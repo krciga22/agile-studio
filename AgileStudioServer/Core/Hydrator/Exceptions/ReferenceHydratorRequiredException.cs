@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Exceptions;
+﻿using AgileStudioServer.Core.Exceptions;
+using AgileStudioServer.Core.Hydrator;
 
 namespace AgileStudioServer.Core.Hydrators.Exceptions
 {

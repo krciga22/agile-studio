@@ -2,7 +2,7 @@
 using AgileStudioServer.Application.Exceptions;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
-using AgileStudioServer.Exceptions;
+using AgileStudioServer.Core.Services.Exceptions;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.API.Attributes.Validation

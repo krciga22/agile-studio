@@ -1,4 +1,4 @@
-﻿using AgileStudioServer.Exceptions;
+﻿using AgileStudioServer.Core.Exceptions;
 
 namespace AgileStudioServer.Data.Exceptions
 {

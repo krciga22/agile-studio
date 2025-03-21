@@ -1,11 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
 {
     public class WorkflowStateHydrator : AbstractModelHydrator
     {
@@ -17,9 +16,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(Data.Entities.WorkflowState) || 
-                from == typeof(WorkflowStatePostDto) || 
+                from == typeof(int) ||
+                from == typeof(Data.Entities.WorkflowState) ||
+                from == typeof(WorkflowStatePostDto) ||
                 from == typeof(WorkflowStatePatchDto)
             ) && to == typeof(WorkflowState);
         }
@@ -31,7 +30,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {

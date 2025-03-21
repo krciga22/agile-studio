@@ -1,4 +1,4 @@
-﻿using AgileStudioServer.API.Attributes.Validation;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs

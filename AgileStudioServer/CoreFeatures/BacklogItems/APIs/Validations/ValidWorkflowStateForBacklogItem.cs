@@ -4,7 +4,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Attributes.Validation
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ValidWorkflowStateForBacklogItem : ValidationAttribute
@@ -41,7 +41,7 @@ namespace AgileStudioServer.API.Attributes.Validation
             {
                 workflowStateId = patchDto.WorkflowStateId;
 
-                var backlogItem = backlogItemService.Get(patchDto.ID) ?? 
+                var backlogItem = backlogItemService.Get(patchDto.ID) ??
                     throw new ModelNotFoundException(nameof(BacklogItem), patchDto.ID.ToString());
 
                 backlogItemTypeId = backlogItem.BacklogItemTypeID;

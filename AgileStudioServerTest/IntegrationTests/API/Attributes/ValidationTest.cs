@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.API.Attributes.Validation;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations;
 using AgileStudioServer.Data;
 using System.ComponentModel.DataAnnotations;
 

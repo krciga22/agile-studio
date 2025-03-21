@@ -4,7 +4,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Attributes.Validation
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ValidParentBacklogItemForBacklogItem : ValidationAttribute
@@ -59,7 +59,7 @@ namespace AgileStudioServer.API.Attributes.Validation
                 var parentBacklogItem = backlogItemService.Get(id) ??
                     throw new ModelNotFoundException(nameof(BacklogItem), id.ToString());
 
-                if(parentBacklogItem.ProjectID != backlogItemProjectId)
+                if (parentBacklogItem.ProjectID != backlogItemProjectId)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }

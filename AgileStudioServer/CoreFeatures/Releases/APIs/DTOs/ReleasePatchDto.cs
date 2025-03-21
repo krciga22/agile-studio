@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs
 {
-    public class ReleasePostDto
+    public class ReleasePatchDto
     {
+        [Required]
+        public int ID;
+
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
-
-        [Required]
-        public int ProjectId { get; set; }
 
         [StringLength(255)]
         public string? Description { get; set; }
@@ -20,10 +20,10 @@ namespace AgileStudioServer.API.Dtos
         [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
-        public ReleasePostDto(string title, int projectId)
+        public ReleasePatchDto(int id, string title)
         {
+            ID = id;
             Title = title;
-            ProjectId = projectId;
         }
     }
 }

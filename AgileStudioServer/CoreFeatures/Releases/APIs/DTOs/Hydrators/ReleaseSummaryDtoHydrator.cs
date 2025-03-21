@@ -2,20 +2,21 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
 {
-    public class ReleaseDtoHydrator : AbstractDtoHydrator
+    public class ReleaseSummaryDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
                 from == typeof(Application.Models.Release)
-            ) && to == typeof(ReleaseDto);
+            ) && to == typeof(ReleaseSummaryDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -28,7 +29,7 @@ namespace AgileStudioServer.API.Dtos.Hydrators
             }
 
             Application.Models.Release? model = null;
-            if (from is int)
+            if (from is int && referenceHydrator != null)
             {
                 model = (Application.Models.Release)referenceHydrator.Hydrate(
                     from, typeof(Application.Models.Release), maxDepth, depth, referenceHydrator
@@ -39,14 +40,10 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 model = (Application.Models.Release)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
             if (model != null)
             {
-                var projectSummaryDto = (ProjectSummaryDto)referenceHydrator.Hydrate(
-                    model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
-                );
-
-                dto = new ReleaseDto(model.ID, model.Title, projectSummaryDto, model.CreatedOn);
+                dto = new ReleaseSummaryDto(model.ID, model.Title);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -65,32 +62,13 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (ReleaseDto)to;
-            int nextDepth = depth + 1;
+            var dto = (ReleaseSummaryDto)to;
 
             if (from is Application.Models.Release)
             {
                 var model = (Application.Models.Release)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
-                dto.Description = model.Description;
-                dto.CreatedOn = model.CreatedOn;
-                dto.StartDate = model.StartDate;
-                dto.EndDate = model.EndDate;
-
-                if (referenceHydrator != null && nextDepth <= maxDepth)
-                {
-                    dto.Project = (ProjectSummaryDto)referenceHydrator.Hydrate(
-                        model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
-                    );
-
-                    if (model.CreatedByID != null)
-                    {
-                        dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(
-                            model.CreatedByID, typeof(UserSummaryDto), maxDepth, depth
-                        );
-                    }
-                }
             }
         }
     }

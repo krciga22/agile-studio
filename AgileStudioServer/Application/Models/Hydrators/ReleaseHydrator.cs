@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators
@@ -17,8 +18,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
             return (
                 from == typeof(int) || 
                 from == typeof(Data.Entities.Release) || 
-                from == typeof(API.Dtos.ReleasePostDto) || 
-                from == typeof(API.Dtos.ReleasePatchDto)
+                from == typeof(ReleasePostDto) || 
+                from == typeof(ReleasePatchDto)
             ) && to == typeof(Release);
         }
 
@@ -46,15 +47,15 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model = new Release(entity.Title, entity.ProjectID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.ReleasePostDto)
+            else if (from is ReleasePostDto)
             {
-                var dto = (API.Dtos.ReleasePostDto)from;
+                var dto = (ReleasePostDto)from;
                 model = new Release(dto.Title, dto.ProjectId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.ReleasePatchDto)
+            else if (from is ReleasePatchDto)
             {
-                var dto = (API.Dtos.ReleasePatchDto)from;
+                var dto = (ReleasePatchDto)from;
                 var entity = _DBContext.Release.Find(dto.ID);
                 if (entity != null)
                 {
@@ -93,18 +94,18 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.ProjectID = entity.ProjectID;
                 model.CreatedByID = entity.CreatedByID;
             }
-            else if (from is API.Dtos.ReleasePostDto)
+            else if (from is ReleasePostDto)
             {
-                var dto = (API.Dtos.ReleasePostDto)from;
+                var dto = (ReleasePostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.StartDate = dto.StartDate;
                 model.EndDate = dto.EndDate;
                 model.ProjectID = dto.ProjectId;
             }
-            else if (from is API.Dtos.ReleasePatchDto)
+            else if (from is ReleasePatchDto)
             {
-                var dto = (API.Dtos.ReleasePatchDto)from;
+                var dto = (ReleasePatchDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.StartDate = dto.StartDate;

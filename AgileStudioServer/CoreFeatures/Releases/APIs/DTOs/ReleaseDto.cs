@@ -1,5 +1,6 @@
-﻿
-namespace AgileStudioServer.API.Dtos
+﻿using AgileStudioServer.API.Dtos;
+
+namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs
 {
     public class ReleaseDto
     {

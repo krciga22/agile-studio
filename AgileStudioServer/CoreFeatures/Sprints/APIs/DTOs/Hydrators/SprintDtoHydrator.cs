@@ -5,6 +5,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.API.Dtos;
 using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 
 namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
 {

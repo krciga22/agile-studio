@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.API.Dtos;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 
 namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs
 {

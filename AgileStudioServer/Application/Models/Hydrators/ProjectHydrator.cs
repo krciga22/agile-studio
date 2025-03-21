@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators
@@ -17,8 +18,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Data.Entities.Project) || 
-                from == typeof(API.Dtos.ProjectPostDto) || 
-                from == typeof(API.Dtos.ProjectPatchDto)
+                from == typeof(ProjectPostDto) || 
+                from == typeof(ProjectPatchDto)
             ) && to == typeof(Project);
         }
 
@@ -46,15 +47,15 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model = new Project(entity.Title, entity.BacklogItemTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.ProjectPostDto)
+            else if (from is ProjectPostDto)
             {
-                var dto = (API.Dtos.ProjectPostDto)from;
+                var dto = (ProjectPostDto)from;
                 model = new Project(dto.Title, dto.BacklogItemTypeSchemaId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.ProjectPatchDto)
+            else if (from is ProjectPatchDto)
             {
-                var dto = (API.Dtos.ProjectPatchDto)from;
+                var dto = (ProjectPatchDto)from;
                 var entity = _DBContext.Project.Find(dto.ID);
                 if (entity != null)
                 {
@@ -91,16 +92,16 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.BacklogItemTypeSchemaID = entity.BacklogItemTypeSchemaID;
                 model.CreatedByID = entity.CreatedByID;
             }
-            else if (from is API.Dtos.ProjectPostDto)
+            else if (from is ProjectPostDto)
             {
-                var dto = (API.Dtos.ProjectPostDto)from;
+                var dto = (ProjectPostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.BacklogItemTypeSchemaID = dto.BacklogItemTypeSchemaId;
             }
-            else if (from is API.Dtos.ProjectPatchDto)
+            else if (from is ProjectPatchDto)
             {
-                var dto = (API.Dtos.ProjectPatchDto)from;
+                var dto = (ProjectPatchDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
             }

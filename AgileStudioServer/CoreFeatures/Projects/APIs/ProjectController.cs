@@ -3,6 +3,7 @@ using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Releases.Services;
 using AgileStudioServer.CoreFeatures.Releases.Services.Models;
@@ -12,7 +13,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.API.Controllers
+namespace AgileStudioServer.CoreFeatures.Projects.APIs
 {
     [ApiController]
     [Route("[controller]")]
@@ -178,7 +179,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<ProjectDto> dtos = new();
 
-            projects.ForEach(project => {
+            projects.ForEach(project =>
+            {
                 ProjectDto dto = HydrateProjectDto(project, depth);
                 dtos.Add(dto);
             });
@@ -197,7 +199,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<BacklogItemDto> dtos = new();
 
-            backlogItems.ForEach(backlogItem => {
+            backlogItems.ForEach(backlogItem =>
+            {
                 BacklogItemDto dto = HydrateBacklogItemDto(backlogItem, depth);
                 dtos.Add(dto);
             });
@@ -216,7 +219,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<SprintSummaryDto> dtos = new();
 
-            sprints.ForEach(sprint => {
+            sprints.ForEach(sprint =>
+            {
                 SprintSummaryDto dto = HydrateSprintSummaryDto(sprint, depth);
                 dtos.Add(dto);
             });
@@ -235,7 +239,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<ReleaseSummaryDto> dtos = new();
 
-            releases.ForEach(release => {
+            releases.ForEach(release =>
+            {
                 ReleaseSummaryDto dto = HydrateReleaseSummaryDto(release, depth);
                 dtos.Add(dto);
             });

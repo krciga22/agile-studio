@@ -2,20 +2,21 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
 {
     public class ProjectSummaryDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
+                from == typeof(int) ||
                 from == typeof(Application.Models.Project)
             ) && to == typeof(ProjectSummaryDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -39,7 +40,7 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 model = (Application.Models.Project)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
             if (model != null)
             {
                 dto = new ProjectSummaryDto(model.ID, model.Title);

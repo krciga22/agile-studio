@@ -1,10 +1,10 @@
-﻿
+﻿using AgileStudioServer.API.Dtos;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
 {
     public class BacklogItemDto
     {
@@ -31,10 +31,10 @@ namespace AgileStudioServer.API.Dtos
         public BacklogItemSummaryDto? ParentBacklogItem { get; set; } = null;
 
         public BacklogItemDto(
-            int id, 
-            string title, 
-            DateTime createdOn, 
-            ProjectSummaryDto project, 
+            int id,
+            string title,
+            DateTime createdOn,
+            ProjectSummaryDto project,
             BacklogItemTypeSummaryDto backlogItemType,
             WorkflowStateSummaryDto workflowState)
         {

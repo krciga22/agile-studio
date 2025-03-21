@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators
@@ -17,8 +18,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Data.Entities.BacklogItem) || 
-                from == typeof(API.Dtos.BacklogItemPostDto) || 
-                from == typeof(API.Dtos.BacklogItemPatchDto)
+                from == typeof(BacklogItemPostDto) || 
+                from == typeof(BacklogItemPatchDto)
             ) && to == typeof(BacklogItem);
         }
 
@@ -51,9 +52,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 );
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.BacklogItemPostDto)
+            else if (from is BacklogItemPostDto)
             {
-                var dto = (API.Dtos.BacklogItemPostDto)from;
+                var dto = (BacklogItemPostDto)from;
                 model = new BacklogItem(
                     dto.Title,
                     dto.ProjectId,
@@ -62,9 +63,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 );
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.BacklogItemPatchDto)
+            else if (from is BacklogItemPatchDto)
             {
-                var dto = (API.Dtos.BacklogItemPatchDto)from;
+                var dto = (BacklogItemPatchDto)from;
                 var entity = _DBContext.BacklogItem.Find(dto.ID);
                 if (entity != null)
                 {
@@ -106,9 +107,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.CreatedByID = entity.CreatedByID;
                 model.ParentBacklogItemId = entity.ParentBacklogItemId;
             }
-            else if (from is API.Dtos.BacklogItemPostDto)
+            else if (from is BacklogItemPostDto)
             {
-                var dto = (API.Dtos.BacklogItemPostDto)from;
+                var dto = (BacklogItemPostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.ProjectID = dto.ProjectId;
@@ -118,9 +119,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.ReleaseID = dto.ReleaseId;
                 model.ParentBacklogItemId = dto.ParentBacklogItemId;
             }
-            else if (from is API.Dtos.BacklogItemPatchDto)
+            else if (from is BacklogItemPatchDto)
             {
-                var dto = (API.Dtos.BacklogItemPatchDto)from;
+                var dto = (BacklogItemPatchDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.WorkflowStateID = dto.WorkflowStateId;

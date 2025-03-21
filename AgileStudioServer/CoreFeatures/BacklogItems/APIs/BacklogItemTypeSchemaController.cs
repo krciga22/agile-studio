@@ -1,12 +1,12 @@
-using AgileStudioServer.API.Dtos;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.API.Controllers
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
 {
     [ApiController]
     [Route("[controller]")]
@@ -144,7 +144,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<BacklogItemTypeSchemaDto> dtos = new();
 
-            backlogItemTypeSchemas.ForEach(backlogItemTypeSchema => {
+            backlogItemTypeSchemas.ForEach(backlogItemTypeSchema =>
+            {
                 BacklogItemTypeSchemaDto dto = HydrateBacklogItemTypeSchemaDto(backlogItemTypeSchema, depth);
                 dtos.Add(dto);
             });
@@ -163,7 +164,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<BacklogItemTypeSummaryDto> dtos = new();
 
-            backlogItemTypes.ForEach(backlogItemType => {
+            backlogItemTypes.ForEach(backlogItemType =>
+            {
                 BacklogItemTypeSummaryDto dto = HydrateBacklogItemTypeSummaryDto(backlogItemType, depth);
                 dtos.Add(dto);
             });

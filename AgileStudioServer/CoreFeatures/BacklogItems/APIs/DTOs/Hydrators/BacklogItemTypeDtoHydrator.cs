@@ -2,20 +2,20 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
-using AgileStudioServer.API.Dtos;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.API.Dtos;
 
-namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
-    public class ProjectDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemTypeDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.Project)
-            ) && to == typeof(ProjectDto);
+                from == typeof(Application.Models.BacklogItemType)
+            ) && to == typeof(BacklogItemTypeDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -30,26 +30,33 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.Project? model = null;
-            if (from is int)
+            Application.Models.BacklogItemType? model = null;
+            if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.Project)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.Project), maxDepth, depth, referenceHydrator
+                model = (Application.Models.BacklogItemType)referenceHydrator.Hydrate(
+                    from, typeof(Application.Models.BacklogItemType), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.Project)
+            else if (from is Application.Models.BacklogItemType)
             {
-                model = (Application.Models.Project)from;
+                model = (Application.Models.BacklogItemType)from;
             }
 
             object? dto = null;
-            if (model != null)
+            if (model != null && referenceHydrator != null)
             {
                 var backlogItemTypeSchemaSummaryDto = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
                     model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
                 );
 
-                dto = new ProjectDto(model.ID, model.Title, model.CreatedOn, backlogItemTypeSchemaSummaryDto);
+                var workflowSummaryDto = (WorkflowSummaryDto)referenceHydrator.Hydrate(
+                    model.WorkflowID, typeof(WorkflowSummaryDto), maxDepth, depth
+                );
+
+                dto = new BacklogItemTypeDto(
+                    model.ID, model.Title, model.CreatedOn,
+                    backlogItemTypeSchemaSummaryDto, workflowSummaryDto);
+
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -68,12 +75,12 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (ProjectDto)to;
+            var dto = (BacklogItemTypeDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.Project)
+            if (from is Application.Models.BacklogItemType)
             {
-                var model = (Application.Models.Project)from;
+                var model = (Application.Models.BacklogItemType)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;
@@ -83,6 +90,10 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 {
                     dto.BacklogItemTypeSchema = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
                         model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
+                    );
+
+                    dto.Workflow = (WorkflowSummaryDto)referenceHydrator.Hydrate(
+                        model.WorkflowID, typeof(WorkflowSummaryDto), maxDepth, depth
                     );
 
                     if (model.CreatedByID != null)

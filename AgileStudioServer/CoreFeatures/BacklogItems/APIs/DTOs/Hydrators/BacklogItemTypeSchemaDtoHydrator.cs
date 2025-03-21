@@ -2,20 +2,22 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.API.Dtos;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
     public class BacklogItemTypeSchemaDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) ||  
+                from == typeof(int) ||
                 from == typeof(Application.Models.BacklogItemTypeSchema)
             ) && to == typeof(BacklogItemTypeSchemaDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -39,7 +41,7 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 model = (Application.Models.BacklogItemTypeSchema)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
             if (model != null)
             {
                 dto = new BacklogItemTypeSchemaDto(model.ID, model.Title, model.CreatedOn);

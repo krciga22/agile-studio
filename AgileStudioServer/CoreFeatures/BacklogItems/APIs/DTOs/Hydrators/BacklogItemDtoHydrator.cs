@@ -6,20 +6,22 @@ using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.API.Dtos;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
     public class BacklogItemDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
+                from == typeof(int) ||
                 from == typeof(Application.Models.BacklogItem)
             ) && to == typeof(BacklogItemDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -43,7 +45,7 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 model = (Application.Models.BacklogItem)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
 
             if (model != null)
             {

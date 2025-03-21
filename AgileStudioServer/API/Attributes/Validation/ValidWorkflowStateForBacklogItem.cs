@@ -1,7 +1,7 @@
-﻿using AgileStudioServer.API.Dtos;
-using AgileStudioServer.Application.Models;
+﻿using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.API.Attributes.Validation

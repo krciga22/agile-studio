@@ -1,23 +1,24 @@
 ﻿using AgileStudioServer.API.Attributes.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
 {
+    [ValidBacklogItemTypeForBacklogItemPostDto]
     [ValidSprintForBacklogItem]
     [ValidReleaseForBacklogItem]
     [ValidWorkflowStateForBacklogItem]
     [ValidParentBacklogItemForBacklogItem]
-    public class BacklogItemPatchDto
+    public class BacklogItemPostDto
     {
-        [Required]
-        public int ID { get; set; }
-
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
 
-        [StringLength(255)]
-        public string? Description { get; set; }
+        [Required]
+        public int ProjectId { get; set; }
+
+        [Required]
+        public int BacklogItemTypeId { get; set; }
 
         [Required]
         public int WorkflowStateId { get; set; }
@@ -28,10 +29,14 @@ namespace AgileStudioServer.API.Dtos
 
         public int? ParentBacklogItemId { get; set; } = null;
 
-        public BacklogItemPatchDto(int id, string title, int workflowStateId)
+        [StringLength(255)]
+        public string? Description { get; set; }
+
+        public BacklogItemPostDto(string title, int projectId, int backlogItemTypeId, int workflowStateId)
         {
-            ID = id;
             Title = title;
+            ProjectId = projectId;
+            BacklogItemTypeId = backlogItemTypeId;
             WorkflowStateId = workflowStateId;
         }
     }

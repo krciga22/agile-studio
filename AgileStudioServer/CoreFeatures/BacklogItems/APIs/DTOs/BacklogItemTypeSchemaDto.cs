@@ -1,7 +1,8 @@
-﻿
-namespace AgileStudioServer.API.Dtos
+﻿using AgileStudioServer.API.Dtos;
+
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
 {
-    public class BacklogItemTypeSummaryDto
+    public class BacklogItemTypeSchemaDto
     {
         public int ID { get; set; }
 
@@ -11,7 +12,9 @@ namespace AgileStudioServer.API.Dtos
 
         public DateTime CreatedOn { get; set; }
 
-        public BacklogItemTypeSummaryDto(
+        public UserSummaryDto? CreatedBy { get; set; }
+
+        public BacklogItemTypeSchemaDto(
             int id,
             string title,
             DateTime createdOn)

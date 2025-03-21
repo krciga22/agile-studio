@@ -1,7 +1,7 @@
-﻿
+﻿using AgileStudioServer.API.Dtos;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
 {
     public class BacklogItemTypeDto
     {

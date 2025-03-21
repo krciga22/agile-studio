@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.API.Dtos;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 
 namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs
 {

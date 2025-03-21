@@ -2,20 +2,21 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
-    public class BacklogItemTypeSchemaSummaryDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemSummaryDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(Application.Models.BacklogItemTypeSchema)
-            ) && to == typeof(BacklogItemTypeSchemaSummaryDto);
+                from == typeof(int) ||
+                from == typeof(Application.Models.BacklogItem)
+            ) && to == typeof(BacklogItemSummaryDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -27,22 +28,22 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.BacklogItemTypeSchema? model = null;
-            if (from is int && referenceHydrator != null)
+            Application.Models.BacklogItem? model = null;
+            if (from is int)
             {
-                model = (Application.Models.BacklogItemTypeSchema)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.BacklogItemTypeSchema), maxDepth, depth, referenceHydrator
+                model = (Application.Models.BacklogItem)referenceHydrator.Hydrate(
+                    from, typeof(Application.Models.BacklogItem), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.BacklogItemTypeSchema)
+            else if (from is Application.Models.BacklogItem)
             {
-                model = (Application.Models.BacklogItemTypeSchema)from;
+                model = (Application.Models.BacklogItem)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
             if (model != null)
             {
-                dto = new BacklogItemTypeSchemaSummaryDto(model.ID, model.Title);
+                dto = new BacklogItemSummaryDto(model.ID, model.Title);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -61,11 +62,11 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (BacklogItemTypeSchemaSummaryDto)to;
+            var dto = (BacklogItemSummaryDto)to;
 
-            if (from is Application.Models.BacklogItemTypeSchema)
+            if (from is Application.Models.BacklogItem)
             {
-                var model = (Application.Models.BacklogItemTypeSchema)from;
+                var model = (Application.Models.BacklogItem)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

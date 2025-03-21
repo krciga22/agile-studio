@@ -1,12 +1,12 @@
-using AgileStudioServer.API.Dtos;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.API.Controllers
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
 {
     [ApiController]
     [Route("[controller]")]
@@ -22,8 +22,8 @@ namespace AgileStudioServer.API.Controllers
         private readonly Hydrator _Hydrator;
 
         public BacklogItemTypeController(
-            BacklogItemTypeService dataProvider, 
-            Hydrator hydrator, 
+            BacklogItemTypeService dataProvider,
+            Hydrator hydrator,
             ChildBacklogItemTypeService childBacklogItemTypeService,
             BacklogItemTypeSchemaService backlogItemTypeSchemaService)
         {
@@ -137,9 +137,10 @@ namespace AgileStudioServer.API.Controllers
             List<BacklogItemType> models = new();
 
             var childBacklogItemTypes = _ChildBacklogItemTypeService.GetByParentTypeId(id);
-            childBacklogItemTypes.ForEach(childBacklogItemType => {
+            childBacklogItemTypes.ForEach(childBacklogItemType =>
+            {
                 var childType = _BacklogItemTypeService.Get(childBacklogItemType.ChildTypeID);
-                if(childType == null)
+                if (childType == null)
                 {
                     throw new ModelNotFoundException(
                         nameof(BacklogItemType),
@@ -167,7 +168,7 @@ namespace AgileStudioServer.API.Controllers
                 return NotFound();
             }
 
-            if(parentType.BacklogItemTypeSchemaID != childType.BacklogItemTypeSchemaID)
+            if (parentType.BacklogItemTypeSchemaID != childType.BacklogItemTypeSchemaID)
             {
                 var problem = new ProblemDetails();
                 problem.Title = "Child belongs to a different schema";
@@ -182,7 +183,7 @@ namespace AgileStudioServer.API.Controllers
                 var schema = _BacklogItemTypeSchemaService.Get(
                     parentType.BacklogItemTypeSchemaID
                 );
-                if(schema == null)
+                if (schema == null)
                 {
                     throw new ModelNotFoundException(
                         nameof(BacklogItemTypeSchema),
@@ -221,7 +222,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<BacklogItemTypeDto> dtos = new();
 
-            backlogItemTypes.ForEach(backlogItemType => {
+            backlogItemTypes.ForEach(backlogItemType =>
+            {
                 BacklogItemTypeDto dto = HydrateBacklogItemTypeDto(backlogItemType, depth);
                 dtos.Add(dto);
             });

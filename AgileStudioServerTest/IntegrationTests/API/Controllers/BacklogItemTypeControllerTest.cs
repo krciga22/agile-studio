@@ -1,8 +1,9 @@
 ﻿using AgileStudioServer.API.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.API.Controllers;
 using AgileStudioServer.Data;
 using AgileStudioServer.Data.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 
 namespace AgileStudioServerTest.IntegrationTests.API.Controllers
 {

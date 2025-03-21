@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
 {
-    public class BacklogItemTypePatchDto
+    public class BacklogItemTypeSchemaPatchDto
     {
         [Required]
         public int ID;
@@ -14,7 +14,7 @@ namespace AgileStudioServer.API.Dtos
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public BacklogItemTypePatchDto(int id, string title)
+        public BacklogItemTypeSchemaPatchDto(int id, string title)
         {
             ID = id;
             Title = title;

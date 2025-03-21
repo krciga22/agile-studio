@@ -4,10 +4,11 @@ using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.API.Controllers
+namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
 {
     [ApiController]
     [Route("[controller]")]
@@ -30,15 +31,15 @@ namespace AgileStudioServer.API.Controllers
         public IActionResult GetChildBacklogItems(int id, [FromQuery] int? page = null)
         {
             var paginationDetails = new PaginationDetails();
-            if(page != null)
+            if (page != null)
             {
-                paginationDetails.Page = (int) page;
+                paginationDetails.Page = (int)page;
             }
 
             var paginationResults = _BacklogItemService.GetChildBacklogItems(id, paginationDetails);
 
             PaginatedResultsDto<BacklogItemDto, BacklogItem> paginatedResultsDto = new(
-                HydrateBacklogItemDtos(paginationResults.Items), 
+                HydrateBacklogItemDtos(paginationResults.Items),
                 paginationResults
             );
 
@@ -154,7 +155,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<BacklogItemDto> dtos = new();
 
-            backlogItems.ForEach(backlogItem => {
+            backlogItems.ForEach(backlogItem =>
+            {
                 BacklogItemDto dto = HydrateBacklogItemDto(backlogItem, depth);
                 dtos.Add(dto);
             });

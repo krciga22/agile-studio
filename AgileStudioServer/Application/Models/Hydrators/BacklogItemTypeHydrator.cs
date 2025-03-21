@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators
@@ -17,8 +18,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Data.Entities.BacklogItemType) || 
-                from == typeof(API.Dtos.BacklogItemTypePostDto) || 
-                from == typeof(API.Dtos.BacklogItemTypePatchDto)
+                from == typeof(BacklogItemTypePostDto) || 
+                from == typeof(BacklogItemTypePatchDto)
             ) && to == typeof(BacklogItemType);
         }
 
@@ -47,16 +48,16 @@ namespace AgileStudioServer.Application.Models.Hydrators
                     entity.Title, entity.BacklogItemTypeSchemaID, entity.WorkflowID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.BacklogItemTypePostDto)
+            else if (from is BacklogItemTypePostDto)
             {
-                var dto = (API.Dtos.BacklogItemTypePostDto)from;
+                var dto = (BacklogItemTypePostDto)from;
                 model = new BacklogItemType(
                     dto.Title, dto.BacklogItemTypeSchemaId, dto.WorkflowId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.BacklogItemTypePatchDto)
+            else if (from is BacklogItemTypePatchDto)
             {
-                var dto = (API.Dtos.BacklogItemTypePatchDto)from;
+                var dto = (BacklogItemTypePatchDto)from;
                 var entity = _DBContext.BacklogItemType.Find(dto.ID);
                 if (entity != null)
                 {
@@ -94,17 +95,17 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.WorkflowID = entity.WorkflowID;
                 model.CreatedByID = entity.CreatedByID;
             }
-            else if (from is API.Dtos.BacklogItemTypePostDto)
+            else if (from is BacklogItemTypePostDto)
             {
-                var dto = (API.Dtos.BacklogItemTypePostDto)from;
+                var dto = (BacklogItemTypePostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.BacklogItemTypeSchemaID = dto.BacklogItemTypeSchemaId;
                 model.WorkflowID = dto.WorkflowId;
             }
-            else if (from is API.Dtos.BacklogItemTypePatchDto)
+            else if (from is BacklogItemTypePatchDto)
             {
-                var dto = (API.Dtos.BacklogItemTypePatchDto)from;
+                var dto = (BacklogItemTypePatchDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
             }

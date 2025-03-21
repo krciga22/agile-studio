@@ -1,8 +1,6 @@
 ﻿using DtoHydrators = AgileStudioServer.API.Dtos.Hydrators;
 using ModelHydrators = AgileStudioServer.Application.Models.Hydrators;
 using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
-
-using AgileStudioServer.API.Controllers;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
@@ -20,6 +18,8 @@ using AgileStudioServer.CoreFeatures.Workflows.APIs;
 using AgileStudioServer.CoreFeatures.Projects.APIs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
+using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators;
 
 namespace AgileStudioServerTest
 {
@@ -46,12 +46,12 @@ namespace AgileStudioServerTest
             services.AddScoped<Hydrator>();
             services.AddScoped<HydratorRegistry>();
 
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemSummaryDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemTypeDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemTypeSummaryDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemTypeSchemaDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.BacklogItemTypeSchemaSummaryDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemSummaryDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemTypeDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemTypeSummaryDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemTypeSchemaDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemTypeSchemaSummaryDtoHydrator>();
             services.AddScoped<IHydrator, ProjectDtoHydrator>();
             services.AddScoped<IHydrator, ProjectSummaryDtoHydrator>();
             services.AddScoped<IHydrator, ReleaseDtoHydrator>();

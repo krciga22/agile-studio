@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 {
     public class BacklogItemTypeService
     {
@@ -32,7 +32,8 @@ namespace AgileStudioServer.Application.Services
         public virtual BacklogItemType? Get(int id)
         {
             Data.Entities.BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -75,7 +76,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<BacklogItemType> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 BacklogItemType model = HydrateBacklogItemTypeModel(entity, depth);
                 models.Add(model);
             });

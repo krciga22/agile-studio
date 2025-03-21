@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Core.Exceptions;
 
-namespace AgileStudioServer.Application.Exceptions
+namespace AgileStudioServer.Core.Services.Exceptions
 {
     public class ModelNotFoundException : AbstractException
     {

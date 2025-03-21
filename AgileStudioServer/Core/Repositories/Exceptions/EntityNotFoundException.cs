@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Core.Exceptions;
 
-namespace AgileStudioServer.Data.Exceptions
+namespace AgileStudioServer.Core.Repositories.Exceptions
 {
     public class EntityNotFoundException : AbstractException
     {

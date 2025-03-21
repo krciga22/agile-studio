@@ -1,8 +1,8 @@
 using AgileStudioServer.API.Dtos;
-using AgileStudioServer.Application.Exceptions;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

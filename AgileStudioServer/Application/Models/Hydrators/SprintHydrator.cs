@@ -1,5 +1,4 @@
 ﻿
-using AgileStudioServer.Application.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Data;

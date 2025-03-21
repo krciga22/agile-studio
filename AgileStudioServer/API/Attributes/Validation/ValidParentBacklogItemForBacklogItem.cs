@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.API.Dtos;
-using AgileStudioServer.Application.Exceptions;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Services.Exceptions;

@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 {
     public class BacklogItemTypeSchemaService
     {
@@ -26,7 +26,8 @@ namespace AgileStudioServer.Application.Services
         public virtual BacklogItemTypeSchema? Get(int id)
         {
             Data.Entities.BacklogItemTypeSchema? entity = _DBContext.BacklogItemTypeSchema.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -35,7 +36,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual BacklogItemTypeSchema Create(BacklogItemTypeSchema backlogItemTypeSchema)
         {
-            Data.Entities.BacklogItemTypeSchema entity = 
+            Data.Entities.BacklogItemTypeSchema entity =
                 HydrateBacklogItemTypeSchemaEntity(backlogItemTypeSchema);
 
             _DBContext.Add(entity);
@@ -46,7 +47,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual BacklogItemTypeSchema Update(BacklogItemTypeSchema backlogItemTypeSchema)
         {
-            Data.Entities.BacklogItemTypeSchema entity = 
+            Data.Entities.BacklogItemTypeSchema entity =
                 HydrateBacklogItemTypeSchemaEntity(backlogItemTypeSchema);
 
             _DBContext.Update(entity);
@@ -57,7 +58,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual void Delete(BacklogItemTypeSchema backlogItemTypeSchema)
         {
-            Data.Entities.BacklogItemTypeSchema entity = 
+            Data.Entities.BacklogItemTypeSchema entity =
                 HydrateBacklogItemTypeSchemaEntity(backlogItemTypeSchema);
 
             _DBContext.Remove(entity);
@@ -69,7 +70,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<BacklogItemTypeSchema> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 BacklogItemTypeSchema model = HydrateBacklogItemTypeSchemaModel(entity, depth);
                 models.Add(model);
             });

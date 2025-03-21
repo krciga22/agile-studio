@@ -16,7 +16,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         {
             return (
                 from == typeof(int) || 
-                from == typeof(Application.Models.WorkflowState)
+                from == typeof(CoreFeatures.Workflows.Services.Models.WorkflowState)
             ) && to == typeof(WorkflowState);
         }
 
@@ -29,9 +29,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
 
             Object? entity = null;
 
-            if (from is Application.Models.WorkflowState)
+            if (from is CoreFeatures.Workflows.Services.Models.WorkflowState)
             {
-                var model = (Application.Models.WorkflowState)from;
+                var model = (CoreFeatures.Workflows.Services.Models.WorkflowState)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.WorkflowState.Find(model.ID);
@@ -74,9 +74,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (WorkflowState)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.WorkflowState)
+            if (from is CoreFeatures.Workflows.Services.Models.WorkflowState)
             {
-                var model = (Application.Models.WorkflowState)from;
+                var model = (CoreFeatures.Workflows.Services.Models.WorkflowState)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

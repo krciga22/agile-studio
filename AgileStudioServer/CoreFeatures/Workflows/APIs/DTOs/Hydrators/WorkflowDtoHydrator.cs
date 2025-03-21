@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
 {
@@ -13,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.Workflow)
+                from == typeof(Workflow)
             ) && to == typeof(WorkflowDto);
         }
 
@@ -29,16 +30,16 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.Workflow? model = null;
+            Workflow? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.Workflow)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.Workflow), maxDepth, depth, referenceHydrator
+                model = (Workflow)referenceHydrator.Hydrate(
+                    from, typeof(Workflow), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.Workflow)
+            else if (from is Workflow)
             {
-                model = (Application.Models.Workflow)from;
+                model = (Workflow)from;
             }
 
             object? dto = null;
@@ -66,9 +67,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
             var dto = (WorkflowDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.Workflow)
+            if (from is Workflow)
             {
-                var model = (Application.Models.Workflow)from;
+                var model = (Workflow)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

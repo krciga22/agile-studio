@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
 {
@@ -12,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.WorkflowState)
+                from == typeof(WorkflowState)
             ) && to == typeof(WorkflowStateSummaryDto);
         }
 
@@ -28,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.WorkflowState? model = null;
+            WorkflowState? model = null;
             if (from is int)
             {
-                model = (Application.Models.WorkflowState)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.WorkflowState), maxDepth, depth, referenceHydrator
+                model = (WorkflowState)referenceHydrator.Hydrate(
+                    from, typeof(WorkflowState), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.WorkflowState)
+            else if (from is WorkflowState)
             {
-                model = (Application.Models.WorkflowState)from;
+                model = (WorkflowState)from;
             }
 
             object? dto = null;
@@ -64,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
 
             var dto = (WorkflowStateSummaryDto)to;
 
-            if (from is Application.Models.WorkflowState)
+            if (from is WorkflowState)
             {
-                var model = (Application.Models.WorkflowState)from;
+                var model = (WorkflowState)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

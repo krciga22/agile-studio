@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models
 {
-    public class WorkflowState
+    public class Workflow
     {
         public int ID { get; set; }
 
         public string Title { get; set; }
-
-        [Required]
-        public int WorkflowId { get; set; }
 
         public string? Description { get; set; }
 
@@ -17,10 +12,9 @@ namespace AgileStudioServer.Application.Models
 
         public int? CreatedById { get; set; } = null!;
 
-        public WorkflowState(string title, int workflowId)
+        public Workflow(string title)
         {
             Title = title;
-            WorkflowId = workflowId;
             CreatedOn = DateTime.Now;
         }
     }

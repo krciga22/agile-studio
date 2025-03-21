@@ -1,6 +1,6 @@
-﻿using AgileStudioServer.Application.Models;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.Services
 {

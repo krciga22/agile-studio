@@ -1,5 +1,4 @@
-﻿using AgileStudioServer.API.Dtos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
 using AgileStudioServer.Data.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs;

@@ -1,10 +1,9 @@
-﻿
-using AgileStudioServer.Core.Pagination;
+﻿using AgileStudioServer.Core.Pagination;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.Core.APIs.DTOs
 {
-    public class PaginatedResultsDto<T, J> 
-        where T : class 
+    public class PaginatedResultsDto<T, J>
+        where T : class
         where J : class
     {
         public List<T> Items { get; set; }

@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 {
     public class BacklogItemService
     {
@@ -19,7 +19,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual List<BacklogItem> GetByProjectId(int projectId)
         {
-            List<Data.Entities.BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem => 
+            List<Data.Entities.BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
                 backlogItem.Project.ID == projectId).ToList();
 
             return HydrateBacklogItemModels(entities);
@@ -35,7 +35,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual PaginationResults<BacklogItem> GetChildBacklogItems(int parentBacklogItemId, PaginationDetails? paginationDetails = null)
         {
-            if(paginationDetails is null)
+            if (paginationDetails is null)
             {
                 paginationDetails = new PaginationDetails();
             }
@@ -69,9 +69,9 @@ namespace AgileStudioServer.Application.Services
                 return null;
             }
 
-            Data.Entities.BacklogItem? parentEntity = 
+            Data.Entities.BacklogItem? parentEntity =
                 _DBContext.BacklogItem.Find(entity.ParentBacklogItemId);
-            if(parentEntity is null)
+            if (parentEntity is null)
             {
                 return null;
             }
@@ -82,7 +82,8 @@ namespace AgileStudioServer.Application.Services
         public virtual BacklogItem? Get(int id)
         {
             Data.Entities.BacklogItem? entity = _DBContext.BacklogItem.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -121,7 +122,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<BacklogItem> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 BacklogItem model = HydrateBacklogItemModel(entity, depth);
                 models.Add(model);
             });

@@ -1,6 +1,5 @@
 ﻿using ModelHydrators = AgileStudioServer.Application.Models.Hydrators;
 using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
-using AgileStudioServer.Application.Services;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;

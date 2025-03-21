@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Application.Models;
-using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.CoreFeatures.Sprints.Services;

@@ -1,7 +1,5 @@
 using ModelHydrators = AgileStudioServer.Application.Models.Hydrators;
 using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
-
-using AgileStudioServer.Application.Services;
 using AgileStudioServer.Data;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

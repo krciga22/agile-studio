@@ -5,6 +5,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Services;
 using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using AgileStudioServer.CoreFeatures.Releases.Services;
 using AgileStudioServer.CoreFeatures.Releases.Services.Models;
+using AgileStudioServer.CoreFeatures.Workflows.Services;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

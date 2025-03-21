@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.Workflows.Services
 {
     public class WorkflowService
     {
@@ -25,7 +25,8 @@ namespace AgileStudioServer.Application.Services
         public virtual Workflow? Get(int id)
         {
             Data.Entities.Workflow? entity = _DBContext.Workflow.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -64,7 +65,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<Workflow> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 Workflow model = HydrateWorkflowModel(entity, depth);
                 models.Add(model);
             });

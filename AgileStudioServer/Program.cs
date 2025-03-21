@@ -22,6 +22,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs.Hydrators;
 using AgileStudioServer.CoreFeatures.Workflows.Services;
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators;
+using AgileStudioServer.CoreFeatures.Projects.Services;
 
 namespace AgileStudioServer
 {

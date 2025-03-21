@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.Projects.Services
 {
     public class ProjectService
     {
@@ -34,7 +34,8 @@ namespace AgileStudioServer.Application.Services
         public virtual Project? Get(int id)
         {
             Data.Entities.Project? entity = _DBContext.Project.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -73,7 +74,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<Project> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 Project model = HydrateProjectModel(entity, depth);
                 models.Add(model);
             });

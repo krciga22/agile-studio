@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.Users.Services
 {
     public class UserService
     {
@@ -19,7 +19,8 @@ namespace AgileStudioServer.Application.Services
         public virtual User? Get(int id)
         {
             Data.Entities.User? entity = _DBContext.User.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -58,7 +59,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<User> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 User model = HydrateUserModel(entity, depth);
                 models.Add(model);
             });

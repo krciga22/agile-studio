@@ -1,7 +1,6 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.Core.Hydrator
 {
     public abstract class AbstractEntityHydrator : AbstractHydrator
     {

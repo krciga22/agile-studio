@@ -1,9 +1,11 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
+using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
+using AgileStudioServer.Data;
+using AgileStudioServer.Data.Entities;
 
-namespace AgileStudioServer.Data.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Releases.Repositories.Entities.Hydrators;
 
 public class ReleaseHydrator : AbstractEntityHydrator
 {
@@ -15,8 +17,8 @@ public class ReleaseHydrator : AbstractEntityHydrator
     public override bool Supports(Type from, Type to)
     {
         return (
-            from == typeof(int) || 
-            from == typeof(CoreFeatures.Releases.Services.Models.Release)
+            from == typeof(int) ||
+            from == typeof(Services.Models.Release)
         ) && to == typeof(Release);
     }
 
@@ -27,11 +29,11 @@ public class ReleaseHydrator : AbstractEntityHydrator
             throw new HydrationNotSupportedException(from.GetType(), to);
         }
 
-        Object? entity = null;
+        object? entity = null;
 
-        if (from is CoreFeatures.Releases.Services.Models.Release)
+        if (from is Services.Models.Release)
         {
-            var model = (CoreFeatures.Releases.Services.Models.Release)from;
+            var model = (Services.Models.Release)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Release.Find(model.ID);
@@ -74,9 +76,9 @@ public class ReleaseHydrator : AbstractEntityHydrator
         var entity = (Release)to;
         int nextDepth = depth + 1;
 
-        if (from is CoreFeatures.Releases.Services.Models.Release)
+        if (from is Services.Models.Release)
         {
-            var model = (CoreFeatures.Releases.Services.Models.Release)from;
+            var model = (Services.Models.Release)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

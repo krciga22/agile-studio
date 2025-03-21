@@ -16,6 +16,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities.Hydrators;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators;
 using AgileStudioServer.CoreFeatures.Releases.Services;
 using AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators;
+using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities.Hydrators;
 
 namespace AgileStudioServer
 {
@@ -62,7 +63,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ModelHydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.ProjectHydrator>();
-            builder.Services.AddScoped<IHydrator, ReleaseHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Services.Models.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Services.Models.Hydrators.SprintHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.UserHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.WorkflowHydrator>();
@@ -73,7 +74,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.ProjectHydrator>();
-            builder.Services.AddScoped<IHydrator, EntityHydrators.ReleaseHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Repositories.Entities.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Repositories.Entities.Hydrators.SprintHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.UserHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.WorkflowHydrator>();

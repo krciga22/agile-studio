@@ -5,6 +5,7 @@ using AgileStudioServer.Data.Entities;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 
 namespace AgileStudioServerTest.IntegrationTests.API.Controllers

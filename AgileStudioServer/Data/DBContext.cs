@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Releases.Services.Models;
+using Entities = AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators
@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.Release) ||
+                from == typeof(Entities.Release) ||
                 from == typeof(ReleasePostDto) ||
                 from == typeof(ReleasePatchDto)
             ) && to == typeof(Release);
@@ -41,9 +41,9 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.Release)
+            if (from is Entities.Release)
             {
-                var entity = (Data.Entities.Release)from;
+                var entity = (Entities.Release)from;
                 model = new Release(entity.Title, entity.ProjectID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -81,9 +81,9 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators
 
             var model = (Release)to;
 
-            if (from is Data.Entities.Release)
+            if (from is Entities.Release)
             {
-                var entity = (Data.Entities.Release)from;
+                var entity = (Entities.Release)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

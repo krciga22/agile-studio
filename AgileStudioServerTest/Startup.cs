@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.Sprints.APIs;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators;
+using AgileStudioServer.CoreFeatures.Sprints.Services;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models.Hydrators;
 
 namespace AgileStudioServerTest
 {
@@ -60,7 +62,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, ModelHydrators.ChildBacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, ModelHydrators.ProjectHydrator>();
             services.AddScoped<IHydrator, ModelHydrators.ReleaseHydrator>();
-            services.AddScoped<IHydrator, ModelHydrators.SprintHydrator>();
+            services.AddScoped<IHydrator, SprintHydrator>();
             services.AddScoped<IHydrator, ModelHydrators.UserHydrator>();
             services.AddScoped<IHydrator, ModelHydrators.WorkflowHydrator>();
             services.AddScoped<IHydrator, ModelHydrators.WorkflowStateHydrator>();

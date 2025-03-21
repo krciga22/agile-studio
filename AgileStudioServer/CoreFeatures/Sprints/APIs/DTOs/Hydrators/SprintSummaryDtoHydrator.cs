@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
 {
@@ -12,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.Sprint)
+                from == typeof(Sprint)
             ) && to == typeof(SprintSummaryDto);
         }
 
@@ -28,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.Sprint? model = null;
+            Sprint? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.Sprint)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.Sprint), maxDepth, depth, referenceHydrator
+                model = (Sprint)referenceHydrator.Hydrate(
+                    from, typeof(Sprint), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.Sprint)
+            else if (from is Sprint)
             {
-                model = (Application.Models.Sprint)from;
+                model = (Sprint)from;
             }
 
             object? dto = null;
@@ -64,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
 
             var dto = (SprintSummaryDto)to;
 
-            if (from is Application.Models.Sprint)
+            if (from is Sprint)
             {
-                var model = (Application.Models.Sprint)from;
+                var model = (Sprint)from;
                 dto.ID = model.ID;
                 dto.SprintNumber = model.SprintNumber;
             }

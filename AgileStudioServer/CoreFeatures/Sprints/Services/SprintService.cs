@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.Application.Models;
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.Sprints.Services
 {
     public class SprintService
     {
@@ -18,7 +18,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual List<Sprint> GetByProjectId(int projectId)
         {
-            List<Data.Entities.Sprint> entities = _DBContext.Sprint.Where(sprint => 
+            List<Data.Entities.Sprint> entities = _DBContext.Sprint.Where(sprint =>
                 sprint.Project.ID == projectId).ToList();
 
             return HydrateSprintModels(entities);
@@ -27,7 +27,8 @@ namespace AgileStudioServer.Application.Services
         public virtual Sprint? Get(int id)
         {
             Data.Entities.Sprint? entity = _DBContext.Sprint.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -82,7 +83,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<Sprint> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 Sprint model = HydrateSprintModel(entity, depth);
                 models.Add(model);
             });

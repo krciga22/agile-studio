@@ -1,5 +1,4 @@
-﻿
-namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.Sprints.Services.Models
 {
     public class Sprint
     {

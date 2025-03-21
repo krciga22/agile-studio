@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators;
+using AgileStudioServer.CoreFeatures.Sprints.Services;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models.Hydrators;
 
 namespace AgileStudioServer
 {
@@ -57,7 +59,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ModelHydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.ReleaseHydrator>();
-            builder.Services.AddScoped<IHydrator, ModelHydrators.SprintHydrator>();
+            builder.Services.AddScoped<IHydrator, SprintHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.UserHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.WorkflowHydrator>();
             builder.Services.AddScoped<IHydrator, ModelHydrators.WorkflowStateHydrator>();

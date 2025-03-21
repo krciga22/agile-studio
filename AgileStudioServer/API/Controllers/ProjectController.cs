@@ -4,6 +4,8 @@ using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Sprints.Services;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

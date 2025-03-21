@@ -1,10 +1,9 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
 {
     public class UserHydrator : AbstractModelHydrator
     {
@@ -21,14 +20,14 @@ namespace AgileStudioServer.Application.Models.Hydrators
             ) && to == typeof(User);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {
@@ -46,7 +45,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
-            if(model == null)
+            if (model == null)
             {
                 throw new HydrationFailedException(from.GetType(), to);
             }
@@ -63,8 +62,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
 
             if (from is Data.Entities.User && to is User)
             {
-                var entity = (Data.Entities.User) from;
-                var model = (User) to;
+                var entity = (Data.Entities.User)from;
+                var model = (User)to;
 
                 model.ID = entity.ID;
                 model.Email = entity.Email;

@@ -11,6 +11,7 @@ using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.CoreFeatures.Users.Services;
 using AgileStudioServer.CoreFeatures.Users.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

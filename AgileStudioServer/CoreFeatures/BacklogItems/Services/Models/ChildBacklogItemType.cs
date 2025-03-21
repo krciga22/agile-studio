@@ -1,11 +1,11 @@
-﻿namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
     public class ChildBacklogItemType
     {
         public int ID { get; set; }
 
         public int ChildTypeID { get; set; }
-        
+
         public int ParentTypeID { get; set; }
 
         public int SchemaID { get; set; }

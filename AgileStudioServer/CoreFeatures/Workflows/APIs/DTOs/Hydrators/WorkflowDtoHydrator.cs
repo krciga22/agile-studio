@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
-using AgileStudioServer.API.Dtos;
+using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
 {

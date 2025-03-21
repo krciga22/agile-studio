@@ -1,5 +1,4 @@
-﻿
-namespace AgileStudioServer.API.Dtos
+﻿namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs
 {
     public class SprintSummaryDto
     {

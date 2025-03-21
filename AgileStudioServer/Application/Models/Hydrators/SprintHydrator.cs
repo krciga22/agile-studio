@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators
@@ -17,8 +18,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Data.Entities.Sprint) || 
-                from == typeof(API.Dtos.SprintPostDto) || 
-                from == typeof(API.Dtos.SprintPatchDto)
+                from == typeof(SprintPostDto) || 
+                from == typeof(SprintPatchDto)
             ) && to == typeof(Sprint);
         }
 
@@ -46,15 +47,15 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model = new Sprint(entity.SprintNumber, entity.ProjectID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.SprintPostDto)
+            else if (from is SprintPostDto)
             {
-                var dto = (API.Dtos.SprintPostDto)from;
+                var dto = (SprintPostDto)from;
                 model = new Sprint(0, dto.ProjectId); // todo fix hard coded sprint number
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
-            else if (from is API.Dtos.SprintPatchDto)
+            else if (from is SprintPatchDto)
             {
-                var dto = (API.Dtos.SprintPatchDto)from;
+                var dto = (SprintPatchDto)from;
                 var entity = _DBContext.Sprint.Find(dto.ID);
                 if (entity != null)
                 {
@@ -92,17 +93,17 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 model.ProjectID = entity.ProjectID;
                 model.CreatedByID = entity.CreatedByID;
             }
-            else if (from is API.Dtos.SprintPostDto)
+            else if (from is SprintPostDto)
             {
-                var dto = (API.Dtos.SprintPostDto)from;
+                var dto = (SprintPostDto)from;
                 model.Description = dto.Description;
                 model.StartDate = dto.StartDate;
                 model.EndDate = dto.EndDate;
                 model.ProjectID = dto.ProjectId;
             }
-            else if (from is API.Dtos.SprintPatchDto)
+            else if (from is SprintPatchDto)
             {
-                var dto = (API.Dtos.SprintPatchDto)from;
+                var dto = (SprintPatchDto)from;
                 model.Description = dto.Description;
                 model.StartDate = dto.StartDate;
                 model.EndDate = dto.EndDate;

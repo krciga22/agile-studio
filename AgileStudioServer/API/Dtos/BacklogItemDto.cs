@@ -1,4 +1,6 @@
 ﻿
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+
 namespace AgileStudioServer.API.Dtos
 {
     public class BacklogItemDto

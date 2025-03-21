@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators;
 
 namespace AgileStudioServer
 {
@@ -42,8 +43,8 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, DtoHydrators.ProjectSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, DtoHydrators.ReleaseDtoHydrator>();
             builder.Services.AddScoped<IHydrator, DtoHydrators.ReleaseSummaryDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, DtoHydrators.SprintDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, DtoHydrators.SprintSummaryDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, SprintDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, SprintSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, DtoHydrators.UserSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, DtoHydrators.WorkflowDtoHydrator>();
             builder.Services.AddScoped<IHydrator, DtoHydrators.WorkflowSummaryDtoHydrator>();

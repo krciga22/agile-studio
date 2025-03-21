@@ -2,20 +2,21 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 
-namespace AgileStudioServer.API.Dtos.Hydrators
+namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
 {
-    public class SprintDtoHydrator : AbstractDtoHydrator
+    public class SprintSummaryDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
+                from == typeof(int) ||
                 from == typeof(Application.Models.Sprint)
-            ) && to == typeof(SprintDto);
+            ) && to == typeof(SprintSummaryDto);
         }
 
-        public override Object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
         {
             if (!Supports(from.GetType(), to))
             {
@@ -28,7 +29,7 @@ namespace AgileStudioServer.API.Dtos.Hydrators
             }
 
             Application.Models.Sprint? model = null;
-            if (from is int)
+            if (from is int && referenceHydrator != null)
             {
                 model = (Application.Models.Sprint)referenceHydrator.Hydrate(
                     from, typeof(Application.Models.Sprint), maxDepth, depth, referenceHydrator
@@ -39,14 +40,10 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 model = (Application.Models.Sprint)from;
             }
 
-            Object? dto = null;
+            object? dto = null;
             if (model != null)
             {
-                var projectSummaryDto = (ProjectSummaryDto)referenceHydrator.Hydrate(
-                    model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
-                );
-
-                dto = new SprintDto(model.ID, model.SprintNumber, projectSummaryDto, model.CreatedOn);
+                dto = new SprintSummaryDto(model.ID, model.SprintNumber);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -65,32 +62,13 @@ namespace AgileStudioServer.API.Dtos.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (SprintDto)to;
-            int nextDepth = depth + 1;
+            var dto = (SprintSummaryDto)to;
 
             if (from is Application.Models.Sprint)
             {
                 var model = (Application.Models.Sprint)from;
                 dto.ID = model.ID;
                 dto.SprintNumber = model.SprintNumber;
-                dto.Description = model.Description;
-                dto.CreatedOn = model.CreatedOn;
-                dto.StartDate = model.StartDate;
-                dto.EndDate = model.EndDate;
-
-                if (referenceHydrator != null && nextDepth <= maxDepth)
-                {
-                    dto.Project = (ProjectSummaryDto)referenceHydrator.Hydrate(
-                        model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
-                    );
-
-                    if (model.CreatedByID != null)
-                    {
-                        dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(
-                            model.CreatedByID, typeof(UserSummaryDto), maxDepth, depth
-                        );
-                    }
-                }
             }
         }
     }

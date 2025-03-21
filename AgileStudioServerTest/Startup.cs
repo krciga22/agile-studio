@@ -8,6 +8,8 @@ using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Sprints.APIs;
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators;
 
 namespace AgileStudioServerTest
 {
@@ -44,8 +46,8 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, DtoHydrators.ProjectSummaryDtoHydrator>();
             services.AddScoped<IHydrator, DtoHydrators.ReleaseDtoHydrator>();
             services.AddScoped<IHydrator, DtoHydrators.ReleaseSummaryDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.SprintDtoHydrator>();
-            services.AddScoped<IHydrator, DtoHydrators.SprintSummaryDtoHydrator>();
+            services.AddScoped<IHydrator, SprintDtoHydrator>();
+            services.AddScoped<IHydrator, SprintSummaryDtoHydrator>();
             services.AddScoped<IHydrator, DtoHydrators.UserSummaryDtoHydrator>();
             services.AddScoped<IHydrator, DtoHydrators.WorkflowDtoHydrator>();
             services.AddScoped<IHydrator, DtoHydrators.WorkflowSummaryDtoHydrator>();

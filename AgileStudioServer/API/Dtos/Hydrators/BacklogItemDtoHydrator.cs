@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 
 namespace AgileStudioServer.API.Dtos.Hydrators
 {

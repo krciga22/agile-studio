@@ -1,11 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
 {
     public class ProjectHydrator : AbstractModelHydrator
     {
@@ -18,8 +17,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.Project) || 
-                from == typeof(ProjectPostDto) || 
+                from == typeof(Data.Entities.Project) ||
+                from == typeof(ProjectPostDto) ||
                 from == typeof(ProjectPatchDto)
             ) && to == typeof(Project);
         }
@@ -31,7 +30,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {

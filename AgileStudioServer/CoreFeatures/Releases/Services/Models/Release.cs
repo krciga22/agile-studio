@@ -1,5 +1,4 @@
-﻿
-namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.Releases.Services.Models
 {
     public class Release
     {

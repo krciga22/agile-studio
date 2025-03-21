@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
 {
@@ -12,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.Release)
+                from == typeof(Release)
             ) && to == typeof(ReleaseSummaryDto);
         }
 
@@ -28,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.Release? model = null;
+            Release? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.Release)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.Release), maxDepth, depth, referenceHydrator
+                model = (Release)referenceHydrator.Hydrate(
+                    from, typeof(Release), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.Release)
+            else if (from is Release)
             {
-                model = (Application.Models.Release)from;
+                model = (Release)from;
             }
 
             object? dto = null;
@@ -64,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
 
             var dto = (ReleaseSummaryDto)to;
 
-            if (from is Application.Models.Release)
+            if (from is Release)
             {
-                var model = (Application.Models.Release)from;
+                var model = (Release)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.Application.Models;
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.Releases.Services
 {
     public class ReleaseService
     {
@@ -18,7 +18,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual List<Release> GetByProjectId(int projectId)
         {
-            List<Data.Entities.Release> entities = _DBContext.Release.Where(release => 
+            List<Data.Entities.Release> entities = _DBContext.Release.Where(release =>
                 release.Project.ID == projectId).ToList();
 
             return HydrateReleaseModels(entities);
@@ -27,7 +27,8 @@ namespace AgileStudioServer.Application.Services
         public virtual Release? Get(int id)
         {
             Data.Entities.Release? entity = _DBContext.Release.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -66,7 +67,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<Release> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 Release model = HydrateReleaseModel(entity, depth);
                 models.Add(model);
             });

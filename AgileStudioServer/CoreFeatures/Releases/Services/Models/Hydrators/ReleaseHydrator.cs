@@ -1,10 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.Releases.Services.Models.Hydrators
 {
     public class ReleaseHydrator : AbstractModelHydrator
     {
@@ -16,9 +16,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(Data.Entities.Release) || 
-                from == typeof(ReleasePostDto) || 
+                from == typeof(int) ||
+                from == typeof(Data.Entities.Release) ||
+                from == typeof(ReleasePostDto) ||
                 from == typeof(ReleasePatchDto)
             ) && to == typeof(Release);
         }
@@ -30,7 +30,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {

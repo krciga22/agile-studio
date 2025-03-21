@@ -4,6 +4,8 @@ using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Releases.Services;
+using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.Services;
 using AgileStudioServer.CoreFeatures.Sprints.Services.Models;

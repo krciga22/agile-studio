@@ -1,5 +1,6 @@
-﻿
-namespace AgileStudioServer.Data.Entities
+﻿using AgileStudioServer.Data.Entities;
+
+namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities
 {
     public class Sprint
     {

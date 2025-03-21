@@ -1,9 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
+using AgileStudioServer.Data;
+using AgileStudioServer.Data.Entities;
 
-namespace AgileStudioServer.Data.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities.Hydrators;
 
 public class SprintHydrator : AbstractEntityHydrator
 {
@@ -16,7 +17,7 @@ public class SprintHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(CoreFeatures.Sprints.Services.Models.Sprint)
+            from == typeof(Services.Models.Sprint)
         ) && to == typeof(Sprint);
     }
 
@@ -27,11 +28,11 @@ public class SprintHydrator : AbstractEntityHydrator
             throw new HydrationNotSupportedException(from.GetType(), to);
         }
 
-        Object? entity = null;
+        object? entity = null;
 
-        if (from is CoreFeatures.Sprints.Services.Models.Sprint)
+        if (from is Services.Models.Sprint)
         {
-            var model = (CoreFeatures.Sprints.Services.Models.Sprint)from;
+            var model = (Services.Models.Sprint)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Sprint.Find(model.ID);
@@ -74,9 +75,9 @@ public class SprintHydrator : AbstractEntityHydrator
         var entity = (Sprint)to;
         int nextDepth = depth + 1;
 
-        if (from is CoreFeatures.Sprints.Services.Models.Sprint)
+        if (from is Services.Models.Sprint)
         {
-            var model = (CoreFeatures.Sprints.Services.Models.Sprint)from;
+            var model = (Services.Models.Sprint)from;
 
             entity.ID = model.ID;
             entity.SprintNumber = model.SprintNumber;

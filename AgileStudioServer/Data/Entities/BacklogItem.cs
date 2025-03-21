@@ -1,4 +1,6 @@
-﻿namespace AgileStudioServer.Data.Entities
+﻿using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
+
+namespace AgileStudioServer.Data.Entities
 {
     public class BacklogItem
     {

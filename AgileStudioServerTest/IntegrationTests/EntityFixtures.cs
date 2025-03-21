@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
+using AgileStudioServer.Data;
 using AgileStudioServer.Data.Entities;
 
 namespace AgileStudioServerTest.IntegrationTests

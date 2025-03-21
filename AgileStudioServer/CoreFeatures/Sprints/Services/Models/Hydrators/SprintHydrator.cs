@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.Sprint) ||
+                from == typeof(CoreFeatures.Sprints.Repositories.Entities.Sprint) ||
                 from == typeof(SprintPostDto) ||
                 from == typeof(SprintPatchDto)
             ) && to == typeof(Sprint);
@@ -41,9 +41,9 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.Sprint)
+            if (from is CoreFeatures.Sprints.Repositories.Entities.Sprint)
             {
-                var entity = (Data.Entities.Sprint)from;
+                var entity = (CoreFeatures.Sprints.Repositories.Entities.Sprint)from;
                 model = new Sprint(entity.SprintNumber, entity.ProjectID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -81,9 +81,9 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services.Models.Hydrators
 
             var model = (Sprint)to;
 
-            if (from is Data.Entities.Sprint)
+            if (from is CoreFeatures.Sprints.Repositories.Entities.Sprint)
             {
-                var entity = (Data.Entities.Sprint)from;
+                var entity = (CoreFeatures.Sprints.Repositories.Entities.Sprint)from;
                 model.ID = entity.ID;
                 model.SprintNumber = entity.SprintNumber;
                 model.Description = entity.Description;

@@ -4,6 +4,7 @@ using AgileStudioServer.API.Controllers;
 using AgileStudioServer.Data.Entities;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
 
 namespace AgileStudioServerTest.IntegrationTests.API.Controllers
 {

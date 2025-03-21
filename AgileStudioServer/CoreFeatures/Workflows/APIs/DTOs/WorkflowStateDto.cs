@@ -1,11 +1,14 @@
-﻿
-namespace AgileStudioServer.API.Dtos
+﻿using AgileStudioServer.API.Dtos;
+
+namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs
 {
-    public class WorkflowDto
+    public class WorkflowStateDto
     {
         public int ID { get; set; }
 
         public string Title { get; set; }
+
+        public WorkflowSummaryDto Workflow { get; set; }
 
         public string? Description { get; set; }
 
@@ -13,14 +16,16 @@ namespace AgileStudioServer.API.Dtos
 
         public UserSummaryDto? CreatedBy { get; set; }
 
-        public WorkflowDto(
+        public WorkflowStateDto(
             int id,
             string title,
+            WorkflowSummaryDto workflow,
             DateTime createdOn)
         {
             ID = id;
             Title = title;
             CreatedOn = createdOn;
+            Workflow = workflow;
         }
     }
 }

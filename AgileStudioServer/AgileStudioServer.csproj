@@ -23,4 +23,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CoreFeatures\Workflows\APIs\DTOs\Hydrators\" />
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.API.Dtos;
-using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.API.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data.Entities;
 using AgileStudioServer.Data;
+using AgileStudioServer.CoreFeatures.Workflows.APIs;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
 namespace AgileStudioServerTest.IntegrationTests.API.Controllers
 {

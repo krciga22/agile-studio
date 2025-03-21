@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
 namespace AgileStudioServer.API.Dtos
 {

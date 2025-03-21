@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.API.Dtos
+namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs
 {
-    public class WorkflowStatePatchDto
+    public class WorkflowPostDto
     {
-        [Required]
-        public int ID;
-
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
@@ -14,9 +11,8 @@ namespace AgileStudioServer.API.Dtos
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public WorkflowStatePatchDto(int id, string title)
+        public WorkflowPostDto(string title)
         {
-            ID = id;
             Title = title;
         }
     }

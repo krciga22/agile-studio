@@ -1,12 +1,12 @@
-using AgileStudioServer.API.Dtos;
 using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.API.Controllers
+namespace AgileStudioServer.CoreFeatures.Workflows.APIs
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,7 +17,7 @@ namespace AgileStudioServer.API.Controllers
         private readonly WorkflowStateService _WorkflowStateService;
         private readonly Hydrator _Hydrator;
 
-        public WorkflowController(WorkflowService workflowService, 
+        public WorkflowController(WorkflowService workflowService,
             WorkflowStateService workflowStateService, Hydrator hydrator)
         {
             _WorkflowService = workflowService;
@@ -57,7 +57,7 @@ namespace AgileStudioServer.API.Controllers
         public IActionResult GetWorkflowStatesForWorkflow(int id)
         {
             var workflow = _WorkflowService.Get(id);
-            if(workflow == null)
+            if (workflow == null)
             {
                 return NotFound();
             }
@@ -96,7 +96,7 @@ namespace AgileStudioServer.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Patch(int id, WorkflowPatchDto workflowPatchDto)
         {
-            if(id != workflowPatchDto.ID)
+            if (id != workflowPatchDto.ID)
             {
                 return BadRequest();
             }
@@ -144,7 +144,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<WorkflowDto> dtos = new();
 
-            workflows.ForEach(workflow => {
+            workflows.ForEach(workflow =>
+            {
                 WorkflowDto dto = HydrateWorkflowDto(workflow, depth);
                 dtos.Add(dto);
             });
@@ -163,7 +164,8 @@ namespace AgileStudioServer.API.Controllers
         {
             List<WorkflowStateDto> dtos = new();
 
-            workflowStates.ForEach(workflowState => {
+            workflowStates.ForEach(workflowState =>
+            {
                 WorkflowStateDto dto = HydrateWorkflowStateDto(workflowState, depth);
                 dtos.Add(dto);
             });

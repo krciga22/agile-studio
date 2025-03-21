@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.Application.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 {
     public class ChildBacklogItemTypeService
     {
@@ -19,7 +19,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual List<ChildBacklogItemType> GetByParentTypeId(int parentTypeId)
         {
-            List<Data.Entities.ChildBacklogItemType> entities = 
+            List<Data.Entities.ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ParentType.ID == parentTypeId
                 )
@@ -34,7 +34,7 @@ namespace AgileStudioServer.Application.Services
 
         public virtual List<ChildBacklogItemType> GetByChildTypeId(int childTypeId)
         {
-            List<Data.Entities.ChildBacklogItemType> entities = 
+            List<Data.Entities.ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ChildType.ID == childTypeId
                 )
@@ -50,7 +50,8 @@ namespace AgileStudioServer.Application.Services
         public virtual ChildBacklogItemType? Get(int id)
         {
             Data.Entities.ChildBacklogItemType? entity = _DBContext.ChildBacklogItemType.Find(id);
-            if (entity is null) {
+            if (entity is null)
+            {
                 return null;
             }
 
@@ -61,7 +62,7 @@ namespace AgileStudioServer.Application.Services
         {
             List<Data.Entities.ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
-                    childBacklogItemType.ParentType.ID == parentTypeId && 
+                    childBacklogItemType.ParentType.ID == parentTypeId &&
                     childBacklogItemType.ChildType.ID == childTypeId
                 )
                 .Include(b => b.ChildType)
@@ -105,7 +106,8 @@ namespace AgileStudioServer.Application.Services
         {
             List<ChildBacklogItemType> models = new();
 
-            entities.ForEach(entity => {
+            entities.ForEach(entity =>
+            {
                 ChildBacklogItemType model = HydrateChildBacklogItemTypeModel(entity, depth);
                 models.Add(model);
             });

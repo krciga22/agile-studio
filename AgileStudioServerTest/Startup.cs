@@ -26,6 +26,7 @@ using AgileStudioServer.CoreFeatures.Projects.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators;
 using AgileStudioServer.CoreFeatures.Users.Services;
 using AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 
 namespace AgileStudioServerTest
 {

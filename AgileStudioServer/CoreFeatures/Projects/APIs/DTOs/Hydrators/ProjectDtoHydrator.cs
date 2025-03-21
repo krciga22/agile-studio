@@ -5,6 +5,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
 {
@@ -14,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.Project)
+                from == typeof(Project)
             ) && to == typeof(ProjectDto);
         }
 
@@ -30,16 +31,16 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.Project? model = null;
+            Project? model = null;
             if (from is int)
             {
-                model = (Application.Models.Project)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.Project), maxDepth, depth, referenceHydrator
+                model = (Project)referenceHydrator.Hydrate(
+                    from, typeof(Project), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.Project)
+            else if (from is Project)
             {
-                model = (Application.Models.Project)from;
+                model = (Project)from;
             }
 
             object? dto = null;
@@ -71,9 +72,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
             var dto = (ProjectDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.Project)
+            if (from is Project)
             {
-                var model = (Application.Models.Project)from;
+                var model = (Project)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

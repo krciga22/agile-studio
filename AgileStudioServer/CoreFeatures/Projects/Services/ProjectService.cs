@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Application.Models;
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Services

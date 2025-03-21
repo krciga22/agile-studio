@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators

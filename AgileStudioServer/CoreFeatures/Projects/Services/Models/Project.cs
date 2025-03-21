@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.Application.Models
+namespace AgileStudioServer.CoreFeatures.Projects.Services.Models
 {
     public class Project
     {

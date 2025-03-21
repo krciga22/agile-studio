@@ -3,6 +3,7 @@ using AgileStudioServer.Application.Models;
 using AgileStudioServer.Application.Services;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
+using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 
 namespace AgileStudioServerTest.IntegrationTests.Application.Services
 {

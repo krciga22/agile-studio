@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.Application.Models;
 using AgileStudioServer.CoreFeatures.Users.Services;
+using AgileStudioServer.CoreFeatures.Users.Services.Models;
 
 namespace AgileStudioServerTest.IntegrationTests.Application.Services
 {

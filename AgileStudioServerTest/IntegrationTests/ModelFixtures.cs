@@ -10,6 +10,7 @@ using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.CoreFeatures.Users.Services;
+using AgileStudioServer.CoreFeatures.Users.Services.Models;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

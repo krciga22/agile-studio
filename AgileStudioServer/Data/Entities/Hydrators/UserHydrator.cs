@@ -16,7 +16,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.User)
+                from == typeof(CoreFeatures.Users.Services.Models.User)
             ) && to == typeof(User);
         }
 
@@ -29,9 +29,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
 
             Object? entity = null;
 
-            if (from is Application.Models.User)
+            if (from is CoreFeatures.Users.Services.Models.User)
             {
-                var model = (Application.Models.User)from;
+                var model = (CoreFeatures.Users.Services.Models.User)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.User.Find(model.ID);
@@ -73,9 +73,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
 
             var entity = (User)to;
 
-            if (from is Application.Models.User)
+            if (from is CoreFeatures.Users.Services.Models.User)
             {
-                var model = (Application.Models.User)from;
+                var model = (CoreFeatures.Users.Services.Models.User)from;
 
                 entity.ID = model.ID;
                 entity.Email = model.Email;

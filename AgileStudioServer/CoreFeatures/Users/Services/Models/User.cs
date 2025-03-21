@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.Users.Services.Models
 {
     public class User
     {

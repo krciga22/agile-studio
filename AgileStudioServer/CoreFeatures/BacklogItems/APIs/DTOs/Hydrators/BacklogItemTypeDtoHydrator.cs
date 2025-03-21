@@ -5,6 +5,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
@@ -14,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.BacklogItemType)
+                from == typeof(BacklogItemType)
             ) && to == typeof(BacklogItemTypeDto);
         }
 
@@ -30,16 +31,16 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.BacklogItemType? model = null;
+            BacklogItemType? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.BacklogItemType)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.BacklogItemType), maxDepth, depth, referenceHydrator
+                model = (BacklogItemType)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemType), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.BacklogItemType)
+            else if (from is BacklogItemType)
             {
-                model = (Application.Models.BacklogItemType)from;
+                model = (BacklogItemType)from;
             }
 
             object? dto = null;
@@ -78,9 +79,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
             var dto = (BacklogItemTypeDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.BacklogItemType)
+            if (from is BacklogItemType)
             {
-                var model = (Application.Models.BacklogItemType)from;
+                var model = (BacklogItemType)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

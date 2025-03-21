@@ -16,7 +16,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         {
             return (
                 from == typeof(int) || 
-                from == typeof(Application.Models.BacklogItemType)
+                from == typeof(CoreFeatures.BacklogItems.Services.Models.BacklogItemType)
             ) && to == typeof(BacklogItemType);
         }
 
@@ -29,9 +29,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
 
             Object? entity = null;
 
-            if (from is Application.Models.BacklogItemType)
+            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItemType)
             {
-                var model = (Application.Models.BacklogItemType)from;
+                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItemType)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.BacklogItemType.Find(model.ID);
@@ -75,9 +75,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (BacklogItemType)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.BacklogItemType)
+            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItemType)
             {
-                var model = (Application.Models.BacklogItemType)from;
+                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItemType)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

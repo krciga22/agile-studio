@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.Application.Models.Hydrators

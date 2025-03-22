@@ -1,4 +1,3 @@
-using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
 using AgileStudioServer.Data;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -69,7 +68,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, WorkflowStateDtoHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
 
-            builder.Services.AddScoped<IHydrator, BacklogItemHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
@@ -80,7 +79,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowStateHydrator>();
 
-            builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();

@@ -8,8 +8,9 @@ using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
 {
     public class BacklogItemHydrator : AbstractEntityHydrator
     {
@@ -21,8 +22,8 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(CoreFeatures.BacklogItems.Services.Models.BacklogItem)
+                from == typeof(int) ||
+                from == typeof(Services.Models.BacklogItem)
             ) && to == typeof(BacklogItem);
         }
 
@@ -33,11 +34,11 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? entity = null;
+            object? entity = null;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItem)
+            if (from is Services.Models.BacklogItem)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItem)from;
+                var model = (Services.Models.BacklogItem)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.BacklogItem.Find(model.ID);
@@ -50,9 +51,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 else
                 {
                     entity = new BacklogItem(
-                        model.Title, 
-                        model.ProjectID, 
-                        model.BacklogItemTypeID, 
+                        model.Title,
+                        model.ProjectID,
+                        model.BacklogItemTypeID,
                         model.WorkflowStateID);
                 }
 
@@ -84,9 +85,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (BacklogItem)to;
             int nextDepth = depth + 1;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItem)
+            if (from is Services.Models.BacklogItem)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItem)from;
+                var model = (Services.Models.BacklogItem)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;
@@ -99,7 +100,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 entity.ReleaseID = model.ReleaseID;
                 entity.CreatedByID = model.CreatedByID;
                 entity.ParentBacklogItemId = model.ParentBacklogItemId;
-;
+                ;
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {
                     entity.Project = (Project)referenceHydrator.Hydrate(

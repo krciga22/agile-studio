@@ -1,5 +1,4 @@
-﻿using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;
 using AgileStudioServer.Core.Hydrator;
@@ -73,7 +72,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, WorkflowStateDtoHydrator>();
             services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
             
-            services.AddScoped<IHydrator, BacklogItemHydrator>();
+            services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
@@ -84,7 +83,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowStateHydrator>();
 
-            services.AddScoped<IHydrator, EntityHydrators.BacklogItemHydrator>();
+            services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeSchemaHydrator>();
             services.AddScoped<IHydrator, AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();

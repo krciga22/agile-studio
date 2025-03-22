@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data.Entities;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
@@ -9,6 +8,7 @@ using AgileStudioServer.CoreFeatures.Projects.APIs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 
 namespace AgileStudioServerTest.IntegrationTests.API.Controllers
 {

@@ -3,9 +3,8 @@ using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 
-namespace AgileStudioServer.Data.Entities
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities
 {
     public class BacklogItem
     {

@@ -1,7 +1,6 @@
 ﻿using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.Data;
-using AgileStudioServer.Data.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;

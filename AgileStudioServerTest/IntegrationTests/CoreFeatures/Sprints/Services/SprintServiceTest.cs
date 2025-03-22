@@ -3,7 +3,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Services;
 using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 
-namespace AgileStudioServerTest.IntegrationTests.Application.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Services
 {
     public class SprintServiceTest : AbstractServiceTest
     {

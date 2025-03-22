@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.Data.Entities
+﻿namespace AgileStudioServer.CoreFeatures.Users.Repositories.Entities
 {
     public class User
     {

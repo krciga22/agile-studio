@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data.Entities;
+﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data.Entities;
 
 namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities
 {

@@ -2,6 +2,7 @@
 using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
 namespace AgileStudioServer.Data
 {

@@ -16,7 +16,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.User)
+                from == typeof(Repositories.Entities.User)
             ) && to == typeof(User);
         }
 
@@ -38,9 +38,9 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.User)
+            if (from is Repositories.Entities.User)
             {
-                var entity = (Data.Entities.User)from;
+                var entity = (Repositories.Entities.User)from;
                 model = new User(entity.Email, entity.FirstName, entity.LastName);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -60,9 +60,9 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            if (from is Data.Entities.User && to is User)
+            if (from is Repositories.Entities.User && to is User)
             {
-                var entity = (Data.Entities.User)from;
+                var entity = (Repositories.Entities.User)from;
                 var model = (User)to;
 
                 model.ID = entity.ID;

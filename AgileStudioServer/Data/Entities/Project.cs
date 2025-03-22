@@ -1,4 +1,6 @@
 ﻿
+using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+
 namespace AgileStudioServer.Data.Entities
 {
     public class Project

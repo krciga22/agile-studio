@@ -2,6 +2,7 @@
 using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.Data;
 using AgileStudioServer.Data.Entities;
+using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

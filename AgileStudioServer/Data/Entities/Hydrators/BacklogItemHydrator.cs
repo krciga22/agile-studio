@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
 namespace AgileStudioServer.Data.Entities.Hydrators
 {

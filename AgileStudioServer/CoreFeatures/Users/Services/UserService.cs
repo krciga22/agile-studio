@@ -1,6 +1,7 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.Users.Services.Models;
 using AgileStudioServer.Data;
+using Entities = AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
 namespace AgileStudioServer.CoreFeatures.Users.Services
 {
@@ -18,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
 
         public virtual User? Get(int id)
         {
-            Data.Entities.User? entity = _DBContext.User.Find(id);
+            Entities.User? entity = _DBContext.User.Find(id);
             if (entity is null)
             {
                 return null;
@@ -29,7 +30,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
 
         public virtual User Create(User user)
         {
-            Data.Entities.User entity = HydrateUserEntity(user);
+            Entities.User entity = HydrateUserEntity(user);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -39,7 +40,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
 
         public virtual User Update(User user)
         {
-            Data.Entities.User entity = HydrateUserEntity(user);
+            Entities.User entity = HydrateUserEntity(user);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -49,13 +50,13 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
 
         public virtual void Delete(User user)
         {
-            Data.Entities.User entity = HydrateUserEntity(user);
+            Entities.User entity = HydrateUserEntity(user);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<User> HydrateUserModels(List<Data.Entities.User> entities, int depth = 3)
+        private List<User> HydrateUserModels(List<Entities.User> entities, int depth = 3)
         {
             List<User> models = new();
 
@@ -68,17 +69,17 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             return models;
         }
 
-        private User HydrateUserModel(Data.Entities.User user, int depth = 3)
+        private User HydrateUserModel(Entities.User user, int depth = 3)
         {
             return (User)_Hydrator.Hydrate(
                 user, typeof(User), depth
             );
         }
 
-        private Data.Entities.User HydrateUserEntity(User user, int depth = 3)
+        private Entities.User HydrateUserEntity(User user, int depth = 3)
         {
-            return (Data.Entities.User)_Hydrator.Hydrate(
-                user, typeof(Data.Entities.User), depth
+            return (Entities.User)_Hydrator.Hydrate(
+                user, typeof(Entities.User), depth
             );
         }
     }

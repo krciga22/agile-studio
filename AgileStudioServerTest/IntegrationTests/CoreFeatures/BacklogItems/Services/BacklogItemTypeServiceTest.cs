@@ -3,7 +3,7 @@ using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
-namespace AgileStudioServerTest.IntegrationTests.Application.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
 {
     public class BacklogItemTypeServiceTest : AbstractServiceTest
     {
@@ -48,11 +48,11 @@ namespace AgileStudioServerTest.IntegrationTests.Application.Services
             var backlogItemTypes = new List<BacklogItemType>
             {
                 _Fixtures.CreateBacklogItemType(
-                    "Test BacklogItemType 1", 
+                    "Test BacklogItemType 1",
                     backlogItemTypeSchema: backlogItemTypeSchema
                 ),
                 _Fixtures.CreateBacklogItemType(
-                    "Test BacklogItemType 2", 
+                    "Test BacklogItemType 2",
                     backlogItemTypeSchema: backlogItemTypeSchema
                 )
             };

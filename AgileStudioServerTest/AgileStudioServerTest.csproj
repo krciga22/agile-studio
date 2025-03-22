@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IntegrationTests\CoreFeatures\BacklogItems\Services\" />
     <Folder Include="IntegrationTests\Data\" />
   </ItemGroup>
 

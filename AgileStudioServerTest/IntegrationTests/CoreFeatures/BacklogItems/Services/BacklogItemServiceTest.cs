@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
-namespace AgileStudioServerTest.IntegrationTests.Application.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
 {
     public class BacklogItemServiceTest : AbstractServiceTest
     {
@@ -27,9 +27,9 @@ namespace AgileStudioServerTest.IntegrationTests.Application.Services
             WorkflowState workflowState = _Fixtures.CreateWorkflowState();
 
             BacklogItem backlogItem = new(
-                "Test BacklogItem", 
-                projectId: project.ID, 
-                backlogItemTypeId: backlogItemType.ID, 
+                "Test BacklogItem",
+                projectId: project.ID,
+                backlogItemTypeId: backlogItemType.ID,
                 workflowStateId: workflowState.ID
             );
 
@@ -55,7 +55,7 @@ namespace AgileStudioServerTest.IntegrationTests.Application.Services
         {
             var project = _Fixtures.CreateProject();
             var parentBacklogItem = _Fixtures.CreateBacklogItem(
-                "Parent Backlog Item", 
+                "Parent Backlog Item",
                 project: project
             );
 
@@ -110,7 +110,7 @@ namespace AgileStudioServerTest.IntegrationTests.Application.Services
         {
             var project = _Fixtures.CreateProject();
             var parentBacklogItem = _Fixtures.CreateBacklogItem(
-                "Parent Backlog Item", 
+                "Parent Backlog Item",
                 project: project
             );
             var childBacklogItemType = _Fixtures.CreateBacklogItemType();
@@ -141,9 +141,10 @@ namespace AgileStudioServerTest.IntegrationTests.Application.Services
             foreach (var returnedBacklogItem in results.Items)
             {
                 bool isChildBacklogItem = false;
-                foreach (var childBacklogItem in childBacklogItems) 
+                foreach (var childBacklogItem in childBacklogItems)
                 {
-                    if(childBacklogItem.ID == returnedBacklogItem.ID){
+                    if (childBacklogItem.ID == returnedBacklogItem.ID)
+                    {
                         isChildBacklogItem = true;
                         break;
                     }

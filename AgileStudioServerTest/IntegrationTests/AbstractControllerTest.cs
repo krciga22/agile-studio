@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Data;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Controllers
+namespace AgileStudioServerTest.IntegrationTests
 {
     public abstract class AbstractControllerTest : DBTest
     {

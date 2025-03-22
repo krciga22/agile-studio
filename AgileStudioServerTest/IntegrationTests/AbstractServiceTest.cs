@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Data;
 
-namespace AgileStudioServerTest.IntegrationTests.Application.Services
+namespace AgileStudioServerTest.IntegrationTests
 {
     public abstract class AbstractServiceTest : DBTest
     {

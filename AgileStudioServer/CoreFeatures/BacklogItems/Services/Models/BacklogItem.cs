@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.Application.Models
+﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
     public class BacklogItem
     {

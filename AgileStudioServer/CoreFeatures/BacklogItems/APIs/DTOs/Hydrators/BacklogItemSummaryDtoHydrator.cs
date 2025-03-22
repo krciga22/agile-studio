@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
@@ -12,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.BacklogItem)
+                from == typeof(BacklogItem)
             ) && to == typeof(BacklogItemSummaryDto);
         }
 
@@ -28,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.BacklogItem? model = null;
+            BacklogItem? model = null;
             if (from is int)
             {
-                model = (Application.Models.BacklogItem)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.BacklogItem), maxDepth, depth, referenceHydrator
+                model = (BacklogItem)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItem), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.BacklogItem)
+            else if (from is BacklogItem)
             {
-                model = (Application.Models.BacklogItem)from;
+                model = (BacklogItem)from;
             }
 
             object? dto = null;
@@ -64,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 
             var dto = (BacklogItemSummaryDto)to;
 
-            if (from is Application.Models.BacklogItem)
+            if (from is BacklogItem)
             {
-                var model = (Application.Models.BacklogItem)from;
+                var model = (BacklogItem)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="IntegrationTests\CoreFeatures\Workflows\Services\" />
-    <Folder Include="IntegrationTests\CoreFeatures\Releases\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\Projects\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\BacklogItems\Services\" />
     <Folder Include="IntegrationTests\Data\" />

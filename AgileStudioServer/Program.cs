@@ -75,7 +75,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Services.Models.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Services.Models.Hydrators.SprintHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Users.Services.Models.Hydrators.UserHydrator>();
-            builder.Services.AddScoped<IHydrator, WorkflowHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowStateHydrator>();
 
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemHydrator>();
@@ -86,7 +86,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Repositories.Entities.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Repositories.Entities.Hydrators.SprintHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Users.Repositories.Entities.Hydrators.UserHydrator>();
-            builder.Services.AddScoped<IHydrator, EntityHydrators.WorkflowHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Repositories.Entities.Hydrators.WorkflowHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Repositories.Entities.Hydrators.WorkflowStateHydrator>();
 
             builder.Services.AddScoped<BacklogItemService>();

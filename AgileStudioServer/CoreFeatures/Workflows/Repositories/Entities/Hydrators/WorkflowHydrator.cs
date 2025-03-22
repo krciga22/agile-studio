@@ -1,11 +1,11 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrators;
 
 public class WorkflowHydrator : AbstractEntityHydrator
 {
@@ -17,8 +17,8 @@ public class WorkflowHydrator : AbstractEntityHydrator
     public override bool Supports(Type from, Type to)
     {
         return (
-            from == typeof(int) || 
-            from == typeof(CoreFeatures.Workflows.Services.Models.Workflow)
+            from == typeof(int) ||
+            from == typeof(Services.Models.Workflow)
         ) && to == typeof(Workflow);
     }
 
@@ -29,11 +29,11 @@ public class WorkflowHydrator : AbstractEntityHydrator
             throw new HydrationNotSupportedException(from.GetType(), to);
         }
 
-        Object? entity = null;
+        object? entity = null;
 
-        if (from is CoreFeatures.Workflows.Services.Models.Workflow)
+        if (from is Services.Models.Workflow)
         {
-            var model = (CoreFeatures.Workflows.Services.Models.Workflow)from;
+            var model = (Services.Models.Workflow)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Workflow.Find(model.ID);
@@ -53,7 +53,7 @@ public class WorkflowHydrator : AbstractEntityHydrator
                 Hydrate(model, entity, maxDepth, depth, referenceHydrator);
             }
         }
-        else if(from is int)
+        else if (from is int)
         {
             entity = _DBContext.Workflow.Find(from);
         }
@@ -76,9 +76,9 @@ public class WorkflowHydrator : AbstractEntityHydrator
         var entity = (Workflow)to;
         int nextDepth = depth + 1;
 
-        if (from is CoreFeatures.Workflows.Services.Models.Workflow)
+        if (from is Services.Models.Workflow)
         {
-            var model = (CoreFeatures.Workflows.Services.Models.Workflow)from;
+            var model = (Services.Models.Workflow)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

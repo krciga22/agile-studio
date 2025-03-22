@@ -1,10 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
 {
     public class UserHydrator : AbstractEntityHydrator
     {
@@ -17,7 +17,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(CoreFeatures.Users.Services.Models.User)
+                from == typeof(Users.Services.Models.User)
             ) && to == typeof(User);
         }
 
@@ -28,11 +28,11 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? entity = null;
+            object? entity = null;
 
-            if (from is CoreFeatures.Users.Services.Models.User)
+            if (from is Users.Services.Models.User)
             {
-                var model = (CoreFeatures.Users.Services.Models.User)from;
+                var model = (Users.Services.Models.User)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.User.Find(model.ID);
@@ -74,9 +74,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
 
             var entity = (User)to;
 
-            if (from is CoreFeatures.Users.Services.Models.User)
+            if (from is Users.Services.Models.User)
             {
-                var model = (CoreFeatures.Users.Services.Models.User)from;
+                var model = (Users.Services.Models.User)from;
 
                 entity.ID = model.ID;
                 entity.Email = model.Email;

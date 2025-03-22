@@ -1,11 +1,11 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrators
 {
     public class WorkflowStateHydrator : AbstractEntityHydrator
     {
@@ -17,8 +17,8 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(CoreFeatures.Workflows.Services.Models.WorkflowState)
+                from == typeof(int) ||
+                from == typeof(Services.Models.WorkflowState)
             ) && to == typeof(WorkflowState);
         }
 
@@ -29,11 +29,11 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? entity = null;
+            object? entity = null;
 
-            if (from is CoreFeatures.Workflows.Services.Models.WorkflowState)
+            if (from is Services.Models.WorkflowState)
             {
-                var model = (CoreFeatures.Workflows.Services.Models.WorkflowState)from;
+                var model = (Services.Models.WorkflowState)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.WorkflowState.Find(model.ID);
@@ -53,7 +53,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                     Hydrate(model, entity, maxDepth, depth, referenceHydrator);
                 }
             }
-            else if(from is int)
+            else if (from is int)
             {
                 entity = _DBContext.WorkflowState.Find(from);
             }
@@ -76,9 +76,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (WorkflowState)to;
             int nextDepth = depth + 1;
 
-            if (from is CoreFeatures.Workflows.Services.Models.WorkflowState)
+            if (from is Services.Models.WorkflowState)
             {
-                var model = (CoreFeatures.Workflows.Services.Models.WorkflowState)from;
+                var model = (Services.Models.WorkflowState)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
-using AgileStudioServer.Data.Entities;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Repositories.Entities
 {

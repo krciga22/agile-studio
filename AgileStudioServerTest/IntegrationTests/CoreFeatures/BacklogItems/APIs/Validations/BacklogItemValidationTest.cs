@@ -3,15 +3,15 @@ using AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations;
 using AgileStudioServer.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Attributes
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs.Validations
 {
-    public class ValidationTest : DBTest
+    public class BacklogItemValidationTest : DBTest
     {
         private readonly EntityFixtures _Fixtures;
 
         private readonly IServiceProvider? _ServiceProvider;
 
-        public ValidationTest(
+        public BacklogItemValidationTest(
             DBContext dbContext,
             EntityFixtures fixtures,
             IServiceProvider? serviceProvider) : base(dbContext)
@@ -365,7 +365,7 @@ namespace AgileStudioServerTest.IntegrationTests.API.Attributes
 
             var attribute = new ValidParentBacklogItemForBacklogItem();
             var result = attribute.GetValidationResult(
-                backlogItemPostDto, 
+                backlogItemPostDto,
                 CreateValidationContext(backlogItemPostDto)
             );
 
@@ -425,7 +425,7 @@ namespace AgileStudioServerTest.IntegrationTests.API.Attributes
 
             var attribute = new ValidParentBacklogItemForBacklogItem();
             var result = attribute.GetValidationResult(
-                backlogItemPatchDto, 
+                backlogItemPatchDto,
                 CreateValidationContext(backlogItemPatchDto)
             );
 

@@ -1,11 +1,11 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
 {
     public class BacklogItemTypeSchemaHydrator : AbstractEntityHydrator
     {
@@ -18,7 +18,7 @@ namespace AgileStudioServer.Data.Entities.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(CoreFeatures.BacklogItems.Services.Models.BacklogItemTypeSchema) 
+                from == typeof(Services.Models.BacklogItemTypeSchema)
             ) && to == typeof(BacklogItemTypeSchema);
         }
 
@@ -29,11 +29,11 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? entity = null;
+            object? entity = null;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItemTypeSchema)
+            if (from is Services.Models.BacklogItemTypeSchema)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItemTypeSchema)from;
+                var model = (Services.Models.BacklogItemTypeSchema)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.BacklogItemTypeSchema.Find(model.ID);
@@ -76,9 +76,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (BacklogItemTypeSchema)to;
             int nextDepth = depth + 1;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.BacklogItemTypeSchema)
+            if (from is Services.Models.BacklogItemTypeSchema)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.BacklogItemTypeSchema)from;
+                var model = (Services.Models.BacklogItemTypeSchema)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

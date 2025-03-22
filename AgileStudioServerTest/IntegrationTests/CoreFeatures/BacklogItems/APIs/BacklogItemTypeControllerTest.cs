@@ -4,7 +4,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Controllers
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
 {
     public class BacklogItemTypeControllerTest : AbstractControllerTest
     {
@@ -207,12 +207,12 @@ namespace AgileStudioServerTest.IntegrationTests.API.Controllers
 
         [Fact]
         public void PutChildType_WithNonExistantChild_ReturnsNotFound()
-        { 
+        {
             var parentType = _Fixtures.CreateBacklogItemType();
             var nonExistantBacklogItemTypeId = NON_EXISTANT_ID;
 
             IActionResult result = _Controller.PutChildType(
-                parentType.ID, 
+                parentType.ID,
                 nonExistantBacklogItemTypeId
             );
 

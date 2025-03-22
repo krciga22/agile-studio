@@ -39,7 +39,6 @@
     <Folder Include="IntegrationTests\CoreFeatures\Releases\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\Projects\APIs\" />
     <Folder Include="IntegrationTests\CoreFeatures\Projects\Services\" />
-    <Folder Include="IntegrationTests\CoreFeatures\BacklogItems\APIs\" />
     <Folder Include="IntegrationTests\CoreFeatures\BacklogItems\Services\" />
     <Folder Include="IntegrationTests\Data\" />
   </ItemGroup>

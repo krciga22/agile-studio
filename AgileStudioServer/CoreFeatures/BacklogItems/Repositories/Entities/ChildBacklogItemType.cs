@@ -1,7 +1,7 @@
-﻿
-using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data.Entities;
 
-namespace AgileStudioServer.Data.Entities
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities
 {
     public class ChildBacklogItemType
     {

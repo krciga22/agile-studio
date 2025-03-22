@@ -16,7 +16,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.ChildBacklogItemType)
+                from == typeof(Repositories.Entities.ChildBacklogItemType)
             ) && to == typeof(ChildBacklogItemType);
         }
 
@@ -38,9 +38,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.ChildBacklogItemType)
+            if (from is Repositories.Entities.ChildBacklogItemType)
             {
-                var entity = (Data.Entities.ChildBacklogItemType)from;
+                var entity = (Repositories.Entities.ChildBacklogItemType)from;
                 model = new ChildBacklogItemType(
                     entity.ChildTypeID, entity.ParentTypeID, entity.SchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
@@ -63,9 +63,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (ChildBacklogItemType)to;
 
-            if (from is Data.Entities.ChildBacklogItemType)
+            if (from is Repositories.Entities.ChildBacklogItemType)
             {
-                var entity = (Data.Entities.ChildBacklogItemType)from;
+                var entity = (Repositories.Entities.ChildBacklogItemType)from;
 
                 model.ID = entity.ID;
                 model.CreatedOn = entity.CreatedOn;

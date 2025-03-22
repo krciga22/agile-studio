@@ -37,7 +37,6 @@
     <Folder Include="IntegrationTests\CoreFeatures\Sprints\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\Releases\APIs\" />
     <Folder Include="IntegrationTests\CoreFeatures\Releases\Services\" />
-    <Folder Include="IntegrationTests\CoreFeatures\Projects\APIs\" />
     <Folder Include="IntegrationTests\CoreFeatures\Projects\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\BacklogItems\Services\" />
     <Folder Include="IntegrationTests\Data\" />

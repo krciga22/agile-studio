@@ -4,7 +4,7 @@ using AgileStudioServer.CoreFeatures.Workflows.APIs;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Controllers
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.APIs
 {
     public class WorkflowControllerTest : AbstractControllerTest
     {

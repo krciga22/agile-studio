@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IntegrationTests\CoreFeatures\Workflows\APIs\" />
     <Folder Include="IntegrationTests\CoreFeatures\Workflows\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\Sprints\Services\" />
     <Folder Include="IntegrationTests\CoreFeatures\Releases\Services\" />

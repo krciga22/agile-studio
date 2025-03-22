@@ -23,4 +23,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CoreFeatures\BacklogItems\Repositories\Entities\Hydrators\" />
+    <Folder Include="CoreFeatures\Projects\Repositories\Entities\Hydrators\" />
+    <Folder Include="CoreFeatures\Users\Repositories\Entities\Hydrators\" />
+    <Folder Include="CoreFeatures\Workflows\Repositories\Entities\Hydrators\" />
+  </ItemGroup>
+
 </Project>

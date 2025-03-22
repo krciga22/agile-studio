@@ -70,7 +70,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
 
             builder.Services.AddScoped<IHydrator, BacklogItemHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItemTypeHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Projects.Services.Models.Hydrators.ProjectHydrator>();
@@ -81,7 +81,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, CoreFeatures.Workflows.Services.Models.Hydrators.WorkflowStateHydrator>();
 
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemHydrator>();
-            builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemTypeHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Projects.Repositories.Entities.Hydrators.ProjectHydrator>();

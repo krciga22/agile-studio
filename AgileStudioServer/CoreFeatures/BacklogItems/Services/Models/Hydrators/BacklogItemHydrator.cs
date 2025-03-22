@@ -1,11 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 {
     public class BacklogItemHydrator : AbstractModelHydrator
     {
@@ -18,8 +17,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.BacklogItem) || 
-                from == typeof(BacklogItemPostDto) || 
+                from == typeof(Data.Entities.BacklogItem) ||
+                from == typeof(BacklogItemPostDto) ||
                 from == typeof(BacklogItemPatchDto)
             ) && to == typeof(BacklogItem);
         }
@@ -31,7 +30,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {
@@ -46,9 +45,9 @@ namespace AgileStudioServer.Application.Models.Hydrators
             {
                 var entity = (Data.Entities.BacklogItem)from;
                 model = new BacklogItem(
-                    entity.Title, 
-                    entity.ProjectID, 
-                    entity.BacklogItemTypeID, 
+                    entity.Title,
+                    entity.ProjectID,
+                    entity.BacklogItemTypeID,
                     entity.WorkflowStateID
                 );
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);

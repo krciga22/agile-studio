@@ -1,5 +1,4 @@
-﻿using ModelHydrators = AgileStudioServer.Application.Models.Hydrators;
-using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
+﻿using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,7 +70,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, WorkflowStateDtoHydrator>();
             services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
             
-            services.AddScoped<IHydrator, ModelHydrators.BacklogItemHydrator>();
+            services.AddScoped<IHydrator, BacklogItemHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeSchemaHydrator>();
             services.AddScoped<IHydrator, ChildBacklogItemTypeHydrator>();

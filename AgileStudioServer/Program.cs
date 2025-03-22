@@ -1,4 +1,3 @@
-using ModelHydrators = AgileStudioServer.Application.Models.Hydrators;
 using EntityHydrators = AgileStudioServer.Data.Entities.Hydrators;
 using AgileStudioServer.Data;
 using Auth0.AspNetCore.Authentication;
@@ -67,7 +66,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, WorkflowStateDtoHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
 
-            builder.Services.AddScoped<IHydrator, ModelHydrators.BacklogItemHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, ChildBacklogItemTypeHydrator>();

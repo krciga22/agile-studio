@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 
 namespace AgileStudioServer.Data.Entities
 {

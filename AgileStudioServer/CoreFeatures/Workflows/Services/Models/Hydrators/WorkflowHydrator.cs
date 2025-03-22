@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.Workflow) ||
+                from == typeof(Repositories.Entities.Workflow) ||
                 from == typeof(WorkflowPostDto) ||
                 from == typeof(WorkflowPatchDto)
             ) && to == typeof(Workflow);
@@ -41,9 +41,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.Workflow)
+            if (from is Repositories.Entities.Workflow)
             {
-                var entity = (Data.Entities.Workflow)from;
+                var entity = (Repositories.Entities.Workflow)from;
                 model = new Workflow(entity.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -81,9 +81,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
 
             var model = (Workflow)to;
 
-            if (from is Data.Entities.Workflow)
+            if (from is Repositories.Entities.Workflow)
             {
-                var entity = (Data.Entities.Workflow)from;
+                var entity = (Repositories.Entities.Workflow)from;
                 model.ID = entity.ID;
                 model.Title = entity.Title;
                 model.Description = entity.Description;

@@ -1,11 +1,10 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Application.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 {
     public class BacklogItemTypeHydrator : AbstractModelHydrator
     {
@@ -18,8 +17,8 @@ namespace AgileStudioServer.Application.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.BacklogItemType) || 
-                from == typeof(BacklogItemTypePostDto) || 
+                from == typeof(Data.Entities.BacklogItemType) ||
+                from == typeof(BacklogItemTypePostDto) ||
                 from == typeof(BacklogItemTypePatchDto)
             ) && to == typeof(BacklogItemType);
         }
@@ -31,7 +30,7 @@ namespace AgileStudioServer.Application.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? model = null;
+            object? model = null;
 
             if (from is int)
             {

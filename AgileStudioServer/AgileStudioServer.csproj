@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="CoreFeatures\BacklogItems\Repositories\Entities\Hydrators\" />
-    <Folder Include="CoreFeatures\Projects\Repositories\Entities\Hydrators\" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,25 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Projects.Repositories.Entities.Hydrators;
 
 public class ProjectHydrator : AbstractEntityHydrator
 {
     public ProjectHydrator(DBContext dBContext) : base(dBContext)
     {
-        
+
     }
 
     public override bool Supports(Type from, Type to)
     {
         return (
             from == typeof(int) ||
-            from == typeof(CoreFeatures.Projects.Services.Models.Project)
+            from == typeof(Services.Models.Project)
         ) && to == typeof(Project);
     }
 
@@ -30,11 +30,11 @@ public class ProjectHydrator : AbstractEntityHydrator
             throw new HydrationNotSupportedException(from.GetType(), to);
         }
 
-        Object? entity = null;
+        object? entity = null;
 
-        if (from is CoreFeatures.Projects.Services.Models.Project)
+        if (from is Services.Models.Project)
         {
-            var model = (CoreFeatures.Projects.Services.Models.Project)from;
+            var model = (Services.Models.Project)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Project.Find(model.ID);
@@ -77,9 +77,9 @@ public class ProjectHydrator : AbstractEntityHydrator
         var entity = (Project)to;
         int nextDepth = depth + 1;
 
-        if (from is CoreFeatures.Projects.Services.Models.Project)
+        if (from is Services.Models.Project)
         {
-            var model = (CoreFeatures.Projects.Services.Models.Project)from;
+            var model = (Services.Models.Project)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

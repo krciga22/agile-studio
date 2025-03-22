@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.BacklogItemType) ||
+                from == typeof(Repositories.Entities.BacklogItemType) ||
                 from == typeof(BacklogItemTypePostDto) ||
                 from == typeof(BacklogItemTypePatchDto)
             ) && to == typeof(BacklogItemType);
@@ -41,9 +41,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.BacklogItemType)
+            if (from is Repositories.Entities.BacklogItemType)
             {
-                var entity = (Data.Entities.BacklogItemType)from;
+                var entity = (Repositories.Entities.BacklogItemType)from;
                 model = new BacklogItemType(
                     entity.Title, entity.BacklogItemTypeSchemaID, entity.WorkflowID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
@@ -83,9 +83,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (BacklogItemType)to;
 
-            if (from is Data.Entities.BacklogItemType)
+            if (from is Repositories.Entities.BacklogItemType)
             {
-                var entity = (Data.Entities.BacklogItemType)from;
+                var entity = (Repositories.Entities.BacklogItemType)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

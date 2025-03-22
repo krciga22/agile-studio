@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Hydrator;
+using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<BacklogItemType> GetByBacklogItemTypeSchemaId(int backlogItemTypeSchemaId)
         {
-            List<Data.Entities.BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
+            List<Entities.BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
                 backlogItemType.BacklogItemTypeSchema.ID == backlogItemTypeSchemaId)
                 .Include(b => b.CreatedBy)
                 .Include(b => b.BacklogItemTypeSchema)
@@ -31,7 +32,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemType? Get(int id)
         {
-            Data.Entities.BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
+            Entities.BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
             if (entity is null)
             {
                 return null;
@@ -46,7 +47,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemType Create(BacklogItemType backlogItemType)
         {
-            Data.Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -56,7 +57,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemType Update(BacklogItemType backlogItemType)
         {
-            Data.Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -66,13 +67,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual void Delete(BacklogItemType backlogItemType)
         {
-            Data.Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<BacklogItemType> HydrateBacklogItemTypeModels(List<Data.Entities.BacklogItemType> entities, int depth = 3)
+        private List<BacklogItemType> HydrateBacklogItemTypeModels(List<Entities.BacklogItemType> entities, int depth = 3)
         {
             List<BacklogItemType> models = new();
 
@@ -85,17 +86,17 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return models;
         }
 
-        private BacklogItemType HydrateBacklogItemTypeModel(Data.Entities.BacklogItemType backlogItemType, int depth = 3)
+        private BacklogItemType HydrateBacklogItemTypeModel(Entities.BacklogItemType backlogItemType, int depth = 3)
         {
             return (BacklogItemType)_Hydrator.Hydrate(
                 backlogItemType, typeof(BacklogItemType), depth
             );
         }
 
-        private Data.Entities.BacklogItemType HydrateBacklogItemTypeEntity(BacklogItemType backlogItemType, int depth = 3)
+        private Entities.BacklogItemType HydrateBacklogItemTypeEntity(BacklogItemType backlogItemType, int depth = 3)
         {
-            return (Data.Entities.BacklogItemType)_Hydrator.Hydrate(
-                backlogItemType, typeof(Data.Entities.BacklogItemType), depth
+            return (Entities.BacklogItemType)_Hydrator.Hydrate(
+                backlogItemType, typeof(Entities.BacklogItemType), depth
             );
         }
     }

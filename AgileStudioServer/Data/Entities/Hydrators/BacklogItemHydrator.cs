@@ -7,6 +7,7 @@ using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 
 namespace AgileStudioServer.Data.Entities.Hydrators
 {

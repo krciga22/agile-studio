@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {
@@ -13,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Application.Models.BacklogItemTypeSchema)
+                from == typeof(BacklogItemTypeSchema)
             ) && to == typeof(BacklogItemTypeSchemaDto);
         }
 
@@ -29,16 +30,16 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Application.Models.BacklogItemTypeSchema? model = null;
+            BacklogItemTypeSchema? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Application.Models.BacklogItemTypeSchema)referenceHydrator.Hydrate(
-                    from, typeof(Application.Models.BacklogItemTypeSchema), maxDepth, depth, referenceHydrator
+                model = (BacklogItemTypeSchema)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemTypeSchema), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Application.Models.BacklogItemTypeSchema)
+            else if (from is BacklogItemTypeSchema)
             {
-                model = (Application.Models.BacklogItemTypeSchema)from;
+                model = (BacklogItemTypeSchema)from;
             }
 
             object? dto = null;
@@ -66,9 +67,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
             var dto = (BacklogItemTypeSchemaDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Application.Models.BacklogItemTypeSchema)
+            if (from is BacklogItemTypeSchema)
             {
-                var model = (Application.Models.BacklogItemTypeSchema)from;
+                var model = (BacklogItemTypeSchema)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

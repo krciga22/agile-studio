@@ -1,24 +1,24 @@
-﻿
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Data.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
 {
     public class ChildBacklogItemTypeHydrator : AbstractEntityHydrator
     {
         public ChildBacklogItemTypeHydrator(DBContext _dbContext) : base(_dbContext)
         {
-            
+
         }
 
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) || 
-                from == typeof(CoreFeatures.BacklogItems.Services.Models.ChildBacklogItemType) 
+                from == typeof(int) ||
+                from == typeof(Services.Models.ChildBacklogItemType)
             ) && to == typeof(ChildBacklogItemType);
         }
 
@@ -29,11 +29,11 @@ namespace AgileStudioServer.Data.Entities.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to);
             }
 
-            Object? entity = null;
+            object? entity = null;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.ChildBacklogItemType)
+            if (from is Services.Models.ChildBacklogItemType)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.ChildBacklogItemType)from;
+                var model = (Services.Models.ChildBacklogItemType)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.ChildBacklogItemType.Find(model.ID);
@@ -77,9 +77,9 @@ namespace AgileStudioServer.Data.Entities.Hydrators
             var entity = (ChildBacklogItemType)to;
             int nextDepth = depth + 1;
 
-            if (from is CoreFeatures.BacklogItems.Services.Models.ChildBacklogItemType)
+            if (from is Services.Models.ChildBacklogItemType)
             {
-                var model = (CoreFeatures.BacklogItems.Services.Models.ChildBacklogItemType)from;
+                var model = (Services.Models.ChildBacklogItemType)from;
 
                 entity.ID = model.ID;
                 entity.CreatedOn = model.CreatedOn;

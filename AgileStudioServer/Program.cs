@@ -27,6 +27,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrators;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities.Hydrators;
+using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators;
 
 namespace AgileStudioServer
 {
@@ -71,7 +72,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemTypeSchemaHydrator>();
-            builder.Services.AddScoped<IHydrator, ChildBacklogItemTypeHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Projects.Services.Models.Hydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Services.Models.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Services.Models.Hydrators.SprintHydrator>();
@@ -82,7 +83,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, EntityHydrators.BacklogItemTypeSchemaHydrator>();
-            builder.Services.AddScoped<IHydrator, EntityHydrators.ChildBacklogItemTypeHydrator>();
+            builder.Services.AddScoped<IHydrator, CoreFeatures.BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Projects.Repositories.Entities.Hydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Releases.Repositories.Entities.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, CoreFeatures.Sprints.Repositories.Entities.Hydrators.SprintHydrator>();

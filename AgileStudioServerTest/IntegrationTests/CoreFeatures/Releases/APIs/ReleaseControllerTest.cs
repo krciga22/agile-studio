@@ -3,7 +3,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Releases.APIs;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Controllers
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.APIs
 {
     public class ReleaseControllerTest : AbstractControllerTest
     {

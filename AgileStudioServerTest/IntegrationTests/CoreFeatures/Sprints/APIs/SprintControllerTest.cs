@@ -3,7 +3,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.APIs;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 
-namespace AgileStudioServerTest.IntegrationTests.API.Controllers
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.APIs
 {
     public class SprintControllerTest : AbstractControllerNewTest
     {

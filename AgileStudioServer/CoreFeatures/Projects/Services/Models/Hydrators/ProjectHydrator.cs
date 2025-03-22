@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Data.Entities.Project) ||
+                from == typeof(Repositories.Entities.Project) ||
                 from == typeof(ProjectPostDto) ||
                 from == typeof(ProjectPatchDto)
             ) && to == typeof(Project);
@@ -41,9 +41,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
                 }
             }
 
-            if (from is Data.Entities.Project)
+            if (from is Repositories.Entities.Project)
             {
-                var entity = (Data.Entities.Project)from;
+                var entity = (Repositories.Entities.Project)from;
                 model = new Project(entity.Title, entity.BacklogItemTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -81,9 +81,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
 
             var model = (Project)to;
 
-            if (from is Data.Entities.Project)
+            if (from is Repositories.Entities.Project)
             {
-                var entity = (Data.Entities.Project)from;
+                var entity = (Repositories.Entities.Project)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

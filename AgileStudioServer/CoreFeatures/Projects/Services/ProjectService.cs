@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Hydrator;
+using Entities = AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.Data;
 
@@ -18,14 +19,14 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
 
         public virtual List<Project> GetAll()
         {
-            List<Data.Entities.Project> entities = _DBContext.Project.ToList();
+            List<Entities.Project> entities = _DBContext.Project.ToList();
 
             return HydrateProjectModels(entities);
         }
 
         public virtual List<Project> GetByCreatedByUserId(int userId)
         {
-            List<Data.Entities.Project> entities = _DBContext.Project.Where(project =>
+            List<Entities.Project> entities = _DBContext.Project.Where(project =>
                 project.CreatedBy != null && project.CreatedBy.ID == userId).ToList();
 
             return HydrateProjectModels(entities);
@@ -33,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
 
         public virtual Project? Get(int id)
         {
-            Data.Entities.Project? entity = _DBContext.Project.Find(id);
+            Entities.Project? entity = _DBContext.Project.Find(id);
             if (entity is null)
             {
                 return null;
@@ -44,7 +45,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
 
         public virtual Project Create(Project project)
         {
-            Data.Entities.Project entity = HydrateProjectEntity(project);
+            Entities.Project entity = HydrateProjectEntity(project);
 
             _DBContext.Project.Add(entity);
             _DBContext.SaveChanges();
@@ -54,7 +55,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
 
         public virtual Project Update(Project project)
         {
-            Data.Entities.Project entity = HydrateProjectEntity(project);
+            Entities.Project entity = HydrateProjectEntity(project);
 
             _DBContext.Project.Update(entity);
             _DBContext.SaveChanges();
@@ -64,13 +65,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
 
         public virtual void Delete(Project project)
         {
-            Data.Entities.Project entity = HydrateProjectEntity(project);
+            Entities.Project entity = HydrateProjectEntity(project);
 
             _DBContext.Project.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<Project> HydrateProjectModels(List<Data.Entities.Project> entities, int depth = 3)
+        private List<Project> HydrateProjectModels(List<Entities.Project> entities, int depth = 3)
         {
             List<Project> models = new();
 
@@ -83,17 +84,17 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services
             return models;
         }
 
-        private Project HydrateProjectModel(Data.Entities.Project project, int depth = 3)
+        private Project HydrateProjectModel(Entities.Project project, int depth = 3)
         {
             return (Project)_Hydrator.Hydrate(
                 project, typeof(Project), depth
             );
         }
 
-        private Data.Entities.Project HydrateProjectEntity(Project project, int depth = 3)
+        private Entities.Project HydrateProjectEntity(Project project, int depth = 3)
         {
-            return (Data.Entities.Project)_Hydrator.Hydrate(
-                project, typeof(Data.Entities.Project), depth
+            return (Entities.Project)_Hydrator.Hydrate(
+                project, typeof(Entities.Project), depth
             );
         }
     }

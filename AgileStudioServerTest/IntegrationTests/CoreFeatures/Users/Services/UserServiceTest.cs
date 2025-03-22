@@ -2,7 +2,7 @@
 using AgileStudioServer.CoreFeatures.Users.Services;
 using AgileStudioServer.CoreFeatures.Users.Services.Models;
 
-namespace AgileStudioServerTest.IntegrationTests.Application.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Services
 {
     public class UserServiceTest : AbstractServiceTest
     {

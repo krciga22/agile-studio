@@ -138,6 +138,24 @@ namespace AgileStudioServerTest.IntegrationTests
             return childBacklogItemType;
         }
 
+        public BacklogItemLinkType CreateBacklogItemLinkType(
+            string? title = null,
+            string? titleOpposite = null,
+            User? createdBy = null)
+        {
+            title ??= "Test BacklogItemLinkType";
+            titleOpposite ??= "Test BacklogItemLinkTypeOpposite";
+            createdBy ??= CreateUser();
+
+            var backlogItemLinkType = new BacklogItemLinkType(title, titleOpposite)
+            {
+                CreatedBy = createdBy,
+            };
+            _DBContext.BacklogItemLinkType.Add(backlogItemLinkType);
+            _DBContext.SaveChanges();
+            return backlogItemLinkType;
+        }
+
         public Sprint CreateSprint(
             int? sprintNumber = null,
             Project? project = null,

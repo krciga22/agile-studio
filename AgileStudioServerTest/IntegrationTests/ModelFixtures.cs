@@ -24,6 +24,7 @@ namespace AgileStudioServerTest.IntegrationTests
         private readonly BacklogItemTypeService _backlogItemTypeService;
         private readonly BacklogItemTypeSchemaService _backlogItemTypeSchemaService;
         private readonly ChildBacklogItemTypeService _childBacklogItemTypeService;
+        private readonly BacklogItemLinkTypeService _backlogItemLinkTypeService;
         private readonly SprintService _sprintService;
         private readonly ReleaseService _releaseService;
         private readonly UserService _userService;
@@ -36,6 +37,7 @@ namespace AgileStudioServerTest.IntegrationTests
             BacklogItemTypeService backlogItemTypeService,
             BacklogItemTypeSchemaService backlogItemTypeSchemaService,
             ChildBacklogItemTypeService childBacklogItemTypeService,
+            BacklogItemLinkTypeService backlogItemLinkTypeService,
             SprintService sprintService,
             ReleaseService releaseService,
             UserService userService,
@@ -47,6 +49,7 @@ namespace AgileStudioServerTest.IntegrationTests
             _backlogItemTypeService = backlogItemTypeService;
             _backlogItemTypeSchemaService = backlogItemTypeSchemaService;
             _childBacklogItemTypeService = childBacklogItemTypeService;
+            _backlogItemLinkTypeService = backlogItemLinkTypeService;
             _sprintService = sprintService;
             _releaseService = releaseService;
             _userService = userService;
@@ -166,6 +169,23 @@ namespace AgileStudioServerTest.IntegrationTests
             };
             childBacklogItemType = _childBacklogItemTypeService.Create(childBacklogItemType);
             return childBacklogItemType;
+        }
+
+        public BacklogItemLinkType CreateBacklogItemLinkType(
+            string? title = null,
+            string? titleOpposite = null,
+            User? createdBy = null)
+        {
+            title ??= "Test BacklogItemLinkType";
+            titleOpposite ??= "Test BacklogItemLinkTypeOpposite";
+            createdBy ??= CreateUser();
+
+            var backlogItemLinkType = new BacklogItemLinkType(title, titleOpposite)
+            {
+                CreatedByID = createdBy.ID,
+            };
+            backlogItemLinkType = _backlogItemLinkTypeService.Create(backlogItemLinkType);
+            return backlogItemLinkType;
         }
 
         public Sprint CreateSprint(

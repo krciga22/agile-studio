@@ -18,6 +18,8 @@ namespace AgileStudioServer.Data
 
         public DbSet<BacklogItemTypeSchema> BacklogItemTypeSchema { get; set; }
 
+        public DbSet<BacklogItemLinkType> BacklogItemLinkType { get; set; }
+
         public DbSet<ChildBacklogItemType> ChildBacklogItemType { get; set; }
 
         public DbSet<Sprint> Sprint { get; set; }

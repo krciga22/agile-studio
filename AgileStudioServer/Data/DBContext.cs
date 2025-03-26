@@ -5,6 +5,7 @@ using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AgileStudioServer.Data
 {
@@ -21,6 +22,8 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemLinkType> BacklogItemLinkType { get; set; }
 
         public DbSet<ChildBacklogItemType> ChildBacklogItemType { get; set; }
+
+        public DbSet<BacklogItemLinkTypeSchema> BacklogItemLinkTypeSchema { get; set; }
 
         public DbSet<Sprint> Sprint { get; set; }
 

@@ -114,6 +114,13 @@ namespace AgileStudioCLI.FixtureSets
                 schema: backlogItemTypeSchema
             );
 
+            fixtures.CreateBacklogItemLinkType("blocks", "is blocked by");
+            fixtures.CreateBacklogItemLinkType("relates to", "relates to");
+            fixtures.CreateBacklogItemLinkType("split from", "split to");
+            fixtures.CreateBacklogItemLinkType("cloned from", "cloned to");
+            fixtures.CreateBacklogItemLinkType("duplicates", "is duplicated by");
+            fixtures.CreateBacklogItemLinkType("causes", "is caused by");
+
             var project = fixtures.CreateProject(
                 title: "Agile Studio", 
                 backlogItemTypeSchema: backlogItemTypeSchema,

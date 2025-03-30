@@ -21,7 +21,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         {
             BacklogItemType backlogItemTypeStory = _Fixtures.CreateBacklogItemType("Story");
             BacklogItemType backlogItemTypeTask = _Fixtures.CreateBacklogItemType("Task");
-            BacklogItemTypeSchema schema = _Fixtures.CreateBacklogItemTypeSchema();
+            BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
             ChildBacklogItemType childBacklogItemType = new(
                 backlogItemTypeTask.ID, backlogItemTypeStory.ID, schema.ID);
 

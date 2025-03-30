@@ -186,7 +186,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
                 if (schema == null)
                 {
                     throw new ModelNotFoundException(
-                        nameof(BacklogItemTypeSchema),
+                        nameof(BacklogItemTypeSchemaModel),
                         parentType.BacklogItemTypeSchemaID.ToString()
                     );
                 }

@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         [Fact]
         public void Create_ReturnsBacklogItemTypeSchema()
         {
-            BacklogItemTypeSchema backlogItemTypeSchema = new("Test BacklogItemTypeSchema");
+            BacklogItemTypeSchemaModel backlogItemTypeSchema = new("Test BacklogItemTypeSchema");
 
             backlogItemTypeSchema = _backlogItemTypeSchemaService.Create(backlogItemTypeSchema);
 
@@ -41,13 +41,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         [Fact]
         public void GetAll_ReturnsAllBacklogItemTypeSchemas()
         {
-            var backlogItemTypeSchemas = new List<BacklogItemTypeSchema>
+            var backlogItemTypeSchemas = new List<BacklogItemTypeSchemaModel>
             {
                 _Fixtures.CreateBacklogItemTypeSchema("Test BacklogItemTypeSchema 1"),
                 _Fixtures.CreateBacklogItemTypeSchema("Test BacklogItemTypeSchema 2")
             };
 
-            List<BacklogItemTypeSchema> returnedBacklogItemTypeSchemas = _backlogItemTypeSchemaService
+            List<BacklogItemTypeSchemaModel> returnedBacklogItemTypeSchemas = _backlogItemTypeSchemaService
                 .GetAll();
 
             Assert.Equal(backlogItemTypeSchemas.Count, returnedBacklogItemTypeSchemas.Count);

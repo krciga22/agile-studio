@@ -64,7 +64,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public Project CreateProject(
             string? title = null, 
-            BacklogItemTypeSchema? backlogItemTypeSchema = null,
+            BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
             User? createdBy = null)
         {
             title ??= "Test Project";
@@ -91,7 +91,7 @@ namespace AgileStudioServerTest.IntegrationTests
         {
             title ??= "Test BacklogItem";
 
-            BacklogItemTypeSchema schema = CreateBacklogItemTypeSchema();
+            BacklogItemTypeSchemaModel schema = CreateBacklogItemTypeSchema();
             project ??= CreateProject(null, backlogItemTypeSchema: schema);
             backlogItemType ??= CreateBacklogItemType(backlogItemTypeSchema: schema);
 
@@ -123,14 +123,14 @@ namespace AgileStudioServerTest.IntegrationTests
             return backlogItem;
         }
 
-        public BacklogItemTypeSchema CreateBacklogItemTypeSchema(
+        public BacklogItemTypeSchemaModel CreateBacklogItemTypeSchema(
             string? title = null,
             User? createdBy = null)
         {
             title ??= "Test BacklogItemTypeSchema";
             createdBy ??= CreateUser();
 
-            var backlogItemTypeSchema = new BacklogItemTypeSchema(title)
+            var backlogItemTypeSchema = new BacklogItemTypeSchemaModel(title)
             {
                 CreatedById = createdBy.ID
             };
@@ -141,7 +141,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public BacklogItemType CreateBacklogItemType(
             string? title = null,
             User? createdBy = null,
-            BacklogItemTypeSchema? backlogItemTypeSchema = null,
+            BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
             Workflow? workflow = null)
         {
             title ??= "Test BacklogItemType";
@@ -160,7 +160,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public ChildBacklogItemType CreateChildBacklogItemType(
             BacklogItemType? parentType = null,
             BacklogItemType? childType = null,
-            BacklogItemTypeSchema? schema = null,
+            BacklogItemTypeSchemaModel? schema = null,
             User? createdBy = null)
         {
             schema ??= CreateBacklogItemTypeSchema();

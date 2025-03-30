@@ -20,7 +20,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         [Fact]
         public void Create_ReturnsBacklogItemType()
         {
-            BacklogItemTypeSchema schema = _Fixtures.CreateBacklogItemTypeSchema();
+            BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
             Workflow workflow = _Fixtures.CreateWorkflow(); ;
             BacklogItemType backlogItemType = new("Test BacklogItemType", schema.ID, workflow.ID);
 

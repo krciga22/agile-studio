@@ -20,7 +20,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Services
         [Fact]
         public void Create_ReturnsProject()
         {
-            BacklogItemTypeSchema schema = _Fixtures.CreateBacklogItemTypeSchema();
+            BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
             Project project = new("Test Project", schema.ID);
 
             project = _projectService.Create(project);

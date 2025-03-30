@@ -60,7 +60,7 @@ namespace AgileStudioServer
 
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaModelHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeModelHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();

@@ -60,7 +60,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
                     throw new ModelNotFoundException(nameof(WorkflowState), workflowStateId.ToString());
 
             var backlogItemType = backlogItemTypeService.Get(backlogItemTypeId) ??
-                    throw new ModelNotFoundException(nameof(BacklogItemType), backlogItemTypeId.ToString());
+                    throw new ModelNotFoundException(nameof(BacklogItemTypeModel), backlogItemTypeId.ToString());
 
             if (workflowState.WorkflowId == backlogItemType.WorkflowID)
             {

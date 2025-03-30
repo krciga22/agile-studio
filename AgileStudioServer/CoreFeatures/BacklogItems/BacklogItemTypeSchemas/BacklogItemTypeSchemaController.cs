@@ -153,14 +153,14 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
             return dtos;
         }
 
-        private BacklogItemTypeSummaryDto HydrateBacklogItemTypeSummaryDto(BacklogItemType backlogItemType, int depth = 1)
+        private BacklogItemTypeSummaryDto HydrateBacklogItemTypeSummaryDto(BacklogItemTypeModel backlogItemType, int depth = 1)
         {
             return (BacklogItemTypeSummaryDto)_Hydrator.Hydrate(
                 backlogItemType, typeof(BacklogItemTypeSummaryDto), depth
             );
         }
 
-        private List<BacklogItemTypeSummaryDto> HydrateBacklogItemTypeSummaryDtos(List<BacklogItemType> backlogItemTypes, int depth = 1)
+        private List<BacklogItemTypeSummaryDto> HydrateBacklogItemTypeSummaryDtos(List<BacklogItemTypeModel> backlogItemTypes, int depth = 1)
         {
             List<BacklogItemTypeSummaryDto> dtos = new();
 

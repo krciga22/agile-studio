@@ -34,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
                 throw new ModelNotFoundException(nameof(Project), dto.ProjectId.ToString());
 
             var backlogItemType = backlogItemTypeService.Get(dto.BacklogItemTypeId) ??
-                throw new ModelNotFoundException(nameof(BacklogItemType), dto.BacklogItemTypeId.ToString());
+                throw new ModelNotFoundException(nameof(BacklogItemTypeModel), dto.BacklogItemTypeId.ToString());
 
             if (backlogItemType.BacklogItemTypeSchemaID != project.BacklogItemTypeSchemaID)
             {

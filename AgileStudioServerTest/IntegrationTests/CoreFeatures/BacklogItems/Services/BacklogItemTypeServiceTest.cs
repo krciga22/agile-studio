@@ -23,7 +23,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         {
             BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
             Workflow workflow = _Fixtures.CreateWorkflow(); ;
-            BacklogItemType backlogItemType = new("Test BacklogItemType", schema.ID, workflow.ID);
+            BacklogItemTypeModel backlogItemType = new("Test BacklogItemType", schema.ID, workflow.ID);
 
             backlogItemType = _backlogItemTypeService.Create(backlogItemType);
 
@@ -46,7 +46,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         public void GetByBacklogItemTypeSchemaId_ReturnsBacklogItemTypes()
         {
             var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            var backlogItemTypes = new List<BacklogItemType>
+            var backlogItemTypes = new List<BacklogItemTypeModel>
             {
                 _Fixtures.CreateBacklogItemType(
                     "Test BacklogItemType 1",
@@ -58,7 +58,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
                 )
             };
 
-            List<BacklogItemType> returnedBacklogItemTypes = _backlogItemTypeService
+            List<BacklogItemTypeModel> returnedBacklogItemTypes = _backlogItemTypeService
                 .GetByBacklogItemTypeSchemaId(backlogItemTypeSchema.ID);
 
             Assert.Equal(backlogItemTypes.Count, returnedBacklogItemTypes.Count);

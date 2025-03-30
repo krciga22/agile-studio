@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
-    public class BacklogItemType
+    public class BacklogItemTypeModel
     {
         public int ID { get; set; }
 
@@ -16,7 +16,7 @@
 
         public int WorkflowID { get; set; }
 
-        public BacklogItemType(string title, int backlogItemTypeSchemaId, int workflowId)
+        public BacklogItemTypeModel(string title, int backlogItemTypeSchemaId, int workflowId)
         {
             Title = title;
             CreatedOn = DateTime.Now;

@@ -23,7 +23,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         public void Create_ReturnsBacklogItem()
         {
             Project project = _Fixtures.CreateProject();
-            BacklogItemType backlogItemType = _Fixtures.CreateBacklogItemType();
+            BacklogItemTypeModel backlogItemType = _Fixtures.CreateBacklogItemType();
             WorkflowState workflowState = _Fixtures.CreateWorkflowState();
 
             BacklogItem backlogItem = new(

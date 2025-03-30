@@ -84,7 +84,7 @@ namespace AgileStudioServerTest.IntegrationTests
             string? title = null,
             User? createdBy = null, 
             Project? project = null, 
-            BacklogItemType? backlogItemType = null,
+            BacklogItemTypeModel? backlogItemType = null,
             WorkflowState? workflowState = null,
             Sprint? sprint = null,
             Release? release = null,
@@ -139,7 +139,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return backlogItemTypeSchema;
         }
 
-        public BacklogItemType CreateBacklogItemType(
+        public BacklogItemTypeModel CreateBacklogItemType(
             string? title = null,
             User? createdBy = null,
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
@@ -150,7 +150,7 @@ namespace AgileStudioServerTest.IntegrationTests
             backlogItemTypeSchema ??= CreateBacklogItemTypeSchema();
             workflow ??= CreateWorkflow();
 
-            var backlogItemType = new BacklogItemType(title, backlogItemTypeSchema.ID, workflow.ID)
+            var backlogItemType = new BacklogItemTypeModel(title, backlogItemTypeSchema.ID, workflow.ID)
             {
                 CreatedByID = createdBy.ID,
             };
@@ -159,8 +159,8 @@ namespace AgileStudioServerTest.IntegrationTests
         }
 
         public ChildBacklogItemType CreateChildBacklogItemType(
-            BacklogItemType? parentType = null,
-            BacklogItemType? childType = null,
+            BacklogItemTypeModel? parentType = null,
+            BacklogItemTypeModel? childType = null,
             BacklogItemTypeSchemaModel? schema = null,
             User? createdBy = null)
         {

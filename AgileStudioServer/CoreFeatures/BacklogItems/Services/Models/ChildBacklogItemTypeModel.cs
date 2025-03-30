@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
-    public class ChildBacklogItemType
+    public class ChildBacklogItemTypeModel
     {
         public int ID { get; set; }
 
@@ -14,7 +14,7 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public ChildBacklogItemType(int childTypeId, int parentTypeId, int schemaId)
+        public ChildBacklogItemTypeModel(int childTypeId, int parentTypeId, int schemaId)
         {
             CreatedOn = DateTime.Now;
             ChildTypeID = childTypeId;

@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Services.Models.ChildBacklogItemType)
+                from == typeof(Services.Models.ChildBacklogItemTypeModel)
             ) && to == typeof(ChildBacklogItemType);
         }
 
@@ -32,9 +32,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
 
             object? entity = null;
 
-            if (from is Services.Models.ChildBacklogItemType)
+            if (from is Services.Models.ChildBacklogItemTypeModel)
             {
-                var model = (Services.Models.ChildBacklogItemType)from;
+                var model = (Services.Models.ChildBacklogItemTypeModel)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.ChildBacklogItemType.Find(model.ID);
@@ -78,9 +78,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
             var entity = (ChildBacklogItemType)to;
             int nextDepth = depth + 1;
 
-            if (from is Services.Models.ChildBacklogItemType)
+            if (from is Services.Models.ChildBacklogItemTypeModel)
             {
-                var model = (Services.Models.ChildBacklogItemType)from;
+                var model = (Services.Models.ChildBacklogItemTypeModel)from;
 
                 entity.ID = model.ID;
                 entity.CreatedOn = model.CreatedOn;

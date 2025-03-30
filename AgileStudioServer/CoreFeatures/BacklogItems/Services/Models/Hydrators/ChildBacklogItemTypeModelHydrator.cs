@@ -5,9 +5,9 @@ using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 {
-    public class ChildBacklogItemTypeHydrator : AbstractModelHydrator
+    public class ChildBacklogItemTypeModelHydrator : AbstractModelHydrator
     {
-        public ChildBacklogItemTypeHydrator(DBContext dbContext) : base(dbContext)
+        public ChildBacklogItemTypeModelHydrator(DBContext dbContext) : base(dbContext)
         {
 
         }
@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Repositories.Entities.ChildBacklogItemType)
-            ) && to == typeof(ChildBacklogItemType);
+            ) && to == typeof(ChildBacklogItemTypeModel);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -41,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
             if (from is Repositories.Entities.ChildBacklogItemType)
             {
                 var entity = (Repositories.Entities.ChildBacklogItemType)from;
-                model = new ChildBacklogItemType(
+                model = new ChildBacklogItemTypeModel(
                     entity.ChildTypeID, entity.ParentTypeID, entity.SchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -61,7 +61,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var model = (ChildBacklogItemType)to;
+            var model = (ChildBacklogItemTypeModel)to;
 
             if (from is Repositories.Entities.ChildBacklogItemType)
             {

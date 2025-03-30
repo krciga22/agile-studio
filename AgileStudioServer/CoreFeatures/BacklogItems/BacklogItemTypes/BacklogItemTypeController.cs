@@ -191,7 +191,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
                     );
                 }
 
-                childBacklogItemType = new ChildBacklogItemType(
+                childBacklogItemType = new ChildBacklogItemTypeModel(
                     childType.ID, parentType.ID, schema.ID);
                 childBacklogItemType = _ChildBacklogItemTypeService.Create(childBacklogItemType);
                 created = true;

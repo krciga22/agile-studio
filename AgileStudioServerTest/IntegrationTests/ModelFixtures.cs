@@ -159,7 +159,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return backlogItemType;
         }
 
-        public ChildBacklogItemType CreateChildBacklogItemType(
+        public ChildBacklogItemTypeModel CreateChildBacklogItemType(
             BacklogItemTypeModel? parentType = null,
             BacklogItemTypeModel? childType = null,
             BacklogItemTypeSchemaModel? schema = null,
@@ -170,7 +170,7 @@ namespace AgileStudioServerTest.IntegrationTests
             childType ??= CreateBacklogItemType("Task", backlogItemTypeSchema: schema);
             createdBy ??= CreateUser();
 
-            var childBacklogItemType = new ChildBacklogItemType(childType.ID, parentType.ID, schema.ID)
+            var childBacklogItemType = new ChildBacklogItemTypeModel(childType.ID, parentType.ID, schema.ID)
             {
                 CreatedByID = createdBy.ID
             };

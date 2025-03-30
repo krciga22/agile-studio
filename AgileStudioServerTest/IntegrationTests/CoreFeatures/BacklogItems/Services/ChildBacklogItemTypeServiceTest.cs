@@ -24,7 +24,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
             BacklogItemTypeModel backlogItemTypeStory = _Fixtures.CreateBacklogItemType("Story");
             BacklogItemTypeModel backlogItemTypeTask = _Fixtures.CreateBacklogItemType("Task");
             BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
-            ChildBacklogItemType childBacklogItemType = new(
+            ChildBacklogItemTypeModel childBacklogItemType = new(
                 backlogItemTypeTask.ID, backlogItemTypeStory.ID, schema.ID);
 
             childBacklogItemType = _childBacklogItemTypeService.Create(childBacklogItemType);
@@ -49,7 +49,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         {
             var parentBacklogItemType = _Fixtures.CreateBacklogItemType("Parent Type");
 
-            var childBacklogItemTypes = new List<ChildBacklogItemType>
+            var childBacklogItemTypes = new List<ChildBacklogItemTypeModel>
             {
                 _Fixtures.CreateChildBacklogItemType(
                     parentType: parentBacklogItemType
@@ -59,7 +59,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
                 )
             };
 
-            List<ChildBacklogItemType> returnedChildBacklogItemTypes = _childBacklogItemTypeService
+            List<ChildBacklogItemTypeModel> returnedChildBacklogItemTypes = _childBacklogItemTypeService
                 .GetByParentTypeId(parentBacklogItemType.ID);
 
             Assert.Equal(childBacklogItemTypes.Count, returnedChildBacklogItemTypes.Count);
@@ -70,7 +70,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         {
             var childBacklogItemType = _Fixtures.CreateBacklogItemType("Child Type");
 
-            var childBacklogItemTypes = new List<ChildBacklogItemType>
+            var childBacklogItemTypes = new List<ChildBacklogItemTypeModel>
             {
                 _Fixtures.CreateChildBacklogItemType(
                     childType: childBacklogItemType
@@ -80,7 +80,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
                 )
             };
 
-            List<ChildBacklogItemType> returnedChildBacklogItemTypes = _childBacklogItemTypeService
+            List<ChildBacklogItemTypeModel> returnedChildBacklogItemTypes = _childBacklogItemTypeService
                 .GetByChildTypeId(childBacklogItemType.ID);
 
             Assert.Equal(childBacklogItemTypes.Count, returnedChildBacklogItemTypes.Count);

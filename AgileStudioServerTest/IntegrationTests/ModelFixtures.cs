@@ -25,6 +25,7 @@ namespace AgileStudioServerTest.IntegrationTests
         private readonly BacklogItemTypeSchemaService _backlogItemTypeSchemaService;
         private readonly ChildBacklogItemTypeService _childBacklogItemTypeService;
         private readonly BacklogItemLinkTypeService _backlogItemLinkTypeService;
+        private readonly BacklogItemLinkTypeSchemaService _backlogItemLinkTypeSchemaService;
         private readonly SprintService _sprintService;
         private readonly ReleaseService _releaseService;
         private readonly UserService _userService;
@@ -38,6 +39,7 @@ namespace AgileStudioServerTest.IntegrationTests
             BacklogItemTypeSchemaService backlogItemTypeSchemaService,
             ChildBacklogItemTypeService childBacklogItemTypeService,
             BacklogItemLinkTypeService backlogItemLinkTypeService,
+            BacklogItemLinkTypeSchemaService backlogItemLinkTypeSchemaService,
             SprintService sprintService,
             ReleaseService releaseService,
             UserService userService,
@@ -50,6 +52,7 @@ namespace AgileStudioServerTest.IntegrationTests
             _backlogItemTypeSchemaService = backlogItemTypeSchemaService;
             _childBacklogItemTypeService = childBacklogItemTypeService;
             _backlogItemLinkTypeService = backlogItemLinkTypeService;
+            _backlogItemLinkTypeSchemaService = backlogItemLinkTypeSchemaService;
             _sprintService = sprintService;
             _releaseService = releaseService;
             _userService = userService;
@@ -186,6 +189,21 @@ namespace AgileStudioServerTest.IntegrationTests
             };
             backlogItemLinkType = _backlogItemLinkTypeService.Create(backlogItemLinkType);
             return backlogItemLinkType;
+        }
+
+        public BacklogItemLinkTypeSchema CreateBacklogItemLinkTypeSchema(
+            string? title = null,
+            User? createdBy = null)
+        {
+            title ??= "Test BacklogItemLinkTypeSchema";
+            createdBy ??= CreateUser();
+
+            var backlogItemLinkTypeSchema = new BacklogItemLinkTypeSchema(title)
+            {
+                CreatedByID = createdBy.ID,
+            };
+            backlogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Create(backlogItemLinkTypeSchema);
+            return backlogItemLinkTypeSchema;
         }
 
         public Sprint CreateSprint(

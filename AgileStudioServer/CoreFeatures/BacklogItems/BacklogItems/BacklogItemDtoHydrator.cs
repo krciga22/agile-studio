@@ -7,10 +7,9 @@ using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemDtoHydrator : AbstractDtoHydrator
     {

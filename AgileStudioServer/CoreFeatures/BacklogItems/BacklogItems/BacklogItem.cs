@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItem
     {

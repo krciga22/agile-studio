@@ -2,9 +2,8 @@
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
 {

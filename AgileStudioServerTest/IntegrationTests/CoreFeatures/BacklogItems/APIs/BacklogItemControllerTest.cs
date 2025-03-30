@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.Core.APIs.DTOs;
-using BacklogItemServices = AgileStudioServer.CoreFeatures.BacklogItems.Services;
-using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
 {
@@ -48,14 +45,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
                 childBacklogItem2
             };
 
-            PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>? results = null;
+            PaginatedResultsDto<BacklogItemDto, BacklogItemModel>? results = null;
             IActionResult result = _Controller.GetChildBacklogItems(parentBacklogItem.ID);
             if (result is OkObjectResult okResult)
             {
-                results = okResult.Value as PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>;
+                results = okResult.Value as PaginatedResultsDto<BacklogItemDto, BacklogItemModel>;
             }
 
-            Assert.IsType<PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>>(results);
+            Assert.IsType<PaginatedResultsDto<BacklogItemDto, BacklogItemModel>>(results);
             Assert.Equal(childBacklogItems.Count, results.Items.Count);
 
             foreach (var dto in results.Items)

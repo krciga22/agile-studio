@@ -6,9 +6,8 @@ using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.APIs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.APIs
 {

@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Core.Hydrator;
-using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas

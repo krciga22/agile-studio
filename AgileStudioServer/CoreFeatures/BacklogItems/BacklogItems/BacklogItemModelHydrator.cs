@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemModelHydrator : AbstractModelHydrator
     {
@@ -17,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.BacklogItem) ||
+                from == typeof(BacklogItem) ||
                 from == typeof(BacklogItemPostDto) ||
                 from == typeof(BacklogItemPatchDto)
             ) && to == typeof(BacklogItemModel);
@@ -41,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.BacklogItem)
+            if (from is BacklogItem)
             {
-                var entity = (Repositories.Entities.BacklogItem)from;
+                var entity = (BacklogItem)from;
                 model = new BacklogItemModel(
                     entity.Title,
                     entity.ProjectID,
@@ -91,9 +89,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (BacklogItemModel)to;
 
-            if (from is Repositories.Entities.BacklogItem)
+            if (from is BacklogItem)
             {
-                var entity = (Repositories.Entities.BacklogItem)from;
+                var entity = (BacklogItem)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ValidParentBacklogItemForBacklogItem : ValidationAttribute

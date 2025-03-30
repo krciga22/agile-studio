@@ -1,19 +1,17 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
-using AgileStudioServer.CoreFeatures.Releases.Services;
-using AgileStudioServer.CoreFeatures.Releases.Services.Models;
+using AgileStudioServer.CoreFeatures.Sprints.Services;
+using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class ValidReleaseForBacklogItem : ValidationAttribute
+    public class ValidSprintForBacklogItem : ValidationAttribute
     {
-        public string GetErrorMessage() => "Invalid Release for Backlog Item";
+        public string GetErrorMessage() => "Invalid Sprint for Backlog Item";
 
         public override bool RequiresValidationContext => true;
 
@@ -27,33 +25,33 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
             var backlogItemService = (BacklogItemService?)validationContext.GetService(typeof(BacklogItemService)) ??
                 throw new ServiceNotFoundException(nameof(BacklogItemService));
 
-            var releaseService = (ReleaseService?)validationContext.GetService(typeof(ReleaseService)) ??
-                throw new ServiceNotFoundException(nameof(ReleaseService));
+            var sprintService = (SprintService?)validationContext.GetService(typeof(SprintService)) ??
+                throw new ServiceNotFoundException(nameof(SprintService));
 
             var projectService = (ProjectService?)validationContext.GetService(typeof(ProjectService)) ??
                 throw new ServiceNotFoundException(nameof(ProjectService));
 
-            int releaseId;
+            int sprintId;
             int projectId;
 
             if (value is BacklogItemPostDto postDto)
             {
-                if (postDto.ReleaseId is null)
+                if (postDto.SprintId is null)
                 {
                     return ValidationResult.Success;
                 }
 
-                releaseId = (int)postDto.ReleaseId;
+                sprintId = (int)postDto.SprintId;
                 projectId = postDto.ProjectId;
             }
             else if (value is BacklogItemPatchDto patchDto)
             {
-                if (patchDto.ReleaseId is null)
+                if (patchDto.SprintId is null)
                 {
                     return ValidationResult.Success;
                 }
 
-                releaseId = (int)patchDto.ReleaseId;
+                sprintId = (int)patchDto.SprintId;
 
                 var backlogItem = backlogItemService.Get(patchDto.ID) ??
                     throw new ModelNotFoundException(nameof(BacklogItemModel), patchDto.ID.ToString());
@@ -66,14 +64,14 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
                     $"applied to {typeof(BacklogItemPostDto)} or {typeof(BacklogItemPatchDto)}");
             }
 
-            // make sure the release belongs to the same project as the backlog item
-            var release = releaseService.Get(releaseId) ??
-                throw new ModelNotFoundException(nameof(Release), releaseId.ToString());
+            // make sure the sprint belongs to the same project as the backlog item
+            var sprint = sprintService.Get(sprintId) ??
+                throw new ModelNotFoundException(nameof(Sprint), sprintId.ToString());
 
             var project = projectService.Get(projectId) ??
                 throw new ModelNotFoundException(nameof(Project), projectId.ToString());
 
-            if (release.ProjectID == project.ID)
+            if (sprint.ProjectID == project.ID)
             {
                 return ValidationResult.Success;
             }

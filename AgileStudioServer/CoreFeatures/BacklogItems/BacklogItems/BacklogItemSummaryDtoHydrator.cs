@@ -2,10 +2,8 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemSummaryDtoHydrator : AbstractDtoHydrator
     {

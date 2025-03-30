@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
-using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemService
     {
@@ -20,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<BacklogItemModel> GetByProjectId(int projectId)
         {
-            List<Entities.BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
+            List<BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
                 backlogItem.Project.ID == projectId).ToList();
 
             return HydrateBacklogItemModels(entities);
@@ -28,7 +26,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<BacklogItemModel> GetByProjectIdAndBacklogItemTypeId(int projectId, int backlogItemTypeId)
         {
-            List<Entities.BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
+            List<BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
                 backlogItem.Project.ID == projectId && backlogItem.BacklogItemType.ID == backlogItemTypeId).ToList();
 
             return HydrateBacklogItemModels(entities);
@@ -41,7 +39,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
                 paginationDetails = new PaginationDetails();
             }
 
-            IQueryable<Entities.BacklogItem> query = _DBContext.BacklogItem
+            IQueryable<BacklogItem> query = _DBContext.BacklogItem
                 .Where(backlogItem => backlogItem.ParentBacklogItemId == parentBacklogItemId)
                 .OrderByDescending(backlogItem => backlogItem.CreatedOn)
                 .ThenByDescending(backlogItem => backlogItem.ID);
@@ -50,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
             query = query.Skip(paginationDetails.ItemsPerPage * (paginationDetails.Page - 1)).Take(paginationDetails.ItemsPerPage);
 
-            List<Entities.BacklogItem> entities = query.ToList();
+            List<BacklogItem> entities = query.ToList();
 
             PaginationResults<BacklogItemModel> results = new(
                 HydrateBacklogItemModels(entities),
@@ -64,13 +62,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemModel? GetParentBacklogItem(int id)
         {
-            Entities.BacklogItem? entity = _DBContext.BacklogItem.Find(id);
+            BacklogItem? entity = _DBContext.BacklogItem.Find(id);
             if (entity is null || entity.ParentBacklogItemId is null)
             {
                 return null;
             }
 
-            Entities.BacklogItem? parentEntity =
+            BacklogItem? parentEntity =
                 _DBContext.BacklogItem.Find(entity.ParentBacklogItemId);
             if (parentEntity is null)
             {
@@ -82,7 +80,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemModel? Get(int id)
         {
-            Entities.BacklogItem? entity = _DBContext.BacklogItem.Find(id);
+            BacklogItem? entity = _DBContext.BacklogItem.Find(id);
             if (entity is null)
             {
                 return null;
@@ -93,7 +91,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemModel Create(BacklogItemModel backlogItem)
         {
-            Entities.BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
+            BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -103,7 +101,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemModel Update(BacklogItemModel backlogItem)
         {
-            Entities.BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
+            BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -113,13 +111,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual void Delete(BacklogItemModel backlogItem)
         {
-            Entities.BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
+            BacklogItem entity = HydrateBacklogItemEntity(backlogItem);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<BacklogItemModel> HydrateBacklogItemModels(List<Entities.BacklogItem> entities, int depth = 3)
+        private List<BacklogItemModel> HydrateBacklogItemModels(List<BacklogItem> entities, int depth = 3)
         {
             List<BacklogItemModel> models = new();
 
@@ -132,17 +130,17 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return models;
         }
 
-        private BacklogItemModel HydrateBacklogItemModel(Entities.BacklogItem backlogItem, int depth = 3)
+        private BacklogItemModel HydrateBacklogItemModel(BacklogItem backlogItem, int depth = 3)
         {
             return (BacklogItemModel)_Hydrator.Hydrate(
                 backlogItem, typeof(BacklogItemModel), depth
             );
         }
 
-        private Entities.BacklogItem HydrateBacklogItemEntity(BacklogItemModel backlogItem, int depth = 3)
+        private BacklogItem HydrateBacklogItemEntity(BacklogItemModel backlogItem, int depth = 3)
         {
-            return (Entities.BacklogItem)_Hydrator.Hydrate(
-                backlogItem, typeof(Entities.BacklogItem), depth
+            return (BacklogItem)_Hydrator.Hydrate(
+                backlogItem, typeof(BacklogItem), depth
             );
         }
     }

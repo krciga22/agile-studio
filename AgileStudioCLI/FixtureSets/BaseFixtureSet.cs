@@ -114,6 +114,8 @@ namespace AgileStudioCLI.FixtureSets
                 schema: backlogItemTypeSchema
             );
 
+            fixtures.CreateBacklogItemLinkTypeSchema("Agile Studio Backlog Item Link Type Schema");
+
             fixtures.CreateBacklogItemLinkType("blocks", "is blocked by");
             fixtures.CreateBacklogItemLinkType("relates to", "relates to");
             fixtures.CreateBacklogItemLinkType("split from", "split to");

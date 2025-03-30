@@ -61,7 +61,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemLinkTypeHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemLinkTypeSchemaHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemLinkTypeSchemaModelHydrator>();
             builder.Services.AddScoped<IHydrator, Projects.Services.Models.Hydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, Releases.Services.Models.Hydrators.ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, Sprints.Services.Models.Hydrators.SprintHydrator>();

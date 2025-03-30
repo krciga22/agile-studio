@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             _Hydrator = hydrator;
         }
 
-        public virtual BacklogItemLinkTypeSchema? Get(int id)
+        public virtual BacklogItemLinkTypeSchemaModel? Get(int id)
         {
             Entities.BacklogItemLinkTypeSchema? entity = _DBContext.BacklogItemLinkTypeSchema.Find(id);
             if (entity is null)
@@ -30,7 +30,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeSchemaModel(entity);
         }
 
-        public virtual BacklogItemLinkTypeSchema Create(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema)
+        public virtual BacklogItemLinkTypeSchemaModel Create(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
@@ -40,7 +40,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeSchemaModel(entity);
         }
 
-        public virtual BacklogItemLinkTypeSchema Update(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema)
+        public virtual BacklogItemLinkTypeSchemaModel Update(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
@@ -50,7 +50,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeSchemaModel(entity);
         }
 
-        public virtual void Delete(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema)
+        public virtual void Delete(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
@@ -58,14 +58,14 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             _DBContext.SaveChanges();
         }
 
-        private BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaModel(Entities.BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 3)
+        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(Entities.BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 3)
         {
-            return (BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchema), depth
+            return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
+                backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchemaModel), depth
             );
         }
 
-        private Entities.BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaEntity(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 3)
+        private Entities.BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaEntity(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema, int depth = 3)
         {
             return (Entities.BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
                 backlogItemLinkTypeSchema, typeof(Entities.BacklogItemLinkTypeSchema), depth

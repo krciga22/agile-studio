@@ -191,14 +191,14 @@ namespace AgileStudioServerTest.IntegrationTests
             return backlogItemLinkType;
         }
 
-        public BacklogItemLinkTypeSchema CreateBacklogItemLinkTypeSchema(
+        public BacklogItemLinkTypeSchemaModel CreateBacklogItemLinkTypeSchema(
             string? title = null,
             User? createdBy = null)
         {
             title ??= "Test BacklogItemLinkTypeSchema";
             createdBy ??= CreateUser();
 
-            var backlogItemLinkTypeSchema = new BacklogItemLinkTypeSchema(title)
+            var backlogItemLinkTypeSchema = new BacklogItemLinkTypeSchemaModel(title)
             {
                 CreatedByID = createdBy.ID,
             };

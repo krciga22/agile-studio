@@ -48,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemLinkTypeSchemaPostDto backlogItemLinkTypeSchemaPostDto)
         {
-            BacklogItemLinkTypeSchema model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPostDto);
+            BacklogItemLinkTypeSchemaModel model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPostDto);
             model = _BacklogItemLinkTypeSchemaService.Create(model);
 
             string backlogItemLinkTypeSchemaUrl = "";
@@ -78,13 +78,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             BacklogItemLinkTypeSchemaDto dto;
             try
             {
-                BacklogItemLinkTypeSchema model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPatchDto);
+                BacklogItemLinkTypeSchemaModel model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPatchDto);
                 model = _BacklogItemLinkTypeSchemaService.Update(model);
                 dto = HydrateBacklogItemLinkTypeSchemaDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(BacklogItemLinkTypeSchema)))
+                if (e.ModelClassName.Equals(nameof(BacklogItemLinkTypeSchemaModel)))
                 {
                     return NotFound();
                 }
@@ -103,7 +103,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            BacklogItemLinkTypeSchema? model = _BacklogItemLinkTypeSchemaService.Get(id);
+            BacklogItemLinkTypeSchemaModel? model = _BacklogItemLinkTypeSchemaService.Get(id);
             if (model == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return new OkResult();
         }
 
-        private List<BacklogItemLinkTypeSchemaDto> HydrateBacklogItemLinkTypeSchemaDtos(List<BacklogItemLinkTypeSchema> backlogItemLinkTypeSchemas, int depth = 1)
+        private List<BacklogItemLinkTypeSchemaDto> HydrateBacklogItemLinkTypeSchemaDtos(List<BacklogItemLinkTypeSchemaModel> backlogItemLinkTypeSchemas, int depth = 1)
         {
             List<BacklogItemLinkTypeSchemaDto> dtos = new();
 
@@ -127,24 +127,24 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return dtos;
         }
 
-        private BacklogItemLinkTypeSchemaDto HydrateBacklogItemLinkTypeSchemaDto(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 1)
+        private BacklogItemLinkTypeSchemaDto HydrateBacklogItemLinkTypeSchemaDto(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema, int depth = 1)
         {
             return (BacklogItemLinkTypeSchemaDto)_Hydrator.Hydrate(
                 backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchemaDto), depth
             );
         }
 
-        private BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPostDto backlogItemLinkTypeSchemaPostDto, int depth = 3)
+        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPostDto backlogItemLinkTypeSchemaPostDto, int depth = 3)
         {
-            return (BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaPostDto, typeof(BacklogItemLinkTypeSchema), depth
+            return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
+                backlogItemLinkTypeSchemaPostDto, typeof(BacklogItemLinkTypeSchemaModel), depth
             );
         }
 
-        private BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPatchDto backlogItemLinkTypeSchemaPatchDto, int depth = 3)
+        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPatchDto backlogItemLinkTypeSchemaPatchDto, int depth = 3)
         {
-            return (BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaPatchDto, typeof(BacklogItemLinkTypeSchema), depth
+            return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
+                backlogItemLinkTypeSchemaPatchDto, typeof(BacklogItemLinkTypeSchemaModel), depth
             );
         }
     }

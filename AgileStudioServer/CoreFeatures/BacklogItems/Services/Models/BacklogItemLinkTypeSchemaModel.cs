@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
-    public class BacklogItemLinkTypeSchema
+    public class BacklogItemLinkTypeSchemaModel
     {
         public int ID { get; set; }
 
@@ -12,7 +12,7 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public BacklogItemLinkTypeSchema(string title)
+        public BacklogItemLinkTypeSchemaModel(string title)
         {
             Title = title;
             CreatedOn = DateTime.Now;

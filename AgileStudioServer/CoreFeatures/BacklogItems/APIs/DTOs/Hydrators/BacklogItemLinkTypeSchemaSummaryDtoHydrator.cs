@@ -12,7 +12,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemLinkTypeSchema)
+                from == typeof(BacklogItemLinkTypeSchemaModel)
             ) && to == typeof(BacklogItemLinkTypeSchemaSummaryDto);
         }
 
@@ -28,16 +28,16 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            BacklogItemLinkTypeSchema? model = null;
+            BacklogItemLinkTypeSchemaModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (BacklogItemLinkTypeSchema)referenceHydrator.Hydrate(
-                    from, typeof(BacklogItemLinkTypeSchema), maxDepth, depth, referenceHydrator
+                model = (BacklogItemLinkTypeSchemaModel)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemLinkTypeSchemaModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is BacklogItemLinkTypeSchema)
+            else if (from is BacklogItemLinkTypeSchemaModel)
             {
-                model = (BacklogItemLinkTypeSchema)from;
+                model = (BacklogItemLinkTypeSchemaModel)from;
             }
 
             object? dto = null;
@@ -64,9 +64,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 
             var dto = (BacklogItemLinkTypeSchemaSummaryDto)to;
 
-            if (from is BacklogItemLinkTypeSchema)
+            if (from is BacklogItemLinkTypeSchemaModel)
             {
-                var model = (BacklogItemLinkTypeSchema)from;
+                var model = (BacklogItemLinkTypeSchemaModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

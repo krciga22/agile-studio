@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         [Fact]
         public void Create_ReturnsBacklogItemLinkTypeSchema()
         {
-            BacklogItemLinkTypeSchema backlogItemLinkTypeSchema = new("Test Schema");
+            BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema = new("Test Schema");
 
             backlogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Create(backlogItemLinkTypeSchema);
 

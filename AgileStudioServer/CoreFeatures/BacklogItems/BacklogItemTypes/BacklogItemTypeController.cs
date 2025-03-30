@@ -1,7 +1,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services;
+using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

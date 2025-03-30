@@ -2,7 +2,7 @@
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities
+namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
 {
     public class ChildBacklogItemType
     {

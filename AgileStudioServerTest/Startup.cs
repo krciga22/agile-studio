@@ -13,6 +13,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 
 namespace AgileStudioServerTest
 {
@@ -67,7 +68,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeModelHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeSchemaModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeModelHydrator>();
+            services.AddScoped<IHydrator, ChildBacklogItemTypeModelHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeModelHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();
             services.AddScoped<IHydrator, Projects.Services.Models.Hydrators.ProjectHydrator>();
@@ -80,7 +81,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.BacklogItemHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, BacklogItemTypeSchemaHydrator>();
-            services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();
+            services.AddScoped<IHydrator, ChildBacklogItemTypeHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaHydrator>();
             services.AddScoped<IHydrator, Projects.Repositories.Entities.Hydrators.ProjectHydrator>();
@@ -93,7 +94,7 @@ namespace AgileStudioServerTest
             services.AddScoped<BacklogItems.Services.BacklogItemService>();
             services.AddScoped<BacklogItemTypeService>();
             services.AddScoped<BacklogItemTypeSchemaService>();
-            services.AddScoped<BacklogItems.Services.ChildBacklogItemTypeService>();
+            services.AddScoped<ChildBacklogItemTypeService>();
             services.AddScoped<BacklogItemLinkTypeService>();
             services.AddScoped<BacklogItemLinkTypeSchemaService>();
             services.AddScoped<Projects.Services.ProjectService>();

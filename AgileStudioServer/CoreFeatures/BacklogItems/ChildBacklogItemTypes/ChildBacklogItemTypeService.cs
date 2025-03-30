@@ -1,10 +1,9 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
 {
     public class ChildBacklogItemTypeService
     {
@@ -20,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<ChildBacklogItemTypeModel> GetByParentTypeId(int parentTypeId)
         {
-            List<Entities.ChildBacklogItemType> entities =
+            List<ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ParentType.ID == parentTypeId
                 )
@@ -35,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<ChildBacklogItemTypeModel> GetByChildTypeId(int childTypeId)
         {
-            List<Entities.ChildBacklogItemType> entities =
+            List<ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ChildType.ID == childTypeId
                 )
@@ -50,7 +49,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual ChildBacklogItemTypeModel? Get(int id)
         {
-            Entities.ChildBacklogItemType? entity = _DBContext.ChildBacklogItemType.Find(id);
+            ChildBacklogItemType? entity = _DBContext.ChildBacklogItemType.Find(id);
             if (entity is null)
             {
                 return null;
@@ -61,7 +60,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual ChildBacklogItemTypeModel? Get(int parentTypeId, int childTypeId)
         {
-            List<Entities.ChildBacklogItemType> entities =
+            List<ChildBacklogItemType> entities =
                 _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ParentType.ID == parentTypeId &&
                     childBacklogItemType.ChildType.ID == childTypeId
@@ -77,7 +76,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual ChildBacklogItemTypeModel Create(ChildBacklogItemTypeModel childBacklogItemType)
         {
-            Entities.ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
+            ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -87,7 +86,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual ChildBacklogItemTypeModel Update(ChildBacklogItemTypeModel childBacklogItemType)
         {
-            Entities.ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
+            ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -97,13 +96,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual void Delete(ChildBacklogItemTypeModel childBacklogItemType)
         {
-            Entities.ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
+            ChildBacklogItemType entity = HydrateChildBacklogItemTypeEntity(childBacklogItemType);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<ChildBacklogItemTypeModel> HydrateChildBacklogItemTypeModels(List<Entities.ChildBacklogItemType> entities, int depth = 3)
+        private List<ChildBacklogItemTypeModel> HydrateChildBacklogItemTypeModels(List<ChildBacklogItemType> entities, int depth = 3)
         {
             List<ChildBacklogItemTypeModel> models = new();
 
@@ -116,17 +115,17 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return models;
         }
 
-        private ChildBacklogItemTypeModel HydrateChildBacklogItemTypeModel(Entities.ChildBacklogItemType childBacklogItemType, int depth = 3)
+        private ChildBacklogItemTypeModel HydrateChildBacklogItemTypeModel(ChildBacklogItemType childBacklogItemType, int depth = 3)
         {
             return (ChildBacklogItemTypeModel)_Hydrator.Hydrate(
                 childBacklogItemType, typeof(ChildBacklogItemTypeModel), depth
             );
         }
 
-        private Entities.ChildBacklogItemType HydrateChildBacklogItemTypeEntity(ChildBacklogItemTypeModel childBacklogItemType, int depth = 3)
+        private ChildBacklogItemType HydrateChildBacklogItemTypeEntity(ChildBacklogItemTypeModel childBacklogItemType, int depth = 3)
         {
-            return (Entities.ChildBacklogItemType)_Hydrator.Hydrate(
-                childBacklogItemType, typeof(Entities.ChildBacklogItemType), depth
+            return (ChildBacklogItemType)_Hydrator.Hydrate(
+                childBacklogItemType, typeof(ChildBacklogItemType), depth
             );
         }
     }

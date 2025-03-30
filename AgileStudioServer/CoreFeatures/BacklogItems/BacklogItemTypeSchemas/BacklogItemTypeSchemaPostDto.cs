@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
     public class BacklogItemTypeSchemaPostDto
     {

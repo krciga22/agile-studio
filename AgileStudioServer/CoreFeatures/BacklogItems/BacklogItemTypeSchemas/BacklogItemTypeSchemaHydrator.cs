@@ -1,11 +1,10 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
     public class BacklogItemTypeSchemaHydrator : AbstractEntityHydrator
     {
@@ -18,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Services.Models.BacklogItemTypeSchemaModel)
+                from == typeof(BacklogItemTypeSchemaModel)
             ) && to == typeof(BacklogItemTypeSchema);
         }
 
@@ -31,9 +30,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
 
             object? entity = null;
 
-            if (from is Services.Models.BacklogItemTypeSchemaModel)
+            if (from is BacklogItemTypeSchemaModel)
             {
-                var model = (Services.Models.BacklogItemTypeSchemaModel)from;
+                var model = (BacklogItemTypeSchemaModel)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.BacklogItemTypeSchema.Find(model.ID);
@@ -76,9 +75,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
             var entity = (BacklogItemTypeSchema)to;
             int nextDepth = depth + 1;
 
-            if (from is Services.Models.BacklogItemTypeSchemaModel)
+            if (from is BacklogItemTypeSchemaModel)
             {
-                var model = (Services.Models.BacklogItemTypeSchemaModel)from;
+                var model = (BacklogItemTypeSchemaModel)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

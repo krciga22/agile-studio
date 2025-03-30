@@ -6,7 +6,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
     [ApiController]
     [Route("[controller]")]

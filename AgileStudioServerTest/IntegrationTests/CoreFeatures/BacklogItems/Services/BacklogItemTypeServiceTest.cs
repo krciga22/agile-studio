@@ -2,6 +2,7 @@
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
 {

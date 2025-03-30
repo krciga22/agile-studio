@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Projects.Services;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Services
 {

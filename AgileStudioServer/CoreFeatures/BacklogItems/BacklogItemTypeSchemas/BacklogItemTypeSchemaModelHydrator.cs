@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
     public class BacklogItemTypeSchemaModelHydrator : AbstractModelHydrator
     {
@@ -17,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.BacklogItemTypeSchema) ||
+                from == typeof(BacklogItemTypeSchema) ||
                 from == typeof(BacklogItemTypeSchemaPostDto) ||
                 from == typeof(BacklogItemTypeSchemaPatchDto)
             ) && to == typeof(BacklogItemTypeSchemaModel);
@@ -41,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.BacklogItemTypeSchema)
+            if (from is BacklogItemTypeSchema)
             {
-                var entity = (Repositories.Entities.BacklogItemTypeSchema)from;
+                var entity = (BacklogItemTypeSchema)from;
                 model = new BacklogItemTypeSchemaModel(entity.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -82,9 +80,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
             var model = (BacklogItemTypeSchemaModel)to;
             int nextDepth = depth + 1;
 
-            if (from is Repositories.Entities.BacklogItemTypeSchema)
+            if (from is BacklogItemTypeSchema)
             {
-                var entity = (Repositories.Entities.BacklogItemTypeSchema)from;
+                var entity = (BacklogItemTypeSchema)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

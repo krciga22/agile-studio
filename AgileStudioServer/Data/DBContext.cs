@@ -8,6 +8,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServer.Data
 {

@@ -3,9 +3,9 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 {

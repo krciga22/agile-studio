@@ -175,7 +175,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return childBacklogItemType;
         }
 
-        public BacklogItemLinkType CreateBacklogItemLinkType(
+        public BacklogItemLinkTypeModel CreateBacklogItemLinkType(
             string? title = null,
             string? titleOpposite = null,
             User? createdBy = null)
@@ -184,7 +184,7 @@ namespace AgileStudioServerTest.IntegrationTests
             titleOpposite ??= "Test BacklogItemLinkTypeOpposite";
             createdBy ??= CreateUser();
 
-            var backlogItemLinkType = new BacklogItemLinkType(title, titleOpposite)
+            var backlogItemLinkType = new BacklogItemLinkTypeModel(title, titleOpposite)
             {
                 CreatedByID = createdBy.ID,
             };

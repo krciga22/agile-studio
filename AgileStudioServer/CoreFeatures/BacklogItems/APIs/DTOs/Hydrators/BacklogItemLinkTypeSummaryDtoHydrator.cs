@@ -12,7 +12,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemLinkType)
+                from == typeof(BacklogItemLinkTypeModel)
             ) && to == typeof(BacklogItemLinkTypeSummaryDto);
         }
 
@@ -28,16 +28,16 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            BacklogItemLinkType? model = null;
+            BacklogItemLinkTypeModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (BacklogItemLinkType)referenceHydrator.Hydrate(
-                    from, typeof(BacklogItemLinkType), maxDepth, depth, referenceHydrator
+                model = (BacklogItemLinkTypeModel)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemLinkTypeModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is BacklogItemLinkType)
+            else if (from is BacklogItemLinkTypeModel)
             {
-                model = (BacklogItemLinkType)from;
+                model = (BacklogItemLinkTypeModel)from;
             }
 
             object? dto = null;
@@ -64,9 +64,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs.Hydrators
 
             var dto = (BacklogItemLinkTypeSummaryDto)to;
 
-            if (from is BacklogItemLinkType)
+            if (from is BacklogItemLinkTypeModel)
             {
-                var model = (BacklogItemLinkType)from;
+                var model = (BacklogItemLinkTypeModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.TitleOpposite = model.TitleOpposite;

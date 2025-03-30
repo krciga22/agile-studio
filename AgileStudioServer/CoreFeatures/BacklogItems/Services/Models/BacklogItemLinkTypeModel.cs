@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
 {
-    public class BacklogItemLinkType
+    public class BacklogItemLinkTypeModel
     {
         public int ID { get; set; }
 
@@ -14,7 +14,7 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public BacklogItemLinkType(string title, string titleOpposite)
+        public BacklogItemLinkTypeModel(string title, string titleOpposite)
         {
             Title = title;
             TitleOpposite = titleOpposite;

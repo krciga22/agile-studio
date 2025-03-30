@@ -48,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemLinkTypePostDto backlogItemLinkTypePostDto)
         {
-            BacklogItemLinkType model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePostDto);
+            BacklogItemLinkTypeModel model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePostDto);
             model = _BacklogItemLinkTypeService.Create(model);
 
             string backlogItemLinkTypeUrl = "";
@@ -78,13 +78,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             BacklogItemLinkTypeDto dto;
             try
             {
-                BacklogItemLinkType model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePatchDto);
+                BacklogItemLinkTypeModel model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePatchDto);
                 model = _BacklogItemLinkTypeService.Update(model);
                 dto = HydrateBacklogItemLinkTypeDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(BacklogItemLinkType)))
+                if (e.ModelClassName.Equals(nameof(BacklogItemLinkTypeModel)))
                 {
                     return NotFound();
                 }
@@ -103,7 +103,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            BacklogItemLinkType? model = _BacklogItemLinkTypeService.Get(id);
+            BacklogItemLinkTypeModel? model = _BacklogItemLinkTypeService.Get(id);
             if (model == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return new OkResult();
         }
 
-        private List<BacklogItemLinkTypeDto> HydrateBacklogItemLinkTypeDtos(List<BacklogItemLinkType> backlogItemLinkTypes, int depth = 1)
+        private List<BacklogItemLinkTypeDto> HydrateBacklogItemLinkTypeDtos(List<BacklogItemLinkTypeModel> backlogItemLinkTypes, int depth = 1)
         {
             List<BacklogItemLinkTypeDto> dtos = new();
 
@@ -127,24 +127,24 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return dtos;
         }
 
-        private BacklogItemLinkTypeDto HydrateBacklogItemLinkTypeDto(BacklogItemLinkType backlogItemLinkType, int depth = 1)
+        private BacklogItemLinkTypeDto HydrateBacklogItemLinkTypeDto(BacklogItemLinkTypeModel backlogItemLinkType, int depth = 1)
         {
             return (BacklogItemLinkTypeDto)_Hydrator.Hydrate(
                 backlogItemLinkType, typeof(BacklogItemLinkTypeDto), depth
             );
         }
 
-        private BacklogItemLinkType HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePostDto backlogItemLinkTypePostDto, int depth = 3)
+        private BacklogItemLinkTypeModel HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePostDto backlogItemLinkTypePostDto, int depth = 3)
         {
-            return (BacklogItemLinkType)_Hydrator.Hydrate(
-                backlogItemLinkTypePostDto, typeof(BacklogItemLinkType), depth
+            return (BacklogItemLinkTypeModel)_Hydrator.Hydrate(
+                backlogItemLinkTypePostDto, typeof(BacklogItemLinkTypeModel), depth
             );
         }
 
-        private BacklogItemLinkType HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePatchDto backlogItemLinkTypePatchDto, int depth = 3)
+        private BacklogItemLinkTypeModel HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePatchDto backlogItemLinkTypePatchDto, int depth = 3)
         {
-            return (BacklogItemLinkType)_Hydrator.Hydrate(
-                backlogItemLinkTypePatchDto, typeof(BacklogItemLinkType), depth
+            return (BacklogItemLinkTypeModel)_Hydrator.Hydrate(
+                backlogItemLinkTypePatchDto, typeof(BacklogItemLinkTypeModel), depth
             );
         }
     }

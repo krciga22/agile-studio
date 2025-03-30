@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         [Fact]
         public void Create_ReturnsBacklogItemLinkType()
         {
-            BacklogItemLinkType backlogItemLinkType = new("blocks", "blocked-by");
+            BacklogItemLinkTypeModel backlogItemLinkType = new("blocks", "blocked-by");
 
             backlogItemLinkType = _backlogItemLinkTypeService.Create(backlogItemLinkType);
 

@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             _Hydrator = hydrator;
         }
 
-        public virtual BacklogItemLinkType? Get(int id)
+        public virtual BacklogItemLinkTypeModel? Get(int id)
         {
             Entities.BacklogItemLinkType? entity = _DBContext.BacklogItemLinkType.Find(id);
             if (entity is null)
@@ -30,7 +30,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeModel(entity);
         }
 
-        public virtual BacklogItemLinkType Create(BacklogItemLinkType backlogItemLinkType)
+        public virtual BacklogItemLinkTypeModel Create(BacklogItemLinkTypeModel backlogItemLinkType)
         {
             Entities.BacklogItemLinkType entity = HydrateBacklogItemLinkTypeEntity(backlogItemLinkType);
 
@@ -40,7 +40,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeModel(entity);
         }
 
-        public virtual BacklogItemLinkType Update(BacklogItemLinkType backlogItemLinkType)
+        public virtual BacklogItemLinkTypeModel Update(BacklogItemLinkTypeModel backlogItemLinkType)
         {
             Entities.BacklogItemLinkType entity = HydrateBacklogItemLinkTypeEntity(backlogItemLinkType);
 
@@ -50,7 +50,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return HydrateBacklogItemLinkTypeModel(entity);
         }
 
-        public virtual void Delete(BacklogItemLinkType backlogItemLinkType)
+        public virtual void Delete(BacklogItemLinkTypeModel backlogItemLinkType)
         {
             Entities.BacklogItemLinkType entity = HydrateBacklogItemLinkTypeEntity(backlogItemLinkType);
 
@@ -58,14 +58,14 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             _DBContext.SaveChanges();
         }
 
-        private BacklogItemLinkType HydrateBacklogItemLinkTypeModel(Entities.BacklogItemLinkType backlogItemLinkType, int depth = 3)
+        private BacklogItemLinkTypeModel HydrateBacklogItemLinkTypeModel(Entities.BacklogItemLinkType backlogItemLinkType, int depth = 3)
         {
-            return (BacklogItemLinkType)_Hydrator.Hydrate(
-                backlogItemLinkType, typeof(BacklogItemLinkType), depth
+            return (BacklogItemLinkTypeModel)_Hydrator.Hydrate(
+                backlogItemLinkType, typeof(BacklogItemLinkTypeModel), depth
             );
         }
 
-        private Entities.BacklogItemLinkType HydrateBacklogItemLinkTypeEntity(BacklogItemLinkType backlogItemLinkType, int depth = 3)
+        private Entities.BacklogItemLinkType HydrateBacklogItemLinkTypeEntity(BacklogItemLinkTypeModel backlogItemLinkType, int depth = 3)
         {
             return (Entities.BacklogItemLinkType)_Hydrator.Hydrate(
                 backlogItemLinkType, typeof(Entities.BacklogItemLinkType), depth

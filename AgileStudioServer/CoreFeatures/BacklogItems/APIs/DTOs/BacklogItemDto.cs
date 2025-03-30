@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;

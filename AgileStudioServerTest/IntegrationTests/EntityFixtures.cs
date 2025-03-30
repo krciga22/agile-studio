@@ -8,6 +8,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

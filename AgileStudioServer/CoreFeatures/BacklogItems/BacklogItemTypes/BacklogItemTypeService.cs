@@ -1,10 +1,9 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 {
     public class BacklogItemTypeService
     {
@@ -20,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual List<BacklogItemTypeModel> GetByBacklogItemTypeSchemaId(int backlogItemTypeSchemaId)
         {
-            List<Entities.BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
+            List<BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
                 backlogItemType.BacklogItemTypeSchema.ID == backlogItemTypeSchemaId)
                 .Include(b => b.CreatedBy)
                 .Include(b => b.BacklogItemTypeSchema)
@@ -32,7 +31,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemTypeModel? Get(int id)
         {
-            Entities.BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
+            BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
             if (entity is null)
             {
                 return null;
@@ -47,7 +46,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemTypeModel Create(BacklogItemTypeModel backlogItemType)
         {
-            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -57,7 +56,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemTypeModel Update(BacklogItemTypeModel backlogItemType)
         {
-            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -67,13 +66,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual void Delete(BacklogItemTypeModel backlogItemType)
         {
-            Entities.BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
+            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private List<BacklogItemTypeModel> HydrateBacklogItemTypeModels(List<Entities.BacklogItemType> entities, int depth = 3)
+        private List<BacklogItemTypeModel> HydrateBacklogItemTypeModels(List<BacklogItemType> entities, int depth = 3)
         {
             List<BacklogItemTypeModel> models = new();
 
@@ -86,17 +85,17 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
             return models;
         }
 
-        private BacklogItemTypeModel HydrateBacklogItemTypeModel(Entities.BacklogItemType backlogItemType, int depth = 3)
+        private BacklogItemTypeModel HydrateBacklogItemTypeModel(BacklogItemType backlogItemType, int depth = 3)
         {
             return (BacklogItemTypeModel)_Hydrator.Hydrate(
                 backlogItemType, typeof(BacklogItemTypeModel), depth
             );
         }
 
-        private Entities.BacklogItemType HydrateBacklogItemTypeEntity(BacklogItemTypeModel backlogItemType, int depth = 3)
+        private BacklogItemType HydrateBacklogItemTypeEntity(BacklogItemTypeModel backlogItemType, int depth = 3)
         {
-            return (Entities.BacklogItemType)_Hydrator.Hydrate(
-                backlogItemType, typeof(Entities.BacklogItemType), depth
+            return (BacklogItemType)_Hydrator.Hydrate(
+                backlogItemType, typeof(BacklogItemType), depth
             );
         }
     }

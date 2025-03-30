@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 {
     public class BacklogItemTypeModelHydrator : AbstractModelHydrator
     {
@@ -17,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.BacklogItemType) ||
+                from == typeof(BacklogItemType) ||
                 from == typeof(BacklogItemTypePostDto) ||
                 from == typeof(BacklogItemTypePatchDto)
             ) && to == typeof(BacklogItemTypeModel);
@@ -41,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.BacklogItemType)
+            if (from is BacklogItemType)
             {
-                var entity = (Repositories.Entities.BacklogItemType)from;
+                var entity = (BacklogItemType)from;
                 model = new BacklogItemTypeModel(
                     entity.Title, entity.BacklogItemTypeSchemaID, entity.WorkflowID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
@@ -83,9 +81,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (BacklogItemTypeModel)to;
 
-            if (from is Repositories.Entities.BacklogItemType)
+            if (from is BacklogItemType)
             {
-                var entity = (Repositories.Entities.BacklogItemType)from;
+                var entity = (BacklogItemType)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

@@ -6,7 +6,7 @@ using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 {
     public class BacklogItemTypeHydrator : AbstractEntityHydrator
     {
@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Services.Models.BacklogItemTypeModel)
+                from == typeof(BacklogItemTypeModel)
             ) && to == typeof(BacklogItemType);
         }
 
@@ -32,9 +32,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
 
             object? entity = null;
 
-            if (from is Services.Models.BacklogItemTypeModel)
+            if (from is BacklogItemTypeModel)
             {
-                var model = (Services.Models.BacklogItemTypeModel)from;
+                var model = (BacklogItemTypeModel)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.BacklogItemType.Find(model.ID);
@@ -78,9 +78,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities.Hydr
             var entity = (BacklogItemType)to;
             int nextDepth = depth + 1;
 
-            if (from is Services.Models.BacklogItemTypeModel)
+            if (from is BacklogItemTypeModel)
             {
-                var model = (Services.Models.BacklogItemTypeModel)from;
+                var model = (BacklogItemTypeModel)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

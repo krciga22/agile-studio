@@ -41,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
                     parentBacklogItemId = (int)patchDto.ParentBacklogItemId;
 
                     var backlogItem = backlogItemService.Get(patchDto.ID) ??
-                        throw new ModelNotFoundException(nameof(BacklogItem), patchDto.ID.ToString());
+                        throw new ModelNotFoundException(nameof(BacklogItemModel), patchDto.ID.ToString());
 
                     backlogItemProjectId = backlogItem.ProjectID;
                 }
@@ -57,7 +57,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
             {
                 int id = (int)parentBacklogItemId;
                 var parentBacklogItem = backlogItemService.Get(id) ??
-                    throw new ModelNotFoundException(nameof(BacklogItem), id.ToString());
+                    throw new ModelNotFoundException(nameof(BacklogItemModel), id.ToString());
 
                 if (parentBacklogItem.ProjectID != backlogItemProjectId)
                 {

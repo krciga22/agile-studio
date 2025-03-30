@@ -27,7 +27,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
             BacklogItemTypeModel backlogItemType = _Fixtures.CreateBacklogItemType();
             WorkflowState workflowState = _Fixtures.CreateWorkflowState();
 
-            BacklogItem backlogItem = new(
+            BacklogItemModel backlogItem = new(
                 "Test BacklogItem",
                 projectId: project.ID,
                 backlogItemTypeId: backlogItemType.ID,
@@ -66,7 +66,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
                 parentBacklogItem: parentBacklogItem
             );
 
-            BacklogItem? returnedBacklogItem = _backlogItemService
+            BacklogItemModel? returnedBacklogItem = _backlogItemService
                 .GetParentBacklogItem(childBacklogItem.ID);
 
             Assert.NotNull(returnedBacklogItem);
@@ -77,13 +77,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         public void GetAll_ReturnsAllBacklogItems()
         {
             var project = _Fixtures.CreateProject();
-            var backlogItems = new List<BacklogItem>
+            var backlogItems = new List<BacklogItemModel>
             {
                 _Fixtures.CreateBacklogItem("Test BacklogItem 1", project: project),
                 _Fixtures.CreateBacklogItem("Test BacklogItem 2", project: project)
             };
 
-            List<BacklogItem> returnedBacklogItems = _backlogItemService
+            List<BacklogItemModel> returnedBacklogItems = _backlogItemService
                 .GetByProjectId(project.ID);
 
             Assert.Equal(backlogItems.Count, returnedBacklogItems.Count);
@@ -94,13 +94,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
         {
             var project = _Fixtures.CreateProject();
             var backlogItemType = _Fixtures.CreateBacklogItemType();
-            var backlogItems = new List<BacklogItem>
+            var backlogItems = new List<BacklogItemModel>
             {
                 _Fixtures.CreateBacklogItem("Test BacklogItem 1", project: project, backlogItemType: backlogItemType),
                 _Fixtures.CreateBacklogItem("Test BacklogItem 2", project: project, backlogItemType: backlogItemType)
             };
 
-            List<BacklogItem> returnedBacklogItems = _backlogItemService
+            List<BacklogItemModel> returnedBacklogItems = _backlogItemService
                 .GetByProjectIdAndBacklogItemTypeId(project.ID, backlogItemType.ID);
 
             Assert.Equal(backlogItems.Count, returnedBacklogItems.Count);
@@ -128,13 +128,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Servi
                 parentBacklogItem: parentBacklogItem
             );
 
-            var childBacklogItems = new List<BacklogItem>
+            var childBacklogItems = new List<BacklogItemModel>
             {
                 childBacklogItem1,
                 childBacklogItem2
             };
 
-            PaginationResults<BacklogItem> results = _backlogItemService
+            PaginationResults<BacklogItemModel> results = _backlogItemService
                 .GetChildBacklogItems(parentBacklogItem.ID);
 
             Assert.Equal(childBacklogItems.Count, results.Items.Count);

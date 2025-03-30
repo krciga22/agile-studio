@@ -48,14 +48,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
                 childBacklogItem2
             };
 
-            PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItem>? results = null;
+            PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>? results = null;
             IActionResult result = _Controller.GetChildBacklogItems(parentBacklogItem.ID);
             if (result is OkObjectResult okResult)
             {
-                results = okResult.Value as PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItem>;
+                results = okResult.Value as PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>;
             }
 
-            Assert.IsType<PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItem>>(results);
+            Assert.IsType<PaginatedResultsDto<BacklogItemDto, BacklogItemServices.Models.BacklogItemModel>>(results);
             Assert.Equal(childBacklogItems.Count, results.Items.Count);
 
             foreach (var dto in results.Items)

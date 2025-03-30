@@ -82,7 +82,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return project;
         }
 
-        public BacklogItem CreateBacklogItem(
+        public BacklogItemModel CreateBacklogItem(
             string? title = null,
             User? createdBy = null, 
             Project? project = null, 
@@ -90,7 +90,7 @@ namespace AgileStudioServerTest.IntegrationTests
             WorkflowState? workflowState = null,
             Sprint? sprint = null,
             Release? release = null,
-            BacklogItem? parentBacklogItem = null)
+            BacklogItemModel? parentBacklogItem = null)
         {
             title ??= "Test BacklogItem";
 
@@ -100,7 +100,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
             workflowState ??= CreateWorkflowState();
 
-            var backlogItem = new BacklogItem(title, project.ID, backlogItemType.ID, workflowState.ID);
+            var backlogItem = new BacklogItemModel(title, project.ID, backlogItemType.ID, workflowState.ID);
 
             if (createdBy != null)
             {

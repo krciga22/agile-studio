@@ -197,7 +197,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             );
         }
 
-        private List<BacklogItemDto> HydrateBacklogItemSummaryDtos(List<BacklogItem> backlogItems, int depth = 1)
+        private List<BacklogItemDto> HydrateBacklogItemSummaryDtos(List<BacklogItemModel> backlogItems, int depth = 1)
         {
             List<BacklogItemDto> dtos = new();
 
@@ -210,7 +210,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             return dtos;
         }
 
-        private BacklogItemDto HydrateBacklogItemDto(BacklogItem backlogItem, int depth = 1)
+        private BacklogItemDto HydrateBacklogItemDto(BacklogItemModel backlogItem, int depth = 1)
         {
             return (BacklogItemDto)_Hydrator.Hydrate(
                 backlogItem, typeof(BacklogItemDto), depth

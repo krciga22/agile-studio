@@ -56,7 +56,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.Validations
                 sprintId = (int)patchDto.SprintId;
 
                 var backlogItem = backlogItemService.Get(patchDto.ID) ??
-                    throw new ModelNotFoundException(nameof(BacklogItem), patchDto.ID.ToString());
+                    throw new ModelNotFoundException(nameof(BacklogItemModel), patchDto.ID.ToString());
 
                 projectId = backlogItem.ProjectID;
             }

@@ -27,7 +27,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
 
         [HttpGet("{id}/Children", Name = "GetChildBacklogItems")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PaginatedResultsDto<BacklogItemDto, BacklogItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginatedResultsDto<BacklogItemDto, BacklogItemModel>), StatusCodes.Status200OK)]
         public IActionResult GetChildBacklogItems(int id, [FromQuery] int? page = null)
         {
             var paginationDetails = new PaginationDetails();
@@ -38,7 +38,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
 
             var paginationResults = _BacklogItemService.GetChildBacklogItems(id, paginationDetails);
 
-            PaginatedResultsDto<BacklogItemDto, BacklogItem> paginatedResultsDto = new(
+            PaginatedResultsDto<BacklogItemDto, BacklogItemModel> paginatedResultsDto = new(
                 HydrateBacklogItemDtos(paginationResults.Items),
                 paginationResults
             );
@@ -85,7 +85,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemPostDto backlogItemPostDto)
         {
-            BacklogItem model = HydrateBacklogItemModel(backlogItemPostDto);
+            BacklogItemModel model = HydrateBacklogItemModel(backlogItemPostDto);
             model = _BacklogItemService.Create(model);
 
             string backlogItemUrl = "";
@@ -115,13 +115,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             BacklogItemDto dto;
             try
             {
-                BacklogItem model = HydrateBacklogItemModel(backlogItemPatchDto);
+                BacklogItemModel model = HydrateBacklogItemModel(backlogItemPatchDto);
                 model = _BacklogItemService.Update(model);
                 dto = HydrateBacklogItemDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(BacklogItem)))
+                if (e.ModelClassName.Equals(nameof(BacklogItemModel)))
                 {
                     return NotFound();
                 }
@@ -140,7 +140,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            BacklogItem? model = _BacklogItemService.Get(id);
+            BacklogItemModel? model = _BacklogItemService.Get(id);
             if (model == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return new OkResult();
         }
 
-        private List<BacklogItemDto> HydrateBacklogItemDtos(List<BacklogItem> backlogItems, int depth = 1)
+        private List<BacklogItemDto> HydrateBacklogItemDtos(List<BacklogItemModel> backlogItems, int depth = 1)
         {
             List<BacklogItemDto> dtos = new();
 
@@ -164,24 +164,24 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs
             return dtos;
         }
 
-        private BacklogItemDto HydrateBacklogItemDto(BacklogItem backlogItem, int depth = 1)
+        private BacklogItemDto HydrateBacklogItemDto(BacklogItemModel backlogItem, int depth = 1)
         {
             return (BacklogItemDto)_Hydrator.Hydrate(
                 backlogItem, typeof(BacklogItemDto), depth
             );
         }
 
-        private BacklogItem HydrateBacklogItemModel(BacklogItemPostDto backlogItemPostDto, int depth = 3)
+        private BacklogItemModel HydrateBacklogItemModel(BacklogItemPostDto backlogItemPostDto, int depth = 3)
         {
-            return (BacklogItem)_Hydrator.Hydrate(
-                backlogItemPostDto, typeof(BacklogItem), depth
+            return (BacklogItemModel)_Hydrator.Hydrate(
+                backlogItemPostDto, typeof(BacklogItemModel), depth
             );
         }
 
-        private BacklogItem HydrateBacklogItemModel(BacklogItemPatchDto backlogItemPatchDto, int depth = 3)
+        private BacklogItemModel HydrateBacklogItemModel(BacklogItemPatchDto backlogItemPatchDto, int depth = 3)
         {
-            return (BacklogItem)_Hydrator.Hydrate(
-                backlogItemPatchDto, typeof(BacklogItem), depth
+            return (BacklogItemModel)_Hydrator.Hydrate(
+                backlogItemPatchDto, typeof(BacklogItemModel), depth
             );
         }
     }

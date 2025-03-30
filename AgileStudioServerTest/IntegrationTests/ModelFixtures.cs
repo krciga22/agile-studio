@@ -87,7 +87,7 @@ namespace AgileStudioServerTest.IntegrationTests
             Project? project = null, 
             BacklogItemTypeModel? backlogItemType = null,
             WorkflowState? workflowState = null,
-            Sprint? sprint = null,
+            SprintModel? sprint = null,
             Release? release = null,
             BacklogItemModel? parentBacklogItem = null)
         {
@@ -210,7 +210,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return backlogItemLinkTypeSchema;
         }
 
-        public Sprint CreateSprint(
+        public SprintModel CreateSprint(
             int? sprintNumber = null,
             Project? project = null,
             User? createdBy = null)
@@ -219,7 +219,7 @@ namespace AgileStudioServerTest.IntegrationTests
             project ??= CreateProject();
             createdBy ??= CreateUser();
 
-            var sprint = new Sprint(nextSprintNumber, project.ID)
+            var sprint = new SprintModel(nextSprintNumber, project.ID)
             {
                 CreatedByID = createdBy.ID
             };

@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.Sprints.Services.Models
 {
-    public class Sprint
+    public class SprintModel
     {
         public int ID { get; set; }
 
@@ -18,7 +18,7 @@
 
         public DateTime? EndDate { get; set; }
 
-        public Sprint(int sprintNumber, int projectId)
+        public SprintModel(int sprintNumber, int projectId)
         {
             SprintNumber = sprintNumber;
             CreatedOn = DateTime.Now;

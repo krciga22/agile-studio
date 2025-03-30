@@ -74,7 +74,7 @@ namespace AgileStudioServerTest
             services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();
             services.AddScoped<IHydrator, Projects.Services.Models.Hydrators.ProjectHydrator>();
             services.AddScoped<IHydrator, Releases.Services.Models.Hydrators.ReleaseHydrator>();
-            services.AddScoped<IHydrator, Sprints.Services.Models.Hydrators.SprintHydrator>();
+            services.AddScoped<IHydrator, Sprints.Services.Models.Hydrators.SprintModelHydrator>();
             services.AddScoped<IHydrator, Users.Services.Models.Hydrators.UserHydrator>();
             services.AddScoped<IHydrator, Workflows.Services.Models.Hydrators.WorkflowHydrator>();
             services.AddScoped<IHydrator, Workflows.Services.Models.Hydrators.WorkflowStateHydrator>();

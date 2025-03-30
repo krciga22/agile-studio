@@ -215,7 +215,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             );
         }
 
-        private List<SprintSummaryDto> HydrateSprintSummaryDtos(List<Sprint> sprints, int depth = 1)
+        private List<SprintSummaryDto> HydrateSprintSummaryDtos(List<SprintModel> sprints, int depth = 1)
         {
             List<SprintSummaryDto> dtos = new();
 
@@ -228,7 +228,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             return dtos;
         }
 
-        private SprintSummaryDto HydrateSprintSummaryDto(Sprint sprint, int depth = 1)
+        private SprintSummaryDto HydrateSprintSummaryDto(SprintModel sprint, int depth = 1)
         {
             return (SprintSummaryDto)_Hydrator.Hydrate(
                 sprint, typeof(SprintSummaryDto), depth

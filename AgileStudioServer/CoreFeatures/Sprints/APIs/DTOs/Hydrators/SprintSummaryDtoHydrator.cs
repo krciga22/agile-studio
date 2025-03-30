@@ -13,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Sprint)
+                from == typeof(SprintModel)
             ) && to == typeof(SprintSummaryDto);
         }
 
@@ -29,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Sprint? model = null;
+            SprintModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Sprint)referenceHydrator.Hydrate(
-                    from, typeof(Sprint), maxDepth, depth, referenceHydrator
+                model = (SprintModel)referenceHydrator.Hydrate(
+                    from, typeof(SprintModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Sprint)
+            else if (from is SprintModel)
             {
-                model = (Sprint)from;
+                model = (SprintModel)from;
             }
 
             object? dto = null;
@@ -65,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs.Hydrators
 
             var dto = (SprintSummaryDto)to;
 
-            if (from is Sprint)
+            if (from is SprintModel)
             {
-                var model = (Sprint)from;
+                var model = (SprintModel)from;
                 dto.ID = model.ID;
                 dto.SprintNumber = model.SprintNumber;
             }

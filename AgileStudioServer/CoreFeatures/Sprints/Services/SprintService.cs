@@ -16,7 +16,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             _Hydrator = hydrator;
         }
 
-        public virtual List<Sprint> GetByProjectId(int projectId)
+        public virtual List<SprintModel> GetByProjectId(int projectId)
         {
             List<CoreFeatures.Sprints.Repositories.Entities.Sprint> entities = _DBContext.Sprint.Where(sprint =>
                 sprint.Project.ID == projectId).ToList();
@@ -24,7 +24,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             return HydrateSprintModels(entities);
         }
 
-        public virtual Sprint? Get(int id)
+        public virtual SprintModel? Get(int id)
         {
             CoreFeatures.Sprints.Repositories.Entities.Sprint? entity = _DBContext.Sprint.Find(id);
             if (entity is null)
@@ -35,7 +35,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             return HydrateSprintModel(entity);
         }
 
-        public virtual Sprint Create(Sprint sprint)
+        public virtual SprintModel Create(SprintModel sprint)
         {
             CoreFeatures.Sprints.Repositories.Entities.Sprint entity = HydrateSprintEntity(sprint);
 
@@ -47,7 +47,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             return HydrateSprintModel(entity);
         }
 
-        public virtual Sprint Update(Sprint sprint)
+        public virtual SprintModel Update(SprintModel sprint)
         {
             CoreFeatures.Sprints.Repositories.Entities.Sprint entity = HydrateSprintEntity(sprint);
 
@@ -57,7 +57,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             return HydrateSprintModel(entity);
         }
 
-        public virtual void Delete(Sprint sprint)
+        public virtual void Delete(SprintModel sprint)
         {
             CoreFeatures.Sprints.Repositories.Entities.Sprint entity = HydrateSprintEntity(sprint);
 
@@ -79,27 +79,27 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Services
             return lastSprint?.SprintNumber ?? 0;
         }
 
-        private List<Sprint> HydrateSprintModels(List<CoreFeatures.Sprints.Repositories.Entities.Sprint> entities, int depth = 3)
+        private List<SprintModel> HydrateSprintModels(List<CoreFeatures.Sprints.Repositories.Entities.Sprint> entities, int depth = 3)
         {
-            List<Sprint> models = new();
+            List<SprintModel> models = new();
 
             entities.ForEach(entity =>
             {
-                Sprint model = HydrateSprintModel(entity, depth);
+                SprintModel model = HydrateSprintModel(entity, depth);
                 models.Add(model);
             });
 
             return models;
         }
 
-        private Sprint HydrateSprintModel(CoreFeatures.Sprints.Repositories.Entities.Sprint sprint, int depth = 3)
+        private SprintModel HydrateSprintModel(CoreFeatures.Sprints.Repositories.Entities.Sprint sprint, int depth = 3)
         {
-            return (Sprint)_Hydrator.Hydrate(
-                sprint, typeof(Sprint), depth
+            return (SprintModel)_Hydrator.Hydrate(
+                sprint, typeof(SprintModel), depth
             );
         }
 
-        private CoreFeatures.Sprints.Repositories.Entities.Sprint HydrateSprintEntity(Sprint sprint, int depth = 3)
+        private CoreFeatures.Sprints.Repositories.Entities.Sprint HydrateSprintEntity(SprintModel sprint, int depth = 3)
         {
             return (CoreFeatures.Sprints.Repositories.Entities.Sprint)_Hydrator.Hydrate(
                 sprint, typeof(CoreFeatures.Sprints.Repositories.Entities.Sprint), depth

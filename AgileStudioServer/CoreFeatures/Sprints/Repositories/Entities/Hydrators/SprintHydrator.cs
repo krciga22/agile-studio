@@ -18,7 +18,7 @@ public class SprintHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.Sprint)
+            from == typeof(Services.Models.SprintModel)
         ) && to == typeof(Sprint);
     }
 
@@ -31,9 +31,9 @@ public class SprintHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.Sprint)
+        if (from is Services.Models.SprintModel)
         {
-            var model = (Services.Models.Sprint)from;
+            var model = (Services.Models.SprintModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Sprint.Find(model.ID);
@@ -76,9 +76,9 @@ public class SprintHydrator : AbstractEntityHydrator
         var entity = (Sprint)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.Sprint)
+        if (from is Services.Models.SprintModel)
         {
-            var model = (Services.Models.Sprint)from;
+            var model = (Services.Models.SprintModel)from;
 
             entity.ID = model.ID;
             entity.SprintNumber = model.SprintNumber;

@@ -22,7 +22,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Services
         {
             int nextSprintNumber = _sprintService.GetNextSprintNumber();
             Project project = _Fixtures.CreateProject();
-            Sprint sprint = new(nextSprintNumber, project.ID);
+            SprintModel sprint = new(nextSprintNumber, project.ID);
 
             sprint = _sprintService.Create(sprint);
 
@@ -46,13 +46,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Services
         {
             var project = _Fixtures.CreateProject();
             var nextSprintNumber = _sprintService.GetNextSprintNumber();
-            var sprints = new List<Sprint>
+            var sprints = new List<SprintModel>
             {
                 _Fixtures.CreateSprint(nextSprintNumber + 1, project),
                 _Fixtures.CreateSprint(nextSprintNumber + 2,project)
             };
 
-            List<Sprint> returnedSprints = _sprintService.GetByProjectId(project.ID);
+            List<SprintModel> returnedSprints = _sprintService.GetByProjectId(project.ID);
 
             Assert.Equal(sprints.Count, returnedSprints.Count);
         }

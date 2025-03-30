@@ -12,6 +12,7 @@ using Sprints = AgileStudioServer.CoreFeatures.Sprints;
 using Users = AgileStudioServer.CoreFeatures.Users;
 using Workflows = AgileStudioServer.CoreFeatures.Workflows;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 
 namespace AgileStudioServer
 {
@@ -41,8 +42,8 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItems.APIs.DTOs.Hydrators.BacklogItemTypeSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.APIs.DTOs.Hydrators.BacklogItemTypeSchemaDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.APIs.DTOs.Hydrators.BacklogItemTypeSchemaSummaryDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.APIs.DTOs.Hydrators.BacklogItemLinkTypeDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.APIs.DTOs.Hydrators.BacklogItemLinkTypeSummaryDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, Projects.APIs.DTOs.Hydrators.ProjectDtoHydrator>();
@@ -61,7 +62,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.ChildBacklogItemTypeHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.Services.Models.Hydrators.BacklogItemLinkTypeModelHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeModelHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();
             builder.Services.AddScoped<IHydrator, Projects.Services.Models.Hydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, Releases.Services.Models.Hydrators.ReleaseHydrator>();
@@ -74,7 +75,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.BacklogItemTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.ChildBacklogItemTypeHydrator>();
-            builder.Services.AddScoped<IHydrator, BacklogItems.Repositories.Entities.Hydrators.BacklogItemLinkTypeHydrator>();
+            builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaHydrator>();
             builder.Services.AddScoped<IHydrator, Projects.Repositories.Entities.Hydrators.ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, Releases.Repositories.Entities.Hydrators.ReleaseHydrator>();
@@ -87,7 +88,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<BacklogItems.Services.BacklogItemTypeService>();
             builder.Services.AddScoped<BacklogItems.Services.BacklogItemTypeSchemaService>();
             builder.Services.AddScoped<BacklogItems.Services.ChildBacklogItemTypeService>();
-            builder.Services.AddScoped<BacklogItems.Services.BacklogItemLinkTypeService>();
+            builder.Services.AddScoped<BacklogItemLinkTypeService>();
             builder.Services.AddScoped<BacklogItemLinkTypeSchemaService>();
             builder.Services.AddScoped<Projects.Services.ProjectService>();
             builder.Services.AddScoped<Releases.Services.ReleaseService>();

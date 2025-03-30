@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models
+﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 {
     public class BacklogItemLinkTypeModel
     {

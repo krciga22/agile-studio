@@ -1,9 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 {
     public class BacklogItemLinkTypeModelHydrator : AbstractModelHydrator
     {
@@ -16,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.BacklogItemLinkType) ||
+                from == typeof(BacklogItemLinkType) ||
                 from == typeof(BacklogItemLinkTypePostDto) ||
                 from == typeof(BacklogItemLinkTypePatchDto)
             ) && to == typeof(BacklogItemLinkTypeModel);
@@ -40,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.BacklogItemLinkType)
+            if (from is BacklogItemLinkType)
             {
-                var entity = (Repositories.Entities.BacklogItemLinkType)from;
+                var entity = (BacklogItemLinkType)from;
                 model = new BacklogItemLinkTypeModel(entity.Title, entity.TitleOpposite);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -80,9 +79,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (BacklogItemLinkTypeModel)to;
 
-            if (from is Repositories.Entities.BacklogItemLinkType)
+            if (from is BacklogItemLinkType)
             {
-                var entity = (Repositories.Entities.BacklogItemLinkType)from;
+                var entity = (BacklogItemLinkType)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

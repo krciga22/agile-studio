@@ -1,6 +1,5 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
 {

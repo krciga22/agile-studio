@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
 {

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
     public class BacklogItemTypeSchemaServiceTest : AbstractServiceTest
     {

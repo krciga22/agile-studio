@@ -3,7 +3,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.ChildBacklogItemTypes
 {
     public class ChildBacklogItemTypeServiceTest : AbstractServiceTest
     {

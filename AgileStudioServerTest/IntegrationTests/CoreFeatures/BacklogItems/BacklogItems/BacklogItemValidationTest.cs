@@ -3,7 +3,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations;
 using AgileStudioServer.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs.Validations
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemValidationTest : DBTest
     {

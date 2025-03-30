@@ -3,7 +3,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemControllerTest : AbstractControllerTest
     {

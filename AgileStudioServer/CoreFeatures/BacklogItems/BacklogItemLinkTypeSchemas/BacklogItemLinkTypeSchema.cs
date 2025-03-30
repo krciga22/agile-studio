@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchema
     {

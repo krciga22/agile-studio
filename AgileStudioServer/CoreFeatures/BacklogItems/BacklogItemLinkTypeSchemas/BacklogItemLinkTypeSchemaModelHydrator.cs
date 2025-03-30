@@ -1,9 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaModelHydrator : AbstractModelHydrator
     {
@@ -16,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.BacklogItemLinkTypeSchema) ||
+                from == typeof(BacklogItemLinkTypeSchema) ||
                 from == typeof(BacklogItemLinkTypeSchemaPostDto) ||
                 from == typeof(BacklogItemLinkTypeSchemaPatchDto)
             ) && to == typeof(BacklogItemLinkTypeSchemaModel);
@@ -40,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.BacklogItemLinkTypeSchema)
+            if (from is BacklogItemLinkTypeSchema)
             {
-                var entity = (Repositories.Entities.BacklogItemLinkTypeSchema)from;
+                var entity = (BacklogItemLinkTypeSchema)from;
                 model = new BacklogItemLinkTypeSchemaModel(entity.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -80,9 +79,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services.Models.Hydrators
 
             var model = (BacklogItemLinkTypeSchemaModel)to;
 
-            if (from is Repositories.Entities.BacklogItemLinkTypeSchema)
+            if (from is BacklogItemLinkTypeSchema)
             {
-                var entity = (Repositories.Entities.BacklogItemLinkTypeSchema)from;
+                var entity = (BacklogItemLinkTypeSchema)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

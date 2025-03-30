@@ -5,6 +5,7 @@ using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

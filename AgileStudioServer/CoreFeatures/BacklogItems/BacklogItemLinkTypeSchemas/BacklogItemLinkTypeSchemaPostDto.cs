@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
-    public class BacklogItemLinkTypeSchemaPatchDto
+    public class BacklogItemLinkTypeSchemaPostDto
     {
-        [Required]
-        public int ID;
-
         [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
@@ -14,9 +11,8 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public BacklogItemLinkTypeSchemaPatchDto(int id, string title)
+        public BacklogItemLinkTypeSchemaPostDto(string title)
         {
-            ID = id;
             Title = title;
         }
     }

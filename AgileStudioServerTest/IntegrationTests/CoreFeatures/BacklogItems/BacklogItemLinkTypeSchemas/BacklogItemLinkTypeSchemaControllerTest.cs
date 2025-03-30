@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.APIs;
 using AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.APIs
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaControllerTest : AbstractControllerTest
     {

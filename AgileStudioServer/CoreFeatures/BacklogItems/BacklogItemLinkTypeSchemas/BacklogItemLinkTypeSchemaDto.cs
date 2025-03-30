@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaDto
     {

@@ -6,6 +6,7 @@ using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServer.Data
 {

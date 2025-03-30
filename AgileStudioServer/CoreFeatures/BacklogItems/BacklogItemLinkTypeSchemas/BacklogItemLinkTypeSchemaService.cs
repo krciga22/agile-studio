@@ -1,9 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using Entities = AgileStudioServer.CoreFeatures.BacklogItems.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.BacklogItems.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaService
     {
@@ -19,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemLinkTypeSchemaModel? Get(int id)
         {
-            Entities.BacklogItemLinkTypeSchema? entity = _DBContext.BacklogItemLinkTypeSchema.Find(id);
+            BacklogItemLinkTypeSchema? entity = _DBContext.BacklogItemLinkTypeSchema.Find(id);
             if (entity is null)
             {
                 return null;
@@ -32,7 +31,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemLinkTypeSchemaModel Create(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
-            Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
+            BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
             _DBContext.Add(entity);
             _DBContext.SaveChanges();
@@ -42,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual BacklogItemLinkTypeSchemaModel Update(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
-            Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
+            BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
             _DBContext.Update(entity);
             _DBContext.SaveChanges();
@@ -52,23 +51,23 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.Services
 
         public virtual void Delete(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
-            Entities.BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
+            BacklogItemLinkTypeSchema entity = HydrateBacklogItemLinkTypeSchemaEntity(backlogItemLinkTypeSchema);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
         }
 
-        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(Entities.BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 3)
+        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchema backlogItemLinkTypeSchema, int depth = 3)
         {
             return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
                 backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchemaModel), depth
             );
         }
 
-        private Entities.BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaEntity(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema, int depth = 3)
+        private BacklogItemLinkTypeSchema HydrateBacklogItemLinkTypeSchemaEntity(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema, int depth = 3)
         {
-            return (Entities.BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchema, typeof(Entities.BacklogItemLinkTypeSchema), depth
+            return (BacklogItemLinkTypeSchema)_Hydrator.Hydrate(
+                backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchema), depth
             );
         }
     }

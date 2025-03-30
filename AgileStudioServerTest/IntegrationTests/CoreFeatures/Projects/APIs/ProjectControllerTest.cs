@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.APIs;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.APIs
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 {
     public class SprintPostDto
     {

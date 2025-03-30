@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Sprints.Sprints;
 
 public class SprintHydrator : AbstractEntityHydrator
 {
@@ -18,7 +18,7 @@ public class SprintHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.SprintModel)
+            from == typeof(SprintModel)
         ) && to == typeof(Sprint);
     }
 
@@ -31,9 +31,9 @@ public class SprintHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.SprintModel)
+        if (from is SprintModel)
         {
-            var model = (Services.Models.SprintModel)from;
+            var model = (SprintModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Sprint.Find(model.ID);
@@ -76,9 +76,9 @@ public class SprintHydrator : AbstractEntityHydrator
         var entity = (Sprint)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.SprintModel)
+        if (from is SprintModel)
         {
-            var model = (Services.Models.SprintModel)from;
+            var model = (SprintModel)from;
 
             entity.ID = model.ID;
             entity.SprintNumber = model.SprintNumber;

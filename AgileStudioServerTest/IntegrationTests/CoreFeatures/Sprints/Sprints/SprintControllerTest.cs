@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Sprints.APIs;
-using AgileStudioServer.CoreFeatures.Sprints.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.APIs
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {
     public class SprintControllerTest : AbstractControllerNewTest
     {

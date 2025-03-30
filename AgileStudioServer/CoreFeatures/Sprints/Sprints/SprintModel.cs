@@ -1,9 +1,6 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
-
-namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities
+﻿namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 {
-    public class Sprint
+    public class SprintModel
     {
         public int ID { get; set; }
 
@@ -11,25 +8,21 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Repositories.Entities
 
         public int ProjectID { get; set; }
 
-        public Project Project { get; set; } = null!;
-
         public string? Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         public int? CreatedByID { get; set; } = null!;
 
-        public User? CreatedBy { get; set; } = null!;
-
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
 
-        public Sprint(int sprintNumber, int projectID)
+        public SprintModel(int sprintNumber, int projectId)
         {
             SprintNumber = sprintNumber;
             CreatedOn = DateTime.Now;
-            ProjectID = projectID;
+            ProjectID = projectId;
         }
     }
 }

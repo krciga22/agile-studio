@@ -1,9 +1,8 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Sprints.Services;
-using AgileStudioServer.CoreFeatures.Sprints.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
+using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {
     public class SprintServiceTest : AbstractServiceTest
     {

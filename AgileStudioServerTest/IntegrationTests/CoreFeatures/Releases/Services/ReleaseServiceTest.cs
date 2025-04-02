@@ -21,7 +21,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Services
         public void Create_ReturnsRelease()
         {
             Project project = _Fixtures.CreateProject();
-            Release release = new("Test Release", project.ID);
+            ReleaseModel release = new("Test Release", project.ID);
 
             release = _releaseService.Create(release);
 
@@ -44,13 +44,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Services
         public void GetAll_ReturnsAllReleases()
         {
             var project = _Fixtures.CreateProject();
-            var releases = new List<Release>
+            var releases = new List<ReleaseModel>
             {
                 _Fixtures.CreateRelease("Test Release 1", project),
                 _Fixtures.CreateRelease("Test Release 2", project)
             };
 
-            List<Release> returnedReleases = _releaseService.GetByProjectId(project.ID);
+            List<ReleaseModel> returnedReleases = _releaseService.GetByProjectId(project.ID);
 
             Assert.Equal(releases.Count, returnedReleases.Count);
         }

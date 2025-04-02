@@ -13,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Release)
+                from == typeof(ReleaseModel)
             ) && to == typeof(ReleaseSummaryDto);
         }
 
@@ -29,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Release? model = null;
+            ReleaseModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Release)referenceHydrator.Hydrate(
-                    from, typeof(Release), maxDepth, depth, referenceHydrator
+                model = (ReleaseModel)referenceHydrator.Hydrate(
+                    from, typeof(ReleaseModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Release)
+            else if (from is ReleaseModel)
             {
-                model = (Release)from;
+                model = (ReleaseModel)from;
             }
 
             object? dto = null;
@@ -65,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
 
             var dto = (ReleaseSummaryDto)to;
 
-            if (from is Release)
+            if (from is ReleaseModel)
             {
-                var model = (Release)from;
+                var model = (ReleaseModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

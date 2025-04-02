@@ -233,7 +233,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             );
         }
 
-        private List<ReleaseSummaryDto> HydrateReleaseSummaryDtos(List<Release> releases, int depth = 1)
+        private List<ReleaseSummaryDto> HydrateReleaseSummaryDtos(List<ReleaseModel> releases, int depth = 1)
         {
             List<ReleaseSummaryDto> dtos = new();
 
@@ -246,7 +246,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             return dtos;
         }
 
-        private ReleaseSummaryDto HydrateReleaseSummaryDto(Release release, int depth = 1)
+        private ReleaseSummaryDto HydrateReleaseSummaryDto(ReleaseModel release, int depth = 1)
         {
             return (ReleaseSummaryDto)_Hydrator.Hydrate(
                 release, typeof(ReleaseSummaryDto), depth

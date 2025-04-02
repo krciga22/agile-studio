@@ -18,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             _Hydrator = hydrator;
         }
 
-        public virtual List<Release> GetByProjectId(int projectId)
+        public virtual List<ReleaseModel> GetByProjectId(int projectId)
         {
             List<Entities.Release> entities = _DBContext.Release.Where(release =>
                 release.Project.ID == projectId).ToList();
@@ -26,7 +26,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             return HydrateReleaseModels(entities);
         }
 
-        public virtual Release? Get(int id)
+        public virtual ReleaseModel? Get(int id)
         {
             Entities.Release? entity = _DBContext.Release.Find(id);
             if (entity is null)
@@ -37,7 +37,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             return HydrateReleaseModel(entity);
         }
 
-        public virtual Release Create(Release release)
+        public virtual ReleaseModel Create(ReleaseModel release)
         {
             Entities.Release entity = HydrateReleaseEntity(release);
 
@@ -47,7 +47,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             return HydrateReleaseModel(entity);
         }
 
-        public virtual Release Update(Release release)
+        public virtual ReleaseModel Update(ReleaseModel release)
         {
             Entities.Release entity = HydrateReleaseEntity(release);
 
@@ -57,7 +57,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             return HydrateReleaseModel(entity);
         }
 
-        public virtual void Delete(Release release)
+        public virtual void Delete(ReleaseModel release)
         {
             Entities.Release entity = HydrateReleaseEntity(release);
 
@@ -65,27 +65,27 @@ namespace AgileStudioServer.CoreFeatures.Releases.Services
             _DBContext.SaveChanges();
         }
 
-        private List<Release> HydrateReleaseModels(List<Entities.Release> entities, int depth = 3)
+        private List<ReleaseModel> HydrateReleaseModels(List<Entities.Release> entities, int depth = 3)
         {
-            List<Release> models = new();
+            List<ReleaseModel> models = new();
 
             entities.ForEach(entity =>
             {
-                Release model = HydrateReleaseModel(entity, depth);
+                ReleaseModel model = HydrateReleaseModel(entity, depth);
                 models.Add(model);
             });
 
             return models;
         }
 
-        private Release HydrateReleaseModel(Entities.Release release, int depth = 3)
+        private ReleaseModel HydrateReleaseModel(Entities.Release release, int depth = 3)
         {
-            return (Release)_Hydrator.Hydrate(
-                release, typeof(Release), depth
+            return (ReleaseModel)_Hydrator.Hydrate(
+                release, typeof(ReleaseModel), depth
             );
         }
 
-        private Entities.Release HydrateReleaseEntity(Release release, int depth = 3)
+        private Entities.Release HydrateReleaseEntity(ReleaseModel release, int depth = 3)
         {
             return (Entities.Release)_Hydrator.Hydrate(
                 release, typeof(Entities.Release), depth

@@ -19,7 +19,7 @@ public class ReleaseHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.Release)
+            from == typeof(Services.Models.ReleaseModel)
         ) && to == typeof(Release);
     }
 
@@ -32,9 +32,9 @@ public class ReleaseHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.Release)
+        if (from is Services.Models.ReleaseModel)
         {
-            var model = (Services.Models.Release)from;
+            var model = (Services.Models.ReleaseModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Release.Find(model.ID);
@@ -77,9 +77,9 @@ public class ReleaseHydrator : AbstractEntityHydrator
         var entity = (Release)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.Release)
+        if (from is Services.Models.ReleaseModel)
         {
-            var model = (Services.Models.Release)from;
+            var model = (Services.Models.ReleaseModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

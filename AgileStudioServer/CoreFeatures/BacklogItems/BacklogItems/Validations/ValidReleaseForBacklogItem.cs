@@ -66,7 +66,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
 
             // make sure the release belongs to the same project as the backlog item
             var release = releaseService.Get(releaseId) ??
-                throw new ModelNotFoundException(nameof(Release), releaseId.ToString());
+                throw new ModelNotFoundException(nameof(ReleaseModel), releaseId.ToString());
 
             var project = projectService.Get(projectId) ??
                 throw new ModelNotFoundException(nameof(Project), projectId.ToString());

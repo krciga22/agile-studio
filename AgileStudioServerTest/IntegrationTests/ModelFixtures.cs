@@ -87,7 +87,7 @@ namespace AgileStudioServerTest.IntegrationTests
             BacklogItemTypeModel? backlogItemType = null,
             WorkflowState? workflowState = null,
             SprintModel? sprint = null,
-            Release? release = null,
+            ReleaseModel? release = null,
             BacklogItemModel? parentBacklogItem = null)
         {
             title ??= "Test BacklogItem";
@@ -226,7 +226,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return sprint;
         }
 
-        public Release CreateRelease(
+        public ReleaseModel CreateRelease(
             string? title = null,
             Project? project = null,
             User? createdBy = null)
@@ -235,7 +235,7 @@ namespace AgileStudioServerTest.IntegrationTests
             project ??= CreateProject();
             createdBy ??= CreateUser();
 
-            var release = new Release(title, project.ID)
+            var release = new ReleaseModel(title, project.ID)
             {
                 CreatedByID = createdBy.ID
             };

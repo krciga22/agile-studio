@@ -1,5 +1,4 @@
-﻿using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
@@ -11,6 +10,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 
 namespace AgileStudioServer.Data
 {

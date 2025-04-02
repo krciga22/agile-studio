@@ -2,12 +2,10 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
 
-namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {
     public class ReleaseDtoHydrator : AbstractDtoHydrator
     {

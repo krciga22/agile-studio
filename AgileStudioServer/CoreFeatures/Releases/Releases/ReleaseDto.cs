@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
 
-namespace AgileStudioServer.CoreFeatures.Releases.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {
     public class ReleaseDto
     {

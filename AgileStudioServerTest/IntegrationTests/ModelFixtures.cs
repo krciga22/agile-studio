@@ -1,6 +1,4 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Releases.Services;
-using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.CoreFeatures.Workflows.Services;
 using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services;
@@ -14,6 +12,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

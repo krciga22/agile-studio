@@ -1,9 +1,9 @@
-﻿using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+﻿using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {

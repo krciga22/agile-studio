@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Releases.APIs;
-using AgileStudioServer.CoreFeatures.Releases.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.APIs
 {

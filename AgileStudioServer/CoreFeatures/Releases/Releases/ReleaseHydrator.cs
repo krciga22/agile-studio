@@ -2,11 +2,10 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.Releases.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Repositories.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Releases.Releases;
 
 public class ReleaseHydrator : AbstractEntityHydrator
 {
@@ -19,7 +18,7 @@ public class ReleaseHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.ReleaseModel)
+            from == typeof(ReleaseModel)
         ) && to == typeof(Release);
     }
 
@@ -32,9 +31,9 @@ public class ReleaseHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.ReleaseModel)
+        if (from is ReleaseModel)
         {
-            var model = (Services.Models.ReleaseModel)from;
+            var model = (ReleaseModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Release.Find(model.ID);
@@ -77,9 +76,9 @@ public class ReleaseHydrator : AbstractEntityHydrator
         var entity = (Release)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.ReleaseModel)
+        if (from is ReleaseModel)
         {
-            var model = (Services.Models.ReleaseModel)from;
+            var model = (ReleaseModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

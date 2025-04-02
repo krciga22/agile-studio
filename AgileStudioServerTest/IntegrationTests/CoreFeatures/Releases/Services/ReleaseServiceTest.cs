@@ -1,7 +1,6 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Releases.Services;
-using AgileStudioServer.CoreFeatures.Releases.Services.Models;
 using AgileStudioServer.CoreFeatures.Projects.Services.Models;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Services
 {

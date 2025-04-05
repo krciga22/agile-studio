@@ -1,5 +1,5 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
-using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {

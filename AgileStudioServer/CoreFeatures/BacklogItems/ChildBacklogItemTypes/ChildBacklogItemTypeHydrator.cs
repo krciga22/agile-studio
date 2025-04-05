@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.Users.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes

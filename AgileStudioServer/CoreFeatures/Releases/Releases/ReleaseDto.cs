@@ -1,5 +1,5 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {

@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.Users.APIs.DTOs
+﻿namespace AgileStudioServer.CoreFeatures.Users.Users
 {
     public class UserSummaryDto
     {

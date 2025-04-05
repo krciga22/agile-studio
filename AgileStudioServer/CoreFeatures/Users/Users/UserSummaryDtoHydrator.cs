@@ -2,10 +2,8 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Users.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Users.Services.Models;
 
-namespace AgileStudioServer.CoreFeatures.Users.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.Users.Users
 {
     public class UserSummaryDtoHydrator : AbstractDtoHydrator
     {

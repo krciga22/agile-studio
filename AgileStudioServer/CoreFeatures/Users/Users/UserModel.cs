@@ -1,6 +1,6 @@
-﻿namespace AgileStudioServer.CoreFeatures.Users.Repositories.Entities
+﻿namespace AgileStudioServer.CoreFeatures.Users.Users
 {
-    public class User
+    public class UserModel
     {
         public int ID { get; set; }
 
@@ -12,7 +12,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public User(string email, string firstName, string lastName)
+        public UserModel(string email, string firstName, string lastName)
         {
             Email = email;
             FirstName = firstName;

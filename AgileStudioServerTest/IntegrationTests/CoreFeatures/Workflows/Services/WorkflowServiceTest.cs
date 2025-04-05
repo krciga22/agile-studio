@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Services
         [Fact]
         public void Create_ReturnsWorkflow()
         {
-            Workflow workflow = new("Test Workflow");
+            WorkflowModel workflow = new("Test Workflow");
 
             workflow = _workflowService.Create(workflow);
 
@@ -41,13 +41,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Services
         [Fact]
         public void GetAll_ReturnsAllWorkflows()
         {
-            var workflows = new List<Workflow>
+            var workflows = new List<WorkflowModel>
             {
                 _Fixtures.CreateWorkflow("Test Workflow 1"),
                 _Fixtures.CreateWorkflow("Test Workflow 2")
             };
 
-            List<Workflow> returnedWorkflows = _workflowService.GetAll();
+            List<WorkflowModel> returnedWorkflows = _workflowService.GetAll();
 
             Assert.Equal(workflows.Count, returnedWorkflows.Count);
         }

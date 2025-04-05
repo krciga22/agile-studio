@@ -74,7 +74,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Post(WorkflowPostDto workflowPostDto)
         {
-            Workflow model = HydrateWorkflowModel(workflowPostDto);
+            WorkflowModel model = HydrateWorkflowModel(workflowPostDto);
             model = _WorkflowService.Create(model);
 
             string workflowUrl = "";
@@ -104,13 +104,13 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             WorkflowDto dto;
             try
             {
-                Workflow model = HydrateWorkflowModel(workflowPatchDto);
+                WorkflowModel model = HydrateWorkflowModel(workflowPatchDto);
                 model = _WorkflowService.Update(model);
                 dto = HydrateWorkflowDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(Workflow)))
+                if (e.ModelClassName.Equals(nameof(WorkflowModel)))
                 {
                     return NotFound();
                 }
@@ -129,7 +129,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            Workflow? model = _WorkflowService.Get(id);
+            WorkflowModel? model = _WorkflowService.Get(id);
             if (model == null)
             {
                 return NotFound();
@@ -140,7 +140,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             return new OkResult();
         }
 
-        private List<WorkflowDto> HydrateWorkflowDtos(List<Workflow> workflows, int depth = 1)
+        private List<WorkflowDto> HydrateWorkflowDtos(List<WorkflowModel> workflows, int depth = 1)
         {
             List<WorkflowDto> dtos = new();
 
@@ -153,7 +153,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             return dtos;
         }
 
-        private WorkflowDto HydrateWorkflowDto(Workflow workflow, int depth = 1)
+        private WorkflowDto HydrateWorkflowDto(WorkflowModel workflow, int depth = 1)
         {
             return (WorkflowDto)_Hydrator.Hydrate(
                 workflow, typeof(WorkflowDto), depth
@@ -180,21 +180,21 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             );
         }
 
-        private Workflow HydrateWorkflowModel(WorkflowPostDto workflowPostDto, int depth = 3)
+        private WorkflowModel HydrateWorkflowModel(WorkflowPostDto workflowPostDto, int depth = 3)
         {
-            return (Workflow)_Hydrator.Hydrate(
-                workflowPostDto, typeof(Workflow), depth
+            return (WorkflowModel)_Hydrator.Hydrate(
+                workflowPostDto, typeof(WorkflowModel), depth
             );
         }
 
-        private Workflow HydrateWorkflowModel(WorkflowPatchDto workflowPatchDto, int depth = 3)
+        private WorkflowModel HydrateWorkflowModel(WorkflowPatchDto workflowPatchDto, int depth = 3)
         {
-            return (Workflow)_Hydrator.Hydrate(
-                workflowPatchDto, typeof(Workflow), depth
+            return (WorkflowModel)_Hydrator.Hydrate(
+                workflowPatchDto, typeof(WorkflowModel), depth
             );
         }
 
-        private void HydrateWorkflowModel(WorkflowPatchDto workflowPatchDto, Workflow workflow, int depth = 3)
+        private void HydrateWorkflowModel(WorkflowPatchDto workflowPatchDto, WorkflowModel workflow, int depth = 3)
         {
             _Hydrator.Hydrate(
                 workflowPatchDto, workflow, depth

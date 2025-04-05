@@ -6,9 +6,9 @@ using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
 {
-    public class WorkflowHydrator : AbstractModelHydrator
+    public class WorkflowModelHydrator : AbstractModelHydrator
     {
-        public WorkflowHydrator(DBContext dbContext) : base(dbContext)
+        public WorkflowModelHydrator(DBContext dbContext) : base(dbContext)
         {
 
         }
@@ -20,7 +20,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
                 from == typeof(Repositories.Entities.Workflow) ||
                 from == typeof(WorkflowPostDto) ||
                 from == typeof(WorkflowPatchDto)
-            ) && to == typeof(Workflow);
+            ) && to == typeof(WorkflowModel);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -44,13 +44,13 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
             if (from is Repositories.Entities.Workflow)
             {
                 var entity = (Repositories.Entities.Workflow)from;
-                model = new Workflow(entity.Title);
+                model = new WorkflowModel(entity.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is WorkflowPostDto)
             {
                 var dto = (WorkflowPostDto)from;
-                model = new Workflow(dto.Title);
+                model = new WorkflowModel(dto.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is WorkflowPatchDto)
@@ -59,7 +59,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
                 var entity = _DBContext.Workflow.Find(dto.ID);
                 if (entity != null)
                 {
-                    model = Hydrate(entity, typeof(Workflow), maxDepth, depth, referenceHydrator);
+                    model = Hydrate(entity, typeof(WorkflowModel), maxDepth, depth, referenceHydrator);
                     Hydrate(dto, model, maxDepth, depth, referenceHydrator);
                 }
             }
@@ -79,7 +79,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var model = (Workflow)to;
+            var model = (WorkflowModel)to;
 
             if (from is Repositories.Entities.Workflow)
             {

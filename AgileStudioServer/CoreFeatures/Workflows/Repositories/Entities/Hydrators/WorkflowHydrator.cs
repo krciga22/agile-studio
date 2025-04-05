@@ -18,7 +18,7 @@ public class WorkflowHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.Workflow)
+            from == typeof(Services.Models.WorkflowModel)
         ) && to == typeof(Workflow);
     }
 
@@ -31,9 +31,9 @@ public class WorkflowHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.Workflow)
+        if (from is Services.Models.WorkflowModel)
         {
-            var model = (Services.Models.Workflow)from;
+            var model = (Services.Models.WorkflowModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Workflow.Find(model.ID);
@@ -76,9 +76,9 @@ public class WorkflowHydrator : AbstractEntityHydrator
         var entity = (Workflow)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.Workflow)
+        if (from is Services.Models.WorkflowModel)
         {
-            var model = (Services.Models.Workflow)from;
+            var model = (Services.Models.WorkflowModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

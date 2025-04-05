@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models
 {
-    public class Workflow
+    public class WorkflowModel
     {
         public int ID { get; set; }
 
@@ -12,7 +12,7 @@
 
         public int? CreatedById { get; set; } = null!;
 
-        public Workflow(string title)
+        public WorkflowModel(string title)
         {
             Title = title;
             CreatedOn = DateTime.Now;

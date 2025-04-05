@@ -14,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Workflow)
+                from == typeof(WorkflowModel)
             ) && to == typeof(WorkflowDto);
         }
 
@@ -30,16 +30,16 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Workflow? model = null;
+            WorkflowModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Workflow)referenceHydrator.Hydrate(
-                    from, typeof(Workflow), maxDepth, depth, referenceHydrator
+                model = (WorkflowModel)referenceHydrator.Hydrate(
+                    from, typeof(WorkflowModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Workflow)
+            else if (from is WorkflowModel)
             {
-                model = (Workflow)from;
+                model = (WorkflowModel)from;
             }
 
             object? dto = null;
@@ -67,9 +67,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
             var dto = (WorkflowDto)to;
             int nextDepth = depth + 1;
 
-            if (from is Workflow)
+            if (from is WorkflowModel)
             {
-                var model = (Workflow)from;
+                var model = (WorkflowModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
                 dto.Description = model.Description;

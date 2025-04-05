@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             _Hydrator = hydrator;
         }
 
-        public virtual User? Get(int id)
+        public virtual UserModel? Get(int id)
         {
             Entities.User? entity = _DBContext.User.Find(id);
             if (entity is null)
@@ -28,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             return HydrateUserModel(entity);
         }
 
-        public virtual User Create(User user)
+        public virtual UserModel Create(UserModel user)
         {
             Entities.User entity = HydrateUserEntity(user);
 
@@ -38,7 +38,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             return HydrateUserModel(entity);
         }
 
-        public virtual User Update(User user)
+        public virtual UserModel Update(UserModel user)
         {
             Entities.User entity = HydrateUserEntity(user);
 
@@ -48,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             return HydrateUserModel(entity);
         }
 
-        public virtual void Delete(User user)
+        public virtual void Delete(UserModel user)
         {
             Entities.User entity = HydrateUserEntity(user);
 
@@ -56,27 +56,27 @@ namespace AgileStudioServer.CoreFeatures.Users.Services
             _DBContext.SaveChanges();
         }
 
-        private List<User> HydrateUserModels(List<Entities.User> entities, int depth = 3)
+        private List<UserModel> HydrateUserModels(List<Entities.User> entities, int depth = 3)
         {
-            List<User> models = new();
+            List<UserModel> models = new();
 
             entities.ForEach(entity =>
             {
-                User model = HydrateUserModel(entity, depth);
+                UserModel model = HydrateUserModel(entity, depth);
                 models.Add(model);
             });
 
             return models;
         }
 
-        private User HydrateUserModel(Entities.User user, int depth = 3)
+        private UserModel HydrateUserModel(Entities.User user, int depth = 3)
         {
-            return (User)_Hydrator.Hydrate(
-                user, typeof(User), depth
+            return (UserModel)_Hydrator.Hydrate(
+                user, typeof(UserModel), depth
             );
         }
 
-        private Entities.User HydrateUserEntity(User user, int depth = 3)
+        private Entities.User HydrateUserEntity(UserModel user, int depth = 3)
         {
             return (Entities.User)_Hydrator.Hydrate(
                 user, typeof(Entities.User), depth

@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Services
         [Fact]
         public void Create_ReturnsUser()
         {
-            User user = new("test@test.com", "Test", "User");
+            UserModel user = new("test@test.com", "Test", "User");
 
             user = _userService.Create(user);
 

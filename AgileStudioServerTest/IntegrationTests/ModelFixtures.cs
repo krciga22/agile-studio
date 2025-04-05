@@ -65,7 +65,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public Project CreateProject(
             string? title = null, 
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test Project";
             backlogItemTypeSchema ??= CreateBacklogItemTypeSchema();
@@ -81,7 +81,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public BacklogItemModel CreateBacklogItem(
             string? title = null,
-            User? createdBy = null, 
+            UserModel? createdBy = null, 
             Project? project = null, 
             BacklogItemTypeModel? backlogItemType = null,
             WorkflowState? workflowState = null,
@@ -125,7 +125,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public BacklogItemTypeSchemaModel CreateBacklogItemTypeSchema(
             string? title = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test BacklogItemTypeSchema";
             createdBy ??= CreateUser();
@@ -140,7 +140,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public BacklogItemTypeModel CreateBacklogItemType(
             string? title = null,
-            User? createdBy = null,
+            UserModel? createdBy = null,
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
             Workflow? workflow = null)
         {
@@ -161,7 +161,7 @@ namespace AgileStudioServerTest.IntegrationTests
             BacklogItemTypeModel? parentType = null,
             BacklogItemTypeModel? childType = null,
             BacklogItemTypeSchemaModel? schema = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             schema ??= CreateBacklogItemTypeSchema();
             parentType ??= CreateBacklogItemType("Story", backlogItemTypeSchema: schema);
@@ -179,7 +179,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public BacklogItemLinkTypeModel CreateBacklogItemLinkType(
             string? title = null,
             string? titleOpposite = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test BacklogItemLinkType";
             titleOpposite ??= "Test BacklogItemLinkTypeOpposite";
@@ -195,7 +195,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public BacklogItemLinkTypeSchemaModel CreateBacklogItemLinkTypeSchema(
             string? title = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test BacklogItemLinkTypeSchema";
             createdBy ??= CreateUser();
@@ -211,7 +211,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public SprintModel CreateSprint(
             int? sprintNumber = null,
             Project? project = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             int nextSprintNumber = sprintNumber ?? 1;
             project ??= CreateProject();
@@ -228,7 +228,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public ReleaseModel CreateRelease(
             string? title = null,
             Project? project = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "v1.0.0";
             project ??= CreateProject();
@@ -244,7 +244,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public Workflow CreateWorkflow(
             string? title = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test Workflow";
             createdBy ??= CreateUser();
@@ -260,7 +260,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public WorkflowState CreateWorkflowState(
             string? title = null,
             Workflow? workflow = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test Workflow";
             workflow ??= CreateWorkflow();
@@ -274,7 +274,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return workflowState;
         }
 
-        public User CreateUser(
+        public UserModel CreateUser(
             string? email = null,
             string? firstName = null,
             string? lastName = null)
@@ -283,7 +283,7 @@ namespace AgileStudioServerTest.IntegrationTests
             lastName ??= "User";
             email ??= "testuser@local.agilestudio.dev";
 
-            var user = new User(email, firstName, lastName);
+            var user = new UserModel(email, firstName, lastName);
             user = _userService.Create(user);
             return user;
         }

@@ -5,9 +5,9 @@ using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
 {
-    public class UserHydrator : AbstractModelHydrator
+    public class UserModelHydrator : AbstractModelHydrator
     {
-        public UserHydrator(DBContext dbContext) : base(dbContext)
+        public UserModelHydrator(DBContext dbContext) : base(dbContext)
         {
 
         }
@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
             return (
                 from == typeof(int) ||
                 from == typeof(Repositories.Entities.User)
-            ) && to == typeof(User);
+            ) && to == typeof(UserModel);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -41,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
             if (from is Repositories.Entities.User)
             {
                 var entity = (Repositories.Entities.User)from;
-                model = new User(entity.Email, entity.FirstName, entity.LastName);
+                model = new UserModel(entity.Email, entity.FirstName, entity.LastName);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
@@ -60,10 +60,10 @@ namespace AgileStudioServer.CoreFeatures.Users.Services.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            if (from is Repositories.Entities.User && to is User)
+            if (from is Repositories.Entities.User && to is UserModel)
             {
                 var entity = (Repositories.Entities.User)from;
-                var model = (User)to;
+                var model = (UserModel)to;
 
                 model.ID = entity.ID;
                 model.Email = entity.Email;

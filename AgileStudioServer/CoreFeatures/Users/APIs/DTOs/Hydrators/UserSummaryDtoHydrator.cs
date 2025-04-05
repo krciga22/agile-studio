@@ -13,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Users.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(User)
+                from == typeof(UserModel)
             ) && to == typeof(UserSummaryDto);
         }
 
@@ -29,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Users.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            User? model = null;
+            UserModel? model = null;
             if (from is int)
             {
-                model = (User)referenceHydrator.Hydrate(
-                    from, typeof(User), maxDepth, depth, referenceHydrator
+                model = (UserModel)referenceHydrator.Hydrate(
+                    from, typeof(UserModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is User)
+            else if (from is UserModel)
             {
-                model = (User)from;
+                model = (UserModel)from;
             }
 
             object? dto = null;
@@ -65,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Users.APIs.DTOs.Hydrators
 
             var dto = (UserSummaryDto)to;
 
-            if (from is User)
+            if (from is UserModel)
             {
-                var model = (User)from;
+                var model = (UserModel)from;
                 dto.ID = model.ID;
                 dto.FirstName = model.FirstName;
                 dto.LastName = model.LastName;

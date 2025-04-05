@@ -18,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrato
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Services.Models.WorkflowState)
+                from == typeof(Services.Models.WorkflowStateModel)
             ) && to == typeof(WorkflowState);
         }
 
@@ -31,9 +31,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrato
 
             object? entity = null;
 
-            if (from is Services.Models.WorkflowState)
+            if (from is Services.Models.WorkflowStateModel)
             {
-                var model = (Services.Models.WorkflowState)from;
+                var model = (Services.Models.WorkflowStateModel)from;
                 if (model.ID > 0)
                 {
                     entity = _DBContext.WorkflowState.Find(model.ID);
@@ -76,9 +76,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrato
             var entity = (WorkflowState)to;
             int nextDepth = depth + 1;
 
-            if (from is Services.Models.WorkflowState)
+            if (from is Services.Models.WorkflowStateModel)
             {
-                var model = (Services.Models.WorkflowState)from;
+                var model = (Services.Models.WorkflowStateModel)from;
 
                 entity.ID = model.ID;
                 entity.Title = model.Title;

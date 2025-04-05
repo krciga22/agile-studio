@@ -20,7 +20,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Services
         public void Create_ReturnsWorkflowState()
         {
             Workflow workflow = _Fixtures.CreateWorkflow();
-            WorkflowState workflowState = new("Test WorkflowState", workflow.ID);
+            WorkflowStateModel workflowState = new("Test WorkflowState", workflow.ID);
 
             workflowState = _workflowStateService.Create(workflowState);
 
@@ -43,13 +43,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Services
         public void GetByWorkflowId_ReturnsWorkflowStates()
         {
             var workflow = _Fixtures.CreateWorkflow();
-            var workflowStates = new List<WorkflowState>
+            var workflowStates = new List<WorkflowStateModel>
             {
                 _Fixtures.CreateWorkflowState("Test WorkflowState 1", workflow: workflow),
                 _Fixtures.CreateWorkflowState("Test WorkflowState 2", workflow: workflow)
             };
 
-            List<WorkflowState> returnedWorkflowStates = _workflowStateService
+            List<WorkflowStateModel> returnedWorkflowStates = _workflowStateService
                 .GetByWorkflowId(workflow.ID);
 
             Assert.Equal(workflowStates.Count, returnedWorkflowStates.Count);

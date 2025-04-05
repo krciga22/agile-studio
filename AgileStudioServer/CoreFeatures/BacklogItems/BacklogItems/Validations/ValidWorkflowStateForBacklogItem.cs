@@ -56,7 +56,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
             // make sure the workflow state belongs to the same workflow associated with the backlog item's type
 
             var workflowState = workflowStateService.Get(workflowStateId) ??
-                    throw new ModelNotFoundException(nameof(WorkflowState), workflowStateId.ToString());
+                    throw new ModelNotFoundException(nameof(WorkflowStateModel), workflowStateId.ToString());
 
             var backlogItemType = backlogItemTypeService.Get(backlogItemTypeId) ??
                     throw new ModelNotFoundException(nameof(BacklogItemTypeModel), backlogItemTypeId.ToString());

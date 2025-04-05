@@ -24,7 +24,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         {
             Project project = _Fixtures.CreateProject();
             BacklogItemTypeModel backlogItemType = _Fixtures.CreateBacklogItemType();
-            WorkflowState workflowState = _Fixtures.CreateWorkflowState();
+            WorkflowStateModel workflowState = _Fixtures.CreateWorkflowState();
 
             BacklogItemModel backlogItem = new(
                 "Test BacklogItem",

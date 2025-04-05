@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models
 {
-    public class WorkflowState
+    public class WorkflowStateModel
     {
         public int ID { get; set; }
 
@@ -17,7 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models
 
         public int? CreatedById { get; set; } = null!;
 
-        public WorkflowState(string title, int workflowId)
+        public WorkflowStateModel(string title, int workflowId)
         {
             Title = title;
             WorkflowId = workflowId;

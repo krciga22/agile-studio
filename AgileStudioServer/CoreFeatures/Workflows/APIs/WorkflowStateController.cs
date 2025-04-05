@@ -74,13 +74,13 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             WorkflowStateDto dto;
             try
             {
-                WorkflowState model = HydrateWorkflowStateModel(workflowStatePatchDto);
+                WorkflowStateModel model = HydrateWorkflowStateModel(workflowStatePatchDto);
                 model = _WorkflowStateService.Update(model);
                 dto = HydrateWorkflowStateDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(WorkflowState)))
+                if (e.ModelClassName.Equals(nameof(WorkflowStateModel)))
                 {
                     return NotFound();
                 }
@@ -110,24 +110,24 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             return new OkResult();
         }
 
-        private WorkflowStateDto HydrateWorkflowStateDto(WorkflowState workflowState, int depth = 1)
+        private WorkflowStateDto HydrateWorkflowStateDto(WorkflowStateModel workflowState, int depth = 1)
         {
             return (WorkflowStateDto)_Hydrator.Hydrate(
                 workflowState, typeof(WorkflowStateDto), depth
             );
         }
 
-        private WorkflowState HydrateWorkflowStateModel(WorkflowStatePostDto workflowStatePostDto, int depth = 3)
+        private WorkflowStateModel HydrateWorkflowStateModel(WorkflowStatePostDto workflowStatePostDto, int depth = 3)
         {
-            return (WorkflowState)_Hydrator.Hydrate(
-                workflowStatePostDto, typeof(WorkflowState), depth
+            return (WorkflowStateModel)_Hydrator.Hydrate(
+                workflowStatePostDto, typeof(WorkflowStateModel), depth
             );
         }
 
-        private WorkflowState HydrateWorkflowStateModel(WorkflowStatePatchDto workflowStatePatchDto, int depth = 3)
+        private WorkflowStateModel HydrateWorkflowStateModel(WorkflowStatePatchDto workflowStatePatchDto, int depth = 3)
         {
-            return (WorkflowState)_Hydrator.Hydrate(
-                workflowStatePatchDto, typeof(WorkflowState), depth
+            return (WorkflowStateModel)_Hydrator.Hydrate(
+                workflowStatePatchDto, typeof(WorkflowStateModel), depth
             );
         }
     }

@@ -160,7 +160,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             );
         }
 
-        private List<WorkflowStateDto> HydrateWorkflowStateDtos(List<WorkflowState> workflowStates, int depth = 1)
+        private List<WorkflowStateDto> HydrateWorkflowStateDtos(List<WorkflowStateModel> workflowStates, int depth = 1)
         {
             List<WorkflowStateDto> dtos = new();
 
@@ -173,7 +173,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.APIs
             return dtos;
         }
 
-        private WorkflowStateDto HydrateWorkflowStateDto(WorkflowState workflowState, int depth = 1)
+        private WorkflowStateDto HydrateWorkflowStateDto(WorkflowStateModel workflowState, int depth = 1)
         {
             return (WorkflowStateDto)_Hydrator.Hydrate(
                 workflowState, typeof(WorkflowStateDto), depth

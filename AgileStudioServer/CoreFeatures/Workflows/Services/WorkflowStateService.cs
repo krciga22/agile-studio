@@ -16,7 +16,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             _Hydrator = hydrator;
         }
 
-        public virtual List<WorkflowState> GetByWorkflowId(int workflowId)
+        public virtual List<WorkflowStateModel> GetByWorkflowId(int workflowId)
         {
             List<Entities.WorkflowState> entities = _DBContext.WorkflowState.
                 Where(x => x.Workflow.ID == workflowId).ToList();
@@ -24,7 +24,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             return HydrateWorkflowStateModels(entities);
         }
 
-        public virtual WorkflowState? Get(int id)
+        public virtual WorkflowStateModel? Get(int id)
         {
             Entities.WorkflowState? entity = _DBContext.WorkflowState.Find(id);
             if (entity is null)
@@ -35,7 +35,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             return HydrateWorkflowStateModel(entity);
         }
 
-        public virtual WorkflowState Create(WorkflowState workflowState)
+        public virtual WorkflowStateModel Create(WorkflowStateModel workflowState)
         {
             Entities.WorkflowState entity = HydrateWorkflowStateEntity(workflowState);
 
@@ -45,7 +45,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             return HydrateWorkflowStateModel(entity);
         }
 
-        public virtual WorkflowState Update(WorkflowState workflowState)
+        public virtual WorkflowStateModel Update(WorkflowStateModel workflowState)
         {
             Entities.WorkflowState entity = HydrateWorkflowStateEntity(workflowState);
 
@@ -55,7 +55,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             return HydrateWorkflowStateModel(entity);
         }
 
-        public virtual void Delete(WorkflowState workflowState)
+        public virtual void Delete(WorkflowStateModel workflowState)
         {
             Entities.WorkflowState entity = HydrateWorkflowStateEntity(workflowState);
 
@@ -63,27 +63,27 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Services
             _DBContext.SaveChanges();
         }
 
-        private List<WorkflowState> HydrateWorkflowStateModels(List<Entities.WorkflowState> entities, int depth = 3)
+        private List<WorkflowStateModel> HydrateWorkflowStateModels(List<Entities.WorkflowState> entities, int depth = 3)
         {
-            List<WorkflowState> models = new();
+            List<WorkflowStateModel> models = new();
 
             entities.ForEach(entity =>
             {
-                WorkflowState model = HydrateWorkflowStateModel(entity, depth);
+                WorkflowStateModel model = HydrateWorkflowStateModel(entity, depth);
                 models.Add(model);
             });
 
             return models;
         }
 
-        private WorkflowState HydrateWorkflowStateModel(Entities.WorkflowState workflowState, int depth = 3)
+        private WorkflowStateModel HydrateWorkflowStateModel(Entities.WorkflowState workflowState, int depth = 3)
         {
-            return (WorkflowState)_Hydrator.Hydrate(
-                workflowState, typeof(WorkflowState), depth
+            return (WorkflowStateModel)_Hydrator.Hydrate(
+                workflowState, typeof(WorkflowStateModel), depth
             );
         }
 
-        private Entities.WorkflowState HydrateWorkflowStateEntity(WorkflowState workflowState, int depth = 3)
+        private Entities.WorkflowState HydrateWorkflowStateEntity(WorkflowStateModel workflowState, int depth = 3)
         {
             return (Entities.WorkflowState)_Hydrator.Hydrate(
                 workflowState, typeof(Entities.WorkflowState), depth

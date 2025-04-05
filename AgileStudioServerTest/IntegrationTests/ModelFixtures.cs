@@ -83,7 +83,7 @@ namespace AgileStudioServerTest.IntegrationTests
             UserModel? createdBy = null, 
             Project? project = null, 
             BacklogItemTypeModel? backlogItemType = null,
-            WorkflowState? workflowState = null,
+            WorkflowStateModel? workflowState = null,
             SprintModel? sprint = null,
             ReleaseModel? release = null,
             BacklogItemModel? parentBacklogItem = null)
@@ -256,7 +256,7 @@ namespace AgileStudioServerTest.IntegrationTests
             return workflow;
         }
 
-        public WorkflowState CreateWorkflowState(
+        public WorkflowStateModel CreateWorkflowState(
             string? title = null,
             Workflow? workflow = null,
             UserModel? createdBy = null)
@@ -265,7 +265,7 @@ namespace AgileStudioServerTest.IntegrationTests
             workflow ??= CreateWorkflow();
             createdBy ??= CreateUser();
 
-            var workflowState = new WorkflowState(title, workflow.ID)
+            var workflowState = new WorkflowStateModel(title, workflow.ID)
             {
                 CreatedById = createdBy.ID
             };

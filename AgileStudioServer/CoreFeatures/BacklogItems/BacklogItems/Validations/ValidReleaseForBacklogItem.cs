@@ -1,7 +1,6 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.Projects.Services;
-using AgileStudioServer.CoreFeatures.Projects.Services.Models;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using System.ComponentModel.DataAnnotations;
 

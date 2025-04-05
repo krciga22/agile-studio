@@ -2,21 +2,17 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Projects.Services.Models;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
-    public class ProjectDtoHydrator : AbstractDtoHydrator
+    public class ProjectSummaryDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
                 from == typeof(ProjectModel)
-            ) && to == typeof(ProjectDto);
+            ) && to == typeof(ProjectSummaryDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -32,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
             }
 
             ProjectModel? model = null;
-            if (from is int)
+            if (from is int && referenceHydrator != null)
             {
                 model = (ProjectModel)referenceHydrator.Hydrate(
                     from, typeof(ProjectModel), maxDepth, depth, referenceHydrator
@@ -46,11 +42,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
             object? dto = null;
             if (model != null)
             {
-                var backlogItemTypeSchemaSummaryDto = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
-                    model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
-                );
-
-                dto = new ProjectDto(model.ID, model.Title, model.CreatedOn, backlogItemTypeSchemaSummaryDto);
+                dto = new ProjectSummaryDto(model.ID, model.Title);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -69,30 +61,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (ProjectDto)to;
-            int nextDepth = depth + 1;
+            var dto = (ProjectSummaryDto)to;
 
             if (from is ProjectModel)
             {
                 var model = (ProjectModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
-                dto.Description = model.Description;
-                dto.CreatedOn = model.CreatedOn;
-
-                if (referenceHydrator != null && nextDepth <= maxDepth)
-                {
-                    dto.BacklogItemTypeSchema = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
-                        model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
-                    );
-
-                    if (model.CreatedByID != null)
-                    {
-                        dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(
-                            model.CreatedByID, typeof(UserSummaryDto), maxDepth, depth
-                        );
-                    }
-                }
             }
         }
     }

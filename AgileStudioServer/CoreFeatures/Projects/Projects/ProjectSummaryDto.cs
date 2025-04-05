@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs
+﻿namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
     public class ProjectSummaryDto
     {

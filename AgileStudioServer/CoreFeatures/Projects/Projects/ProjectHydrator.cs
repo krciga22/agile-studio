@@ -2,11 +2,10 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Projects.Repositories.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Projects.Projects;
 
 public class ProjectHydrator : AbstractEntityHydrator
 {
@@ -19,7 +18,7 @@ public class ProjectHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.ProjectModel)
+            from == typeof(ProjectModel)
         ) && to == typeof(Project);
     }
 
@@ -32,9 +31,9 @@ public class ProjectHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.ProjectModel)
+        if (from is ProjectModel)
         {
-            var model = (Services.Models.ProjectModel)from;
+            var model = (ProjectModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Project.Find(model.ID);
@@ -77,9 +76,9 @@ public class ProjectHydrator : AbstractEntityHydrator
         var entity = (Project)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.ProjectModel)
+        if (from is ProjectModel)
         {
-            var model = (Services.Models.ProjectModel)from;
+            var model = (ProjectModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

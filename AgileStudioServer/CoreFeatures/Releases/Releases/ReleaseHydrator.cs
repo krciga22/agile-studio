@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 

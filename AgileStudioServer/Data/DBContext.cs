@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AgileStudioServer.CoreFeatures.Projects.Repositories.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
@@ -12,6 +11,7 @@ using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServer.Data
 {

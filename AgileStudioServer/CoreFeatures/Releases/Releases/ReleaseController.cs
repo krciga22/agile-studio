@@ -1,6 +1,6 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.Services;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

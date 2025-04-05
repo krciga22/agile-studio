@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Projects.Services.Models;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
+namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
     public class ProjectModelHydrator : AbstractModelHydrator
     {
@@ -17,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Repositories.Entities.Project) ||
+                from == typeof(Project) ||
                 from == typeof(ProjectPostDto) ||
                 from == typeof(ProjectPatchDto)
             ) && to == typeof(ProjectModel);
@@ -41,9 +39,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
                 }
             }
 
-            if (from is Repositories.Entities.Project)
+            if (from is Project)
             {
-                var entity = (Repositories.Entities.Project)from;
+                var entity = (Project)from;
                 model = new ProjectModel(entity.Title, entity.BacklogItemTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -81,9 +79,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
 
             var model = (ProjectModel)to;
 
-            if (from is Repositories.Entities.Project)
+            if (from is Project)
             {
-                var entity = (Repositories.Entities.Project)from;
+                var entity = (Project)from;
 
                 model.ID = entity.ID;
                 model.Title = entity.Title;

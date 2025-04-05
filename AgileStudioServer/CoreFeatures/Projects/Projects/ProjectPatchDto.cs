@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
     public class ProjectPatchDto
     {

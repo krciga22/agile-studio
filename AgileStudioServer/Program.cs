@@ -22,6 +22,7 @@ using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServer
 {
@@ -55,8 +56,8 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaDtoHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaSummaryDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, Projects.APIs.DTOs.Hydrators.ProjectDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, Projects.APIs.DTOs.Hydrators.ProjectSummaryDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, ProjectDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, ProjectSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, ReleaseDtoHydrator>();
             builder.Services.AddScoped<IHydrator, ReleaseSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, SprintDtoHydrator>();
@@ -73,7 +74,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ChildBacklogItemTypeModelHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeModelHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();
-            builder.Services.AddScoped<IHydrator, Projects.Services.Models.Hydrators.ProjectModelHydrator>();
+            builder.Services.AddScoped<IHydrator, ProjectModelHydrator>();
             builder.Services.AddScoped<IHydrator, ReleaseModelHydrator>();
             builder.Services.AddScoped<IHydrator, SprintModelHydrator>();
             builder.Services.AddScoped<IHydrator, UserModelHydrator>();
@@ -86,7 +87,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ChildBacklogItemTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeHydrator>();
             builder.Services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaHydrator>();
-            builder.Services.AddScoped<IHydrator, Projects.Repositories.Entities.Hydrators.ProjectHydrator>();
+            builder.Services.AddScoped<IHydrator, ProjectHydrator>();
             builder.Services.AddScoped<IHydrator, ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, SprintHydrator>();
             builder.Services.AddScoped<IHydrator, UserHydrator>();
@@ -99,7 +100,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<ChildBacklogItemTypeService>();
             builder.Services.AddScoped<BacklogItemLinkTypeService>();
             builder.Services.AddScoped<BacklogItemLinkTypeSchemaService>();
-            builder.Services.AddScoped<Projects.Services.ProjectService>();
+            builder.Services.AddScoped<ProjectService>();
             builder.Services.AddScoped<ReleaseService>();
             builder.Services.AddScoped<SprintService>();
             builder.Services.AddScoped<UserService>();

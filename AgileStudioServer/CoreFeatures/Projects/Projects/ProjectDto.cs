@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
     public class ProjectDto
     {

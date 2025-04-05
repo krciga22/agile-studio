@@ -6,9 +6,9 @@ using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
 {
-    public class ProjectHydrator : AbstractModelHydrator
+    public class ProjectModelHydrator : AbstractModelHydrator
     {
-        public ProjectHydrator(DBContext dbContext) : base(dbContext)
+        public ProjectModelHydrator(DBContext dbContext) : base(dbContext)
         {
 
         }
@@ -20,7 +20,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
                 from == typeof(Repositories.Entities.Project) ||
                 from == typeof(ProjectPostDto) ||
                 from == typeof(ProjectPatchDto)
-            ) && to == typeof(Project);
+            ) && to == typeof(ProjectModel);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -44,13 +44,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
             if (from is Repositories.Entities.Project)
             {
                 var entity = (Repositories.Entities.Project)from;
-                model = new Project(entity.Title, entity.BacklogItemTypeSchemaID);
+                model = new ProjectModel(entity.Title, entity.BacklogItemTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPostDto)
             {
                 var dto = (ProjectPostDto)from;
-                model = new Project(dto.Title, dto.BacklogItemTypeSchemaId);
+                model = new ProjectModel(dto.Title, dto.BacklogItemTypeSchemaId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPatchDto)
@@ -59,7 +59,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
                 var entity = _DBContext.Project.Find(dto.ID);
                 if (entity != null)
                 {
-                    model = Hydrate(entity, typeof(Project), maxDepth, depth, referenceHydrator);
+                    model = Hydrate(entity, typeof(ProjectModel), maxDepth, depth, referenceHydrator);
                     Hydrate(dto, model, maxDepth, depth, referenceHydrator);
                 }
             }
@@ -79,7 +79,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models.Hydrators
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var model = (Project)to;
+            var model = (ProjectModel)to;
 
             if (from is Repositories.Entities.Project)
             {

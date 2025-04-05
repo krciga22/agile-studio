@@ -21,7 +21,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Services
         public void Create_ReturnsProject()
         {
             BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
-            Project project = new("Test Project", schema.ID);
+            ProjectModel project = new("Test Project", schema.ID);
 
             project = _projectService.Create(project);
 
@@ -43,13 +43,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Services
         [Fact]
         public void GetAll_ReturnsAllProjects()
         {
-            var projects = new List<Project>
+            var projects = new List<ProjectModel>
             {
                 _Fixtures.CreateProject("Test Project 1"),
                 _Fixtures.CreateProject("Test Project 2")
             };
 
-            List<Project> returnedProjects = _projectService.GetAll();
+            List<ProjectModel> returnedProjects = _projectService.GetAll();
 
             Assert.Equal(projects.Count, returnedProjects.Count);
         }

@@ -68,7 +68,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
                 throw new ModelNotFoundException(nameof(SprintModel), sprintId.ToString());
 
             var project = projectService.Get(projectId) ??
-                throw new ModelNotFoundException(nameof(Project), projectId.ToString());
+                throw new ModelNotFoundException(nameof(ProjectModel), projectId.ToString());
 
             if (sprint.ProjectID == project.ID)
             {

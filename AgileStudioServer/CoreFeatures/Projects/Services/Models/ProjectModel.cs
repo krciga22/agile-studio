@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.CoreFeatures.Projects.Services.Models
 {
-    public class Project
+    public class ProjectModel
     {
         public int ID { get; set; }
 
@@ -16,7 +16,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Services.Models
 
         public int BacklogItemTypeSchemaID { get; set; }
 
-        public Project(string title, int backlogItemTypeSchemaID)
+        public ProjectModel(string title, int backlogItemTypeSchemaID)
         {
             Title = title;
             CreatedOn = DateTime.Now;

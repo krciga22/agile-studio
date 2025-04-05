@@ -19,7 +19,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Services
         [Fact]
         public void Create_ReturnsRelease()
         {
-            Project project = _Fixtures.CreateProject();
+            ProjectModel project = _Fixtures.CreateProject();
             ReleaseModel release = new("Test Release", project.ID);
 
             release = _releaseService.Create(release);

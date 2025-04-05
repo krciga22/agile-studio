@@ -13,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
         {
             return (
                 from == typeof(int) ||
-                from == typeof(Project)
+                from == typeof(ProjectModel)
             ) && to == typeof(ProjectSummaryDto);
         }
 
@@ -29,16 +29,16 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            Project? model = null;
+            ProjectModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (Project)referenceHydrator.Hydrate(
-                    from, typeof(Project), maxDepth, depth, referenceHydrator
+                model = (ProjectModel)referenceHydrator.Hydrate(
+                    from, typeof(ProjectModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is Project)
+            else if (from is ProjectModel)
             {
-                model = (Project)from;
+                model = (ProjectModel)from;
             }
 
             object? dto = null;
@@ -65,9 +65,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs.DTOs.Hydrators
 
             var dto = (ProjectSummaryDto)to;
 
-            if (from is Project)
+            if (from is ProjectModel)
             {
-                var model = (Project)from;
+                var model = (ProjectModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
             }

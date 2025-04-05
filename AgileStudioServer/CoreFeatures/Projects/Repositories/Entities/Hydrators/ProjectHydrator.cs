@@ -19,7 +19,7 @@ public class ProjectHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.Project)
+            from == typeof(Services.Models.ProjectModel)
         ) && to == typeof(Project);
     }
 
@@ -32,9 +32,9 @@ public class ProjectHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.Project)
+        if (from is Services.Models.ProjectModel)
         {
-            var model = (Services.Models.Project)from;
+            var model = (Services.Models.ProjectModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Project.Find(model.ID);
@@ -77,9 +77,9 @@ public class ProjectHydrator : AbstractEntityHydrator
         var entity = (Project)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.Project)
+        if (from is Services.Models.ProjectModel)
         {
-            var model = (Services.Models.Project)from;
+            var model = (Services.Models.ProjectModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

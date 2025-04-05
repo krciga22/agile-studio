@@ -105,7 +105,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(ProjectPostDto projectPostDto)
         {
-            Project model = HydrateProjectModel(projectPostDto);
+            ProjectModel model = HydrateProjectModel(projectPostDto);
             model = _ProjectService.Create(model);
 
             string projectUrl = "";
@@ -135,13 +135,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             ProjectDto dto;
             try
             {
-                Project model = HydrateProjectModel(projectPatchDto);
+                ProjectModel model = HydrateProjectModel(projectPatchDto);
                 model = _ProjectService.Update(model);
                 dto = HydrateProjectDto(model);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(Project)))
+                if (e.ModelClassName.Equals(nameof(ProjectModel)))
                 {
                     return NotFound();
                 }
@@ -160,7 +160,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            Project? model = _ProjectService.Get(id);
+            ProjectModel? model = _ProjectService.Get(id);
             if (model == null)
             {
                 return NotFound();
@@ -171,7 +171,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             return new OkResult();
         }
 
-        private List<ProjectDto> HydrateProjectDtos(List<Project> projects, int depth = 1)
+        private List<ProjectDto> HydrateProjectDtos(List<ProjectModel> projects, int depth = 1)
         {
             List<ProjectDto> dtos = new();
 
@@ -184,7 +184,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             return dtos;
         }
 
-        private ProjectDto HydrateProjectDto(Project project, int depth = 1)
+        private ProjectDto HydrateProjectDto(ProjectModel project, int depth = 1)
         {
             return (ProjectDto)_Hydrator.Hydrate(
                 project, typeof(ProjectDto), depth
@@ -251,17 +251,17 @@ namespace AgileStudioServer.CoreFeatures.Projects.APIs
             );
         }
 
-        private Project HydrateProjectModel(ProjectPostDto projectPostDto, int depth = 3)
+        private ProjectModel HydrateProjectModel(ProjectPostDto projectPostDto, int depth = 3)
         {
-            return (Project)_Hydrator.Hydrate(
-                projectPostDto, typeof(Project), depth
+            return (ProjectModel)_Hydrator.Hydrate(
+                projectPostDto, typeof(ProjectModel), depth
             );
         }
 
-        private Project HydrateProjectModel(ProjectPatchDto projectPatchDto, int depth = 3)
+        private ProjectModel HydrateProjectModel(ProjectPatchDto projectPatchDto, int depth = 3)
         {
-            return (Project)_Hydrator.Hydrate(
-                projectPatchDto, typeof(Project), depth
+            return (ProjectModel)_Hydrator.Hydrate(
+                projectPatchDto, typeof(ProjectModel), depth
             );
         }
     }

@@ -61,7 +61,7 @@ namespace AgileStudioServerTest.IntegrationTests
             _workflowStateService = workflowStateService;
         }
 
-        public Project CreateProject(
+        public ProjectModel CreateProject(
             string? title = null, 
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
             UserModel? createdBy = null)
@@ -70,7 +70,7 @@ namespace AgileStudioServerTest.IntegrationTests
             backlogItemTypeSchema ??= CreateBacklogItemTypeSchema();
             createdBy ??= CreateUser();
 
-            var project = new Project(title, backlogItemTypeSchema.ID)
+            var project = new ProjectModel(title, backlogItemTypeSchema.ID)
             {
                 CreatedByID = createdBy.ID
             };
@@ -81,7 +81,7 @@ namespace AgileStudioServerTest.IntegrationTests
         public BacklogItemModel CreateBacklogItem(
             string? title = null,
             UserModel? createdBy = null, 
-            Project? project = null, 
+            ProjectModel? project = null, 
             BacklogItemTypeModel? backlogItemType = null,
             WorkflowStateModel? workflowState = null,
             SprintModel? sprint = null,
@@ -209,7 +209,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public SprintModel CreateSprint(
             int? sprintNumber = null,
-            Project? project = null,
+            ProjectModel? project = null,
             UserModel? createdBy = null)
         {
             int nextSprintNumber = sprintNumber ?? 1;
@@ -226,7 +226,7 @@ namespace AgileStudioServerTest.IntegrationTests
 
         public ReleaseModel CreateRelease(
             string? title = null,
-            Project? project = null,
+            ProjectModel? project = null,
             UserModel? createdBy = null)
         {
             title ??= "v1.0.0";

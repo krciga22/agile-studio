@@ -20,7 +20,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         public void Create_ReturnsSprint()
         {
             int nextSprintNumber = _sprintService.GetNextSprintNumber();
-            Project project = _Fixtures.CreateProject();
+            ProjectModel project = _Fixtures.CreateProject();
             SprintModel sprint = new(nextSprintNumber, project.ID);
 
             sprint = _sprintService.Create(sprint);

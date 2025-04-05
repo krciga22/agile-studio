@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
     public class WorkflowStatePatchDto
     {

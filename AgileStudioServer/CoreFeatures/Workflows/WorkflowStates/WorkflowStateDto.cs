@@ -1,6 +1,7 @@
 ﻿using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs
+namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
     public class WorkflowStateDto
     {

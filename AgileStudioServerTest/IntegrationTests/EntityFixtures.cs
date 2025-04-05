@@ -10,6 +10,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

@@ -2,11 +2,10 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs.Hydrators
+namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
     public class WorkflowStateDtoHydrator : AbstractDtoHydrator
     {

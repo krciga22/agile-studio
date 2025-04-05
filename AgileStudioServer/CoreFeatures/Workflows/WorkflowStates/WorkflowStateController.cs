@@ -1,12 +1,9 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Workflows.Services;
-using AgileStudioServer.CoreFeatures.Workflows.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.APIs
+namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
     [ApiController]
     [Route("[controller]")]

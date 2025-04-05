@@ -3,6 +3,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.APIs;
 using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.APIs
 {

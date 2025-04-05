@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Workflows.APIs;
-using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
+using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.APIs
 {

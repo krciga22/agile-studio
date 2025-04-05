@@ -21,6 +21,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
+using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServer
 {
@@ -61,8 +62,8 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, SprintDtoHydrator>();
             builder.Services.AddScoped<IHydrator, SprintSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, UserSummaryDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, Workflows.APIs.DTOs.Hydrators.WorkflowDtoHydrator>();
-            builder.Services.AddScoped<IHydrator, Workflows.APIs.DTOs.Hydrators.WorkflowSummaryDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, WorkflowDtoHydrator>();
+            builder.Services.AddScoped<IHydrator, WorkflowSummaryDtoHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateDtoHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateSummaryDtoHydrator>();
 
@@ -76,7 +77,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ReleaseModelHydrator>();
             builder.Services.AddScoped<IHydrator, SprintModelHydrator>();
             builder.Services.AddScoped<IHydrator, UserModelHydrator>();
-            builder.Services.AddScoped<IHydrator, Workflows.Services.Models.Hydrators.WorkflowModelHydrator>();
+            builder.Services.AddScoped<IHydrator, WorkflowModelHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateModelHydrator>();
 
             builder.Services.AddScoped<IHydrator, BacklogItemHydrator>();
@@ -89,7 +90,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<IHydrator, ReleaseHydrator>();
             builder.Services.AddScoped<IHydrator, SprintHydrator>();
             builder.Services.AddScoped<IHydrator, UserHydrator>();
-            builder.Services.AddScoped<IHydrator, Workflows.Repositories.Entities.Hydrators.WorkflowHydrator>();
+            builder.Services.AddScoped<IHydrator, WorkflowHydrator>();
             builder.Services.AddScoped<IHydrator, WorkflowStateHydrator>();
 
             builder.Services.AddScoped<BacklogItemService>();
@@ -102,7 +103,7 @@ namespace AgileStudioServer
             builder.Services.AddScoped<ReleaseService>();
             builder.Services.AddScoped<SprintService>();
             builder.Services.AddScoped<UserService>();
-            builder.Services.AddScoped<Workflows.Services.WorkflowService>();
+            builder.Services.AddScoped<WorkflowService>();
             builder.Services.AddScoped<WorkflowStateService>();
 
             string auth0Domain = builder.Configuration.GetValue<string>("Auth0:Domain");

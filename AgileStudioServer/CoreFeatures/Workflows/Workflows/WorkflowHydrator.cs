@@ -2,10 +2,9 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities.Hydrators;
+namespace AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
 public class WorkflowHydrator : AbstractEntityHydrator
 {
@@ -18,7 +17,7 @@ public class WorkflowHydrator : AbstractEntityHydrator
     {
         return (
             from == typeof(int) ||
-            from == typeof(Services.Models.WorkflowModel)
+            from == typeof(WorkflowModel)
         ) && to == typeof(Workflow);
     }
 
@@ -31,9 +30,9 @@ public class WorkflowHydrator : AbstractEntityHydrator
 
         object? entity = null;
 
-        if (from is Services.Models.WorkflowModel)
+        if (from is WorkflowModel)
         {
-            var model = (Services.Models.WorkflowModel)from;
+            var model = (WorkflowModel)from;
             if (model.ID > 0)
             {
                 entity = _DBContext.Workflow.Find(model.ID);
@@ -76,9 +75,9 @@ public class WorkflowHydrator : AbstractEntityHydrator
         var entity = (Workflow)to;
         int nextDepth = depth + 1;
 
-        if (from is Services.Models.WorkflowModel)
+        if (from is WorkflowModel)
         {
-            var model = (Services.Models.WorkflowModel)from;
+            var model = (WorkflowModel)from;
 
             entity.ID = model.ID;
             entity.Title = model.Title;

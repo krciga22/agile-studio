@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities;
+using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.Data;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates

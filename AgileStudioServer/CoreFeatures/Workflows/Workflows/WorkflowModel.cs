@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.Workflows.Services.Models
+﻿namespace AgileStudioServer.CoreFeatures.Workflows.Workflows
 {
     public class WorkflowModel
     {

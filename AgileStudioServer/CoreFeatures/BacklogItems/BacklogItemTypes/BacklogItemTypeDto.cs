@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 {

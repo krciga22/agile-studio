@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServer.CoreFeatures.Workflows.Repositories.Entities
+namespace AgileStudioServer.CoreFeatures.Workflows.Workflows
 {
     public class Workflow
     {

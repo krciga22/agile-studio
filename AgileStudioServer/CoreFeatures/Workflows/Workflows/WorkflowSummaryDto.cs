@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.Workflows.APIs.DTOs
+﻿namespace AgileStudioServer.CoreFeatures.Workflows.Workflows
 {
     public class WorkflowSummaryDto
     {

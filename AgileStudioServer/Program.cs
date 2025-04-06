@@ -4,18 +4,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
-using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
-using AgileStudioServer.CoreFeatures.Workflows.Workflows;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServer
 {

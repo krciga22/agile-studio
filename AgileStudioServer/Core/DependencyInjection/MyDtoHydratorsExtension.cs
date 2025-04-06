@@ -13,9 +13,9 @@ using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class DtoHydratorsExtension
+    public static class MyDtoHydratorsExtension
     {
-        public static IServiceCollection AddDtoHydrators(
+        public static IServiceCollection AddMyDtoHydrators(
              this IServiceCollection services)
         {
             services.AddScoped<IHydrator, BacklogItemDtoHydrator>();

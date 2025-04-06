@@ -10,9 +10,9 @@ namespace AgileStudioServer
             builder.Services.AddMyCoreServices();
             builder.Services.AddControllers();
             builder.Services.AddMyCoreFeatureServices();
-            builder.Services.AddDtoHydrators();
-            builder.Services.AddModelHydrators();
-            builder.Services.AddEntityHydrators();
+            builder.Services.AddMyDtoHydrators();
+            builder.Services.AddMyModelHydrators();
+            builder.Services.AddMyEntityHydrators();
             builder.Services.AddMyAuth(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

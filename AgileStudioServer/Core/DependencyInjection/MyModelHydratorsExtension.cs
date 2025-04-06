@@ -14,9 +14,9 @@ using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ModelHydratorsExtension
+    public static class MyModelHydratorsExtension
     {
-        public static IServiceCollection AddModelHydrators(
+        public static IServiceCollection AddMyModelHydrators(
              this IServiceCollection services)
         {
             services.AddScoped<IHydrator, BacklogItemModelHydrator>();

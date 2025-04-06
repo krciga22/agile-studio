@@ -10,9 +10,9 @@ namespace AgileStudioServerTest
             services.AddMyCoreServices();
             services.AddMyControllers();
             services.AddMyCoreFeatureServices();
-            services.AddDtoHydrators();
-            services.AddModelHydrators();
-            services.AddEntityHydrators();
+            services.AddMyDtoHydrators();
+            services.AddMyModelHydrators();
+            services.AddMyEntityHydrators();
             services.AddMyFixtures();
         }
     }

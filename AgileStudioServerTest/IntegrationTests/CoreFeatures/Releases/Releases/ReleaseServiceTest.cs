@@ -2,7 +2,7 @@
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 {
     public class ReleaseServiceTest : AbstractServiceTest
     {

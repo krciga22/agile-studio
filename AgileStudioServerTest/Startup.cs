@@ -2,13 +2,6 @@
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;
 using AgileStudioServer.Core.Hydrator;
-
-using BacklogItems = AgileStudioServer.CoreFeatures.BacklogItems;
-using Projects = AgileStudioServer.CoreFeatures.Projects;
-using Releases = AgileStudioServer.CoreFeatures.Releases;
-using Sprints = AgileStudioServer.CoreFeatures.Sprints;
-using Users = AgileStudioServer.CoreFeatures.Users;
-using Workflows = AgileStudioServer.CoreFeatures.Workflows;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
 {
     public class UserServiceTest : AbstractServiceTest
     {

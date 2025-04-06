@@ -3,7 +3,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.APIs
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflows
 {
     public class WorkflowControllerTest : AbstractControllerTest
     {

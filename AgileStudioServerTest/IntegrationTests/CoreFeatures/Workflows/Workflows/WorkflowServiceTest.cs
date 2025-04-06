@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflows
 {
     public class WorkflowServiceTest : AbstractServiceTest
     {

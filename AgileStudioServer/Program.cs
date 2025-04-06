@@ -1,9 +1,7 @@
-using AgileStudioServer.Data;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using AgileStudioServer.Core.Hydrator;
 
 namespace AgileStudioServer
 {
@@ -22,8 +20,7 @@ namespace AgileStudioServer
 
             builder.Services.AddMyDB();
 
-            builder.Services.AddScoped<Hydrator>();
-            builder.Services.AddScoped<HydratorRegistry>();
+            builder.Services.AddMyCoreServices();
 
             builder.Services.AddDtoHydrators();
             builder.Services.AddModelHydrators();

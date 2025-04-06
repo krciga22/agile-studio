@@ -1,7 +1,5 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServerTest.IntegrationTests;
+﻿using AgileStudioServerTest.IntegrationTests;
 using Microsoft.Extensions.DependencyInjection;
-using AgileStudioServer.Core.Hydrator;
 
 namespace AgileStudioServerTest
 {
@@ -14,8 +12,7 @@ namespace AgileStudioServerTest
             services.AddScoped<ModelFixtures>();
             services.AddScoped<EntityFixtures>();
 
-            services.AddScoped<Hydrator>();
-            services.AddScoped<HydratorRegistry>();
+            services.AddMyCoreServices();
 
             services.AddDtoHydrators();
             services.AddModelHydrators();

@@ -11,21 +11,17 @@ namespace AgileStudioServer
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
             builder.Services.AddMyDB();
-
             builder.Services.AddMyCoreServices();
-
+            builder.Services.AddControllers();
+            builder.Services.AddMyCoreFeatureServices();
             builder.Services.AddDtoHydrators();
             builder.Services.AddModelHydrators();
             builder.Services.AddEntityHydrators();
-            builder.Services.AddMyCoreFeatureServices();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             string auth0Domain = builder.Configuration.GetValue<string>("Auth0:Domain");
             string auth0ClientId = builder.Configuration.GetValue<string>("Auth0:ClientId");

@@ -1,5 +1,4 @@
-﻿using AgileStudioServerTest.IntegrationTests;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace AgileStudioServerTest
 {
@@ -8,16 +7,13 @@ namespace AgileStudioServerTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMyDB();
-
-            services.AddMyFixtures();
-
             services.AddMyCoreServices();
-
+            services.AddMyControllers();
+            services.AddMyCoreFeatureServices();
             services.AddDtoHydrators();
             services.AddModelHydrators();
             services.AddEntityHydrators();
-            services.AddMyCoreFeatureServices();
-            services.AddMyControllers();
+            services.AddMyFixtures();
         }
     }
 }

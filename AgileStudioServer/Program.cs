@@ -20,9 +20,7 @@ namespace AgileStudioServer
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<DBContext>(optionsBuilder => {
-                DBContextFactory.ConfigureDefaultOptions(ref optionsBuilder);
-            });
+            builder.Services.AddMyDB();
 
             builder.Services.AddScoped<Hydrator>();
             builder.Services.AddScoped<HydratorRegistry>();

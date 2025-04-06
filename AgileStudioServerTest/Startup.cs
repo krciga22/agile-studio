@@ -9,9 +9,7 @@ namespace AgileStudioServerTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(optionsBuilder => {
-                DBContextFactory.ConfigureDefaultOptions(ref optionsBuilder);
-            });
+            services.AddMyDB();
 
             services.AddScoped<ModelFixtures>();
             services.AddScoped<EntityFixtures>();

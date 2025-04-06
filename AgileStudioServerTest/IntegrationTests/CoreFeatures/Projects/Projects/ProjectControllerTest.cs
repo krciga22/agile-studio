@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.APIs
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
     public class ProjectControllerTest : AbstractControllerTest
     {

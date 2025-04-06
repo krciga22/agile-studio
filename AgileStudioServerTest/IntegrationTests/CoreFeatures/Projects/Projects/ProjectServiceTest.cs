@@ -2,7 +2,7 @@
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Services
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
     public class ProjectServiceTest : AbstractServiceTest
     {

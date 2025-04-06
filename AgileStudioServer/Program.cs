@@ -1,8 +1,3 @@
-using Auth0.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-
 namespace AgileStudioServer
 {
     public class Program
@@ -18,45 +13,11 @@ namespace AgileStudioServer
             builder.Services.AddDtoHydrators();
             builder.Services.AddModelHydrators();
             builder.Services.AddEntityHydrators();
+            builder.Services.AddMyAuth(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            string auth0Domain = builder.Configuration.GetValue<string>("Auth0:Domain");
-            string auth0ClientId = builder.Configuration.GetValue<string>("Auth0:ClientId");
-            string auth0ClientSecret = builder.Configuration.GetValue<string>("Auth0:ClientSecret");
-            string auth0Audience = builder.Configuration.GetValue<string>("Auth0:Audience");
-
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = $"https://{auth0Domain}";
-                    options.Audience = auth0Audience;
-                })
-                .AddAuth0WebAppAuthentication(options =>
-                {
-                    options.Domain = auth0Domain;
-                    options.ClientId = auth0ClientId;
-                    options.ClientSecret = auth0ClientSecret;
-                    options.CallbackPath = "/Auth/Callback";
-                })
-                .WithAccessToken(options =>
-                {
-                    options.Audience = auth0Audience;
-                    options.UseRefreshTokens = false;
-                });
-
-            builder.Services.AddAuthorization(options =>
-            {
-                var policyBuilder = new AuthorizationPolicyBuilder();
-                policyBuilder.AddAuthenticationSchemes(new string[] {
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        JwtBearerDefaults.AuthenticationScheme
-                    })
-                    .RequireAuthenticatedUser();
-                options.DefaultPolicy = policyBuilder.Build();
-            });
 
             var app = builder.Build();
 

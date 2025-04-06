@@ -9,8 +9,7 @@ namespace AgileStudioServerTest
         {
             services.AddMyDB();
 
-            services.AddScoped<ModelFixtures>();
-            services.AddScoped<EntityFixtures>();
+            services.AddMyFixtures();
 
             services.AddMyCoreServices();
 

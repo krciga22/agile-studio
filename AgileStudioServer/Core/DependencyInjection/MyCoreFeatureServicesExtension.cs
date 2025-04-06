@@ -13,9 +13,9 @@ using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class MyServicesExtension
+    public static class MyCoreFeatureServicesExtension
     {
-        public static IServiceCollection AddMyServices(
+        public static IServiceCollection AddMyCoreFeatureServices(
              this IServiceCollection services)
         {
             services.AddScoped<BacklogItemService>();

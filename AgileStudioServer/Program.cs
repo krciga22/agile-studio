@@ -28,7 +28,7 @@ namespace AgileStudioServer
             builder.Services.AddDtoHydrators();
             builder.Services.AddModelHydrators();
             builder.Services.AddEntityHydrators();
-            builder.Services.AddMyServices();
+            builder.Services.AddMyCoreFeatureServices();
 
             string auth0Domain = builder.Configuration.GetValue<string>("Auth0:Domain");
             string auth0ClientId = builder.Configuration.GetValue<string>("Auth0:ClientId");

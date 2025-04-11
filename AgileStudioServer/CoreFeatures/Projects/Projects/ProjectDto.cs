@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
@@ -17,16 +18,20 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         public BacklogItemTypeSchemaSummaryDto BacklogItemTypeSchema { get; set; }
 
+        public BacklogItemLinkTypeSchemaSummaryDto BacklogItemLinkTypeSchema { get; set; }
+
         public ProjectDto(
             int id,
             string title,
             DateTime createdOn,
-            BacklogItemTypeSchemaSummaryDto backlogItemTypeSchema)
+            BacklogItemTypeSchemaSummaryDto backlogItemTypeSchema,
+            BacklogItemLinkTypeSchemaSummaryDto backlogItemLinkTypeSchema)
         {
             ID = id;
             Title = title;
             CreatedOn = createdOn;
             BacklogItemTypeSchema = backlogItemTypeSchema;
+            BacklogItemLinkTypeSchema = backlogItemLinkTypeSchema;
         }
     }
 }

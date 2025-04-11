@@ -1,6 +1,7 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -19,8 +20,9 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Create_ReturnsProject()
         {
-            BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
-            ProjectModel project = new("Test Project", schema.ID);
+            BacklogItemTypeSchemaModel typeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            BacklogItemLinkTypeSchemaModel linkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            ProjectModel project = new("Test Project", typeSchema.ID, linkTypeSchema.ID);
 
             project = _projectService.Create(project);
 

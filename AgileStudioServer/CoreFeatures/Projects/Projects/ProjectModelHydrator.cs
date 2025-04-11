@@ -42,13 +42,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             if (from is Project)
             {
                 var entity = (Project)from;
-                model = new ProjectModel(entity.Title, entity.BacklogItemTypeSchemaID);
+                model = new ProjectModel(entity.Title, entity.BacklogItemTypeSchemaID, entity.BacklogItemLinkTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPostDto)
             {
                 var dto = (ProjectPostDto)from;
-                model = new ProjectModel(dto.Title, dto.BacklogItemTypeSchemaId);
+                model = new ProjectModel(dto.Title, dto.BacklogItemTypeSchemaId, dto.BacklogItemLinkTypeSchemaId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPatchDto)

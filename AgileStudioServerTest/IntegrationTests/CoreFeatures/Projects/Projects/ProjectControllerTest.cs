@@ -145,7 +145,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         public void Post_WithDto_ReturnsDto()
         {
             var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            var projectPostDto = new ProjectPostDto("Test Project", backlogItemTypeSchema.ID);
+            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var projectPostDto = new ProjectPostDto(
+                "Test Project", 
+                backlogItemTypeSchema.ID, 
+                backlogItemLinkTypeSchema.ID);
 
             ProjectDto? projectDto = null;
             IActionResult result = _Controller.Post(projectPostDto);

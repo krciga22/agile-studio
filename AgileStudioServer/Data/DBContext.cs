@@ -53,6 +53,12 @@ namespace AgileStudioServer.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("fk_project_backlog_item_type_schema_id");
 
+            modelBuilder.Entity<Project>()
+                .HasOne(e => e.BacklogItemLinkTypeSchema)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("fk_project_backlog_item_link_type_schema_id");
+
             modelBuilder.Entity<ChildBacklogItemType>()
                 .HasOne(e => e.ChildType)
                 .WithMany()

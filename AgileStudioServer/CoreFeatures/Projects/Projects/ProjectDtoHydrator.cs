@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
@@ -48,7 +49,16 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
                     model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
                 );
 
-                dto = new ProjectDto(model.ID, model.Title, model.CreatedOn, backlogItemTypeSchemaSummaryDto);
+                var backlogItemLinkTypeSchemaSummaryDto = (BacklogItemLinkTypeSchemaSummaryDto)referenceHydrator.Hydrate(
+                    model.BacklogItemLinkTypeSchemaID, typeof(BacklogItemLinkTypeSchemaSummaryDto), maxDepth, depth
+                );
+
+                dto = new ProjectDto(
+                    model.ID, 
+                    model.Title, 
+                    model.CreatedOn, 
+                    backlogItemTypeSchemaSummaryDto, 
+                    backlogItemLinkTypeSchemaSummaryDto);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 

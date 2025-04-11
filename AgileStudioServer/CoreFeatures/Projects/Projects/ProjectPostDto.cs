@@ -11,13 +11,17 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [Required]
         public int BacklogItemTypeSchemaId { get; set; }
 
+        [Required]
+        public int BacklogItemLinkTypeSchemaId { get; set; }
+
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public ProjectPostDto(string title, int backlogItemTypeSchemaId)
+        public ProjectPostDto(string title, int backlogItemTypeSchemaId, int backlogItemLinkTypeSchemaId)
         {
             Title = title;
             BacklogItemTypeSchemaId = backlogItemTypeSchemaId;
+            BacklogItemLinkTypeSchemaId = backlogItemLinkTypeSchemaId;
         }
     }
 }

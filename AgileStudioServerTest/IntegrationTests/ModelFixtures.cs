@@ -63,13 +63,15 @@ namespace AgileStudioServerTest.IntegrationTests
         public ProjectModel CreateProject(
             string? title = null, 
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
+            BacklogItemLinkTypeSchemaModel? backlogItemLinkTypeSchema = null,
             UserModel? createdBy = null)
         {
             title ??= "Test Project";
             backlogItemTypeSchema ??= CreateBacklogItemTypeSchema();
+            backlogItemLinkTypeSchema ??= CreateBacklogItemLinkTypeSchema();
             createdBy ??= CreateUser();
 
-            var project = new ProjectModel(title, backlogItemTypeSchema.ID)
+            var project = new ProjectModel(title, backlogItemTypeSchema.ID, backlogItemLinkTypeSchema.ID)
             {
                 CreatedByID = createdBy.ID
             };

@@ -45,7 +45,7 @@ public class ProjectHydrator : AbstractEntityHydrator
             }
             else
             {
-                entity = new Project(model.Title, model.BacklogItemTypeSchemaID);
+                entity = new Project(model.Title, model.BacklogItemTypeSchemaID, model.BacklogItemLinkTypeSchemaID);
             }
 
             if (entity != null)

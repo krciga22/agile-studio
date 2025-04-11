@@ -16,11 +16,14 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         public int BacklogItemTypeSchemaID { get; set; }
 
-        public ProjectModel(string title, int backlogItemTypeSchemaID)
+        public int BacklogItemLinkTypeSchemaID { get; set; }
+
+        public ProjectModel(string title, int backlogItemTypeSchemaID, int backlogItemLinkTypeSchemaID)
         {
             Title = title;
             CreatedOn = DateTime.Now;
             BacklogItemTypeSchemaID = backlogItemTypeSchemaID;
+            BacklogItemLinkTypeSchemaID = backlogItemLinkTypeSchemaID;
         }
     }
 }

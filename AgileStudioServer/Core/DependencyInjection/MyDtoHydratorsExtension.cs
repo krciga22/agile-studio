@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
@@ -28,6 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IHydrator, BacklogItemLinkTypeSummaryDtoHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaDtoHydrator>();
             services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaSummaryDtoHydrator>();
+            services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaEntryDtoHydrator>();
             services.AddScoped<IHydrator, ProjectDtoHydrator>();
             services.AddScoped<IHydrator, ProjectSummaryDtoHydrator>();
             services.AddScoped<IHydrator, ReleaseDtoHydrator>();

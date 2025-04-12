@@ -11,6 +11,7 @@ using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 
 namespace AgileStudioServerTest.IntegrationTests
 {
@@ -26,6 +27,7 @@ namespace AgileStudioServerTest.IntegrationTests
         private readonly ChildBacklogItemTypeService _childBacklogItemTypeService;
         private readonly BacklogItemLinkTypeService _backlogItemLinkTypeService;
         private readonly BacklogItemLinkTypeSchemaService _backlogItemLinkTypeSchemaService;
+        private readonly BacklogItemLinkTypeSchemaEntryService _backlogItemLinkTypeSchemaEntryService;
         private readonly SprintService _sprintService;
         private readonly ReleaseService _releaseService;
         private readonly UserService _userService;
@@ -40,6 +42,7 @@ namespace AgileStudioServerTest.IntegrationTests
             ChildBacklogItemTypeService childBacklogItemTypeService,
             BacklogItemLinkTypeService backlogItemLinkTypeService,
             BacklogItemLinkTypeSchemaService backlogItemLinkTypeSchemaService,
+            BacklogItemLinkTypeSchemaEntryService backlogItemLinkTypeSchemaEntryService,
             SprintService sprintService,
             ReleaseService releaseService,
             UserService userService,
@@ -53,6 +56,7 @@ namespace AgileStudioServerTest.IntegrationTests
             _childBacklogItemTypeService = childBacklogItemTypeService;
             _backlogItemLinkTypeService = backlogItemLinkTypeService;
             _backlogItemLinkTypeSchemaService = backlogItemLinkTypeSchemaService;
+            _backlogItemLinkTypeSchemaEntryService = backlogItemLinkTypeSchemaEntryService;
             _sprintService = sprintService;
             _releaseService = releaseService;
             _userService = userService;
@@ -206,6 +210,25 @@ namespace AgileStudioServerTest.IntegrationTests
             };
             backlogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Create(backlogItemLinkTypeSchema);
             return backlogItemLinkTypeSchema;
+        }
+
+        public BacklogItemLinkTypeSchemaEntryModel CreateBacklogItemLinkTypeSchemaEntry(
+            BacklogItemLinkTypeSchemaModel? backlogItemLinkTypeSchemaModel = null,
+            BacklogItemLinkTypeModel? backlogItemLinkTypeModel = null,
+            UserModel? createdBy = null)
+        {
+            backlogItemLinkTypeSchemaModel ??= CreateBacklogItemLinkTypeSchema();
+            backlogItemLinkTypeModel ??= CreateBacklogItemLinkType();
+            createdBy ??= CreateUser();
+
+            var backlogItemLinkTypeSchemaEntry = new BacklogItemLinkTypeSchemaEntryModel(
+                backlogItemLinkTypeSchemaModel.ID,
+                backlogItemLinkTypeModel.ID)
+            {
+                CreatedByID = createdBy.ID,
+            };
+            backlogItemLinkTypeSchemaEntry = _backlogItemLinkTypeSchemaEntryService.Create(backlogItemLinkTypeSchemaEntry);
+            return backlogItemLinkTypeSchemaEntry;
         }
 
         public SprintModel CreateSprint(

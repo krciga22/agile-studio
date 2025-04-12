@@ -11,6 +11,7 @@ using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 
 namespace AgileStudioServer.Data
 {
@@ -23,6 +24,8 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemType> BacklogItemType { get; set; }
 
         public DbSet<BacklogItemTypeSchema> BacklogItemTypeSchema { get; set; }
+
+        public DbSet<BacklogItemLinkTypeSchemaEntry> BacklogItemLinkTypeSchemaEntry { get; set; }
 
         public DbSet<BacklogItemLinkType> BacklogItemLinkType { get; set; }
 
@@ -58,6 +61,29 @@ namespace AgileStudioServer.Data
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("fk_project_backlog_item_link_type_schema_id");
+
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>()
+                .HasOne(e => e.BacklogItemLinkTypeSchema)
+                .WithMany()
+                .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_schema_id");
+
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>()
+                .HasIndex(p => p.BacklogItemLinkTypeSchemaID)
+                .HasDatabaseName("ix_backlog_item_link_type_schema_entry_link_type_schema_id");
+
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>()
+                .HasOne(e => e.BacklogItemLinkType)
+                .WithMany()
+                .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_id");
+
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>()
+                .HasIndex(p => p.BacklogItemLinkTypeID)
+                .HasDatabaseName("ix_backlog_item_link_type_schema_entry_link_type_id");
+
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>()
+                .HasIndex(p => new { p.BacklogItemLinkTypeSchemaID, p.BacklogItemLinkTypeID })
+                .IsUnique()
+                .HasDatabaseName("ix_backlog_item_link_type_schema_entry_unique");
 
             modelBuilder.Entity<ChildBacklogItemType>()
                 .HasOne(e => e.ChildType)

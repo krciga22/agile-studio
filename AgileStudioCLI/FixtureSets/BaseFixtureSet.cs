@@ -114,18 +114,43 @@ namespace AgileStudioCLI.FixtureSets
                 schema: backlogItemTypeSchema
             );
 
-            fixtures.CreateBacklogItemLinkTypeSchema("Agile Studio Backlog Item Link Type Schema");
+            var backlogItemLinkTypeSchema = fixtures.CreateBacklogItemLinkTypeSchema("Agile Studio Backlog Item Link Type Schema");
 
-            fixtures.CreateBacklogItemLinkType("blocks", "is blocked by");
-            fixtures.CreateBacklogItemLinkType("relates to", "relates to");
-            fixtures.CreateBacklogItemLinkType("split from", "split to");
-            fixtures.CreateBacklogItemLinkType("cloned from", "cloned to");
-            fixtures.CreateBacklogItemLinkType("duplicates", "is duplicated by");
-            fixtures.CreateBacklogItemLinkType("causes", "is caused by");
+            var blocksLinkType = fixtures.CreateBacklogItemLinkType("blocks", "is blocked by");
+            var relatesToLinkType = fixtures.CreateBacklogItemLinkType("relates to", "relates to");
+            var splitFromLinkType = fixtures.CreateBacklogItemLinkType("split from", "split to");
+            var clonedFromLinkType = fixtures.CreateBacklogItemLinkType("cloned from", "cloned to");
+            var duplicatesLinkType = fixtures.CreateBacklogItemLinkType("duplicates", "is duplicated by");
+            var causesLinkType = fixtures.CreateBacklogItemLinkType("causes", "is caused by");
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: blocksLinkType);
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: relatesToLinkType);
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: splitFromLinkType);
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: clonedFromLinkType);
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: duplicatesLinkType);
+
+            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: causesLinkType);
 
             var project = fixtures.CreateProject(
                 title: "Agile Studio", 
                 backlogItemTypeSchema: backlogItemTypeSchema,
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 createdBy: user);
 
             var sprint1 = fixtures.CreateSprint(

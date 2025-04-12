@@ -11,6 +11,7 @@ using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 
 namespace AgileStudioServerTest.IntegrationTests
 {
@@ -178,6 +179,26 @@ namespace AgileStudioServerTest.IntegrationTests
             _DBContext.BacklogItemLinkTypeSchema.Add(backlogItemLinkTypeSchema);
             _DBContext.SaveChanges();
             return backlogItemLinkTypeSchema;
+        }
+
+        public BacklogItemLinkTypeSchemaEntry CreateBacklogItemLinkTypeSchemaEntry(
+            BacklogItemLinkTypeSchema? backlogItemLinkTypeSchema = null,
+            BacklogItemLinkType? backlogItemLinkType = null,
+            User? createdBy = null)
+        {
+            backlogItemLinkTypeSchema ??= CreateBacklogItemLinkTypeSchema();
+            backlogItemLinkType ??= CreateBacklogItemLinkType();
+            createdBy ??= CreateUser();
+
+            var backlogItemLinkTypeSchemaEntry = new BacklogItemLinkTypeSchemaEntry(
+                backlogItemLinkTypeSchema.ID,
+                backlogItemLinkType.ID)
+            {
+                CreatedBy = createdBy,
+            };
+            _DBContext.BacklogItemLinkTypeSchemaEntry.Add(backlogItemLinkTypeSchemaEntry);
+            _DBContext.SaveChanges();
+            return backlogItemLinkTypeSchemaEntry;
         }
 
         public Sprint CreateSprint(

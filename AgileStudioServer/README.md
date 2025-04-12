@@ -35,6 +35,10 @@ Backlog Item Link Types define the type of linkage between two backlog (eg. bloc
 ### Backlog Item Link Type Schemas
 Backlog Item Link Type Schemas are used to group backlog item link types, so that they can be reused accross different projects.
 
+### Backlog Item Link Type Schema Entries
+Backlog Item Link Type Schema Entries associate Backlog Item Link Types with Backlog Item Link Type Schemas--allowing them 
+to be reused accross different schemas.
+
 ### Workflows
 Workflows are used to define sets of states and transitions, and can be assigned to specific backlog item types.
 

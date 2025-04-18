@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
+﻿using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,6 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyRepositories(
              this IServiceCollection services)
         {
+            services.AddScoped<WorkflowRepository>();
             services.AddScoped<WorkflowStateRepository>();
 
             return services;

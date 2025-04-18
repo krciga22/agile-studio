@@ -7,6 +7,7 @@ namespace AgileStudioServerTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMyDB();
+            services.AddMyRepositories();
             services.AddMyCoreServices();
             services.AddMyControllers();
             services.AddMyCoreFeatureServices();

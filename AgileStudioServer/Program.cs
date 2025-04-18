@@ -7,6 +7,7 @@ namespace AgileStudioServer
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddMyDB();
+            builder.Services.AddMyRepositories();
             builder.Services.AddMyCoreServices();
             builder.Services.AddControllers();
             builder.Services.AddMyCoreFeatureServices();

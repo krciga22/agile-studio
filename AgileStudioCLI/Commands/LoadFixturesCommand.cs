@@ -7,9 +7,12 @@ namespace AgileStudioCLI.Commands
     {
         private readonly DBContext _DBContext;
 
-        public LoadFixturesCommand(DBContext dbContext)
+        private readonly BaseFixtureSet _BaseFixtureSet;
+
+        public LoadFixturesCommand(DBContext dbContext, BaseFixtureSet baseFixtureSet)
         {
             _DBContext = dbContext;
+            _BaseFixtureSet = baseFixtureSet;
 
             SetName("LoadFixtures");
         }
@@ -22,9 +25,7 @@ namespace AgileStudioCLI.Commands
         public override void Execute(object? parameter)
         {
             // todo - ask user which fixtures they want to load
-
-            var baseFixtureSet = new BaseFixtureSet();
-            baseFixtureSet.LoadFixtures(_DBContext);
+            _BaseFixtureSet.LoadFixtures(_DBContext);
         }
     }
 }

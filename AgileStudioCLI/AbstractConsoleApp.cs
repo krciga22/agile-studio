@@ -15,8 +15,6 @@ namespace AgileStudioCLI
             _ExitCommandNames = new string[2];
             _ExitCommandNames[0] = "Exit";
             _ExitCommandNames[1] = "\\d";
-
-            Configure();
         }
 
         /// <summary>
@@ -78,11 +76,6 @@ namespace AgileStudioCLI
 
             Console.WriteLine(String.Empty);
         }
-
-        /// <summary>
-        /// Override this method to add commands to the console app.
-        /// </summary>
-        protected abstract void Configure();
 
         /// <summary>
         /// Get a command by name.

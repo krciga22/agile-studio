@@ -1,101 +1,37 @@
-﻿using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
+﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 {
     public class BacklogItemTypeService
     {
-        private readonly DBContext _DBContext;
+        private readonly BacklogItemTypeRepository _BacklogItemTypeRepository;
 
-        private readonly Hydrator _Hydrator;
-
-        public BacklogItemTypeService(DBContext dbContext, Hydrator hydrator)
+        public BacklogItemTypeService(BacklogItemTypeRepository backlogItemTypeRepository)
         {
-            _DBContext = dbContext;
-            _Hydrator = hydrator;
+            _BacklogItemTypeRepository = backlogItemTypeRepository;
         }
 
         public virtual List<BacklogItemTypeModel> GetByBacklogItemTypeSchemaId(int backlogItemTypeSchemaId)
         {
-            List<BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
-                backlogItemType.BacklogItemTypeSchema.ID == backlogItemTypeSchemaId)
-                .Include(b => b.CreatedBy)
-                .Include(b => b.BacklogItemTypeSchema)
-                .Include(b => b.Workflow)
-                .ToList();
-
-            return HydrateBacklogItemTypeModels(entities);
+            return _BacklogItemTypeRepository.GetByBacklogItemTypeSchemaId(backlogItemTypeSchemaId);
         }
 
         public virtual BacklogItemTypeModel? Get(int id)
         {
-            BacklogItemType? entity = _DBContext.BacklogItemType.Find(id);
-            if (entity is null)
-            {
-                return null;
-            }
-
-            _DBContext.Entry(entity).Reference("CreatedBy").Load();
-            _DBContext.Entry(entity).Reference("BacklogItemTypeSchema").Load();
-            _DBContext.Entry(entity).Reference("Workflow").Load();
-
-            return HydrateBacklogItemTypeModel(entity);
+            return _BacklogItemTypeRepository.Get(id);
         }
 
         public virtual BacklogItemTypeModel Create(BacklogItemTypeModel backlogItemType)
         {
-            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
-
-            _DBContext.Add(entity);
-            _DBContext.SaveChanges();
-
-            return HydrateBacklogItemTypeModel(entity);
+            return _BacklogItemTypeRepository.Create(backlogItemType);
         }
 
         public virtual BacklogItemTypeModel Update(BacklogItemTypeModel backlogItemType)
         {
-            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
-
-            _DBContext.Update(entity);
-            _DBContext.SaveChanges();
-
-            return HydrateBacklogItemTypeModel(entity);
+            return _BacklogItemTypeRepository.Update(backlogItemType);
         }
 
         public virtual void Delete(BacklogItemTypeModel backlogItemType)
         {
-            BacklogItemType entity = HydrateBacklogItemTypeEntity(backlogItemType);
-
-            _DBContext.Remove(entity);
-            _DBContext.SaveChanges();
-        }
-
-        private List<BacklogItemTypeModel> HydrateBacklogItemTypeModels(List<BacklogItemType> entities, int depth = 3)
-        {
-            List<BacklogItemTypeModel> models = new();
-
-            entities.ForEach(entity =>
-            {
-                BacklogItemTypeModel model = HydrateBacklogItemTypeModel(entity, depth);
-                models.Add(model);
-            });
-
-            return models;
-        }
-
-        private BacklogItemTypeModel HydrateBacklogItemTypeModel(BacklogItemType backlogItemType, int depth = 3)
-        {
-            return (BacklogItemTypeModel)_Hydrator.Hydrate(
-                backlogItemType, typeof(BacklogItemTypeModel), depth
-            );
-        }
-
-        private BacklogItemType HydrateBacklogItemTypeEntity(BacklogItemTypeModel backlogItemType, int depth = 3)
-        {
-            return (BacklogItemType)_Hydrator.Hydrate(
-                backlogItemType, typeof(BacklogItemType), depth
-            );
+            _BacklogItemTypeRepository.Delete(backlogItemType);
         }
     }
 }

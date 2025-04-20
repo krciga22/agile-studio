@@ -2,39 +2,41 @@
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates
 {
-    public class WorkflowStateFixture : AbstractEntityFixture
+    public class WorkflowStateFixture : AbstractEntityFixture<WorkflowStateRepository>
     {
         private readonly WorkflowFixture _workflowFixture;
         private readonly UserFixture _userFixture;
 
-        public WorkflowStateFixture(DBContext dbContext, WorkflowFixture workflowFixture, UserFixture userFixture) : base(dbContext)
+        public WorkflowStateFixture(
+            WorkflowStateRepository workflowStateRepository, 
+            WorkflowFixture workflowFixture, 
+            UserFixture userFixture) : base(workflowStateRepository)
         {
             _workflowFixture = workflowFixture;
             _userFixture = userFixture;
         }
 
-        public WorkflowState Create(
+        public WorkflowStateModel Create(
             string? title = null,
-            Workflow? workflow = null,
-            User? createdBy = null)
+            WorkflowModel? workflow = null,
+            UserModel? createdBy = null)
         {
             title ??= "Test Workflow";
             workflow ??= _workflowFixture.Create();
             createdBy ??= _userFixture.Create();
 
-            var workflowState = new WorkflowState(title, workflow.ID)
+            var workflowState = new WorkflowStateModel(title, workflow.ID)
             {
-                CreatedBy = createdBy
+                CreatedById = createdBy.ID
             };
-            _DBContext.WorkflowState.Add(workflowState);
-            _DBContext.SaveChanges();
+
+            _Repository.Create(workflowState);
             return workflowState;
         }
     }

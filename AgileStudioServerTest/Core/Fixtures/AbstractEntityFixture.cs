@@ -1,15 +1,13 @@
-﻿
-using AgileStudioServer.Data;
-
-namespace AgileStudioServerTest.Core.Fixtures
+﻿namespace AgileStudioServerTest.Core.Fixtures
 {
-    public abstract class AbstractEntityFixture
+    public abstract class AbstractEntityFixture<TRepository>
+        where TRepository : class
     {
-        protected readonly DBContext _DBContext;
+        protected readonly TRepository _Repository;
 
-        protected AbstractEntityFixture(DBContext dbContext)
+        protected AbstractEntityFixture(TRepository repository)
         {
-            _DBContext = dbContext;
+            _Repository = repository;
         }
     }
 }

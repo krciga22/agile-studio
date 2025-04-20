@@ -1,36 +1,36 @@
 ﻿
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 {
-    public class BacklogItemLinkTypeFixture : AbstractEntityFixture
+    public class BacklogItemLinkTypeFixture : AbstractEntityFixture<BacklogItemLinkTypeRepository>
     {
         private readonly UserFixture _userFixture;
 
-        public BacklogItemLinkTypeFixture(DBContext dbContext, UserFixture userFixture) : base(dbContext)
+        public BacklogItemLinkTypeFixture(
+            BacklogItemLinkTypeRepository backlogItemLinkTypeRepository, 
+            UserFixture userFixture) : base(backlogItemLinkTypeRepository)
         {
             _userFixture = userFixture;
         }
 
-        public BacklogItemLinkType Create(
+        public BacklogItemLinkTypeModel Create(
             string? title = null,
             string? titleOpposite = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test BacklogItemLinkType";
             titleOpposite ??= "Test BacklogItemLinkTypeOpposite";
             createdBy ??= _userFixture.Create();
 
-            var backlogItemLinkType = new BacklogItemLinkType(title, titleOpposite)
+            var backlogItemLinkType = new BacklogItemLinkTypeModel(title, titleOpposite)
             {
-                CreatedBy = createdBy,
+                CreatedByID = createdBy.ID,
             };
-            _DBContext.BacklogItemLinkType.Add(backlogItemLinkType);
-            _DBContext.SaveChanges();
+            _Repository.Create(backlogItemLinkType);
             return backlogItemLinkType;
         }
     }

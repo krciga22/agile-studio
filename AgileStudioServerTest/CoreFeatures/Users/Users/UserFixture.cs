@@ -1,18 +1,17 @@
 ﻿
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 
 namespace AgileStudioServerTest.CoreFeatures.Users.Users
 {
-    public class UserFixture : AbstractEntityFixture
+    public class UserFixture : AbstractEntityFixture<UserRepository>
     {
-        public UserFixture(DBContext dbContext) : base(dbContext)
+        public UserFixture(UserRepository userRepository) : base(userRepository)
         {
 
         }
 
-        public User Create(
+        public UserModel Create(
             string? email = null,
             string? firstName = null,
             string? lastName = null)
@@ -21,9 +20,8 @@ namespace AgileStudioServerTest.CoreFeatures.Users.Users
             lastName ??= "User";
             email ??= "testuser@local.agilestudio.dev";
 
-            var user = new User(email, firstName, lastName);
-            _DBContext.User.Add(user);
-            _DBContext.SaveChanges();
+            var user = new UserModel(email, firstName, lastName);
+            _Repository.Create(user);
             return user;
         }
     }

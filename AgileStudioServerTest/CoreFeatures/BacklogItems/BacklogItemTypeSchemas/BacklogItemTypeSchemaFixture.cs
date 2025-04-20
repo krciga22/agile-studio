@@ -1,34 +1,34 @@
 ﻿
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
-    public class BacklogItemTypeSchemaFixture : AbstractEntityFixture
+    public class BacklogItemTypeSchemaFixture : AbstractEntityFixture<BacklogItemTypeSchemaRepository>
     {
         private readonly UserFixture _userFixture;
 
-        public BacklogItemTypeSchemaFixture(DBContext dbContext, UserFixture userFixture) : base(dbContext)
+        public BacklogItemTypeSchemaFixture(
+            BacklogItemTypeSchemaRepository backlogItemTypeSchemaRepository, 
+            UserFixture userFixture) : base(backlogItemTypeSchemaRepository)
         {
             _userFixture = userFixture;
         }
 
-        public BacklogItemTypeSchema Create(
+        public BacklogItemTypeSchemaModel Create(
             string? title = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test BacklogItemTypeSchema";
             createdBy ??= _userFixture.Create();
 
-            var backlogItemTypeSchema = new BacklogItemTypeSchema(title)
+            var backlogItemTypeSchema = new BacklogItemTypeSchemaModel(title)
             {
-                CreatedBy = createdBy
+                CreatedById = createdBy.ID
             };
-            _DBContext.BacklogItemTypeSchema.Add(backlogItemTypeSchema);
-            _DBContext.SaveChanges();
+            _Repository.Create(backlogItemTypeSchema);
             return backlogItemTypeSchema;
         }
     }

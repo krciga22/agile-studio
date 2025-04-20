@@ -3,7 +3,6 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
@@ -11,7 +10,7 @@ using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes
 {
-    public class BacklogItemTypeFixture : AbstractEntityFixture
+    public class BacklogItemTypeFixture : AbstractEntityFixture<BacklogItemTypeRepository>
     {
         private readonly UserFixture _userFixture;
 
@@ -20,33 +19,32 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes
         private readonly WorkflowFixture _workflowFixture;
 
         public BacklogItemTypeFixture(
-            DBContext dbContext, 
+            BacklogItemTypeRepository backlogItemTypeRepository, 
             UserFixture userFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            WorkflowFixture workflowFixture) : base(dbContext)
+            WorkflowFixture workflowFixture) : base(backlogItemTypeRepository)
         {
             _userFixture = userFixture;
             _backlogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _workflowFixture = workflowFixture;
         }
 
-        public BacklogItemType Create(
+        public BacklogItemTypeModel Create(
             string? title = null,
-            User? createdBy = null,
-            BacklogItemTypeSchema? backlogItemTypeSchema = null,
-            Workflow? workflow = null)
+            UserModel? createdBy = null,
+            BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
+            WorkflowModel? workflow = null)
         {
             title ??= "Test BacklogItemType";
             createdBy ??= _userFixture.Create();
             backlogItemTypeSchema ??= _backlogItemTypeSchemaFixture.Create();
             workflow ??= _workflowFixture.Create();
 
-            var backlogItemType = new BacklogItemType(title, backlogItemTypeSchema.ID, workflow.ID)
+            var backlogItemType = new BacklogItemTypeModel(title, backlogItemTypeSchema.ID, workflow.ID)
             {
-                CreatedBy = createdBy,
+                CreatedByID = createdBy.ID,
             };
-            _DBContext.BacklogItemType.Add(backlogItemType);
-            _DBContext.SaveChanges();
+            _Repository.Create(backlogItemType);
             return backlogItemType;
         }
     }

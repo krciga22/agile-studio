@@ -1,34 +1,35 @@
 ﻿
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
-using AgileStudioServer.Data;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.CoreFeatures.Workflows.Workflows
 {
-    public class WorkflowFixture : AbstractEntityFixture
+    public class WorkflowFixture : AbstractEntityFixture<WorkflowRepository>
     {
         private readonly UserFixture _userFixture;
 
-        public WorkflowFixture(DBContext dbContext, UserFixture userFixture) : base(dbContext)
+        public WorkflowFixture(
+            WorkflowRepository workflowRepository, 
+            UserFixture userFixture) : base(workflowRepository)
         {
             _userFixture = userFixture;
         }
 
-        public Workflow Create(
+        public WorkflowModel Create(
             string? title = null,
-            User? createdBy = null)
+            UserModel? createdBy = null)
         {
             title ??= "Test Workflow";
             createdBy ??= _userFixture.Create();
 
-            var workflow = new Workflow(title)
+            var workflow = new WorkflowModel(title)
             {
-                CreatedBy = createdBy
+                CreatedById = createdBy.ID
             };
-            _DBContext.Workflow.Add(workflow);
-            _DBContext.SaveChanges();
+
+            _Repository.Create(workflow);
             return workflow;
         }
     }

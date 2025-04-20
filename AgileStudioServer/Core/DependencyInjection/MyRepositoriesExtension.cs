@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
@@ -18,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyRepositories(
              this IServiceCollection services)
         {
+            services.AddScoped<BacklogItemLinkTypeRepository>();
             services.AddScoped<BacklogItemLinkTypeSchemaEntryRepository>();
             services.AddScoped<BacklogItemLinkTypeSchemaRepository>();
             services.AddScoped<BacklogItemRepository>();

@@ -2,7 +2,7 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntryEntries
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries
 {
     public class BacklogItemLinkTypeSchemaEntryControllerTest : AbstractControllerTest
     {

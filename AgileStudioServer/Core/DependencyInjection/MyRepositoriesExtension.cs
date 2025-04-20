@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
@@ -12,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyRepositories(
              this IServiceCollection services)
         {
+            services.AddScoped<ChildBacklogItemTypeRepository>();
             services.AddScoped<ProjectRepository>();
             services.AddScoped<UserRepository>();
             services.AddScoped<ReleaseRepository>();

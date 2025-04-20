@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Releases.Releases;
+﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
@@ -11,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyRepositories(
              this IServiceCollection services)
         {
+            services.AddScoped<ProjectRepository>();
             services.AddScoped<UserRepository>();
             services.AddScoped<ReleaseRepository>();
             services.AddScoped<SprintRepository>();

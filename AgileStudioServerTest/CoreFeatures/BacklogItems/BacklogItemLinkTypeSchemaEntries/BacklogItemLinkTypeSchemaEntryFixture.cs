@@ -42,8 +42,8 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSch
             {
                 CreatedByID = createdBy.ID,
             };
-            _Repository.Create(backlogItemLinkTypeSchemaEntry);
-            return backlogItemLinkTypeSchemaEntry;
+            
+            return _Repository.Create(backlogItemLinkTypeSchemaEntry);
         }
     }
 }

@@ -84,8 +84,8 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems
             {
                 backlogItem.ParentBacklogItemId = parentBacklogItem.ID;
             }
-            _Repository.Create(backlogItem);
-            return backlogItem;
+            
+            return _Repository.Create(backlogItem);
         }
     }
 }

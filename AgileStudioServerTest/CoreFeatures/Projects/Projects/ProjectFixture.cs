@@ -44,8 +44,8 @@ namespace AgileStudioServerTest.CoreFeatures.Projects.Projects
             {
                 CreatedByID = createdBy.ID
             };
-            _Repository.Create(project);
-            return project;
+            
+            return _Repository.Create(project);
         }
     }
 }

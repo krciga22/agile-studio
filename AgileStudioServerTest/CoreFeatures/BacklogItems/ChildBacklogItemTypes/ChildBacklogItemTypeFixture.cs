@@ -44,8 +44,8 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.ChildBacklogItemTypes
             {
                 CreatedByID = createdBy.ID
             };
-            _Repository.Create(childBacklogItemType);
-            return childBacklogItemType;
+            
+            return _Repository.Create(childBacklogItemType);
         }
     }
 }

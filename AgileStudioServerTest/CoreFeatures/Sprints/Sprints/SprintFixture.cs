@@ -36,8 +36,8 @@ namespace AgileStudioServerTest.CoreFeatures.Sprints.Sprints
             {
                 CreatedByID = createdBy.ID
             };
-            _Repository.Create(sprint);
-            return sprint;
+            
+            return _Repository.Create(sprint);
         }
     }
 }

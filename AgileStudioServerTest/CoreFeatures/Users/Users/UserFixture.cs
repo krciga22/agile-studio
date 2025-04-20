@@ -21,8 +21,8 @@ namespace AgileStudioServerTest.CoreFeatures.Users.Users
             email ??= "testuser@local.agilestudio.dev";
 
             var user = new UserModel(email, firstName, lastName);
-            _Repository.Create(user);
-            return user;
+
+            return _Repository.Create(user);
         }
     }
 }

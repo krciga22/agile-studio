@@ -36,8 +36,8 @@ namespace AgileStudioServerTest.CoreFeatures.Releases.Releases
             {
                 CreatedByID = createdBy.ID
             };
-            _Repository.Create(release);
-            return release;
+            
+            return _Repository.Create(release);
         }
     }
 }

@@ -28,9 +28,8 @@ namespace AgileStudioServerTest.CoreFeatures.Workflows.Workflows
             {
                 CreatedById = createdBy.ID
             };
-
-            _Repository.Create(workflow);
-            return workflow;
+            
+            return _Repository.Create(workflow);
         }
     }
 }

@@ -36,8 +36,7 @@ namespace AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates
                 CreatedById = createdBy.ID
             };
 
-            _Repository.Create(workflowState);
-            return workflowState;
+            return _Repository.Create(workflowState);
         }
     }
 }

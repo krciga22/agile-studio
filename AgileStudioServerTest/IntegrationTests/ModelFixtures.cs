@@ -18,6 +18,7 @@ namespace AgileStudioServerTest.IntegrationTests
     /// <summary>
     /// Service to help create test data.
     /// </summary>
+    [Obsolete("Use dedicated fixture classes instead")]
     public class ModelFixtures
     {
         private readonly ProjectService _projectService;

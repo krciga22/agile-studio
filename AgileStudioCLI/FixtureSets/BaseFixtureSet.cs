@@ -1,169 +1,223 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServerTest.IntegrationTests;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Users.Users;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioCLI.FixtureSets
 {
     internal class BaseFixtureSet : IFixtureSet
     {
-        public void LoadFixtures(DBContext dbContext)
+        private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
+        private readonly BacklogItemLinkTypeSchemaEntryFixture _BacklogItemLinkTypeSchemaEntryFixture;
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+        private readonly BacklogItemFixture _BacklogItemFixture;
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+        private readonly ChildBacklogItemTypeFixture _ChildBacklogItemTypeFixture;
+        private readonly ProjectFixture _ProjectFixture;
+        private readonly ReleaseFixture _ReleaseFixture;
+        private readonly SprintFixture _SprintFixture;
+        private readonly UserFixture _UserFixture;
+        private readonly WorkflowFixture _WorkflowFixture;
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
+        public BaseFixtureSet(
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture, 
+            BacklogItemLinkTypeSchemaEntryFixture backlogItemLinkTypeSchemaEntryFixture, 
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture, 
+            BacklogItemFixture backlogItemFixture, 
+            BacklogItemTypeFixture backlogItemTypeFixture, 
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture, 
+            ChildBacklogItemTypeFixture childBacklogItemTypeFixture, 
+            ProjectFixture projectFixture, 
+            ReleaseFixture releaseFixture, 
+            SprintFixture sprintFixture, 
+            UserFixture userFixture, 
+            WorkflowFixture workflowFixture, 
+            WorkflowStateFixture workflowStateFixture)
         {
-            LoadAgileStudioProject(dbContext);
+            _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
+            _BacklogItemLinkTypeSchemaEntryFixture = backlogItemLinkTypeSchemaEntryFixture;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _BacklogItemFixture = backlogItemFixture;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _ChildBacklogItemTypeFixture = childBacklogItemTypeFixture;
+            _ProjectFixture = projectFixture;
+            _ReleaseFixture = releaseFixture;
+            _SprintFixture = sprintFixture;
+            _UserFixture = userFixture;
+            _WorkflowFixture = workflowFixture;
+            _WorkflowStateFixture = workflowStateFixture;
         }
 
-        private void LoadAgileStudioProject(DBContext dbContext)
+        public void LoadFixtures(DBContext dbContext)
         {
-            var fixtures = new EntityFixtures(dbContext);
+            LoadAgileStudioProject();
+        }
 
-            var user = fixtures.CreateUser();
+        private void LoadAgileStudioProject()
+        {
+            var user = _UserFixture.Create();
 
-            var workflow = fixtures.CreateWorkflow(
+            var workflow = _WorkflowFixture.Create(
                 title: "Story & Defect Workflow",
                 createdBy: user);
 
-            var workflowStateInBacklog = fixtures.CreateWorkflowState(
+            var workflowStateInBacklog = _WorkflowStateFixture.Create(
                 title: "In Backlog", 
                 workflow: workflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "In Planning",
                 workflow: workflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "In Development",
                 workflow: workflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "In Testing",
                 workflow: workflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "In Release",
                 workflow: workflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "Cancelled",
                 workflow: workflow,
                 createdBy: user);
 
-            var taskWorkflow = fixtures.CreateWorkflow(
+            var taskWorkflow = _WorkflowFixture.Create(
                 title: "Task Workflow",
                 createdBy: user);
 
-            var taskWorkflowStateNotStarted = fixtures.CreateWorkflowState(
+            var taskWorkflowStateNotStarted = _WorkflowStateFixture.Create(
                 title: "Not Started",
                 workflow: taskWorkflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "In Progress",
                 workflow: taskWorkflow,
                 createdBy: user);
-            fixtures.CreateWorkflowState(
+            _WorkflowStateFixture.Create(
                 title: "Complete",
                 workflow: taskWorkflow,
                 createdBy: user);
 
-            var backlogItemTypeSchema = fixtures.CreateBacklogItemTypeSchema(
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create(
                 title: "Agile Studio Backlog Item Type Schema",
                 createdBy: user);
 
-            var backlogItemTypeStory = fixtures.CreateBacklogItemType(
+            var backlogItemTypeStory = _BacklogItemTypeFixture.Create(
                 title: "Story",
                 createdBy: user,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
-            var backlogItemTypeDefect = fixtures.CreateBacklogItemType(
+            var backlogItemTypeDefect = _BacklogItemTypeFixture.Create(
                 title: "Defect",
                 createdBy: user,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
-            var backlogItemTypeTask = fixtures.CreateBacklogItemType(
+            var backlogItemTypeTask = _BacklogItemTypeFixture.Create(
                 title: "Task",
                 createdBy: user,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
-            var backlogItemTypeTest = fixtures.CreateBacklogItemType(
+            var backlogItemTypeTest = _BacklogItemTypeFixture.Create(
                 title: "Test",
                 createdBy: user,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
-            fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeStory,
                 childType: backlogItemTypeTask,
                 schema: backlogItemTypeSchema
             );
 
-            fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeStory,
                 childType: backlogItemTypeTest,
                 schema: backlogItemTypeSchema
             );
 
-            fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeDefect,
                 childType: backlogItemTypeTask,
                 schema: backlogItemTypeSchema
             );
 
-            fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeDefect,
                 childType: backlogItemTypeTest,
                 schema: backlogItemTypeSchema
             );
 
-            var backlogItemLinkTypeSchema = fixtures.CreateBacklogItemLinkTypeSchema("Agile Studio Backlog Item Link Type Schema");
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create("Agile Studio Backlog Item Link Type Schema");
 
-            var blocksLinkType = fixtures.CreateBacklogItemLinkType("blocks", "is blocked by");
-            var relatesToLinkType = fixtures.CreateBacklogItemLinkType("relates to", "relates to");
-            var splitFromLinkType = fixtures.CreateBacklogItemLinkType("split from", "split to");
-            var clonedFromLinkType = fixtures.CreateBacklogItemLinkType("cloned from", "cloned to");
-            var duplicatesLinkType = fixtures.CreateBacklogItemLinkType("duplicates", "is duplicated by");
-            var causesLinkType = fixtures.CreateBacklogItemLinkType("causes", "is caused by");
+            var blocksLinkType = _BacklogItemLinkTypeFixture.Create("blocks", "is blocked by");
+            var relatesToLinkType = _BacklogItemLinkTypeFixture.Create("relates to", "relates to");
+            var splitFromLinkType = _BacklogItemLinkTypeFixture.Create("split from", "split to");
+            var clonedFromLinkType = _BacklogItemLinkTypeFixture.Create("cloned from", "cloned to");
+            var duplicatesLinkType = _BacklogItemLinkTypeFixture.Create("duplicates", "is duplicated by");
+            var causesLinkType = _BacklogItemLinkTypeFixture.Create("causes", "is caused by");
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: blocksLinkType);
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: relatesToLinkType);
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: splitFromLinkType);
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: clonedFromLinkType);
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: duplicatesLinkType);
 
-            fixtures.CreateBacklogItemLinkTypeSchemaEntry(
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 backlogItemLinkType: causesLinkType);
 
-            var project = fixtures.CreateProject(
+            var project = _ProjectFixture.Create(
                 title: "Agile Studio", 
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 createdBy: user);
 
-            var sprint1 = fixtures.CreateSprint(
+            var sprint1 = _SprintFixture.Create(
                 sprintNumber: 1, 
                 project: project,
                 createdBy: user);
 
-            var release1_0_0 = fixtures.CreateRelease(
+            var release1_0_0 = _ReleaseFixture.Create(
                 title: "1.0.0",
                 project: project,
                 createdBy: user);
 
-            var testStory = fixtures.CreateBacklogItem(
+            var testStory = _BacklogItemFixture.Create(
                 title: "Test Story", 
                 project: project,
                 backlogItemType: backlogItemTypeStory,
@@ -174,7 +228,7 @@ namespace AgileStudioCLI.FixtureSets
 
             for( var i = 0; i < 5; i++ )
             {
-                fixtures.CreateBacklogItem(
+                _BacklogItemFixture.Create(
                     title: $"Child Task {i}",
                     project: project,
                     backlogItemType: backlogItemTypeTask,

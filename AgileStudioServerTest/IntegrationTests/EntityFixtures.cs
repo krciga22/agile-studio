@@ -18,6 +18,7 @@ namespace AgileStudioServerTest.IntegrationTests
     /// <summary>
     /// Service to help create test data.
     /// </summary>
+    [Obsolete("Use dedicated fixture classes instead")]
     public class EntityFixtures
     {
         private readonly DBContext _DBContext;

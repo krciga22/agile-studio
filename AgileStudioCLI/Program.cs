@@ -6,10 +6,14 @@ IHostBuilder builder = Host.CreateDefaultBuilder(args);
 
 builder.ConfigureServices((services) => {
     services.AddMyDB();
+    services.AddMyCoreServices();
+    services.AddMyRepositories();
     services.AddScoped<AgileStudioConsoleApp>();
     services.AddMyFixtureSets();
     services.AddMyFixtures();
     services.AddMyCommands();
+    services.AddMyEntityHydrators();
+    services.AddMyModelHydrators();
 });
 
 IHost host = builder.Build();

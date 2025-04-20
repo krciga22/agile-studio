@@ -78,7 +78,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
             }
 
             var model = (BacklogItemTypeSchemaModel)to;
-            int nextDepth = depth + 1;
 
             if (from is BacklogItemTypeSchema)
             {
@@ -88,14 +87,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
                 model.Title = entity.Title;
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
-
-                if (referenceHydrator != null && nextDepth <= maxDepth)
-                {
-                    if (entity.CreatedBy != null)
-                    {
-                        model.CreatedById = entity.CreatedBy.ID;
-                    }
-                }
+                model.CreatedById = entity.CreatedByID;
             }
             else if (from is BacklogItemTypeSchemaPostDto)
             {

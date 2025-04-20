@@ -86,27 +86,15 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
                 model.Title = entity.Title;
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
-
-                if (entity.Workflow != null)
-                {
-                    model.WorkflowId = entity.WorkflowID;
-                }
-
-                if (entity.CreatedBy != null)
-                {
-                    model.CreatedById = entity.CreatedByID;
-                }
+                model.WorkflowId = entity.WorkflowID;
+                model.CreatedById = entity.CreatedByID;
             }
             else if (from is WorkflowStatePostDto)
             {
                 var dto = (WorkflowStatePostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
-
-                if (dto.WorkflowId > 0)
-                {
-                    model.WorkflowId = dto.WorkflowId;
-                }
+                model.WorkflowId = dto.WorkflowId;
             }
             else if (from is WorkflowStatePatchDto)
             {

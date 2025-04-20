@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 
         protected override DbSet<BacklogItemLinkType> GetDbSet()
         {
-            return _DbContext.BacklogItemLinkType;
+            return _DBContext.BacklogItemLinkType;
         }
     }
 }

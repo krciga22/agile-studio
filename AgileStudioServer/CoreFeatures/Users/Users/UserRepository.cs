@@ -18,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Users
 
         protected override DbSet<User> GetDbSet()
         {
-            return _DbContext.User;
+            return _DBContext.User;
         }
     }
 }

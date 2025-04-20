@@ -19,14 +19,14 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         public virtual List<ProjectModel> GetAll()
         {
-            List<Project> entities = _DbContext.Project.ToList();
+            List<Project> entities = _DBContext.Project.ToList();
 
             return HydrateModels(entities);
         }
 
         public virtual List<ProjectModel> GetByCreatedByUserId(int userId)
         {
-            List<Project> entities = _DbContext.Project.Where(project =>
+            List<Project> entities = _DBContext.Project.Where(project =>
                 project.CreatedBy != null && project.CreatedBy.ID == userId).ToList();
 
             return HydrateModels(entities);
@@ -34,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         protected override DbSet<Project> GetDbSet()
         {
-            return _DbContext.Project;
+            return _DBContext.Project;
         }
     }
 }

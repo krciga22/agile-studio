@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 
         public virtual List<WorkflowStateModel> GetByWorkflowId(int workflowId)
         {
-            List<WorkflowState> entities = _DbContext.WorkflowState.
+            List<WorkflowState> entities = _DBContext.WorkflowState.
                 Where(x => x.Workflow.ID == workflowId).ToList();
 
             return HydrateModels(entities);
@@ -27,7 +27,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 
         protected override DbSet<WorkflowState> GetDbSet()
         {
-            return _DbContext.WorkflowState;
+            return _DBContext.WorkflowState;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 
         public virtual List<SprintModel> GetByProjectId(int projectId)
         {
-            List<Sprint> entities = _DbContext.Sprint.Where(sprint =>
+            List<Sprint> entities = _DBContext.Sprint.Where(sprint =>
                 sprint.Project.ID == projectId).ToList();
 
             return HydrateModels(entities);
@@ -31,12 +31,12 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 
         protected override DbSet<Sprint> GetDbSet()
         {
-            return _DbContext.Sprint;
+            return _DBContext.Sprint;
         }
 
         private int GetLastSprintNumber()
         {
-            var lastSprint = _DbContext.Sprint
+            var lastSprint = _DBContext.Sprint
                 .OrderByDescending(sprint => sprint.SprintNumber)
                 .FirstOrDefault();
 

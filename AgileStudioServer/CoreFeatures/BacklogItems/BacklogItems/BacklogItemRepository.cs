@@ -20,7 +20,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 
         public virtual List<BacklogItemModel> GetByProjectId(int projectId)
         {
-            List<BacklogItem> entities = _DbContext.BacklogItem.Where(backlogItem =>
+            List<BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
                 backlogItem.Project.ID == projectId).ToList();
 
             return HydrateModels(entities);
@@ -28,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 
         public virtual List<BacklogItemModel> GetByProjectIdAndBacklogItemTypeId(int projectId, int backlogItemTypeId)
         {
-            List<BacklogItem> entities = _DbContext.BacklogItem.Where(backlogItem =>
+            List<BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
                 backlogItem.Project.ID == projectId && backlogItem.BacklogItemType.ID == backlogItemTypeId).ToList();
 
             return HydrateModels(entities);
@@ -41,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
                 paginationDetails = new PaginationDetails();
             }
 
-            IQueryable<BacklogItem> query = _DbContext.BacklogItem
+            IQueryable<BacklogItem> query = _DBContext.BacklogItem
                 .Where(backlogItem => backlogItem.ParentBacklogItemId == parentBacklogItemId)
                 .OrderByDescending(backlogItem => backlogItem.CreatedOn)
                 .ThenByDescending(backlogItem => backlogItem.ID);
@@ -64,14 +64,14 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 
         public virtual BacklogItemModel? GetParentBacklogItem(int id)
         {
-            BacklogItem? entity = _DbContext.BacklogItem.Find(id);
+            BacklogItem? entity = _DBContext.BacklogItem.Find(id);
             if (entity is null || entity.ParentBacklogItemId is null)
             {
                 return null;
             }
 
             BacklogItem? parentEntity =
-                _DbContext.BacklogItem.Find(entity.ParentBacklogItemId);
+                _DBContext.BacklogItem.Find(entity.ParentBacklogItemId);
             if (parentEntity is null)
             {
                 return null;
@@ -82,7 +82,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 
         protected override DbSet<BacklogItem> GetDbSet()
         {
-            return _DbContext.BacklogItem;
+            return _DBContext.BacklogItem;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 
         public virtual List<BacklogItemTypeModel> GetByBacklogItemTypeSchemaId(int backlogItemTypeSchemaId)
         {
-            List<BacklogItemType> entities = _DbContext.BacklogItemType.Where(backlogItemType =>
+            List<BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
                 backlogItemType.BacklogItemTypeSchema.ID == backlogItemTypeSchemaId)
                 .Include(b => b.CreatedBy)
                 .Include(b => b.BacklogItemTypeSchema)
@@ -31,7 +31,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
 
         protected override DbSet<BacklogItemType> GetDbSet()
         {
-            return _DbContext.BacklogItemType;
+            return _DBContext.BacklogItemType;
         }
     }
 }

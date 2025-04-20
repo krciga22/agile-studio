@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
 
         public virtual List<ReleaseModel> GetByProjectId(int projectId)
         {
-            List<Release> entities = _DbContext.Release.Where(release =>
+            List<Release> entities = _DBContext.Release.Where(release =>
                 release.Project.ID == projectId).ToList();
 
             return HydrateModels(entities);
@@ -27,7 +27,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
 
         protected override DbSet<Release> GetDbSet()
         {
-            return _DbContext.Release;
+            return _DBContext.Release;
         }
     }
 }

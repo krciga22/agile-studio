@@ -20,7 +20,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
         public virtual List<ChildBacklogItemTypeModel> GetByParentTypeId(int parentTypeId)
         {
             List<ChildBacklogItemType> entities =
-                _DbContext.ChildBacklogItemType.Where(childBacklogItemType =>
+                _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ParentType.ID == parentTypeId
                 )
                 .Include(b => b.ChildType)
@@ -35,7 +35,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
         public virtual List<ChildBacklogItemTypeModel> GetByChildTypeId(int childTypeId)
         {
             List<ChildBacklogItemType> entities =
-                _DbContext.ChildBacklogItemType.Where(childBacklogItemType =>
+                _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ChildType.ID == childTypeId
                 )
                 .Include(b => b.ChildType)
@@ -50,7 +50,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
         public virtual ChildBacklogItemTypeModel? Get(int parentTypeId, int childTypeId)
         {
             List<ChildBacklogItemType> entities =
-                _DbContext.ChildBacklogItemType.Where(childBacklogItemType =>
+                _DBContext.ChildBacklogItemType.Where(childBacklogItemType =>
                     childBacklogItemType.ParentType.ID == parentTypeId &&
                     childBacklogItemType.ChildType.ID == childTypeId
                 )
@@ -65,7 +65,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
 
         protected override DbSet<ChildBacklogItemType> GetDbSet()
         {
-            return _DbContext.ChildBacklogItemType;
+            return _DBContext.ChildBacklogItemType;
         }
     }
 }

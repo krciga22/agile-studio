@@ -12,12 +12,12 @@ namespace AgileStudioServer.Core.Repositories
         where TEntity : class
         where TIdentifier : struct
     {
-        protected TDBContext _DbContext;
+        protected TDBContext _DBContext;
         protected Hydrator.Hydrator _Hydrator;
 
         public EntityRepository(TDBContext dBContext, Hydrator.Hydrator hydrator)
         {
-            _DbContext = dBContext;
+            _DBContext = dBContext;
             _Hydrator = hydrator;
         }
 
@@ -39,8 +39,8 @@ namespace AgileStudioServer.Core.Repositories
         {
             TEntity entity = HydrateEntity(model);
 
-            _DbContext.Add(entity);
-            _DbContext.SaveChanges();
+            _DBContext.Add(entity);
+            _DBContext.SaveChanges();
 
             return HydrateModel(entity);
         }
@@ -49,8 +49,8 @@ namespace AgileStudioServer.Core.Repositories
         {
             TEntity entity = HydrateEntity(model);
 
-            _DbContext.Update(entity);
-            _DbContext.SaveChanges();
+            _DBContext.Update(entity);
+            _DBContext.SaveChanges();
 
             return HydrateModel(entity);
         }
@@ -59,8 +59,8 @@ namespace AgileStudioServer.Core.Repositories
         {
             var entity = HydrateEntity(model);
 
-            _DbContext.Remove(entity);
-            _DbContext.SaveChanges();
+            _DBContext.Remove(entity);
+            _DBContext.SaveChanges();
         }
 
         protected abstract DbSet<TEntity> GetDbSet();

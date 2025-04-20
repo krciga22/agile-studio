@@ -19,13 +19,13 @@ namespace AgileStudioServer.CoreFeatures.Workflows.Workflows
 
         public virtual List<WorkflowModel> GetAll()
         {
-            List<Workflow> entities = _DbContext.Workflow.ToList();
+            List<Workflow> entities = _DBContext.Workflow.ToList();
             return HydrateModels(entities);
         }
 
         protected override DbSet<Workflow> GetDbSet()
         {
-            return _DbContext.Workflow;
+            return _DBContext.Workflow;
         }
     }
 }

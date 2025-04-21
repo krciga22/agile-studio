@@ -31,5 +31,10 @@ namespace AgileStudioServerTest.CoreFeatures.Workflows.Workflows
             
             return _Repository.Create(workflow);
         }
+
+        public WorkflowModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

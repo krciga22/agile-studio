@@ -45,5 +45,10 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSch
             
             return _Repository.Create(backlogItemLinkTypeSchemaEntry);
         }
+
+        public BacklogItemLinkTypeSchemaEntryModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

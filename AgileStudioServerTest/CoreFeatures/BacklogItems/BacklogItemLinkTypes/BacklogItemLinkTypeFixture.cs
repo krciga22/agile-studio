@@ -33,5 +33,10 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes
             
             return _Repository.Create(backlogItemLinkType);
         }
+
+        public BacklogItemLinkTypeModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

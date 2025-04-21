@@ -24,5 +24,10 @@ namespace AgileStudioServerTest.CoreFeatures.Users.Users
 
             return _Repository.Create(user);
         }
+
+        public UserModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

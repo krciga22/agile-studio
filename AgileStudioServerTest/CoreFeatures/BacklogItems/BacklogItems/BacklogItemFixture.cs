@@ -87,5 +87,10 @@ namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems
             
             return _Repository.Create(backlogItem);
         }
+
+        public BacklogItemModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

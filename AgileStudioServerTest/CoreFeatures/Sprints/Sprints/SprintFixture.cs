@@ -39,5 +39,10 @@ namespace AgileStudioServerTest.CoreFeatures.Sprints.Sprints
             
             return _Repository.Create(sprint);
         }
+
+        public SprintModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

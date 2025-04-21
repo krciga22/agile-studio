@@ -39,5 +39,10 @@ namespace AgileStudioServerTest.CoreFeatures.Releases.Releases
             
             return _Repository.Create(release);
         }
+
+        public ReleaseModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

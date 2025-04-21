@@ -47,5 +47,10 @@ namespace AgileStudioServerTest.CoreFeatures.Projects.Projects
             
             return _Repository.Create(project);
         }
+
+        public ProjectModel? Get(int id)
+        {
+            return _Repository.Get(id);
+        }
     }
 }

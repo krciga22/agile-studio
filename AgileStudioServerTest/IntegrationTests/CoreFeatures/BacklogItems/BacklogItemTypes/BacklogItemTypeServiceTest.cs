@@ -2,6 +2,9 @@
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypes
 {
@@ -9,19 +12,30 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemTypeService _backlogItemTypeService;
 
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly WorkflowFixture _WorkflowFixture;
+
         public BacklogItemTypeServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            BacklogItemTypeService backlogItemTypeService) : base(dbContext, fixtures)
+            BacklogItemTypeService backlogItemTypeService,
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            WorkflowFixture workflowFixture) : base(dbContext)
         {
             _backlogItemTypeService = backlogItemTypeService;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _WorkflowFixture = workflowFixture;
         }
 
         [Fact]
         public void Create_ReturnsBacklogItemType()
         {
-            BacklogItemTypeSchemaModel schema = _Fixtures.CreateBacklogItemTypeSchema();
-            WorkflowModel workflow = _Fixtures.CreateWorkflow(); ;
+            BacklogItemTypeSchemaModel schema = _BacklogItemTypeSchemaFixture.Create();
+            WorkflowModel workflow = _WorkflowFixture.Create(); ;
             BacklogItemTypeModel backlogItemType = new("Test BacklogItemType", schema.ID, workflow.ID);
 
             backlogItemType = _backlogItemTypeService.Create(backlogItemType);
@@ -33,7 +47,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_ReturnsBacklogItemType()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             var returnedBacklogItemType = _backlogItemTypeService.Get(backlogItemType.ID);
 
@@ -44,14 +58,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void GetByBacklogItemTypeSchemaId_ReturnsBacklogItemTypes()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
             var backlogItemTypes = new List<BacklogItemTypeModel>
             {
-                _Fixtures.CreateBacklogItemType(
+                _BacklogItemTypeFixture.Create(
                     "Test BacklogItemType 1",
                     backlogItemTypeSchema: backlogItemTypeSchema
                 ),
-                _Fixtures.CreateBacklogItemType(
+                _BacklogItemTypeFixture.Create(
                     "Test BacklogItemType 2",
                     backlogItemTypeSchema: backlogItemTypeSchema
                 )
@@ -66,7 +80,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemType()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
             var title = $"{backlogItemType.Title} Updated";
 
             backlogItemType.Title = title;
@@ -79,7 +93,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_DeletesBacklogItemType()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             _backlogItemTypeService.Delete(backlogItemType);
 

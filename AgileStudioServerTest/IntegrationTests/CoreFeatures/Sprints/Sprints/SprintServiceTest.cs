@@ -1,6 +1,8 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {
@@ -8,19 +10,26 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
     {
         private readonly SprintService _sprintService;
 
+        private readonly SprintFixture _SprintFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
+
         public SprintServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            SprintService sprintService) : base(dbContext, fixtures)
+            SprintService sprintService,
+            SprintFixture sprintFixture,
+            ProjectFixture projectFixture) : base(dbContext)
         {
             _sprintService = sprintService;
+            _SprintFixture = sprintFixture;
+            _ProjectFixture = projectFixture;
         }
 
         [Fact]
         public void Create_ReturnsSprint()
         {
             int nextSprintNumber = _sprintService.GetNextSprintNumber();
-            ProjectModel project = _Fixtures.CreateProject();
+            ProjectModel project = _ProjectFixture.Create();
             SprintModel sprint = new(nextSprintNumber, project.ID);
 
             sprint = _sprintService.Create(sprint);
@@ -32,7 +41,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Get_ReturnsSprint()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
 
             var returnedSprint = _sprintService.Get(sprint.ID);
 
@@ -43,12 +52,12 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void GetAll_ReturnsAllSprints()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var nextSprintNumber = _sprintService.GetNextSprintNumber();
             var sprints = new List<SprintModel>
             {
-                _Fixtures.CreateSprint(nextSprintNumber + 1, project),
-                _Fixtures.CreateSprint(nextSprintNumber + 2,project)
+                _SprintFixture.Create(nextSprintNumber + 1, project),
+                _SprintFixture.Create(nextSprintNumber + 2,project)
             };
 
             List<SprintModel> returnedSprints = _sprintService.GetByProjectId(project.ID);
@@ -59,7 +68,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Update_ReturnsUpdatedSprint()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
             var nextSprintNumber = _sprintService.GetNextSprintNumber();
 
             sprint.SprintNumber = nextSprintNumber;
@@ -72,7 +81,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Delete_DeletesSprint()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
 
             _sprintService.Delete(sprint);
 

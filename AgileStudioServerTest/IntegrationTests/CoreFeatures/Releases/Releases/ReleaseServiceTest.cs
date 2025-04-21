@@ -1,6 +1,8 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 {
@@ -8,18 +10,25 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
     {
         private readonly ReleaseService _releaseService;
 
+        private readonly ReleaseFixture _ReleaseFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
+
         public ReleaseServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            ReleaseService releaseService) : base(dbContext, fixtures)
+            ReleaseService releaseService,
+            ReleaseFixture releaseFixture,
+            ProjectFixture projectFixture) : base(dbContext)
         {
             _releaseService = releaseService;
+            _ReleaseFixture = releaseFixture;
+            _ProjectFixture = projectFixture;
         }
 
         [Fact]
         public void Create_ReturnsRelease()
         {
-            ProjectModel project = _Fixtures.CreateProject();
+            ProjectModel project = _ProjectFixture.Create();
             ReleaseModel release = new("Test Release", project.ID);
 
             release = _releaseService.Create(release);
@@ -31,7 +40,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Get_ReturnsRelease()
         {
-            var release = _Fixtures.CreateRelease();
+            var release = _ReleaseFixture.Create();
 
             var returnedRelease = _releaseService.Get(release.ID);
 
@@ -42,11 +51,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void GetAll_ReturnsAllReleases()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var releases = new List<ReleaseModel>
             {
-                _Fixtures.CreateRelease("Test Release 1", project),
-                _Fixtures.CreateRelease("Test Release 2", project)
+                _ReleaseFixture.Create("Test Release 1", project),
+                _ReleaseFixture.Create("Test Release 2", project)
             };
 
             List<ReleaseModel> returnedReleases = _releaseService.GetByProjectId(project.ID);
@@ -57,7 +66,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Update_ReturnsUpdatedRelease()
         {
-            var release = _Fixtures.CreateRelease();
+            var release = _ReleaseFixture.Create();
             var title = $"{release.Title} Updated";
 
             release.Title = title;
@@ -70,7 +79,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Delete_DeletesRelease()
         {
-            var release = _Fixtures.CreateRelease();
+            var release = _ReleaseFixture.Create();
 
             _releaseService.Delete(release);
 

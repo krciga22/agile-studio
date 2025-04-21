@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
@@ -7,12 +8,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemTypeSchemaService _backlogItemTypeSchemaService;
 
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
         public BacklogItemTypeSchemaServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            BacklogItemTypeSchemaService backlogItemTypeSchemaService) : base(dbContext, fixtures)
+            BacklogItemTypeSchemaService backlogItemTypeSchemaService,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
         {
             _backlogItemTypeSchemaService = backlogItemTypeSchemaService;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_ReturnsBacklogItemTypeSchema()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
 
             var returnedBacklogItemTypeSchema = _backlogItemTypeSchemaService.Get(backlogItemTypeSchema.ID);
 
@@ -42,8 +46,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         {
             var backlogItemTypeSchemas = new List<BacklogItemTypeSchemaModel>
             {
-                _Fixtures.CreateBacklogItemTypeSchema("Test BacklogItemTypeSchema 1"),
-                _Fixtures.CreateBacklogItemTypeSchema("Test BacklogItemTypeSchema 2")
+                _BacklogItemTypeSchemaFixture.Create("Test BacklogItemTypeSchema 1"),
+                _BacklogItemTypeSchemaFixture.Create("Test BacklogItemTypeSchema 2")
             };
 
             List<BacklogItemTypeSchemaModel> returnedBacklogItemTypeSchemas = _backlogItemTypeSchemaService
@@ -55,7 +59,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemTypeSchema()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
             var title = $"{backlogItemTypeSchema.Title} Updated";
 
             backlogItemTypeSchema.Title = title;
@@ -68,7 +72,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_DeletesBacklogItemTypeSchema()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
 
             _backlogItemTypeSchemaService.Delete(backlogItemTypeSchema);
 

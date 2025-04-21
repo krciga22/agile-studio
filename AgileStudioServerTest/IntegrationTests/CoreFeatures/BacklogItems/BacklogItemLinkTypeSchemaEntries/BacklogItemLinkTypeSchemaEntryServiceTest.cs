@@ -2,6 +2,9 @@
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries
 {
@@ -9,19 +12,30 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemLinkTypeSchemaEntryService _backlogItemLinkTypeSchemaEntryService;
 
+        private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
+
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+
+        private readonly BacklogItemLinkTypeSchemaEntryFixture _BacklogItemLinkTypeSchemaEntryFixture;
+
         public BacklogItemLinkTypeSchemaEntryServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            BacklogItemLinkTypeSchemaEntryService backlogItemLinkTypeSchemaEntryService) : base(dbContext, fixtures)
+            BacklogItemLinkTypeSchemaEntryService backlogItemLinkTypeSchemaEntryService,
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture,
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
+            BacklogItemLinkTypeSchemaEntryFixture backlogItemLinkTypeSchemaEntryFixture) : base(dbContext)
         {
             _backlogItemLinkTypeSchemaEntryService = backlogItemLinkTypeSchemaEntryService;
+            _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _BacklogItemLinkTypeSchemaEntryFixture = backlogItemLinkTypeSchemaEntryFixture;
         }
 
         [Fact]
         public void Create_ReturnsBacklogItemLinkTypeSchemaEntry()
         {
-            BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchemaModel = _Fixtures.CreateBacklogItemLinkTypeSchema();
-            BacklogItemLinkTypeModel backlogItemLinkTypeModel = _Fixtures.CreateBacklogItemLinkType();
+            BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchemaModel = _BacklogItemLinkTypeSchemaFixture.Create();
+            BacklogItemLinkTypeModel backlogItemLinkTypeModel = _BacklogItemLinkTypeFixture.Create();
             BacklogItemLinkTypeSchemaEntryModel backlogItemLinkTypeSchemaEntry = new(
                 backlogItemLinkTypeSchemaModel.ID,
                 backlogItemLinkTypeModel.ID);
@@ -35,7 +49,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_ReturnsBacklogItemLinkTypeSchemaEntry()
         {
-            var backlogItemLinkTypeSchemaEntry = _Fixtures.CreateBacklogItemLinkTypeSchemaEntry();
+            var backlogItemLinkTypeSchemaEntry = _BacklogItemLinkTypeSchemaEntryFixture.Create();
             var returnedBacklogItemLinkTypeSchemaEntry = _backlogItemLinkTypeSchemaEntryService.Get(backlogItemLinkTypeSchemaEntry.ID);
 
             Assert.NotNull(returnedBacklogItemLinkTypeSchemaEntry);
@@ -45,7 +59,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_DeletesBacklogItemLinkTypeSchemaEntry()
         {
-            var backlogItemLinkTypeSchemaEntry = _Fixtures.CreateBacklogItemLinkTypeSchemaEntry();
+            var backlogItemLinkTypeSchemaEntry = _BacklogItemLinkTypeSchemaEntryFixture.Create();
 
             _backlogItemLinkTypeSchemaEntryService.Delete(backlogItemLinkTypeSchemaEntry);
 

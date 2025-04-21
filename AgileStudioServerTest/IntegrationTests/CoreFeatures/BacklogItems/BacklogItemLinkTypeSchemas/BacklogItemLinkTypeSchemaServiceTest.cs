@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
@@ -7,12 +8,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemLinkTypeSchemaService _backlogItemLinkTypeSchemaService;
 
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+
         public BacklogItemLinkTypeSchemaServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            BacklogItemLinkTypeSchemaService backlogItemLinkTypeSchemaService) : base(dbContext, fixtures)
+            BacklogItemLinkTypeSchemaService backlogItemLinkTypeSchemaService,
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
         {
             _backlogItemLinkTypeSchemaService = backlogItemLinkTypeSchemaService;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_ReturnsBacklogItemLinkTypeSchema()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
 
             var returnedBacklogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Get(backlogItemLinkTypeSchema.ID);
 
@@ -40,7 +44,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemLinkTypeSchema()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
             var title = $"{backlogItemLinkTypeSchema.Title} Updated";
 
             backlogItemLinkTypeSchema.Title = title;
@@ -53,7 +57,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_DeletesBacklogItemLinkTypeSchema()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
 
             _backlogItemLinkTypeSchemaService.Delete(backlogItemLinkTypeSchema);
 

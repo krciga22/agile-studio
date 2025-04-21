@@ -1,6 +1,8 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.WorkflowStates
 {
@@ -8,18 +10,25 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
     {
         private readonly WorkflowStateService _workflowStateService;
 
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
+        private readonly WorkflowFixture _WorkflowFixture;
+
         public WorkflowStateServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            WorkflowStateService workflowStateService) : base(dbContext, fixtures)
+            WorkflowStateService workflowStateService,
+            WorkflowStateFixture workflowStateFixture,
+            WorkflowFixture workflowFixture) : base(dbContext)
         {
             _workflowStateService = workflowStateService;
+            _WorkflowStateFixture = workflowStateFixture;
+            _WorkflowFixture = workflowFixture;
         }
 
         [Fact]
         public void Create_ReturnsWorkflowState()
         {
-            WorkflowModel workflow = _Fixtures.CreateWorkflow();
+            WorkflowModel workflow = _WorkflowFixture.Create();
             WorkflowStateModel workflowState = new("Test WorkflowState", workflow.ID);
 
             workflowState = _workflowStateService.Create(workflowState);
@@ -31,7 +40,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Get_ReturnsWorkflowState()
         {
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
 
             var returnedWorkflowState = _workflowStateService.Get(workflowState.ID);
 
@@ -42,11 +51,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void GetByWorkflowId_ReturnsWorkflowStates()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
             var workflowStates = new List<WorkflowStateModel>
             {
-                _Fixtures.CreateWorkflowState("Test WorkflowState 1", workflow: workflow),
-                _Fixtures.CreateWorkflowState("Test WorkflowState 2", workflow: workflow)
+                _WorkflowStateFixture.Create("Test WorkflowState 1", workflow: workflow),
+                _WorkflowStateFixture.Create("Test WorkflowState 2", workflow: workflow)
             };
 
             List<WorkflowStateModel> returnedWorkflowStates = _workflowStateService
@@ -58,7 +67,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Update_ReturnsUpdatedWorkflowState()
         {
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
             var title = $"{workflowState.Title} Updated";
 
             workflowState.Title = title;
@@ -71,7 +80,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Delete_DeletesWorkflowState()
         {
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
 
             _workflowStateService.Delete(workflowState);
 

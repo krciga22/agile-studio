@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflows
 {
@@ -7,12 +8,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
     {
         private readonly WorkflowService _workflowService;
 
+        private readonly WorkflowFixture _WorkflowFixture;
+
         public WorkflowServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            WorkflowService workflowService) : base(dbContext, fixtures)
+            WorkflowService workflowService,
+            WorkflowFixture workflowFixture) : base(dbContext)
         {
             _workflowService = workflowService;
+            _WorkflowFixture = workflowFixture;
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Get_ReturnsWorkflow()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
 
             var returnedWorkflow = _workflowService.Get(workflow.ID);
 
@@ -42,8 +46,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         {
             var workflows = new List<WorkflowModel>
             {
-                _Fixtures.CreateWorkflow("Test Workflow 1"),
-                _Fixtures.CreateWorkflow("Test Workflow 2")
+                _WorkflowFixture.Create("Test Workflow 1"),
+                _WorkflowFixture.Create("Test Workflow 2")
             };
 
             List<WorkflowModel> returnedWorkflows = _workflowService.GetAll();
@@ -54,7 +58,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Update_ReturnsUpdatedWorkflow()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
             var title = $"{workflow.Title} Updated";
 
             workflow.Title = title;
@@ -67,7 +71,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Delete_DeletesWorkflow()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
 
             _workflowService.Delete(workflow);
 

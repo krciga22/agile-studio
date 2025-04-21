@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
 {
@@ -7,12 +8,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
     {
         private readonly UserService _userService;
 
+        private readonly UserFixture _UserFixture;
+
         public UserServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            UserService userService) : base(dbContext, fixtures)
+            UserService userService,
+            UserFixture userFixture) : base(dbContext)
         {
             _userService = userService;
+            _UserFixture = userFixture;
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
         [Fact]
         public void Get_ReturnsUser()
         {
-            var user = _Fixtures.CreateUser();
+            var user = _UserFixture.Create();
 
             var returnedUser = _userService.Get(user.ID);
 
@@ -40,7 +44,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
         [Fact]
         public void Update_ReturnsUpdatedUser()
         {
-            var user = _Fixtures.CreateUser();
+            var user = _UserFixture.Create();
             var email = $"test2@test.com";
 
             user.Email = email;
@@ -53,7 +57,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
         [Fact]
         public void Delete_DeletesUser()
         {
-            var user = _Fixtures.CreateUser();
+            var user = _UserFixture.Create();
 
             _userService.Delete(user);
 

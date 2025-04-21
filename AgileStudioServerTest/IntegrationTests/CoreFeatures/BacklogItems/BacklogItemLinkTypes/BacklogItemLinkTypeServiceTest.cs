@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 {
@@ -7,12 +8,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemLinkTypeService _backlogItemLinkTypeService;
 
+        private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
+
         public BacklogItemLinkTypeServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            BacklogItemLinkTypeService backlogItemLinkTypeService) : base(dbContext, fixtures)
+            BacklogItemLinkTypeService backlogItemLinkTypeService,
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture) : base(dbContext)
         {
             _backlogItemLinkTypeService = backlogItemLinkTypeService;
+            _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
         }
 
         [Fact]
@@ -29,7 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_ReturnsBacklogItemLinkType()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
 
             var returnedBacklogItemLinkType = _backlogItemLinkTypeService.Get(backlogItemLinkType.ID);
 
@@ -40,7 +44,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemLinkType()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
             var title = $"{backlogItemLinkType.Title} Updated";
 
             backlogItemLinkType.Title = title;
@@ -53,7 +57,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_DeletesBacklogItemLinkType()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
 
             _backlogItemLinkTypeService.Delete(backlogItemLinkType);
 

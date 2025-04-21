@@ -2,6 +2,9 @@
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -9,19 +12,30 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
     {
         private readonly ProjectService _projectService;
 
+        private readonly ProjectFixture _ProjectFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+
         public ProjectServiceTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            ProjectService projectService) : base(dbContext, fixtures)
+            ProjectService projectService,
+            ProjectFixture projectFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
         {
             _projectService = projectService;
+            _ProjectFixture = projectFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
         }
 
         [Fact]
         public void Create_ReturnsProject()
         {
-            BacklogItemTypeSchemaModel typeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            BacklogItemLinkTypeSchemaModel linkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            BacklogItemTypeSchemaModel typeSchema = _BacklogItemTypeSchemaFixture.Create();
+            BacklogItemLinkTypeSchemaModel linkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
             ProjectModel project = new("Test Project", typeSchema.ID, linkTypeSchema.ID);
 
             project = _projectService.Create(project);
@@ -33,7 +47,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Get_ReturnsProject()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
             var returnedProject = _projectService.Get(project.ID);
 
@@ -46,8 +60,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         {
             var projects = new List<ProjectModel>
             {
-                _Fixtures.CreateProject("Test Project 1"),
-                _Fixtures.CreateProject("Test Project 2")
+                _ProjectFixture.Create("Test Project 1"),
+                _ProjectFixture.Create("Test Project 2")
             };
 
             List<ProjectModel> returnedProjects = _projectService.GetAll();
@@ -58,7 +72,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Update_ReturnsUpdatedProject()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var title = $"{project.Title} Updated";
 
             project.Title = title;
@@ -71,7 +85,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Delete_DeletesProject()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
             _projectService.Delete(project);
 

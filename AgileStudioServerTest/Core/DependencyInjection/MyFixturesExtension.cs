@@ -11,7 +11,6 @@ using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
-using AgileStudioServerTest.IntegrationTests;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,8 +19,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyFixtures(
              this IServiceCollection services)
         {
-            services.AddScoped<ModelFixtures>();
-
             services.AddScoped<BacklogItemLinkTypeFixture>();
             services.AddScoped<BacklogItemLinkTypeSchemaEntryFixture>();
             services.AddScoped<BacklogItemLinkTypeSchemaFixture>();

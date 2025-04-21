@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {
@@ -8,18 +10,25 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
     {
         private readonly SprintController _Controller;
 
+        private readonly SprintFixture _SprintFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
+
         public SprintControllerTest(
             DBContext dbContext,
-            ModelFixtures fixtures,
-            SprintController controller) : base(dbContext, fixtures)
+            SprintController controller,
+            SprintFixture sprintFixture,
+            ProjectFixture projectFixture) : base(dbContext)
         {
             _Controller = controller;
+            _SprintFixture = sprintFixture;
+            _ProjectFixture = projectFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
 
             SprintDto? sprintDto = null;
             IActionResult result = _Controller.Get(sprint.ID);
@@ -43,7 +52,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var sprintPostDto = new SprintPostDto(project.ID);
             sprintPostDto.Description = "Test Sprint";
 
@@ -61,7 +70,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
             var description = $"Test Sprint {sprint.ID} Updated";
             var sprintPatchDto = new SprintPatchDto(sprint.ID)
             {
@@ -82,7 +91,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var sprint = _Fixtures.CreateSprint();
+            var sprint = _SprintFixture.Create();
 
             IActionResult result = _Controller.Delete(sprint.ID);
 

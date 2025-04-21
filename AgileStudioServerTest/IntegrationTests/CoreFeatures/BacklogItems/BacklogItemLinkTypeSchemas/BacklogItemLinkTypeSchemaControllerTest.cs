@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
@@ -8,18 +9,21 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemLinkTypeSchemaController _Controller;
 
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+
         public BacklogItemLinkTypeSchemaControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            BacklogItemLinkTypeSchemaController controller) : base(dbContext, fixtures)
+            BacklogItemLinkTypeSchemaController controller,
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
         {
             _Controller = controller;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
 
             BacklogItemLinkTypeSchemaDto? dto = null;
             IActionResult result = _Controller.Get(backlogItemLinkTypeSchema.ID);
@@ -51,7 +55,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
             var title = $"{backlogItemLinkTypeSchema.Title} Updated";
             var patchDto = new BacklogItemLinkTypeSchemaPatchDto(backlogItemLinkTypeSchema.ID, title);
 
@@ -69,7 +73,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
 
             IActionResult result = _Controller.Delete(backlogItemLinkTypeSchema.ID);
 

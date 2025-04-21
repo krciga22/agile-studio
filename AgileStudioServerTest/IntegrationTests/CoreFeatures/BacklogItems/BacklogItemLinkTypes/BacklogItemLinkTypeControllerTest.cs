@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypes
 {
@@ -8,18 +9,21 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemLinkTypeController _Controller;
 
+        private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
+
         public BacklogItemLinkTypeControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            BacklogItemLinkTypeController controller) : base(dbContext, fixtures)
+            BacklogItemLinkTypeController controller,
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture) : base(dbContext)
         {
             _Controller = controller;
+            _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
 
             BacklogItemLinkTypeDto? dto = null;
             IActionResult result = _Controller.Get(backlogItemLinkType.ID);
@@ -51,7 +55,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
             var title = $"{backlogItemLinkType.Title} Updated";
             var patchDto = new BacklogItemLinkTypePatchDto(backlogItemLinkType.ID, title, backlogItemLinkType.TitleOpposite);
 
@@ -69,7 +73,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var backlogItemLinkType = _Fixtures.CreateBacklogItemLinkType();
+            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
 
             IActionResult result = _Controller.Delete(backlogItemLinkType.ID);
 

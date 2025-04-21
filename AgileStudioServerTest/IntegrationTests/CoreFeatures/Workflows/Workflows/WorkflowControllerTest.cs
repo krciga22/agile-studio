@@ -2,6 +2,8 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflows
 {
@@ -9,20 +11,27 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
     {
         private readonly WorkflowController _Controller;
 
+        private readonly WorkflowFixture _WorkflowFixture;
+
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
         public WorkflowControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            WorkflowController controller) : base(dbContext, fixtures)
+            WorkflowController controller,
+            WorkflowFixture workflowFixture,
+            WorkflowStateFixture workflowStateFixture) : base(dbContext)
         {
             _Controller = controller;
+            _WorkflowFixture = workflowFixture;
+            _WorkflowStateFixture = workflowStateFixture;
         }
 
         [Fact]
         public void Get_WithNoArguments_ReturnsDtos()
         {
-            List<Workflow> workflows = new() {
-                _Fixtures.CreateWorkflow("Test Workflow 1"),
-                _Fixtures.CreateWorkflow("Test Workflow 2")
+            List<WorkflowModel> workflows = new() {
+                _WorkflowFixture.Create("Test Workflow 1"),
+                _WorkflowFixture.Create("Test Workflow 2")
             };
 
             List<WorkflowDto>? dtos = null;
@@ -39,7 +48,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
 
             WorkflowDto? dto = null;
             IActionResult result = _Controller.Get(workflow.ID);
@@ -63,13 +72,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void GetWorkflowStatesForWorkflow_WithId_ReturnsDtos()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
 
-            List<WorkflowState> workflowStates = new() {
-                _Fixtures.CreateWorkflowState(
+            List<WorkflowStateModel> workflowStates = new() {
+                _WorkflowStateFixture.Create(
                     title: "Test Workflow State 1",
                     workflow: workflow),
-                _Fixtures.CreateWorkflowState(
+                _WorkflowStateFixture.Create(
                     title: "Test Workflow State 2",
                     workflow: workflow)
             };
@@ -104,7 +113,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
             var title = $"{workflow.Title} Updated";
             var workflowPatchDto = new WorkflowPatchDto(workflow.ID, title);
 
@@ -122,7 +131,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflow
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var workflow = _Fixtures.CreateWorkflow();
+            var workflow = _WorkflowFixture.Create();
 
             IActionResult result = _Controller.Delete(workflow.ID);
 

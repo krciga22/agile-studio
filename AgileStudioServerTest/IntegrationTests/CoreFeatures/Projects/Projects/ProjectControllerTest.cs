@@ -4,6 +4,13 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -11,20 +18,47 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
     {
         private readonly ProjectController _Controller;
 
+        private readonly ProjectFixture _ProjectFixture;
+
+        private readonly BacklogItemFixture _BacklogItemFixture;
+
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
+
+        private readonly SprintFixture _SprintFixture;
+
+        private readonly ReleaseFixture _ReleaseFixture;
+
         public ProjectControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            ProjectController controller) : base(dbContext, fixtures)
+            ProjectController controller,
+            ProjectFixture projectFixture,
+            BacklogItemFixture backlogItemFixture,
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
+            SprintFixture sprintFixture,
+            ReleaseFixture releaseFixture) : base(dbContext)
         {
             _Controller = controller;
+            _ProjectFixture = projectFixture;
+            _BacklogItemFixture = backlogItemFixture;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _SprintFixture = sprintFixture;
+            _ReleaseFixture = releaseFixture;
         }
 
         [Fact]
         public void Get_WithNoArguments_ReturnsDtos()
         {
-            List<Project> projects = new() {
-                _Fixtures.CreateProject("Test Project 1"),
-                _Fixtures.CreateProject("Test Project 2")
+            List<ProjectModel> projects = new() {
+                _ProjectFixture.Create("Test Project 1"),
+                _ProjectFixture.Create("Test Project 2")
             };
 
             List<ProjectDto>? projectDtos = null;
@@ -41,7 +75,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
             ProjectDto? projectDto = null;
             IActionResult result = _Controller.Get(project.ID);
@@ -65,16 +99,18 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void GetBacklogItemsForProject_WithId_ReturnsDtos()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                backlogItemTypeSchema: project.BacklogItemTypeSchema);
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema);
 
-            List<BacklogItem> backlogItems = new() {
-                _Fixtures.CreateBacklogItem(
+            List<BacklogItemModel> backlogItems = new() {
+                _BacklogItemFixture.Create(
                     title: "Test Backlog Item 1",
                     project: project,
                     backlogItemType: backlogItemType),
-                _Fixtures.CreateBacklogItem(
+                _BacklogItemFixture.Create(
                     title: "Test Backlog Item 2",
                     project: project,
                     backlogItemType: backlogItemType)
@@ -94,13 +130,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void GetSprintsForProject_WithId_ReturnsDtos()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
-            List<Sprint> sprints = new() {
-                _Fixtures.CreateSprint(
+            List<SprintModel> sprints = new() {
+                _SprintFixture.Create(
                     sprintNumber: 1,
                     project: project),
-                _Fixtures.CreateSprint(
+                _SprintFixture.Create(
                     sprintNumber: 2,
                     project: project)
             };
@@ -119,13 +155,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void GetReleasesForProject_WithId_ReturnsDtos()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
-            List<Release> releases = new() {
-                _Fixtures.CreateRelease(
+            List<ReleaseModel> releases = new() {
+                _ReleaseFixture.Create(
                     title: "v1.0.0",
                     project: project),
-                _Fixtures.CreateRelease(
+                _ReleaseFixture.Create(
                     title: "v1.0.1",
                     project: project)
             };
@@ -144,8 +180,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            var backlogItemLinkTypeSchema = _Fixtures.CreateBacklogItemLinkTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
             var projectPostDto = new ProjectPostDto(
                 "Test Project", 
                 backlogItemTypeSchema.ID, 
@@ -165,7 +201,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var title = $"{project.Title} Updated";
             var projectPatchDto = new ProjectPatchDto(project.ID, title);
 
@@ -183,7 +219,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
             IActionResult result = _Controller.Delete(project.ID);
 

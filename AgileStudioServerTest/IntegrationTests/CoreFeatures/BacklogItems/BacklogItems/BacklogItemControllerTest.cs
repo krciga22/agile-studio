@@ -2,6 +2,11 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
 {
@@ -9,37 +14,56 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemController _Controller;
 
+        private readonly BacklogItemFixture _BacklogItemFixture;
+
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
+
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
         public BacklogItemControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            BacklogItemController controller) : base(dbContext, fixtures)
+            BacklogItemController controller,
+            BacklogItemFixture backlogItemFixture,
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            ProjectFixture projectFixture,
+            WorkflowStateFixture workflowStateFixture) : base(dbContext)
         {
             _Controller = controller;
+            _BacklogItemFixture = backlogItemFixture;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _ProjectFixture = projectFixture;
+            _WorkflowStateFixture = workflowStateFixture;
         }
 
         [Fact]
         public void GetChildBacklogItems_WithId_ReturnsDtos()
         {
-            var project = _Fixtures.CreateProject();
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var project = _ProjectFixture.Create();
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 "Parent Backlog Item",
                 project: project
             );
-            var childBacklogItemType = _Fixtures.CreateBacklogItemType();
-            var childBacklogItem1 = _Fixtures.CreateBacklogItem(
+            var childBacklogItemType = _BacklogItemTypeFixture.Create();
+            var childBacklogItem1 = _BacklogItemFixture.Create(
                 "Child BacklogItem 1",
                 project: project,
                 backlogItemType: childBacklogItemType,
                 parentBacklogItem: parentBacklogItem
             );
-            var childBacklogItem2 = _Fixtures.CreateBacklogItem(
+            var childBacklogItem2 = _BacklogItemFixture.Create(
                 "Child BacklogItem 2",
                 project: project,
                 backlogItemType: childBacklogItemType,
                 parentBacklogItem: parentBacklogItem
             );
 
-            var childBacklogItems = new List<BacklogItem>
+            var childBacklogItems = new List<BacklogItemModel>
             {
                 childBacklogItem1,
                 childBacklogItem2
@@ -74,7 +98,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var backlogItem = _Fixtures.CreateBacklogItem();
+            var backlogItem = _BacklogItemFixture.Create();
 
             BacklogItemDto? dto = null;
             IActionResult result = _Controller.Get(backlogItem.ID);
@@ -90,12 +114,12 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void GetParentBacklogItem_WithId_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var project = _ProjectFixture.Create();
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 "Parent Backlog Item",
                 project: project
             );
-            var childBacklogItem = _Fixtures.CreateBacklogItem(
+            var childBacklogItem = _BacklogItemFixture.Create(
                 "Child BacklogItem",
                 project: project,
                 parentBacklogItem: parentBacklogItem
@@ -115,8 +139,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void GetParentBacklogItem_WithInvalidId_ReturnsNotFoundResult()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var project = _ProjectFixture.Create();
+            var backlogItem = _BacklogItemFixture.Create(
                 "Test BacklogItem",
                 project: project
             );
@@ -137,10 +161,12 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
             var postDto = new BacklogItemPostDto("Test Backlog Item Type Schema", project.ID, backlogItemType.ID, workflowState.ID);
 
             BacklogItemDto? dto = null;
@@ -157,9 +183,9 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var backlogItem = _Fixtures.CreateBacklogItem();
+            var backlogItem = _BacklogItemFixture.Create();
             var title = $"{backlogItem.Title} Updated";
-            var patchDto = new BacklogItemPatchDto(backlogItem.ID, title, backlogItem.WorkflowState.ID);
+            var patchDto = new BacklogItemPatchDto(backlogItem.ID, title, backlogItem.WorkflowStateID);
 
             IActionResult result = _Controller.Patch(backlogItem.ID, patchDto);
             BacklogItemDto? dto = null;
@@ -175,7 +201,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var backlogItem = _Fixtures.CreateBacklogItem();
+            var backlogItem = _BacklogItemFixture.Create();
 
             IActionResult result = _Controller.Delete(backlogItem.ID);
 

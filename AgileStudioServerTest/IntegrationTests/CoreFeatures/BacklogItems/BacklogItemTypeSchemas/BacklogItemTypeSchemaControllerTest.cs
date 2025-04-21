@@ -2,6 +2,8 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
@@ -9,20 +11,27 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private readonly BacklogItemTypeSchemaController _Controller;
 
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
         public BacklogItemTypeSchemaControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            BacklogItemTypeSchemaController controller) : base(dbContext, fixtures)
+            BacklogItemTypeSchemaController controller,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            BacklogItemTypeFixture backlogItemTypeFixture) : base(dbContext)
         {
             _Controller = controller;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
         }
 
         [Fact]
         public void List_ReturnsDtos()
         {
-            List<BacklogItemTypeSchema> backlogItemTypeSchemas = new() {
-                _Fixtures.CreateBacklogItemTypeSchema("Test Backlog Item Type Schema 1"),
-                _Fixtures.CreateBacklogItemTypeSchema("Test Backlog Item Type Schema 2")
+            List<BacklogItemTypeSchemaModel> backlogItemTypeSchemas = new() {
+                _BacklogItemTypeSchemaFixture.Create("Test Backlog Item Type Schema 1"),
+                _BacklogItemTypeSchemaFixture.Create("Test Backlog Item Type Schema 2")
             };
 
             List<BacklogItemTypeSchemaDto>? dtos = null;
@@ -39,13 +48,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void ListBacklogItemTypes_WithId_ReturnsDtos()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
 
-            List<BacklogItemType> backlogItemTypes = new() {
-                _Fixtures.CreateBacklogItemType(
+            List<BacklogItemTypeModel> backlogItemTypes = new() {
+                _BacklogItemTypeFixture.Create(
                     title: "Test Backlog Item Type Schema 1",
                     backlogItemTypeSchema: backlogItemTypeSchema),
-                _Fixtures.CreateBacklogItemType(
+                _BacklogItemTypeFixture.Create(
                     title: "Test Backlog Item Type Schema 2",
                     backlogItemTypeSchema: backlogItemTypeSchema)
             };
@@ -64,7 +73,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
 
             BacklogItemTypeSchemaDto? dto = null;
             IActionResult result = _Controller.Get(backlogItemTypeSchema.ID);
@@ -96,7 +105,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
             var title = $"{backlogItemTypeSchema.Title} Updated";
             var patchDto = new BacklogItemTypeSchemaPatchDto(backlogItemTypeSchema.ID, title);
 
@@ -114,7 +123,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
 
             IActionResult result = _Controller.Delete(backlogItemTypeSchema.ID);
 

@@ -4,11 +4,9 @@ namespace AgileStudioServerTest.IntegrationTests
 {
     public abstract class AbstractControllerTest : DBTest
     {
-        protected readonly EntityFixtures _Fixtures;
-
-        public AbstractControllerTest(DBContext dbContext, EntityFixtures fixtures) : base(dbContext)
+        public AbstractControllerTest(DBContext dbContext) : base(dbContext)
         {
-            _Fixtures = fixtures;
+
         }
     }
 }

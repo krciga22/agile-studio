@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 {
@@ -8,18 +10,25 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
     {
         private readonly ReleaseController _Controller;
 
+        private readonly ReleaseFixture _ReleaseFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
+
         public ReleaseControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            ReleaseController controller) : base(dbContext, fixtures)
+            ReleaseController controller,
+            ReleaseFixture releaseFixture,
+            ProjectFixture projectFixture) : base(dbContext)
         {
             _Controller = controller;
+            _ReleaseFixture = releaseFixture;
+            _ProjectFixture = projectFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var release = _Fixtures.CreateRelease();
+            var release = _ReleaseFixture.Create();
 
             ReleaseDto? releaseDto = null;
             IActionResult result = _Controller.Get(release.ID);
@@ -43,7 +52,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
             var releasePostDto = new ReleasePostDto("v1.0.0", project.ID);
 
             ReleaseDto? releaseDto = null;
@@ -60,7 +69,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var release = _Fixtures.CreateRelease("v1.0.0");
+            var release = _ReleaseFixture.Create("v1.0.0");
             var releasePatchDto = new ReleasePatchDto(release.ID, "v1.0.1");
 
             IActionResult result = _Controller.Patch(release.ID, releasePatchDto);
@@ -77,7 +86,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var release = _Fixtures.CreateRelease();
+            var release = _ReleaseFixture.Create();
 
             IActionResult result = _Controller.Delete(release.ID);
 

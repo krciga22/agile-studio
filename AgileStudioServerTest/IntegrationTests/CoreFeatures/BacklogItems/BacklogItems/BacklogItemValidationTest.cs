@@ -1,32 +1,70 @@
 ﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations;
 using AgileStudioServer.Data;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServerTest.CoreFeatures.Releases.Releases;
+using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
 {
     public class BacklogItemValidationTest : DBTest
     {
-        private readonly EntityFixtures _Fixtures;
+        private readonly BacklogItemFixture _BacklogItemFixture;
+
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        private readonly WorkflowFixture _WorkflowFixture;
+
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
+        private readonly SprintFixture _SprintFixture;
+        
+        private readonly ReleaseFixture _ReleaseFixture;
+
+        private readonly ProjectFixture _ProjectFixture;
 
         private readonly IServiceProvider? _ServiceProvider;
 
         public BacklogItemValidationTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            IServiceProvider? serviceProvider) : base(dbContext)
+            IServiceProvider? serviceProvider,
+            BacklogItemFixture backlogItemFixture,
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            WorkflowFixture workflowFixture,
+            WorkflowStateFixture workflowStateFixture,
+            SprintFixture sprintFixture,
+            ReleaseFixture releaseFixture,
+            ProjectFixture projectFixture) : base(dbContext)
         {
-            _Fixtures = fixtures;
             _ServiceProvider = serviceProvider;
+            _BacklogItemFixture = backlogItemFixture;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _WorkflowFixture = workflowFixture;
+            _WorkflowStateFixture = workflowStateFixture;
+            _SprintFixture = sprintFixture;
+            _ReleaseFixture = releaseFixture;
+            _ProjectFixture = projectFixture;
         }
 
         [Fact]
         public void PostBacklogItem_WithBacklogItemTypeFromSameProjectsSchema_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
             var attribute = new ValidBacklogItemTypeForBacklogItemPostDto();
             var backlogItem = new BacklogItemPostDto("Valid Backlog Item", project.ID, backlogItemType.ID, workflowState.ID);
 
@@ -38,11 +76,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithBacklogItemTypeFromDifferentProjectsSchema_IsInvalid()
         {
-            var project = _Fixtures.CreateProject();
-            var otherBacklogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            var backlogItemTypeInvalid = _Fixtures.CreateBacklogItemType(
+            var project = _ProjectFixture.Create();
+            var otherBacklogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+            var backlogItemTypeInvalid = _BacklogItemTypeFixture.Create(
                     backlogItemTypeSchema: otherBacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
             var attribute = new ValidBacklogItemTypeForBacklogItemPostDto();
             var backlogItem = new BacklogItemPostDto("Invalid Backlog Item", project.ID, backlogItemTypeInvalid.ID, workflowState.ID);
 
@@ -54,11 +92,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithSprintForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
-            var sprint = _Fixtures.CreateSprint(project: project);
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
+            var sprint = _SprintFixture.Create(project: project);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -77,12 +117,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithSprintForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project1.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
-            var sprint = _Fixtures.CreateSprint(project: project2);
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project1.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
+            var sprint = _SprintFixture.Create(project: project2);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -101,9 +143,9 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithSprintForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var sprint = _Fixtures.CreateSprint(project: project);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var project = _ProjectFixture.Create();
+            var sprint = _SprintFixture.Create(project: project);
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project,
                 sprint: sprint
             );
@@ -111,7 +153,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: "Test Backlog Item",
-                workflowStateId: backlogItem.WorkflowState.ID);
+                workflowStateId: backlogItem.WorkflowStateID);
 
             backlogItemPatchDto.SprintId = sprint.ID;
 
@@ -124,11 +166,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithSprintForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
-            var sprint1 = _Fixtures.CreateSprint(project: project1);
-            var sprint2 = _Fixtures.CreateSprint(project: project2);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
+            var sprint1 = _SprintFixture.Create(project: project1);
+            var sprint2 = _SprintFixture.Create(project: project2);
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project1,
                 sprint: sprint1
             );
@@ -136,7 +178,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: "Test Backlog Item",
-                workflowStateId: backlogItem.WorkflowState.ID);
+                workflowStateId: backlogItem.WorkflowStateID);
 
             backlogItemPatchDto.SprintId = sprint2.ID;
 
@@ -149,11 +191,13 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithReleaseForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
-            var release = _Fixtures.CreateRelease(project: project);
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
+            var release = _ReleaseFixture.Create(project: project);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -172,12 +216,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithReleaseForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project1.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState();
-            var release = _Fixtures.CreateRelease(project: project2);
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project1.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflowState = _WorkflowStateFixture.Create();
+            var release = _ReleaseFixture.Create(project: project2);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -196,9 +242,9 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithReleaseForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var release = _Fixtures.CreateRelease(project: project);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var project = _ProjectFixture.Create();
+            var release = _ReleaseFixture.Create(project: project);
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project,
                 release: release
             );
@@ -206,7 +252,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: "Test Backlog Item",
-                workflowStateId: backlogItem.WorkflowState.ID);
+                workflowStateId: backlogItem.WorkflowStateID);
 
             backlogItemPatchDto.ReleaseId = release.ID;
 
@@ -219,11 +265,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithReleaseForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
-            var release1 = _Fixtures.CreateRelease(project: project1);
-            var release2 = _Fixtures.CreateRelease(project: project2);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
+            var release1 = _ReleaseFixture.Create(project: project1);
+            var release2 = _ReleaseFixture.Create(project: project2);
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project1,
                 release: release1
             );
@@ -231,7 +277,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: "Test Backlog Item",
-                workflowStateId: backlogItem.WorkflowState.ID);
+                workflowStateId: backlogItem.WorkflowStateID);
 
             backlogItemPatchDto.ReleaseId = release2.ID;
 
@@ -244,11 +290,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithWorkflowStateForSameWorkflow_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState(
-                    workflow: backlogItemType.Workflow);
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID);
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflow = _WorkflowFixture.Get(
+                        backlogItemType.WorkflowID);
+            var workflowState = _WorkflowStateFixture.Create(
+                    workflow: workflow);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -265,13 +315,16 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithWorkflowStateForDiferentWorkflow_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var backlogItemType1 = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var backlogItemType2 = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema);
-            var workflowState = _Fixtures.CreateWorkflowState(
-                    workflow: backlogItemType1.Workflow);
+            var project = _ProjectFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID);
+            var backlogItemType1 = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var backlogItemType2 = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: backlogItemTypeSchema);
+            var workflow = _WorkflowFixture.Get(backlogItemType1.WorkflowID);
+            var workflowState = _WorkflowStateFixture.Create(
+                    workflow: workflow);
 
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
@@ -288,15 +341,15 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithWorkflowStateForSameWorkflow_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var workflow = _Fixtures.CreateWorkflow();
-            var workflowState1 = _Fixtures.CreateWorkflowState(
+            var project = _ProjectFixture.Create();
+            var workflow = _WorkflowFixture.Create();
+            var workflowState1 = _WorkflowStateFixture.Create(
                     workflow: workflow);
-            var workflowState2 = _Fixtures.CreateWorkflowState(
+            var workflowState2 = _WorkflowStateFixture.Create(
                     workflow: workflow);
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
+            var backlogItemType = _BacklogItemTypeFixture.Create(
                     workflow: workflow);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project,
                 backlogItemType: backlogItemType,
                 workflowState: workflowState1
@@ -316,16 +369,16 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithWorkflowStateForDiferentWorkflow_IsValid()
         {
-            var project = _Fixtures.CreateProject();
-            var workflow1 = _Fixtures.CreateWorkflow();
-            var workflow2 = _Fixtures.CreateWorkflow();
-            var workflowState1 = _Fixtures.CreateWorkflowState(
+            var project = _ProjectFixture.Create();
+            var workflow1 = _WorkflowFixture.Create();
+            var workflow2 = _WorkflowFixture.Create();
+            var workflowState1 = _WorkflowStateFixture.Create(
                     workflow: workflow1);
-            var workflowState2 = _Fixtures.CreateWorkflowState(
+            var workflowState2 = _WorkflowStateFixture.Create(
                     workflow: workflow2);
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
+            var backlogItemType = _BacklogItemTypeFixture.Create(
                     workflow: workflow1);
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project,
                 backlogItemType: backlogItemType,
                 workflowState: workflowState1
@@ -345,16 +398,17 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithParentBacklogItemForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 project: project
             );
 
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project.BacklogItemTypeSchema
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: _BacklogItemTypeSchemaFixture.Get(
+                        project.BacklogItemTypeSchemaID)
             );
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
                 projectId: project.ID,
@@ -375,17 +429,18 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PostBacklogItem_WithParentBacklogItemForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
 
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 project: project1
             );
 
-            var backlogItemType = _Fixtures.CreateBacklogItemType(
-                    backlogItemTypeSchema: project2.BacklogItemTypeSchema
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                    backlogItemTypeSchema: _BacklogItemTypeSchemaFixture.Get(
+                        project2.BacklogItemTypeSchemaID)
             );
-            var workflowState = _Fixtures.CreateWorkflowState();
+            var workflowState = _WorkflowStateFixture.Create();
             var backlogItemPostDto = new BacklogItemPostDto(
                 title: "Test Backlog Item",
                 projectId: project2.ID,
@@ -406,20 +461,20 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithParentBacklogItemForSameProject_IsValid()
         {
-            var project = _Fixtures.CreateProject();
+            var project = _ProjectFixture.Create();
 
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 project: project
             );
 
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project
             );
 
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: backlogItem.Title,
-                workflowStateId: backlogItem.WorkflowState.ID
+                workflowStateId: backlogItem.WorkflowStateID
             );
             backlogItemPatchDto.ParentBacklogItemId = parentBacklogItem.ID;
 
@@ -435,21 +490,21 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PatchBacklogItem_WithParentBacklogItemForDifferentProject_IsInvalid()
         {
-            var project1 = _Fixtures.CreateProject();
-            var project2 = _Fixtures.CreateProject();
+            var project1 = _ProjectFixture.Create();
+            var project2 = _ProjectFixture.Create();
 
-            var parentBacklogItem = _Fixtures.CreateBacklogItem(
+            var parentBacklogItem = _BacklogItemFixture.Create(
                 project: project1
             );
 
-            var backlogItem = _Fixtures.CreateBacklogItem(
+            var backlogItem = _BacklogItemFixture.Create(
                 project: project2
             );
 
             var backlogItemPatchDto = new BacklogItemPatchDto(
                 id: backlogItem.ID,
                 title: backlogItem.Title,
-                workflowStateId: backlogItem.WorkflowState.ID
+                workflowStateId: backlogItem.WorkflowStateID
             );
             backlogItemPatchDto.ParentBacklogItemId = parentBacklogItem.ID;
 

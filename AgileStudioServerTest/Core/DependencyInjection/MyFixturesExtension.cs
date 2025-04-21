@@ -21,7 +21,6 @@ namespace Microsoft.Extensions.DependencyInjection
              this IServiceCollection services)
         {
             services.AddScoped<ModelFixtures>();
-            services.AddScoped<EntityFixtures>();
 
             services.AddScoped<BacklogItemLinkTypeFixture>();
             services.AddScoped<BacklogItemLinkTypeSchemaEntryFixture>();

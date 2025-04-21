@@ -2,6 +2,10 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypes
 {
@@ -9,20 +13,35 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
     {
         private const int NON_EXISTANT_ID = 1234567;
 
+        private readonly WorkflowFixture _WorkflowFixture;
+
+        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+
+        private readonly ChildBacklogItemTypeFixture _ChildBacklogItemTypeFixture;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
         private readonly BacklogItemTypeController _Controller;
 
         public BacklogItemTypeControllerTest(
             DBContext dbContext,
-            EntityFixtures fixtures,
-            BacklogItemTypeController controller) : base(dbContext, fixtures)
+            BacklogItemTypeController controller,
+            WorkflowFixture workflowFixture,
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            ChildBacklogItemTypeFixture childBacklogItemTypeFixture,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
         {
             _Controller = controller;
+            _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _ChildBacklogItemTypeFixture = childBacklogItemTypeFixture;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _WorkflowFixture = workflowFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             BacklogItemTypeDto? dto = null;
             IActionResult result = _Controller.Get(backlogItemType.ID);
@@ -38,8 +57,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var backlogItemTypeSchema = _Fixtures.CreateBacklogItemTypeSchema();
-            var workflow = _Fixtures.CreateWorkflow();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+            var workflow = _WorkflowFixture.Create();
             var postDto = new BacklogItemTypePostDto("Test Backlog Item Type Schema",
                 backlogItemTypeSchema.ID, workflow.ID);
 
@@ -57,7 +76,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
             var title = $"{backlogItemType.Title} Updated";
             var patchDto = new BacklogItemTypePatchDto(backlogItemType.ID, title);
 
@@ -75,7 +94,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             IActionResult result = _Controller.Delete(backlogItemType.ID);
 
@@ -93,16 +112,16 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void GetChildTypes_WithExistingId_ReturnsDtos()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var childType1 = _Fixtures.CreateBacklogItemType();
-            var childType2 = _Fixtures.CreateBacklogItemType();
+            var parentType = _BacklogItemTypeFixture.Create();
+            var childType1 = _BacklogItemTypeFixture.Create();
+            var childType2 = _BacklogItemTypeFixture.Create();
 
-            var childBacklogItemTypes = new List<ChildBacklogItemType>() {
-                _Fixtures.CreateChildBacklogItemType(
+            var childBacklogItemTypes = new List<ChildBacklogItemTypeModel>() {
+                _ChildBacklogItemTypeFixture.Create(
                     parentType: parentType,
                     childType: childType1
                 ),
-                _Fixtures.CreateChildBacklogItemType(
+                _ChildBacklogItemTypeFixture.Create(
                     parentType: parentType,
                     childType: childType2
                 )
@@ -130,9 +149,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PutChildType_WithNewChildType_ReturnsDto()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var childType = _Fixtures.CreateBacklogItemType(
-                backlogItemTypeSchema: parentType.BacklogItemTypeSchema
+            var parentType = _BacklogItemTypeFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                parentType.BacklogItemTypeSchemaID);
+            var childType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema
             );
 
             BacklogItemTypeDto? dto = null;
@@ -152,12 +173,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PutChildType_WithExistingChildType_ReturnsDto()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var childType = _Fixtures.CreateBacklogItemType(
-                backlogItemTypeSchema: parentType.BacklogItemTypeSchema
+            var parentType = _BacklogItemTypeFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                parentType.BacklogItemTypeSchemaID);
+            var childType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema
             );
 
-            _Fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: parentType,
                 childType: childType
             );
@@ -179,8 +202,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PutChildType_FromDifferentSchema_ReturnsBadRequest()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var backlogItemType = _Fixtures.CreateBacklogItemType();
+            var parentType = _BacklogItemTypeFixture.Create();
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             IActionResult result = _Controller.PutChildType(
                 parentType.ID,
@@ -194,7 +217,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         public void PutChildType_WithNonExistantParent_ReturnsNotFound()
         {
             var nonExistantBacklogItemTypeId = NON_EXISTANT_ID;
-            var childType = _Fixtures.CreateBacklogItemType();
+            var childType = _BacklogItemTypeFixture.Create();
 
             IActionResult result = _Controller.PutChildType(
                 nonExistantBacklogItemTypeId,
@@ -207,7 +230,7 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void PutChildType_WithNonExistantChild_ReturnsNotFound()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
+            var parentType = _BacklogItemTypeFixture.Create();
             var nonExistantBacklogItemTypeId = NON_EXISTANT_ID;
 
             IActionResult result = _Controller.PutChildType(
@@ -221,12 +244,14 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void DeleteChildType_WithExistingChildType_ReturnsOk()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var childType = _Fixtures.CreateBacklogItemType(
-                backlogItemTypeSchema: parentType.BacklogItemTypeSchema
+            var parentType = _BacklogItemTypeFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                parentType.BacklogItemTypeSchemaID);
+            var childType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema
             );
 
-            _Fixtures.CreateChildBacklogItemType(
+            _ChildBacklogItemTypeFixture.Create(
                 parentType: parentType,
                 childType: childType
             );
@@ -242,9 +267,11 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         [Fact]
         public void DeleteChildType_WithNonExistingChildType_ReturnsNotFound()
         {
-            var parentType = _Fixtures.CreateBacklogItemType();
-            var childType = _Fixtures.CreateBacklogItemType(
-                backlogItemTypeSchema: parentType.BacklogItemTypeSchema
+            var parentType = _BacklogItemTypeFixture.Create();
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                parentType.BacklogItemTypeSchemaID);
+            var childType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema
             );
 
             IActionResult result = _Controller.DeleteChildType(

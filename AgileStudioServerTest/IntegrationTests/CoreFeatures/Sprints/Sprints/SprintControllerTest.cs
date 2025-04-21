@@ -6,7 +6,7 @@ using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {
-    public class SprintControllerTest : AbstractControllerNewTest
+    public class SprintControllerTest : AbstractControllerTest
     {
         private readonly SprintController _Controller;
 

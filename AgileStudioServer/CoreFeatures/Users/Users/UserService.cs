@@ -1,7 +1,9 @@
 ﻿
+using AgileStudioServer.Core.Services;
+
 namespace AgileStudioServer.CoreFeatures.Users.Users
 {
-    public class UserService
+    public class UserService : ServiceBase
     {
         private readonly UserRepository _UserRepository;
 

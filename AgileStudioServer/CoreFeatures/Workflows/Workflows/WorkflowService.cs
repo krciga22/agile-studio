@@ -1,7 +1,9 @@
 ﻿
+using AgileStudioServer.Core.Services;
+
 namespace AgileStudioServer.CoreFeatures.Workflows.Workflows
 {
-    public class WorkflowService
+    public class WorkflowService : ServiceBase
     {
         private readonly WorkflowRepository _WorkflowRepository;
 

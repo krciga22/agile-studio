@@ -1,6 +1,8 @@
-﻿namespace AgileStudioServer.CoreFeatures.Releases.Releases
+﻿using AgileStudioServer.Core.Services;
+
+namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {
-    public class ReleaseService
+    public class ReleaseService : ServiceBase
     {
         private readonly ReleaseRepository _releaseRepository;
 

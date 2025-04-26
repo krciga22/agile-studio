@@ -1,8 +1,9 @@
 ﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
-    public class BacklogItemService
+    public class BacklogItemService : ServiceBase
     {
         private readonly BacklogItemRepository _BacklogItemRepository;
 

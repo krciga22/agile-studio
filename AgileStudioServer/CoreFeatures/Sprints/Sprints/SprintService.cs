@@ -1,7 +1,9 @@
 ﻿
+using AgileStudioServer.Core.Services;
+
 namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 {
-    public class SprintService
+    public class SprintService : ServiceBase
     {
         private readonly SprintRepository _SprintRepository;
 

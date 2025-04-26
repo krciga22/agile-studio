@@ -1,6 +1,8 @@
-﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
+﻿using AgileStudioServer.Core.Services;
+
+namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas
 {
-    public class BacklogItemTypeSchemaService
+    public class BacklogItemTypeSchemaService : ServiceBase
     {
         private readonly BacklogItemTypeSchemaRepository _BacklogItemTypeSchemaRepository;
 

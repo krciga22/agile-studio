@@ -1,7 +1,9 @@
 ﻿
+using AgileStudioServer.Core.Services;
+
 namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
-    public class WorkflowStateService
+    public class WorkflowStateService : ServiceBase
     {
         private WorkflowStateRepository _WorkflowStateRepository;
 

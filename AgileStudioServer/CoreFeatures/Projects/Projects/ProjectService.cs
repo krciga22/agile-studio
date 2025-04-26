@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
-    public class ProjectService : ServiceBase
+    public class ProjectService : AbstractService
     {
         private readonly ProjectRepository _ProjectRepository;
 

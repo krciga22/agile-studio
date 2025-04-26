@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes
 {
-    public class ChildBacklogItemTypeService : ServiceBase
+    public class ChildBacklogItemTypeService : AbstractService
     {
         private readonly ChildBacklogItemTypeRepository _ChildBacklogItemTypeRepository;
 

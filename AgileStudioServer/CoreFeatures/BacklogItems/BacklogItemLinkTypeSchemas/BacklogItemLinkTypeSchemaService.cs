@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
-    public class BacklogItemLinkTypeSchemaService : ServiceBase
+    public class BacklogItemLinkTypeSchemaService : AbstractService
     {
         private readonly BacklogItemLinkTypeSchemaRepository _BacklogItemLinkTypeSchemaRepository;
 

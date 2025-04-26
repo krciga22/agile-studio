@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.Users.Users
 {
-    public class UserService : ServiceBase
+    public class UserService : AbstractService
     {
         private readonly UserRepository _UserRepository;
 

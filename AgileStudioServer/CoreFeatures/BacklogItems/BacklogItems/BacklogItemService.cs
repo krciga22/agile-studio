@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {
-    public class BacklogItemService : ServiceBase
+    public class BacklogItemService : AbstractService
     {
         private readonly BacklogItemRepository _BacklogItemRepository;
 

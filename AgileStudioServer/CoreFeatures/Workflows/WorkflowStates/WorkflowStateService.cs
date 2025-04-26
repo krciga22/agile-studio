@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
 {
-    public class WorkflowStateService : ServiceBase
+    public class WorkflowStateService : AbstractService
     {
         private WorkflowStateRepository _WorkflowStateRepository;
 

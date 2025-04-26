@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var classCollection = Assembly.GetExecutingAssembly()
                             .DefinedTypes.Where(t =>
-                                t.IsSubclassOf(typeof(ServiceBase)) &&
+                                t.IsSubclassOf(typeof(AbstractService)) &&
                                 t.IsPublic &&
                                 !t.IsAbstract);
 

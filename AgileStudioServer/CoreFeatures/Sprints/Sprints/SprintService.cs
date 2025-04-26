@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
 {
-    public class SprintService : ServiceBase
+    public class SprintService : AbstractService
     {
         private readonly SprintRepository _SprintRepository;
 

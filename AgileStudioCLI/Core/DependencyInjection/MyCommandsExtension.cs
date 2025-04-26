@@ -1,4 +1,5 @@
 ﻿using AgileStudioCLI.Commands;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,8 +8,16 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyCommands(
              this IServiceCollection services)
         {
-            services.AddScoped<ClearFixturesCommand>();
-            services.AddScoped<LoadFixturesCommand>();
+            var classCollection = Assembly.GetExecutingAssembly()
+                            .DefinedTypes.Where(t =>
+                                t.IsSubclassOf(typeof(AbstractCommand)) &&
+                                t.IsPublic &&
+                                !t.IsAbstract);
+
+            foreach (var classType in classCollection)
+            {
+                services.AddScoped(classType);
+            }
 
             return services;
         }

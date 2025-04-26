@@ -15,7 +15,7 @@ using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioCLI.FixtureSets
 {
-    internal class BaseFixtureSet : IFixtureSet
+    public class BaseFixtureSet : IFixtureSet
     {
         private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
         private readonly BacklogItemLinkTypeSchemaEntryFixture _BacklogItemLinkTypeSchemaEntryFixture;

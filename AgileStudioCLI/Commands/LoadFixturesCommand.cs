@@ -3,7 +3,7 @@ using AgileStudioServer.Data;
 
 namespace AgileStudioCLI.Commands
 {
-    internal class LoadFixturesCommand : AbstractCommand
+    public class LoadFixturesCommand : AbstractCommand
     {
         private readonly DBContext _DBContext;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioCLI.Commands
 {
-    internal class ClearFixturesCommand : AbstractCommand
+    public class ClearFixturesCommand : AbstractCommand
     {
         private readonly DBContext _DBContext;
 

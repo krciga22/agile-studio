@@ -2,7 +2,7 @@
 
 namespace AgileStudioCLI.Commands
 {
-    internal abstract class AbstractCommand : ICommand
+    public abstract class AbstractCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 

@@ -1,17 +1,5 @@
 ﻿using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
-using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.Workflows;
-using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,19 +8,16 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyModelHydrators(
              this IServiceCollection services)
         {
-            services.AddScoped<IHydrator, BacklogItemModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItemTypeModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItemTypeSchemaModelHydrator>();
-            services.AddScoped<IHydrator, ChildBacklogItemTypeModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItemLinkTypeModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaModelHydrator>();
-            services.AddScoped<IHydrator, BacklogItemLinkTypeSchemaEntryModelHydrator>();
-            services.AddScoped<IHydrator, ProjectModelHydrator>();
-            services.AddScoped<IHydrator, ReleaseModelHydrator>();
-            services.AddScoped<IHydrator, SprintModelHydrator>();
-            services.AddScoped<IHydrator, UserModelHydrator>();
-            services.AddScoped<IHydrator, WorkflowModelHydrator>();
-            services.AddScoped<IHydrator, WorkflowStateModelHydrator>();
+            var classCollection = Assembly.GetExecutingAssembly()
+                            .DefinedTypes.Where(t =>
+                                t.IsSubclassOf(typeof(AbstractModelHydrator)) &&
+                                t.IsPublic &&
+                                !t.IsAbstract);
+
+            foreach (var classType in classCollection)
+            {
+                services.AddScoped(typeof(IHydrator), classType);
+            }
 
             return services;
         }

@@ -34,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
                 return NotFound();
             }
 
-            var dto = HydrateSprintDto(model);
+            var dto = _Hydrator.Hydrate<SprintDto>(model);
             return Ok(dto);
         }
 
@@ -45,7 +45,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Post(SprintPostDto sprintPostDto)
         {
-            SprintModel model = HydrateSprintModel(sprintPostDto);
+            SprintModel model = _Hydrator.Hydrate<SprintModel>(sprintPostDto);
             model = _SprintService.Create(model);
 
             var sprintUrl = "";
@@ -54,7 +54,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
                 sprintUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? sprintUrl;
             }
 
-            var dto = HydrateSprintDto(model);
+            var dto = _Hydrator.Hydrate<SprintDto>(model);
 
             return Created(sprintUrl, dto);
         }
@@ -75,9 +75,9 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
             SprintDto dto;
             try
             {
-                SprintModel model = HydrateSprintModel(sprintPatchDto);
+                SprintModel model = _Hydrator.Hydrate<SprintModel>(sprintPatchDto);
                 model = _SprintService.Update(model);
-                dto = HydrateSprintDto(model);
+                dto = _Hydrator.Hydrate<SprintDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -109,27 +109,6 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
             _SprintService.Delete(model);
 
             return new OkResult();
-        }
-
-        private SprintDto HydrateSprintDto(SprintModel sprint, int depth = 1)
-        {
-            return (SprintDto)_Hydrator.Hydrate(
-                sprint, typeof(SprintDto), depth
-            );
-        }
-
-        private SprintModel HydrateSprintModel(SprintPostDto sprintPostDto, int depth = 3)
-        {
-            return (SprintModel)_Hydrator.Hydrate(
-                sprintPostDto, typeof(SprintModel), depth
-            );
-        }
-
-        private SprintModel HydrateSprintModel(SprintPatchDto sprintPatchDto, int depth = 3)
-        {
-            return (SprintModel)_Hydrator.Hydrate(
-                sprintPatchDto, typeof(SprintModel), depth
-            );
         }
     }
 }

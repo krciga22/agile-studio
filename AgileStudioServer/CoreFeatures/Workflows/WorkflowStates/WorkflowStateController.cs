@@ -31,7 +31,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
                 return NotFound();
             }
 
-            return Ok(HydrateWorkflowStateDto(model));
+            var dto = _Hydrator.Hydrate<WorkflowStateDto>(model);
+
+            return Ok(dto);
         }
 
         [HttpPost(Name = "CreateWorkflowState")]
@@ -41,7 +43,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Post(WorkflowStatePostDto workflowStatePostDto)
         {
-            var model = HydrateWorkflowStateModel(workflowStatePostDto);
+            var model = _Hydrator.Hydrate<WorkflowStateModel>(workflowStatePostDto);
             model = _WorkflowStateService.Create(model);
 
             string workflowStateUrl = "";
@@ -50,7 +52,7 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
                 workflowStateUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? workflowStateUrl;
             }
 
-            var dto = HydrateWorkflowStateDto(model);
+            var dto = _Hydrator.Hydrate<WorkflowStateDto>(model);
 
             return Created(workflowStateUrl, dto);
         }
@@ -71,9 +73,9 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
             WorkflowStateDto dto;
             try
             {
-                WorkflowStateModel model = HydrateWorkflowStateModel(workflowStatePatchDto);
+                WorkflowStateModel model = _Hydrator.Hydrate<WorkflowStateModel>(workflowStatePatchDto);
                 model = _WorkflowStateService.Update(model);
-                dto = HydrateWorkflowStateDto(model);
+                dto = _Hydrator.Hydrate<WorkflowStateDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -105,27 +107,6 @@ namespace AgileStudioServer.CoreFeatures.Workflows.WorkflowStates
             _WorkflowStateService.Delete(model);
 
             return new OkResult();
-        }
-
-        private WorkflowStateDto HydrateWorkflowStateDto(WorkflowStateModel workflowState, int depth = 1)
-        {
-            return (WorkflowStateDto)_Hydrator.Hydrate(
-                workflowState, typeof(WorkflowStateDto), depth
-            );
-        }
-
-        private WorkflowStateModel HydrateWorkflowStateModel(WorkflowStatePostDto workflowStatePostDto, int depth = 3)
-        {
-            return (WorkflowStateModel)_Hydrator.Hydrate(
-                workflowStatePostDto, typeof(WorkflowStateModel), depth
-            );
-        }
-
-        private WorkflowStateModel HydrateWorkflowStateModel(WorkflowStatePatchDto workflowStatePatchDto, int depth = 3)
-        {
-            return (WorkflowStateModel)_Hydrator.Hydrate(
-                workflowStatePatchDto, typeof(WorkflowStateModel), depth
-            );
         }
     }
 }

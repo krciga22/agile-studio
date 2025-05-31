@@ -36,7 +36,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
             var paginationResults = _BacklogItemService.GetChildBacklogItems(id, paginationDetails);
 
             PaginatedResultsDto<BacklogItemDto, BacklogItemModel> paginatedResultsDto = new(
-                HydrateBacklogItemDtos(paginationResults.Items),
+                _Hydrator.HydrateList<BacklogItemDto>(paginationResults.Items),
                 paginationResults
             );
 
@@ -55,7 +55,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
             return Ok(dto);
         }
 
@@ -71,7 +71,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
             return Ok(dto);
         }
 
@@ -82,7 +82,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemPostDto backlogItemPostDto)
         {
-            BacklogItemModel model = HydrateBacklogItemModel(backlogItemPostDto);
+            BacklogItemModel model = _Hydrator.Hydrate<BacklogItemModel>(backlogItemPostDto);
             model = _BacklogItemService.Create(model);
 
             string backlogItemUrl = "";
@@ -91,7 +91,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
                 backlogItemUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemUrl;
             }
 
-            var dto = HydrateBacklogItemDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
 
             return Created(backlogItemUrl, dto);
         }
@@ -112,9 +112,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
             BacklogItemDto dto;
             try
             {
-                BacklogItemModel model = HydrateBacklogItemModel(backlogItemPatchDto);
+                BacklogItemModel model = _Hydrator.Hydrate<BacklogItemModel>(backlogItemPatchDto);
                 model = _BacklogItemService.Update(model);
-                dto = HydrateBacklogItemDto(model);
+                dto = _Hydrator.Hydrate<BacklogItemDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -146,40 +146,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
             _BacklogItemService.Delete(model);
 
             return new OkResult();
-        }
-
-        private List<BacklogItemDto> HydrateBacklogItemDtos(List<BacklogItemModel> backlogItems, int depth = 1)
-        {
-            List<BacklogItemDto> dtos = new();
-
-            backlogItems.ForEach(backlogItem =>
-            {
-                BacklogItemDto dto = HydrateBacklogItemDto(backlogItem, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemDto HydrateBacklogItemDto(BacklogItemModel backlogItem, int depth = 1)
-        {
-            return (BacklogItemDto)_Hydrator.Hydrate(
-                backlogItem, typeof(BacklogItemDto), depth
-            );
-        }
-
-        private BacklogItemModel HydrateBacklogItemModel(BacklogItemPostDto backlogItemPostDto, int depth = 3)
-        {
-            return (BacklogItemModel)_Hydrator.Hydrate(
-                backlogItemPostDto, typeof(BacklogItemModel), depth
-            );
-        }
-
-        private BacklogItemModel HydrateBacklogItemModel(BacklogItemPatchDto backlogItemPatchDto, int depth = 3)
-        {
-            return (BacklogItemModel)_Hydrator.Hydrate(
-                backlogItemPatchDto, typeof(BacklogItemModel), depth
-            );
         }
     }
 }

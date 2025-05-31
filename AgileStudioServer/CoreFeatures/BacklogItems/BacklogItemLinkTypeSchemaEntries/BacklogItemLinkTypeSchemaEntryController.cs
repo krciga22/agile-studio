@@ -33,7 +33,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaE
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemLinkTypeSchemaEntryDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaEntryDto>(model);
             return Ok(dto);
         }
 
@@ -44,7 +44,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaE
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemLinkTypeSchemaEntryPostDto backlogItemLinkTypeSchemaEntryPostDto)
         {
-            BacklogItemLinkTypeSchemaEntryModel model = HydrateBacklogItemLinkTypeSchemaEntryModel(backlogItemLinkTypeSchemaEntryPostDto);
+            BacklogItemLinkTypeSchemaEntryModel model = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaEntryModel>(backlogItemLinkTypeSchemaEntryPostDto);
             model = _BacklogItemLinkTypeSchemaEntryService.Create(model);
 
             string backlogItemLinkTypeSchemaEntryUrl = "";
@@ -53,7 +53,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaE
                 backlogItemLinkTypeSchemaEntryUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemLinkTypeSchemaEntryUrl;
             }
 
-            var dto = HydrateBacklogItemLinkTypeSchemaEntryDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaEntryDto>(model);
 
             return Created(backlogItemLinkTypeSchemaEntryUrl, dto);
         }
@@ -73,33 +73,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaE
             _BacklogItemLinkTypeSchemaEntryService.Delete(model);
 
             return new OkResult();
-        }
-
-        private List<BacklogItemLinkTypeSchemaEntryDto> HydrateBacklogItemLinkTypeSchemaEntryDtos(List<BacklogItemLinkTypeSchemaEntryModel> backlogItemLinkTypeSchemaEntries, int depth = 1)
-        {
-            List<BacklogItemLinkTypeSchemaEntryDto> dtos = new();
-
-            backlogItemLinkTypeSchemaEntries.ForEach(backlogItemLinkTypeSchemaEntry =>
-            {
-                BacklogItemLinkTypeSchemaEntryDto dto = HydrateBacklogItemLinkTypeSchemaEntryDto(backlogItemLinkTypeSchemaEntry, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemLinkTypeSchemaEntryDto HydrateBacklogItemLinkTypeSchemaEntryDto(BacklogItemLinkTypeSchemaEntryModel backlogItemLinkTypeSchemaEntry, int depth = 1)
-        {
-            return (BacklogItemLinkTypeSchemaEntryDto)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaEntry, typeof(BacklogItemLinkTypeSchemaEntryDto), depth
-            );
-        }
-
-        private BacklogItemLinkTypeSchemaEntryModel HydrateBacklogItemLinkTypeSchemaEntryModel(BacklogItemLinkTypeSchemaEntryPostDto backlogItemLinkTypeSchemaEntryPostDto, int depth = 3)
-        {
-            return (BacklogItemLinkTypeSchemaEntryModel)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaEntryPostDto, typeof(BacklogItemLinkTypeSchemaEntryModel), depth
-            );
         }
     }
 }

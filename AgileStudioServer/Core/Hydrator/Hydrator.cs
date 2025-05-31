@@ -77,5 +77,30 @@ namespace AgileStudioServer.Core.Hydrator
 
             return obj;
         }
+
+        public List<TTarget> HydrateList<TTarget>
+            (System.Collections.IEnumerable sourceItems, int depth = 1)
+            where TTarget : class
+        {
+            List<TTarget> targetItems = new();
+
+            foreach(var sourceItem in sourceItems)
+            {
+                targetItems.Add(
+                    Hydrate<TTarget>(sourceItem, depth)
+                );
+            }
+
+            return targetItems;
+        }
+
+        public TTarget Hydrate<TTarget>
+            (object sourceItem, int depth = 1)
+            where TTarget : class
+        {
+            return (TTarget) Hydrate(
+                sourceItem, typeof(TTarget), depth
+            );
+        }
     }
 }

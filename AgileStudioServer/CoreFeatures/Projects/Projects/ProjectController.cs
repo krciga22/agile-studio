@@ -42,7 +42,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public IActionResult Get()
         {
             var models = _ProjectService.GetAll();
-            var dtos = HydrateProjectDtos(models);
+            var dtos = _Hydrator.HydrateList<ProjectDto>(models);
             return Ok(dtos);
         }
 
@@ -58,7 +58,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
                 return NotFound();
             }
 
-            var dto = HydrateProjectDto(model);
+            var dto = _Hydrator.Hydrate<ProjectDto>(model);
             return Ok(dto);
         }
 
@@ -69,7 +69,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public IActionResult GetBacklogItemsForProject(int id)
         {
             var models = _BacklogItemService.GetByProjectId(id);
-            var dtos = HydrateBacklogItemSummaryDtos(models);
+            var dtos = _Hydrator.HydrateList<BacklogItemDto>(models);
             return Ok(dtos);
         }
 
@@ -80,7 +80,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public IActionResult GetSprintsForProject(int id)
         {
             var models = _SprintService.GetByProjectId(id);
-            var dtos = HydrateSprintSummaryDtos(models);
+            var dtos = _Hydrator.HydrateList<SprintSummaryDto>(models);
             return Ok(dtos);
         }
 
@@ -91,7 +91,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public IActionResult GetReleasesForProject(int id)
         {
             var models = _ReleaseService.GetByProjectId(id);
-            var dtos = HydrateReleaseSummaryDtos(models);
+            var dtos = _Hydrator.HydrateList<ReleaseSummaryDto>(models);
             return Ok(dtos);
         }
 
@@ -102,7 +102,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(ProjectPostDto projectPostDto)
         {
-            ProjectModel model = HydrateProjectModel(projectPostDto);
+            ProjectModel model = _Hydrator.Hydrate<ProjectModel>(projectPostDto);
             model = _ProjectService.Create(model);
 
             string projectUrl = "";
@@ -111,7 +111,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
                 projectUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? projectUrl;
             }
 
-            var dto = HydrateProjectDto(model);
+            var dto = _Hydrator.Hydrate<ProjectDto>(model);
 
             return Created(projectUrl, dto);
         }
@@ -132,9 +132,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             ProjectDto dto;
             try
             {
-                ProjectModel model = HydrateProjectModel(projectPatchDto);
+                ProjectModel model = _Hydrator.Hydrate<ProjectModel>(projectPatchDto);
                 model = _ProjectService.Update(model);
-                dto = HydrateProjectDto(model);
+                dto = _Hydrator.Hydrate<ProjectDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -166,100 +166,6 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             _ProjectService.Delete(model);
 
             return new OkResult();
-        }
-
-        private List<ProjectDto> HydrateProjectDtos(List<ProjectModel> projects, int depth = 1)
-        {
-            List<ProjectDto> dtos = new();
-
-            projects.ForEach(project =>
-            {
-                ProjectDto dto = HydrateProjectDto(project, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private ProjectDto HydrateProjectDto(ProjectModel project, int depth = 1)
-        {
-            return (ProjectDto)_Hydrator.Hydrate(
-                project, typeof(ProjectDto), depth
-            );
-        }
-
-        private List<BacklogItemDto> HydrateBacklogItemSummaryDtos(List<BacklogItemModel> backlogItems, int depth = 1)
-        {
-            List<BacklogItemDto> dtos = new();
-
-            backlogItems.ForEach(backlogItem =>
-            {
-                BacklogItemDto dto = HydrateBacklogItemDto(backlogItem, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemDto HydrateBacklogItemDto(BacklogItemModel backlogItem, int depth = 1)
-        {
-            return (BacklogItemDto)_Hydrator.Hydrate(
-                backlogItem, typeof(BacklogItemDto), depth
-            );
-        }
-
-        private List<SprintSummaryDto> HydrateSprintSummaryDtos(List<SprintModel> sprints, int depth = 1)
-        {
-            List<SprintSummaryDto> dtos = new();
-
-            sprints.ForEach(sprint =>
-            {
-                SprintSummaryDto dto = HydrateSprintSummaryDto(sprint, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private SprintSummaryDto HydrateSprintSummaryDto(SprintModel sprint, int depth = 1)
-        {
-            return (SprintSummaryDto)_Hydrator.Hydrate(
-                sprint, typeof(SprintSummaryDto), depth
-            );
-        }
-
-        private List<ReleaseSummaryDto> HydrateReleaseSummaryDtos(List<ReleaseModel> releases, int depth = 1)
-        {
-            List<ReleaseSummaryDto> dtos = new();
-
-            releases.ForEach(release =>
-            {
-                ReleaseSummaryDto dto = HydrateReleaseSummaryDto(release, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private ReleaseSummaryDto HydrateReleaseSummaryDto(ReleaseModel release, int depth = 1)
-        {
-            return (ReleaseSummaryDto)_Hydrator.Hydrate(
-                release, typeof(ReleaseSummaryDto), depth
-            );
-        }
-
-        private ProjectModel HydrateProjectModel(ProjectPostDto projectPostDto, int depth = 3)
-        {
-            return (ProjectModel)_Hydrator.Hydrate(
-                projectPostDto, typeof(ProjectModel), depth
-            );
-        }
-
-        private ProjectModel HydrateProjectModel(ProjectPatchDto projectPatchDto, int depth = 3)
-        {
-            return (ProjectModel)_Hydrator.Hydrate(
-                projectPatchDto, typeof(ProjectModel), depth
-            );
         }
     }
 }

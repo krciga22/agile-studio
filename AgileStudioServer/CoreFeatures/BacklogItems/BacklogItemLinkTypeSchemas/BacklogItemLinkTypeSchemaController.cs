@@ -34,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemLinkTypeSchemaDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaDto>(model);
             return Ok(dto);
         }
 
@@ -45,7 +45,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemLinkTypeSchemaPostDto backlogItemLinkTypeSchemaPostDto)
         {
-            BacklogItemLinkTypeSchemaModel model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPostDto);
+            BacklogItemLinkTypeSchemaModel model = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaModel>(backlogItemLinkTypeSchemaPostDto);
             model = _BacklogItemLinkTypeSchemaService.Create(model);
 
             string backlogItemLinkTypeSchemaUrl = "";
@@ -54,7 +54,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
                 backlogItemLinkTypeSchemaUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemLinkTypeSchemaUrl;
             }
 
-            var dto = HydrateBacklogItemLinkTypeSchemaDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaDto>(model);
 
             return Created(backlogItemLinkTypeSchemaUrl, dto);
         }
@@ -75,9 +75,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
             BacklogItemLinkTypeSchemaDto dto;
             try
             {
-                BacklogItemLinkTypeSchemaModel model = HydrateBacklogItemLinkTypeSchemaModel(backlogItemLinkTypeSchemaPatchDto);
+                BacklogItemLinkTypeSchemaModel model = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaModel>(backlogItemLinkTypeSchemaPatchDto);
                 model = _BacklogItemLinkTypeSchemaService.Update(model);
-                dto = HydrateBacklogItemLinkTypeSchemaDto(model);
+                dto = _Hydrator.Hydrate<BacklogItemLinkTypeSchemaDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -109,40 +109,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
             _BacklogItemLinkTypeSchemaService.Delete(model);
 
             return new OkResult();
-        }
-
-        private List<BacklogItemLinkTypeSchemaDto> HydrateBacklogItemLinkTypeSchemaDtos(List<BacklogItemLinkTypeSchemaModel> backlogItemLinkTypeSchemas, int depth = 1)
-        {
-            List<BacklogItemLinkTypeSchemaDto> dtos = new();
-
-            backlogItemLinkTypeSchemas.ForEach(backlogItemLinkTypeSchema =>
-            {
-                BacklogItemLinkTypeSchemaDto dto = HydrateBacklogItemLinkTypeSchemaDto(backlogItemLinkTypeSchema, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemLinkTypeSchemaDto HydrateBacklogItemLinkTypeSchemaDto(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema, int depth = 1)
-        {
-            return (BacklogItemLinkTypeSchemaDto)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchema, typeof(BacklogItemLinkTypeSchemaDto), depth
-            );
-        }
-
-        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPostDto backlogItemLinkTypeSchemaPostDto, int depth = 3)
-        {
-            return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaPostDto, typeof(BacklogItemLinkTypeSchemaModel), depth
-            );
-        }
-
-        private BacklogItemLinkTypeSchemaModel HydrateBacklogItemLinkTypeSchemaModel(BacklogItemLinkTypeSchemaPatchDto backlogItemLinkTypeSchemaPatchDto, int depth = 3)
-        {
-            return (BacklogItemLinkTypeSchemaModel)_Hydrator.Hydrate(
-                backlogItemLinkTypeSchemaPatchDto, typeof(BacklogItemLinkTypeSchemaModel), depth
-            );
         }
     }
 }

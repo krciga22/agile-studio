@@ -34,7 +34,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemLinkTypeDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeDto>(model);
             return Ok(dto);
         }
 
@@ -45,7 +45,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemLinkTypePostDto backlogItemLinkTypePostDto)
         {
-            BacklogItemLinkTypeModel model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePostDto);
+            BacklogItemLinkTypeModel model = _Hydrator.Hydrate<BacklogItemLinkTypeModel>(backlogItemLinkTypePostDto);
             model = _BacklogItemLinkTypeService.Create(model);
 
             string backlogItemLinkTypeUrl = "";
@@ -54,7 +54,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
                 backlogItemLinkTypeUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemLinkTypeUrl;
             }
 
-            var dto = HydrateBacklogItemLinkTypeDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemLinkTypeDto>(model);
 
             return Created(backlogItemLinkTypeUrl, dto);
         }
@@ -75,9 +75,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
             BacklogItemLinkTypeDto dto;
             try
             {
-                BacklogItemLinkTypeModel model = HydrateBacklogItemLinkTypeModel(backlogItemLinkTypePatchDto);
+                BacklogItemLinkTypeModel model = _Hydrator.Hydrate<BacklogItemLinkTypeModel>(backlogItemLinkTypePatchDto);
                 model = _BacklogItemLinkTypeService.Update(model);
-                dto = HydrateBacklogItemLinkTypeDto(model);
+                dto = _Hydrator.Hydrate<BacklogItemLinkTypeDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -109,40 +109,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes
             _BacklogItemLinkTypeService.Delete(model);
 
             return new OkResult();
-        }
-
-        private List<BacklogItemLinkTypeDto> HydrateBacklogItemLinkTypeDtos(List<BacklogItemLinkTypeModel> backlogItemLinkTypes, int depth = 1)
-        {
-            List<BacklogItemLinkTypeDto> dtos = new();
-
-            backlogItemLinkTypes.ForEach(backlogItemLinkType =>
-            {
-                BacklogItemLinkTypeDto dto = HydrateBacklogItemLinkTypeDto(backlogItemLinkType, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemLinkTypeDto HydrateBacklogItemLinkTypeDto(BacklogItemLinkTypeModel backlogItemLinkType, int depth = 1)
-        {
-            return (BacklogItemLinkTypeDto)_Hydrator.Hydrate(
-                backlogItemLinkType, typeof(BacklogItemLinkTypeDto), depth
-            );
-        }
-
-        private BacklogItemLinkTypeModel HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePostDto backlogItemLinkTypePostDto, int depth = 3)
-        {
-            return (BacklogItemLinkTypeModel)_Hydrator.Hydrate(
-                backlogItemLinkTypePostDto, typeof(BacklogItemLinkTypeModel), depth
-            );
-        }
-
-        private BacklogItemLinkTypeModel HydrateBacklogItemLinkTypeModel(BacklogItemLinkTypePatchDto backlogItemLinkTypePatchDto, int depth = 3)
-        {
-            return (BacklogItemLinkTypeModel)_Hydrator.Hydrate(
-                backlogItemLinkTypePatchDto, typeof(BacklogItemLinkTypeModel), depth
-            );
         }
     }
 }

@@ -44,7 +44,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
                 return NotFound();
             }
 
-            var dto = HydrateBacklogItemTypeDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
             return Ok(dto);
         }
 
@@ -55,7 +55,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public CreatedResult Post(BacklogItemTypePostDto backlogItemTypePostDto)
         {
-            BacklogItemTypeModel model = HydrateBacklogItemTypeModel(backlogItemTypePostDto);
+            BacklogItemTypeModel model = _Hydrator.Hydrate<BacklogItemTypeModel>(backlogItemTypePostDto);
             model = _BacklogItemTypeService.Create(model);
 
             string backlogItemTypeUrl = "";
@@ -64,7 +64,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
                 backlogItemTypeUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemTypeUrl;
             }
 
-            var dto = HydrateBacklogItemTypeDto(model);
+            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
 
             return Created(backlogItemTypeUrl, dto);
         }
@@ -85,9 +85,9 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
             BacklogItemTypeDto dto;
             try
             {
-                BacklogItemTypeModel model = HydrateBacklogItemTypeModel(backlogItemTypePatchDto);
+                BacklogItemTypeModel model = _Hydrator.Hydrate<BacklogItemTypeModel>(backlogItemTypePatchDto);
                 model = _BacklogItemTypeService.Update(model);
-                dto = HydrateBacklogItemTypeDto(model);
+                dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -149,7 +149,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
                 models.Add(childType);
             });
 
-            var dtos = HydrateBacklogItemTypeDtos(models);
+            var dtos = _Hydrator.HydrateList<BacklogItemTypeDto>(models);
             return Ok(dtos);
         }
 
@@ -196,7 +196,7 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
                 created = true;
             }
 
-            var dto = HydrateBacklogItemTypeDto(childType);
+            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(childType);
             return created ? Created("", dto) : Ok(dto);
         }
 
@@ -215,40 +215,6 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes
             _ChildBacklogItemTypeService.Delete(childBacklogItemType);
 
             return new NoContentResult();
-        }
-
-        private List<BacklogItemTypeDto> HydrateBacklogItemTypeDtos(List<BacklogItemTypeModel> backlogItemTypes, int depth = 1)
-        {
-            List<BacklogItemTypeDto> dtos = new();
-
-            backlogItemTypes.ForEach(backlogItemType =>
-            {
-                BacklogItemTypeDto dto = HydrateBacklogItemTypeDto(backlogItemType, depth);
-                dtos.Add(dto);
-            });
-
-            return dtos;
-        }
-
-        private BacklogItemTypeDto HydrateBacklogItemTypeDto(BacklogItemTypeModel backlogItemType, int depth = 1)
-        {
-            return (BacklogItemTypeDto)_Hydrator.Hydrate(
-                backlogItemType, typeof(BacklogItemTypeDto), depth
-            );
-        }
-
-        private BacklogItemTypeModel HydrateBacklogItemTypeModel(BacklogItemTypePostDto backlogItemTypePostDto, int depth = 3)
-        {
-            return (BacklogItemTypeModel)_Hydrator.Hydrate(
-                backlogItemTypePostDto, typeof(BacklogItemTypeModel), depth
-            );
-        }
-
-        private BacklogItemTypeModel HydrateBacklogItemTypeModel(BacklogItemTypePatchDto backlogItemTypePatchDto, int depth = 3)
-        {
-            return (BacklogItemTypeModel)_Hydrator.Hydrate(
-                backlogItemTypePatchDto, typeof(BacklogItemTypeModel), depth
-            );
         }
     }
 }

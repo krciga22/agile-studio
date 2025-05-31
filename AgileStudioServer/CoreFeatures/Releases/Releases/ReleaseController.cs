@@ -37,7 +37,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
                 return NotFound();
             }
 
-            var dto = HydrateReleaseDto(model);
+            var dto = _Hydrator.Hydrate<ReleaseDto>(model);
             return Ok(dto);
         }
 
@@ -48,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Post(ReleasePostDto releasePostDto)
         {
-            ReleaseModel model = HydrateReleaseModel(releasePostDto);
+            ReleaseModel model = _Hydrator.Hydrate<ReleaseModel>(releasePostDto);
             model = _ReleaseService.Create(model);
 
             var releaseUrl = "";
@@ -57,7 +57,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
                 releaseUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? releaseUrl;
             }
 
-            var dto = HydrateReleaseDto(model);
+            var dto = _Hydrator.Hydrate<ReleaseDto>(model);
 
             return Created(releaseUrl, dto);
         }
@@ -78,9 +78,9 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
             ReleaseDto dto;
             try
             {
-                ReleaseModel model = HydrateReleaseModel(releasePatchDto);
+                ReleaseModel model = _Hydrator.Hydrate<ReleaseModel>(releasePatchDto);
                 model = _ReleaseService.Update(model);
-                dto = HydrateReleaseDto(model);
+                dto = _Hydrator.Hydrate<ReleaseDto>(model);
             }
             catch (ModelNotFoundException e)
             {
@@ -112,27 +112,6 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
             _ReleaseService.Delete(model);
 
             return new OkResult();
-        }
-
-        private ReleaseDto HydrateReleaseDto(ReleaseModel release, int depth = 1)
-        {
-            return (ReleaseDto)_Hydrator.Hydrate(
-                release, typeof(ReleaseDto), depth
-            );
-        }
-
-        private ReleaseModel HydrateReleaseModel(ReleasePostDto releasePostDto, int depth = 3)
-        {
-            return (ReleaseModel)_Hydrator.Hydrate(
-                releasePostDto, typeof(ReleaseModel), depth
-            );
-        }
-
-        private ReleaseModel HydrateReleaseModel(ReleasePatchDto releasePatchDto, int depth = 3)
-        {
-            return (ReleaseModel)_Hydrator.Hydrate(
-                releasePatchDto, typeof(ReleaseModel), depth
-            );
         }
     }
 }

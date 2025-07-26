@@ -1,10 +1,10 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypes
 {

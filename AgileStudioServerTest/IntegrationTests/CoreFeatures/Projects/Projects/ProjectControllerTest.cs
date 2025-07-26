@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
@@ -11,6 +10,7 @@ using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
 using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {

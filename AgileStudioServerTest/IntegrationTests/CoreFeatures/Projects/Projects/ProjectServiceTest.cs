@@ -1,10 +1,10 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -63,6 +63,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
                 _ProjectFixture.Create("Test Project 1"),
                 _ProjectFixture.Create("Test Project 2")
             };
+
+            _DBContext.GetType();
 
             List<ProjectModel> returnedProjects = _projectService.GetAll();
 

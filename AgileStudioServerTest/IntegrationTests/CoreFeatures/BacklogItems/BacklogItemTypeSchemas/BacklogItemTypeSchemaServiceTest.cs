@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemTypeSchemas

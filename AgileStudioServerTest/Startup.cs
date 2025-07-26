@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AgileStudioServerTest.IntegrationTests;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AgileStudioServerTest
 {
@@ -6,7 +7,10 @@ namespace AgileStudioServerTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMyDB();
+            DBTestContainer dbTestContainer = DBTestContainer.GetInstance();
+            dbTestContainer.Start();
+
+            services.AddMyTestDB();
             services.AddMyRepositories();
             services.AddMyCoreServices();
             services.AddMyControllers();

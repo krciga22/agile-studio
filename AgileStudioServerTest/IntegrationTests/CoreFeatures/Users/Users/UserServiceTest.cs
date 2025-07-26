@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Users.Users;
+﻿using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users

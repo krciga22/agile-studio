@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+﻿using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {

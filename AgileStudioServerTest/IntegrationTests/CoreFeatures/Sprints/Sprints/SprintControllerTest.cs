@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
 {

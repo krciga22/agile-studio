@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+﻿using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Workflows.Workflows

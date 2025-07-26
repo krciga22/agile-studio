@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
@@ -7,6 +6,7 @@ using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServer.Data;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 {

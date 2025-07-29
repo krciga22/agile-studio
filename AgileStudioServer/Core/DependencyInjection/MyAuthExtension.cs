@@ -10,10 +10,10 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMyAuth(
              this IServiceCollection services, IConfiguration config)
         {
-            string auth0Domain = config.GetValue<string>("Auth0:Domain");
-            string auth0ClientId = config.GetValue<string>("Auth0:ClientId");
-            string auth0ClientSecret = config.GetValue<string>("Auth0:ClientSecret");
-            string auth0Audience = config.GetValue<string>("Auth0:Audience");
+            string auth0Domain = config.GetValue<string>("Auth0:Domain") ?? "";
+            string auth0ClientId = config.GetValue<string>("Auth0:ClientId") ?? "";
+            string auth0ClientSecret = config.GetValue<string>("Auth0:ClientSecret") ?? "";
+            string auth0Audience = config.GetValue<string>("Auth0:Audience") ?? "";
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

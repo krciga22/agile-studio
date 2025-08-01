@@ -19,9 +19,9 @@ namespace AgileStudioServerTest.IntegrationTests
         {
             var builder = new ConfigurationBuilder().AddUserSecrets(Assembly.GetExecutingAssembly());
             var configuration = builder.Build();
-            var dbName = configuration.GetValue<string>("DB:Name");
-            var dbUser = configuration.GetValue<string>("DB:User");
-            var dbPass = configuration.GetValue<string>("DB:Pass");
+            var dbName = configuration.GetValue<string>("DB_NAME");
+            var dbUser = configuration.GetValue<string>("DB_USER");
+            var dbPass = configuration.GetValue<string>("DB_PASS");
 
             _dbTestContainer = new MySqlBuilder()
                 .WithImage("mysql:8.0.42")

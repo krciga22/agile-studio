@@ -24,6 +24,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       env:
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASS: ${{ secrets.DB_PASS }}
         TESTCONTAINERS_REUSE_ENABLE: ${{ secrets.TESTCONTAINERS_REUSE_ENABLE }}
       run: dotnet test --no-build --verbosity normal
     - name: Dump docker logs on failure

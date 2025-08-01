@@ -1,5 +1,7 @@
 ﻿
+using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
+using Microsoft.EntityFrameworkCore;
 
 [assembly: AssemblyFixture(typeof(AgileStudioServerTest.Core.Fixtures.AssemblyFixture))]
 
@@ -7,6 +9,11 @@ namespace AgileStudioServerTest.Core.Fixtures
 {
     public sealed class AssemblyFixture : IDisposable
     {
+        public AssemblyFixture(DBContext dBContext)
+        {
+            dBContext.Database.Migrate();
+        }
+
         public void Dispose()
         {
             DBTestContainer dbTestContainer = DBTestContainer.GetInstance();

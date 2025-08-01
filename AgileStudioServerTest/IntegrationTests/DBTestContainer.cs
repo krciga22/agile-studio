@@ -13,8 +13,6 @@ namespace AgileStudioServerTest.IntegrationTests
 
         private bool _IsStarted { get; set; } = false;
 
-        private bool _IsMigrated { get; set; } = false;
-
         private DBTestContainer()
         {
             var builder = new ConfigurationBuilder()
@@ -55,16 +53,6 @@ namespace AgileStudioServerTest.IntegrationTests
         public bool IsStarted()
         {
             return _IsStarted;
-        }
-
-        public bool IsMigrated()
-        {
-            return _IsMigrated;
-        }
-
-        public void SetIsMigrated(bool isMigrated)
-        {
-            _IsMigrated = isMigrated;
         }
 
         public void Start()

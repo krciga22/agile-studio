@@ -17,7 +17,10 @@ namespace AgileStudioServerTest.IntegrationTests
 
         private DBTestContainer()
         {
-            var builder = new ConfigurationBuilder().AddUserSecrets(Assembly.GetExecutingAssembly());
+            var builder = new ConfigurationBuilder()
+                .AddUserSecrets(Assembly.GetExecutingAssembly())
+                .AddEnvironmentVariables();
+
             var configuration = builder.Build();
             var dbName = configuration.GetValue<string>("DB_NAME");
             var dbUser = configuration.GetValue<string>("DB_USER");

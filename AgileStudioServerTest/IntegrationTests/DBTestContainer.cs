@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DotNet.Testcontainers.Builders;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Testcontainers.MySql;
 
@@ -30,6 +31,7 @@ namespace AgileStudioServerTest.IntegrationTests
                 .WithPassword(dbPass)
                 .WithPortBinding(3306, false)
                 .WithExposedPort(3306)
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(3306))
                 .WithReuse(true)
                 .Build();
         }

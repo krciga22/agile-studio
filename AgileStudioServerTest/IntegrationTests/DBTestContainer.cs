@@ -33,6 +33,7 @@ namespace AgileStudioServerTest.IntegrationTests
                 .WithExposedPort(3306)
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(3306))
                 .WithReuse(true)
+                .WithEnvironment("MYSQL_RANDOM_ROOT_PASSWORD", "yes")
                 .Build();
         }
 

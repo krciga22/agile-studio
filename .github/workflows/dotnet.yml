@@ -26,3 +26,6 @@ jobs:
       env:
         TESTCONTAINERS_REUSE_ENABLE: ${{ secrets.TESTCONTAINERS_REUSE_ENABLE }}
       run: dotnet test --no-build --verbosity normal
+    - name: Dump docker logs on failure
+      if: failure()
+      uses: jwalton/gh-docker-logs@v2

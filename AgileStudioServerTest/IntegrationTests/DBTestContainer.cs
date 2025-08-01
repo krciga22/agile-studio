@@ -6,7 +6,7 @@ namespace AgileStudioServerTest.IntegrationTests
 {
     internal class DBTestContainer
     {
-        private static DBTestContainer _singletonInstance;
+        private static DBTestContainer? _singletonInstance = null;
 
         private MySqlContainer _dbTestContainer;
 

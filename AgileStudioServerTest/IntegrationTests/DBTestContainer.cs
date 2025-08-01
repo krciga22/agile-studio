@@ -34,6 +34,9 @@ namespace AgileStudioServerTest.IntegrationTests
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(3306))
                 .WithReuse(true)
                 .WithEnvironment("MYSQL_RANDOM_ROOT_PASSWORD", "yes")
+                .WithEnvironment("MYSQL_DATABASE", dbName)
+                .WithEnvironment("MYSQL_USER", dbUser)
+                .WithEnvironment("MYSQL_PASSWORD", dbPass)
                 .Build();
         }
 

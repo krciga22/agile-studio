@@ -1,0 +1,14 @@
+services:
+  agile-studio-server-db-temp:
+   image: krciga22/agile-studio-server-db-temp:0.1
+   restart: always
+   container_name: agile-studio-server-db-temp
+   ports:
+    - 127.0.0.1:33060:3306
+   environment:
+     - MYSQL_DATABASE=${DB_NAME}
+     - MYSQL_USER=${DB_USER}
+     - MYSQL_PASSWORD=${DB_PASS}
+     - MYSQL_ROOT_PASSWORD=${DB_ROOT_USER_PASSWORD}
+   volumes:
+    - ../Data/DB:/var/lib/mysql

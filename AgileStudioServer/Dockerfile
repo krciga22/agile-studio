@@ -10,9 +10,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["AgileStudioServer/AgileStudioServer.csproj", "AgileStudioServer/"]
+COPY ["AgileStudioServer.csproj", "AgileStudioServer/"]
 RUN dotnet restore "AgileStudioServer/AgileStudioServer.csproj"
-COPY . .
+COPY . "AgileStudioServer/"
 WORKDIR "/src/AgileStudioServer"
 RUN dotnet build "AgileStudioServer.csproj" -c Release -o /app/build
 

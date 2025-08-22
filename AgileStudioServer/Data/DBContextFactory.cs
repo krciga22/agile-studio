@@ -35,13 +35,20 @@ namespace AgileStudioServer.Data
 
         private static string GetConnectionString()
         {
-            var builder = new ConfigurationBuilder().AddUserSecrets(Assembly.GetExecutingAssembly());
+            var builder = new ConfigurationBuilder()
+                .AddUserSecrets(Assembly.GetExecutingAssembly())
+                .AddEnvironmentVariables();
+
             var configuration = builder.Build();
-            var dbHost = configuration.GetValue<string>("DB:Host");
+            var dbHost = configuration.GetValue<string>("DB_HOST");
+            var dbPort = configuration.GetValue<string>("DB_PORT");
             var dbName = configuration.GetValue<string>("DB_NAME");
             var dbUser = configuration.GetValue<string>("DB_USER");
             var dbPass = configuration.GetValue<string>("DB_PASS");
-            return string.Format("server={0};database={1};user={2};password={3}", dbHost, dbName, dbUser, dbPass);
+            return string.Format(
+                "server={0};port={1};database={2};user={3};password={4};",
+                dbHost, dbPort, dbName, dbUser, dbPass
+            );
         }
     }
 }

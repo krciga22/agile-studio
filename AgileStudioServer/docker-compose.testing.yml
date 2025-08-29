@@ -1,0 +1,11 @@
+services:
+  agile-studio-server:
+   container_name: agile-studio-server-testing
+   environment:
+    - ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/api-testing-agilestudio-dev.pfx
+   volumes:
+    - ../data/testing/certs:/certs:ro
+  agile-studio-server-db:
+   container_name: agile-studio-server-db-testing
+   volumes:
+    - ../data/testing/db:/var/lib/mysql

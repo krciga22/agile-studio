@@ -366,4 +366,5 @@ FodyWeavers.xsd
 README.Development.md
 TODO.Development.md
 appsettings.Development.json
+.runsettings.*
 Data/

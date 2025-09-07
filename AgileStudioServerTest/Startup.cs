@@ -26,12 +26,7 @@ namespace AgileStudioServerTest
 
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-
-            // todo update dbTestContainer to get configuration via dependency injection
-            DBTestContainer dbTestContainer = DBTestContainer.GetInstance(configuration);
-            dbTestContainer.Start();
-
+            services.AddMyDBTestContainer();
             services.AddMyTestDB();
             services.AddMyRepositories();
             services.AddMyCoreServices();

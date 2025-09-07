@@ -5,7 +5,7 @@ using Testcontainers.MySql;
 
 namespace AgileStudioServerTest.IntegrationTests
 {
-    internal class DBTestContainer
+    public class DBTestContainer
     {
         private static DBTestContainer? _singletonInstance = null;
 

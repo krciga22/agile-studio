@@ -9,17 +9,19 @@ namespace AgileStudioServerTest.Core.Fixtures
 {
     public sealed class AssemblyFixture : IDisposable
     {
-        public AssemblyFixture(DBContext dBContext)
+        private readonly DBTestContainer _dBTestContainer;
+
+        public AssemblyFixture(DBContext dBContext, DBTestContainer dBTestContainer)
         {
             dBContext.Database.Migrate();
+            _dBTestContainer = dBTestContainer;
         }
 
         public void Dispose()
         {
-            DBTestContainer dbTestContainer = DBTestContainer.GetInstance();
-            if (dbTestContainer.IsStarted())
+            if (_dBTestContainer.IsStarted())
             {
-                dbTestContainer.Stop();
+                _dBTestContainer.Stop();
             }
         }
     }

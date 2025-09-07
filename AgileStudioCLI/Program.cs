@@ -1,11 +1,14 @@
 ﻿using AgileStudioCLI;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 IHostBuilder builder = Host.CreateDefaultBuilder(args);
 
-builder.ConfigureServices((services) => {
-    services.AddMyDB();
+builder.ConfigureServices((context, services) => {
+    IConfiguration configuration = context.Configuration;
+
+    services.AddMyDB(configuration);
     services.AddMyCoreServices();
     services.AddMyRepositories();
     services.AddScoped<AgileStudioConsoleApp>();
@@ -18,5 +21,6 @@ builder.ConfigureServices((services) => {
 
 IHost host = builder.Build();
 
-var svc = ActivatorUtilities.CreateInstance<AgileStudioConsoleApp>(host.Services);
+var scope = host.Services.CreateScope();
+var svc = ActivatorUtilities.CreateInstance<AgileStudioConsoleApp>(scope.ServiceProvider);
 svc.Start();

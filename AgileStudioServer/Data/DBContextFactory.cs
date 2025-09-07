@@ -20,10 +20,10 @@ namespace AgileStudioServer.Data
             return new DBContext(options);
         }
 
-        public static DbContextOptions ConfigureDefaultOptions(ref DbContextOptionsBuilder optionsBuilder)
+        public static DbContextOptions ConfigureDefaultOptions(ref DbContextOptionsBuilder optionsBuilder, IConfiguration? configuration = null)
         {
             return optionsBuilder.UseMySql(
-                    GetConnectionString(),
+                    GetConnectionString(configuration),
                     ServerVersion.Create(
                         new Version("8.0"),
                         Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql
@@ -33,18 +33,29 @@ namespace AgileStudioServer.Data
                 .Options;
         }
 
-        private static string GetConnectionString()
+        private static string GetConnectionString(IConfiguration? configuration = null)
         {
-            var builder = new ConfigurationBuilder()
-                .AddUserSecrets(Assembly.GetExecutingAssembly())
-                .AddEnvironmentVariables();
+            string? dbHost, dbPort, dbName, dbUser, dbPass;
 
-            var configuration = builder.Build();
-            var dbHost = configuration.GetValue<string>("DB_HOST");
-            var dbPort = configuration.GetValue<string>("DB_PORT");
-            var dbName = configuration.GetValue<string>("DB_NAME");
-            var dbUser = configuration.GetValue<string>("DB_USER");
-            var dbPass = configuration.GetValue<string>("DB_PASS");
+            if (configuration == null)
+            {
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+                var builder = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: true)
+                    .AddJsonFile($"appsettings.{env}.json", optional: true)
+                    .AddUserSecrets(Assembly.GetExecutingAssembly())
+                    .AddEnvironmentVariables();
+
+                configuration = builder.Build();
+            }
+
+            dbHost = configuration.GetValue<string>("DB_HOST");
+            dbPort = configuration.GetValue<string>("DB_PORT");
+            dbName = configuration.GetValue<string>("DB_NAME");
+            dbUser = configuration.GetValue<string>("DB_USER");
+            dbPass = configuration.GetValue<string>("DB_PASS");
+
             return string.Format(
                 "server={0};port={1};database={2};user={3};password={4};",
                 dbHost, dbPort, dbName, dbUser, dbPass

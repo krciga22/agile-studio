@@ -6,7 +6,8 @@ namespace AgileStudioServer
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddMyDB();
+            // todo update DBContextFactory to get configuration via dependency injection
+            builder.Services.AddMyDB(builder.Configuration);
             builder.Services.AddMyRepositories();
             builder.Services.AddMyCoreServices();
             builder.Services.AddControllers();

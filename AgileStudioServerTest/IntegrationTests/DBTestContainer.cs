@@ -13,16 +13,22 @@ namespace AgileStudioServerTest.IntegrationTests
 
         private bool _IsStarted { get; set; } = false;
 
-        private DBTestContainer()
+        private DBTestContainer(IConfiguration? configuration = null)
         {
-            var builder = new ConfigurationBuilder()
-                .AddUserSecrets(Assembly.GetExecutingAssembly())
-                .AddEnvironmentVariables();
+            string dbName, dbUser, dbPass;
 
-            var configuration = builder.Build();
-            var dbName = configuration.GetValue<string>("DB_NAME");
-            var dbUser = configuration.GetValue<string>("DB_USER");
-            var dbPass = configuration.GetValue<string>("DB_PASS");
+            if(configuration == null)
+            {
+                var builder = new ConfigurationBuilder()
+                    .AddUserSecrets(Assembly.GetExecutingAssembly())
+                    .AddEnvironmentVariables();
+
+                configuration = builder.Build();
+            }
+            
+            dbName = configuration.GetValue<string>("DB_NAME");
+            dbUser = configuration.GetValue<string>("DB_USER");
+            dbPass = configuration.GetValue<string>("DB_PASS");
 
             _dbTestContainer = new MySqlBuilder()
                 .WithImage("mysql:8.0.42")
@@ -41,10 +47,10 @@ namespace AgileStudioServerTest.IntegrationTests
                 .Build();
         }
 
-        public static DBTestContainer GetInstance()
+        public static DBTestContainer GetInstance(IConfiguration? configuration = null)
         {
             if(_singletonInstance == null){
-                _singletonInstance = new DBTestContainer();
+                _singletonInstance = new DBTestContainer(configuration);
             }
 
             return _singletonInstance;

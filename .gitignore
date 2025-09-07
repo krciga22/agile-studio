@@ -365,6 +365,6 @@ FodyWeavers.xsd
 # Agile Studio specific ignores
 README.Development.md
 TODO.Development.md
-appsettings.Development.json
+appsettings.*.json
 .runsettings.*
 Data/

@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://api.agilestudio.dev.local:44360/",
+      "applicationUrl": "https://api.development.agilestudio.dev:44360/",
       "useSSL": true,
       "sslPort": 44360
     },
@@ -23,7 +23,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": false,
-      "launchUrl": "{Scheme}://api.agilestudio.dev.local:{ServicePort}/swagger",
+      "launchUrl": "{Scheme}://api.development.agilestudio.dev:{ServicePort}/swagger",
       "environmentVariables": {
         "ASPNETCORE_URLS": "https://+:443;http://+:80"
       },

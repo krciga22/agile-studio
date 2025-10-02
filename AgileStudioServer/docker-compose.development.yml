@@ -1,7 +1,0 @@
-services:
-  #agile-studio-server:
-  # for the development environment, run the server directly from the IDE
-  agile-studio-server-db:
-   container_name: agile-studio-server-db-development
-   volumes:
-    - ../data/development/db:/var/lib/mysql

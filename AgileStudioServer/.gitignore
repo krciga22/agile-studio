@@ -1,3 +1,5 @@
 Agile Studio Server.csproj.user
 .env
 .env.*
+!.env.example
+docker-compose.*.yml

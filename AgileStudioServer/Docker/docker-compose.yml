@@ -4,11 +4,11 @@ services:
    container_name: agile-studio-server
    hostname: ${APP_DOMAIN}
    ports:
-    - 127.0.0.1:8080:80
-    - 127.0.0.1:44360:443
+    - 127.0.0.1:8081:8081
+    - 127.0.0.1:44361:44361
    environment:
      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-     - ASPNETCORE_URLS=https://${APP_DOMAIN}:443;http://${APP_DOMAIN}:80
+     - ASPNETCORE_URLS=https://${APP_DOMAIN}:44361;http://${APP_DOMAIN}:8081
      - ASPNETCORE_HTTPS_PORTS=44360
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/api-development-agilestudio-dev.pfx
      - ASPNETCORE_Kestrel__Certificates__Default__Password=${APP_CERT_PASSWORD}
@@ -35,3 +35,8 @@ services:
      - MYSQL_ROOT_PASSWORD=${DB_ROOT_USER_PASSWORD}
    volumes:
     - ../data/development/db:/var/lib/mysql
+  agile-studio-server-reverse-proxy:
+   image: ubuntu/apache2:latest
+   container_name: agile-studio-server-reverse-proxy
+   ports:
+    - 127.0.0.1:44360:443

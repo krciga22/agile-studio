@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
+using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
+
 namespace AgileStudioServer
 {
     public class Program
@@ -24,11 +28,66 @@ namespace AgileStudioServer
             var app = builder.Build();
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseHttpsRedirection();
+
+            bool webProxyEnabled = builder.Configuration.GetValue<bool>("WEB_PROXY_ENABLED");
+            if (webProxyEnabled)
+            {
+                var forwardedHeaderOptions = CreateForwardedHeadersOptions(builder.Configuration);
+                app.UseForwardedHeaders(forwardedHeaderOptions);
+            }
+            else
+            {
+                app.UseHttpsRedirection();
+            }
+                
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
+        }
+
+        /// <summary>
+        /// Create forwarded headers for use when behind 
+        /// a web proxy
+        /// </summary>
+        private static ForwardedHeadersOptions CreateForwardedHeadersOptions(IConfiguration configuration)
+        {
+            var forwardedHeaderOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                        ForwardedHeaders.XForwardedProto
+            };
+
+            IList<IPNetwork> knownNetworkIPs = GetWebProxyKnownNetworkIPs(configuration);
+            foreach (var ipNetwork in knownNetworkIPs){
+                forwardedHeaderOptions.KnownNetworks.Add(ipNetwork);
+            }
+
+            return forwardedHeaderOptions;
+        }
+
+        /// <summary>
+        /// Get web proxy known network IPs from configuration
+        /// </summary>
+        private static IList<IPNetwork> GetWebProxyKnownNetworkIPs(IConfiguration configuration)
+        {
+            string[]? knownNetworkIPs = configuration.GetValue<string[]?>("WEB_PROXY_KNOWN_NETWORKS");
+            if (knownNetworkIPs == null || knownNetworkIPs.Length == 0)
+            {
+                throw new Exception("WEB_PROXY_ENABLED is true but no WEB_PROXY_KNOWN_NETWORKS are configured");
+            }
+
+            IList<IPNetwork> ipNetworks = new List<IPNetwork>();
+            foreach (string networkIp in knownNetworkIPs)
+            {
+                string[] parts = networkIp.Split('/');
+                if (parts.Length == 2 && IPAddress.TryParse(parts[0], out IPAddress? ip) && Int32.TryParse(parts[1], out int cidr))
+                {
+                    ipNetworks.Add(new IPNetwork(ip, cidr));
+                }
+            }
+
+            return ipNetworks;
         }
     }
 }

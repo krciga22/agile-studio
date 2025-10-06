@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# custom init here...
+#custom initalization here...
 
-# Start MySQL
 exec docker-entrypoint.sh mysqld

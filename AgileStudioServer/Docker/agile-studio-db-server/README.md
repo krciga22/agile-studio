@@ -9,7 +9,7 @@ for the agile studio app server.
 docker build -t agile-studio-server-db:0.1 -f .\Dockerfile .\
 
 #run the container
-docker run --name agile-studio-server-db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=agile-studio-server-db -e MYSQL_USER=agile-studio-server-db-user -e MYSQL_PASSWORD=password -p 127.0.0.1:33060:3306 -v ./file-share/:/app/file-share -v /data:/var/lib/mysql -d --rm agile-studio-server-db:0.1
+docker run --name agile-studio-server-db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=agile-studio-server-db -e MYSQL_USER=agile-studio-server-db-user -e MYSQL_PASSWORD=password --network agile-studio-server-network -p 127.0.0.1:33060:3306 -v ./file-share/:/app/file-share -v /data:/var/lib/mysql -d --rm agile-studio-server-db:0.1
 
 #stop the container
 docker stop agile-studio-server-db

@@ -10,7 +10,7 @@ accessible from outside the docker host.
 docker build -t agile-studio-server-web:0.1 -f .\Dockerfile .\
 
 #run the container
-docker run --name agile-studio-server-web -e TZ=UTC -p 127.0.0.1:44360:443 -p 127.0.0.1:8080:80 -v ./file-share/:/app/file-share -d --rm agile-studio-server-web:0.1
+docker run --name agile-studio-server-web -e TZ=UTC --network agile-studio-server-network -p 127.0.0.1:44360:443 -p 127.0.0.1:8080:80 -v ./file-share/:/app/file-share -d --rm agile-studio-server-web:0.1
 
 #stop the container
 docker stop agile-studio-server-web

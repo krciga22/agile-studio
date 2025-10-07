@@ -5,8 +5,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
@@ -21,5 +20,12 @@ RUN dotnet publish "AgileStudioServer.csproj" -c Release -o /app/publish /p:UseA
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AgileStudioServer.dll"]
+COPY --from=publish /app/publish publish/
+
+COPY Docker/agile-studio-app-server/scripts/*.sh scripts/
+RUN chown root:root scripts/ && chmod -R 770 scripts/
+RUN scripts/build.sh && rm scripts/build.sh
+
+USER agile-studio-app
+
+ENTRYPOINT ["/app/scripts/entrypoint.sh"]

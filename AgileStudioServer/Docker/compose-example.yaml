@@ -1,0 +1,17 @@
+services:
+  agile-studio-server:
+   image: agile-studio-server:0.1
+   container_name: agile-studio-server
+   ports:
+    - 127.0.0.1:8080:80
+    - 127.0.0.1:8443:443
+   environment:
+     - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=${ASPNETCORE_Kestrel__Certificates__Default__Path}
+     - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=${ASPNETCORE_Kestrel__Certificates__Default__KeyPath}
+     - HTTP_PORTS=${HTTP_PORTS}
+     - HTTPS_PORTS=${HTTPS_PORTS}
+     - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+     - DB_PASS=${DB_PASS}
+   volumes:
+    - ./storage/:/app/storage

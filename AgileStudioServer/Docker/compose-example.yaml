@@ -15,3 +15,17 @@ services:
             - DB_PASS=${DB_PASS}
         volumes:
             - ./storage/:/app/storage
+    agile-studio-server-db:
+        image: mysql:8.0.42
+        container_name: agile-studio-server-db
+        ports:
+            - 127.0.0.1:8306:3306
+        environment:
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASS}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_USER_PASSWORD}
+        volumes:
+            - agile-studio-server-db-data:/var/lib/mysql
+volumes:
+    agile-studio-server-db-data:

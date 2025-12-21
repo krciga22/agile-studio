@@ -367,4 +367,4 @@ README.Development.md
 TODO.Development.md
 appsettings.*.json
 .runsettings.*
-Data/
+/data

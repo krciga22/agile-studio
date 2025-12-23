@@ -71,7 +71,7 @@ namespace AgileStudioServer
         /// </summary>
         private static IList<IPNetwork> GetWebProxyKnownNetworkIPs(IConfiguration configuration)
         {
-            string[]? knownNetworkIPs = configuration.GetValue<string[]?>("WEB_PROXY_KNOWN_NETWORKS");
+            string[]? knownNetworkIPs = configuration.GetSection("WEB_PROXY_KNOWN_NETWORKS").Get<string[]?>();
             if (knownNetworkIPs == null || knownNetworkIPs.Length == 0)
             {
                 throw new Exception("WEB_PROXY_ENABLED is true but no WEB_PROXY_KNOWN_NETWORKS are configured");

@@ -1,17 +1,9 @@
 import './App.css'
-import Home from "./pages/Home.tsx";
 import TopNav from "./TopNav.tsx";
 import UserMenu from "./UserMenu.tsx";
-import About from "./pages/About.tsx";
+import PageRouter from "./PageRouter.tsx";
 
 function App() {
-
-  // basic page routing
-  let page = <Home></Home>
-  if(location.href.indexOf("/about") !== -1){
-    page = <About></About>
-  }
-
   return (
     <>
       <header className={"p-2"}>
@@ -26,7 +18,7 @@ function App() {
         </div>
       </header>
       <div className={"p-2 content"}>
-        {page}
+        <PageRouter></PageRouter>
       </div>
       <footer className={"p-2"}>
         Copyright &copy; 2026

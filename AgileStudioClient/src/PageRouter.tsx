@@ -1,17 +1,17 @@
 import './App.css'
-import Home from "./pages/Home.tsx";
-import About from "./pages/About.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 
 function PageRouter() {
 
   // basic page routing
-  let page = <Home></Home>
+  let page = <HomePage></HomePage>
   if(location.pathname === "/"){
-    page = <Home></Home>
+    page = <HomePage></HomePage>
   }
   else if(location.pathname === "/about"){
-    page = <About></About>
+    page = <AboutPage></AboutPage>
   }
   else{
     page = <ErrorPage error={404}></ErrorPage>

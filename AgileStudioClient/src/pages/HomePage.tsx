@@ -1,7 +1,7 @@
-import './Home.css'
+import './HomePage.css'
 import MainLayout from "../layouts/MainLayout.tsx";
 
-function Home() {
+function HomePage() {
   return (
     <MainLayout>
       <h1>Home</h1>
@@ -9,4 +9,4 @@ function Home() {
   )
 }
 
-export default Home
+export default HomePage

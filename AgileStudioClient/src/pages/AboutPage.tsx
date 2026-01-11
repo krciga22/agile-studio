@@ -1,7 +1,7 @@
-import './About.css'
+import './AboutPage.css'
 import MainLayout from "../layouts/MainLayout.tsx";
 
-function About() {
+function AboutPage() {
   return (
     <MainLayout>
       <h1>About</h1>
@@ -9,4 +9,4 @@ function About() {
   )
 }
 
-export default About
+export default AboutPage

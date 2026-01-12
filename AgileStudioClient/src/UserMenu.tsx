@@ -4,7 +4,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 function UserMenu() {
   return (
-    <div className={"UserMenu"}>
+    <div className={"UserMenu d-flex"}>
       <FontAwesomeIcon icon={faUser} size={"lg"}></FontAwesomeIcon>
       <span>Guest</span>
     </div>

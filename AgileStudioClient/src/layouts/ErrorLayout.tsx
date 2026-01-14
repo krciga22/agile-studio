@@ -1,7 +1,6 @@
 import './ErrorLayout.css'
-import TopNav from "../TopNav.tsx";
-import UserMenu from "../UserMenu.tsx";
 import type {ReactNode} from "react";
+import Header from "./headers/Header.tsx";
 
 type ErrorLayoutProps = {
   children: ReactNode,
@@ -11,17 +10,7 @@ type ErrorLayoutProps = {
 function ErrorLayout(props: ErrorLayoutProps) {
   return (
     <>
-      <header className={"p-2"}>
-        <div className={"d-flex justify-content-between"}>
-          <div className={"d-flex"}>
-            <span className={"appName me-3"}>Agile Studio</span>
-            <TopNav></TopNav>
-          </div>
-          <div className={"d-flex"}>
-            <UserMenu></UserMenu>
-          </div>
-        </div>
-      </header>
+      <Header></Header>
       <div className={"p-2 content"}>
         {props.children}
       </div>

@@ -1,0 +1,8 @@
+header{
+    background: #eee;
+    border-bottom: 2px solid #ccc;
+
+    .appName{
+        font-weight: bold;
+    }
+}

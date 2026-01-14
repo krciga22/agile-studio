@@ -1,6 +1,7 @@
 import './ErrorLayout.css'
 import type {ReactNode} from "react";
 import Header from "./headers/Header.tsx";
+import Footer from "./footers/Footer.tsx";
 
 type ErrorLayoutProps = {
   children: ReactNode,
@@ -14,9 +15,7 @@ function ErrorLayout(props: ErrorLayoutProps) {
       <div className={"p-2 content"}>
         {props.children}
       </div>
-      <footer className={"p-2"}>
-        Copyright &copy; 2026
-      </footer>
+      <Footer></Footer>
     </>
   )
 }

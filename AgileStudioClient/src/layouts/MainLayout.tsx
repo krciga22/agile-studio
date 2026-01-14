@@ -1,6 +1,7 @@
 import './MainLayout.css'
 import type {ReactNode} from "react";
 import Header from "./headers/Header.tsx";
+import Footer from "./footers/Footer.tsx";
 
 type MainLayoutProps = {
   children: ReactNode
@@ -13,9 +14,7 @@ function MainLayout(props: MainLayoutProps) {
       <div className={"p-2 content"}>
         {props.children}
       </div>
-      <footer className={"p-2"}>
-        Copyright &copy; 2026
-      </footer>
+      <Footer></Footer>
     </>
   )
 }

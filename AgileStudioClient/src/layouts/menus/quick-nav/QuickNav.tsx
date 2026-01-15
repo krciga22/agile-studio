@@ -32,11 +32,18 @@ function QuickNav() {
 
       const href = `/projects/${project.id}`
       listItems.push(
-        <li className="list-group-item">
-          <a href={href}>{project.title}</a>
-          { activeProject && <ProjectSubMenu></ProjectSubMenu> }
-        </li>
+        <a className={`list-group-item ${activeProject ? 'active' : ''}`} href={href}>
+          {project.title}
+        </a>
       )
+
+      if(activeProject){
+        listItems.push(
+          <li className={"list-group-item"}>
+            <ProjectSubMenu></ProjectSubMenu>
+          </li>
+        );
+      }
     });
 
     return listItems;

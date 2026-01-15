@@ -2,6 +2,7 @@ import './MainLayout.css'
 import type {ReactNode} from "react";
 import Header from "./headers/Header.tsx";
 import Footer from "./footers/Footer.tsx";
+import QuickNav from "./menus/quick-nav/QuickNav.tsx";
 
 type MainLayoutProps = {
   children: ReactNode
@@ -11,9 +12,14 @@ function MainLayout(props: MainLayoutProps) {
   return (
     <>
       <Header></Header>
-      <div className={"p-2 content"}>
-        {props.children}
+
+      <div className={"d-flex flex-grow-1 flex-shrink-2 overflow-hidden"}>
+        <QuickNav></QuickNav>
+        <div className={"content flex-grow-1  py-3"}>
+          {props.children}
+        </div>
       </div>
+
       <Footer></Footer>
     </>
   )

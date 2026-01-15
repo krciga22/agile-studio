@@ -2,6 +2,7 @@ import './QuickNav.css'
 import type {ReactElement} from "react";
 import type {Project} from "../../../models/Project.tsx";
 import type {BacklogItem} from "../../../models/BacklogItem.tsx";
+import ProjectSubMenu from "./ProjectSubMenu.tsx";
 
 function QuickNav() {
 
@@ -27,10 +28,13 @@ function QuickNav() {
     const listItems:ReactElement[] = [];
 
     projects.forEach(project => {
+      const activeProject:boolean = (project.id == 1);
+
       const href = `/projects/${project.id}`
       listItems.push(
         <li className="list-group-item">
           <a href={href}>{project.title}</a>
+          { activeProject && <ProjectSubMenu></ProjectSubMenu> }
         </li>
       )
     });

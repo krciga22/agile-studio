@@ -1,12 +1,6 @@
 import './QuickNav.css'
 import type {ReactElement} from "react";
-
-
-type Project = {
-  id: number,
-  title: string
-};
-
+import type {Project} from "../../../models/Project.tsx";
 
 function QuickNav() {
 

@@ -32,14 +32,14 @@ function QuickNav() {
 
       const href = `/projects/${project.id}`
       listItems.push(
-        <a className={`list-group-item ${activeProject ? 'active' : ''}`} href={href}>
+        <a key={project.id} className={`list-group-item ${activeProject ? 'active' : ''}`} href={href}>
           {project.title}
         </a>
       )
 
       if(activeProject){
         listItems.push(
-          <li className={"list-group-item"}>
+          <li key={`${project.id}-sub-menu`} className={"list-group-item"}>
             <ProjectSubMenu></ProjectSubMenu>
           </li>
         );
@@ -55,7 +55,7 @@ function QuickNav() {
     backlogItems.forEach(backlogItem => {
       const href = `/backlog-items/${backlogItem.id}`
       listItems.push(
-        <li className="list-group-item">
+        <li key={backlogItem.id} className="list-group-item">
           <a href={href}>{backlogItem.title}</a>
         </li>
       )

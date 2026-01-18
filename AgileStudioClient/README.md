@@ -24,3 +24,11 @@ The application uses **PageRouter** (a custom routing component) for basic routi
 This allows for quick development of pages, but doesn't allow for server side rendering (SSR) which 
 may be a limitation for SEO in the future. Currently, SSR is not a priority as Agile Studio is primarily 
 used as an internal tool, but this may change in the future.
+
+### Setting Environment Variables
+Environment variables are set in `AgileStudioClient/env.js`. These 
+variables are then copied to `AgileStudioClient/public/env.js` whenever you execute `npm run set-env`. You can 
+create additional environment files like `env.development.js` 
+and use them from the command line (`npm run set-env development`).
+
+Environment variables from node process are not supported at this time, but may be supported in the future.

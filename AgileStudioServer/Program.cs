@@ -20,6 +20,7 @@ namespace AgileStudioServer
             builder.Services.AddMyModelHydrators();
             builder.Services.AddMyEntityHydrators();
             builder.Services.AddMyAuth(builder.Configuration);
+            builder.Services.AddMyCors(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -42,6 +43,7 @@ namespace AgileStudioServer
                 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(Constants.CorsPolicyDefault);
             app.MapControllers();
             app.Run();
         }

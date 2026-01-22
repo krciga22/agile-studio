@@ -1,3 +1,4 @@
+using AgileStudioServer.CoreFeatures.Auth.APIs.DTOs;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,29 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
             }
 
             return Ok(token);
+        }
+
+        /// <summary>
+        /// Get the currently authenticated user's 
+        /// basic details.
+        /// </summary>
+        [HttpGet("CurrentUser", Name = "AuthGetCurrentUser")]
+        [ProducesResponseType(typeof(ForbidResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(CurrentUserDto), StatusCodes.Status200OK)]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            if (HttpContext.User.Identity == null)
+            {
+                return Forbid();
+            }
+
+            var claims = HttpContext.User.Claims.ToList();
+            var nameClaim = claims.FirstOrDefault(c => c.Type == "name");
+            var name = nameClaim?.Value ?? "Unknown";
+
+            var currentUserDto = new CurrentUserDto(name);
+            return Ok(currentUserDto);
         }
     }
 }

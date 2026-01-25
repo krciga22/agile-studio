@@ -32,3 +32,11 @@ create additional environment files like `env.development.js`
 and use them from the command line (`npm run set-env development`).
 
 Environment variables from node process are not supported at this time, but may be supported in the future.
+
+### Generating a Self-Signed SSL Certificate for Development
+```bash
+openssl req -x509 -out development-agilestudio-dev.crt -keyout development-agilestudio-dev.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=development.agilestudio.dev' -extensions EXT -config <( \
+   printf "[dn]\nCN=development.agilestudio.dev\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:development.agilestudio.dev\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```

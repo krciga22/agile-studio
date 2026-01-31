@@ -27,6 +27,7 @@ const ENV:ENV_TYPE = Object.freeze({
   API_URL: getEnvValue<string>("API_URL"),
   AUTH0_DOMAIN: getEnvValue<string>("AUTH0_DOMAIN"),
   AUTH0_CLIENT_ID: getEnvValue<string>("AUTH0_CLIENT_ID"),
+  AUTH0_AUDIENCE: getEnvValue<string>("AUTH0_AUDIENCE"),
 });
 
 export default ENV

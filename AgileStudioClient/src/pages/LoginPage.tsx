@@ -4,12 +4,18 @@ import Constants from "../Constants.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {setApiAuthBearerToken} from "../services/api/Api.tsx";
 import {goToPage} from "../PageRouterUtils.tsx";
+import ENV from "../config/ENV.tsx";
 
 function LoginPage() {
   const auth0 = useAuth0();
 
   const doLogin = async () => {
-    await auth0.loginWithPopup();
+    await auth0.loginWithPopup({
+      authorizationParams: {
+        audience: ENV.AUTH0_AUDIENCE,
+        scope: "openid profile email"
+      }
+    });
     const accessToken = await auth0.getAccessTokenSilently();
     setApiAuthBearerToken(accessToken);
     goToPage('/');

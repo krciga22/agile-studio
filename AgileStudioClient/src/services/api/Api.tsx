@@ -14,7 +14,7 @@ export const initApiAuthBearerToken = async (auth0:Auth0ContextInterface) => {
 
   const accessToken: string|null = await auth0.getAccessTokenSilently({
     authorizationParams: {
-      audience: "https://api.development.agilestudio.dev",
+      audience: ENV.AUTH0_AUDIENCE,
       scope: "openid profile email"
     }
   });

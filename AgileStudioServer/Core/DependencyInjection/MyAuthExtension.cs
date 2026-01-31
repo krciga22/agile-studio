@@ -15,30 +15,17 @@ namespace Microsoft.Extensions.DependencyInjection
             string auth0ClientSecret = config.GetValue<string>("AUTH0_CLIENT_SECRET") ?? "";
             string auth0Audience = config.GetValue<string>("AUTH0_AUDIENCE") ?? "";
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.Authority = $"https://{auth0Domain}";
                     options.Audience = auth0Audience;
-                })
-                .AddAuth0WebAppAuthentication(options =>
-                {
-                    options.Domain = auth0Domain;
-                    options.ClientId = auth0ClientId;
-                    options.ClientSecret = auth0ClientSecret;
-                    options.CallbackPath = "/Auth/Callback";
-                })
-                .WithAccessToken(options =>
-                {
-                    options.Audience = auth0Audience;
-                    options.UseRefreshTokens = false;
                 });
 
             services.AddAuthorization(options =>
             {
                 var policyBuilder = new AuthorizationPolicyBuilder();
                 policyBuilder.AddAuthenticationSchemes(new string[] {
-                        CookieAuthenticationDefaults.AuthenticationScheme,
                         JwtBearerDefaults.AuthenticationScheme
                     })
                     .RequireAuthenticatedUser();

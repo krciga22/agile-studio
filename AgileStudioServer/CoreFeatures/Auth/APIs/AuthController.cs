@@ -1,5 +1,7 @@
 using AgileStudioServer.CoreFeatures.Auth.APIs.DTOs;
 using Auth0.AspNetCore.Authentication;
+using Auth0.AuthenticationApi;
+using Auth0.AuthenticationApi.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +12,14 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly IConfiguration Config;
+
         public IHostEnvironment HostEnvironment { get; }
 
-        public AuthController(IHostEnvironment hostEnvironment)
+        public AuthController(IHostEnvironment hostEnvironment, IConfiguration config)
         {
             HostEnvironment = hostEnvironment;
+            Config = config;
         }
 
         /// <summary>
@@ -71,17 +76,32 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
         [Authorize]
         public async Task<IActionResult> GetCurrentUser()
         {
-            if (HttpContext.User.Identity == null)
+            if (HttpContext.User.Identity == null || 
+                !HttpContext.User.Identity.IsAuthenticated)
             {
                 return Forbid();
             }
 
-            var claims = HttpContext.User.Claims.ToList();
-            var nameClaim = claims.FirstOrDefault(c => c.Type == "name");
-            var name = nameClaim?.Value ?? "Unknown";
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            if(accessToken == null)
+            {
+                return Forbid();
+            }
 
-            var currentUserDto = new CurrentUserDto(name);
-            return Ok(currentUserDto);
+            try
+            {
+                string auth0Domain = Config.GetValue<string>("AUTH0_DOMAIN") ?? "";
+                var client = new AuthenticationApiClient(new Uri($"https://{auth0Domain}/"));
+
+                UserInfo userInfo = await client.GetUserInfoAsync(accessToken);
+                var name = userInfo.FullName;
+                var currentUserDto = new CurrentUserDto(name);
+                return Ok(currentUserDto);
+            }
+            catch (Exception ex)
+            {
+                return Problem();
+            }
         }
     }
 }

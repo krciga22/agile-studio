@@ -17,7 +17,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     policy.WithOrigins(corsOrigins)
                           .AllowAnyHeader()
-                          .AllowAnyMethod();
+                          .AllowAnyMethod()
+                          .AllowCredentials();
                 });
             });
 

@@ -40,7 +40,8 @@ namespace AgileStudioServer
             {
                 app.UseHttpsRedirection();
             }
-                
+
+            app.UseCors(Constants.CorsPolicyDefault);
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors(Constants.CorsPolicyDefault);

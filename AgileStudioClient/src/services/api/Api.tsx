@@ -4,7 +4,7 @@ import type {Auth0ContextInterface} from "@auth0/auth0-react";
 
 const Api = axios.create({
   baseURL: ENV.API_URL ?? "",
-  timeout: 1000,
+  timeout: 10000,
   withCredentials: true
 });
 export default Api;

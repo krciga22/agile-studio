@@ -24,5 +24,8 @@ dist-ssr
 *.sw?
 
 # Project specific ignores
+.env
 env.*.js
 public/env.js
+development-agilestudio-dev.crt
+development-agilestudio-dev.key

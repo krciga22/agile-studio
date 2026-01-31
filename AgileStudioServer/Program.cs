@@ -21,6 +21,7 @@ namespace AgileStudioServer
             builder.Services.AddMyEntityHydrators();
             builder.Services.AddMyAuth(builder.Configuration);
             builder.Services.AddMyCors(builder.Configuration);
+            builder.Services.AddMySwaggerGen(builder.Configuration);
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -28,7 +29,11 @@ namespace AgileStudioServer
 
             var app = builder.Build();
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                string majorVersion = Constants.ProductVersion.Split('.')[0];
+                options.SwaggerEndpoint($"/swagger/v{majorVersion}/swagger.json", "AgileStudioServer v4");
+            });
 
             bool webProxyEnabled = builder.Configuration.GetValue<bool>("WEB_PROXY_ENABLED");
             if (webProxyEnabled)
@@ -44,7 +49,6 @@ namespace AgileStudioServer
             app.UseCors(Constants.CorsPolicyDefault);
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(Constants.CorsPolicyDefault);
             app.MapControllers();
             app.Run();
         }

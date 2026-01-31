@@ -1,6 +1,6 @@
-import Api from "./Api.tsx";
+import Api from "../Api.tsx";
 import type {AxiosResponse} from "axios";
-import type {ProjectDto, ProjectPostDto} from "./dtos/ProjectDtos.tsx";
+import type {ProjectDto, ProjectPostDto} from "../dtos/ProjectDtos.tsx";
 
 export const getProjects = async (): Promise<AxiosResponse<ProjectDto[]>> => {
   return await Api.get('/Project');

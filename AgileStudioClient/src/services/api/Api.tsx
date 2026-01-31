@@ -12,17 +12,18 @@ export default Api;
 export const initApiAuthBearerToken = async (auth0:Auth0ContextInterface) => {
   console.info("Initializing API auth bearer token");
 
-  return new Promise<string>((resolve, reject) => {
-    auth0.getAccessTokenSilently()
-      .then(accessToken => {
-        setApiAuthBearerToken(accessToken);
-        resolve(accessToken);
-      })
-      .catch(error => {
-        console.error('Error getting access token', error);
-        reject(error);
-      });
+  const accessToken: string|null = await auth0.getAccessTokenSilently({
+    authorizationParams: {
+      audience: "https://api.development.agilestudio.dev",
+      scope: "openid profile email"
+    }
   });
+
+  if(accessToken){
+    setApiAuthBearerToken(accessToken);
+  }
+
+  return accessToken;
 }
 
 export const setApiAuthBearerToken = (token: string|null) => {

@@ -15,7 +15,7 @@ function MainLayout(props: MainLayoutProps) {
 
       <div className={"d-flex flex-grow-1 flex-shrink-2 overflow-hidden"}>
         <QuickNav></QuickNav>
-        <div className={"content flex-grow-1  py-3"}>
+        <div className={"content flex-grow-1 overflow-scroll py-3"}>
           {props.children}
         </div>
       </div>

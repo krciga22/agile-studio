@@ -11,7 +11,6 @@ function ProjectSubMenu(props:ProjectSubMenuProps) {
 
   return (
     <ul className={"ProjectSubMenu"}>
-      <li><a href={projectPage + "/workBoard"} onClick={linkToPage}>Work Board</a></li>
       <li><a href={projectPage + "/backlog"} onClick={linkToPage}>Backlog</a></li>
       <li><a href={projectPage + "/sprints"} onClick={linkToPage}>Sprints</a></li>
       <li><a href={projectPage + "/releases"} onClick={linkToPage}>Releases</a></li>

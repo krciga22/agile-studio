@@ -10,6 +10,10 @@ import BacklogPage from "./pages/project/BacklogPage.tsx";
 import SprintsPage from "./pages/project/SprintsPage.tsx";
 import ReleasesPage from "./pages/project/ReleasesPage.tsx";
 import SettingsPage from "./pages/project/SettingsPage.tsx";
+import MainLayout from "./layouts/MainLayout.tsx";
+import * as React from "react";
+import ErrorLayout from "./layouts/ErrorLayout.tsx";
+import BlankLayout from "./layouts/BlankLayout.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -21,8 +25,6 @@ function PageRouter() {
     pathname: location.pathname,
     state: null
   });
-
-  const auth0 = useAuth0();
 
   useEffect(() => {
     window.addEventListener('pushstate', (e:Event) => {
@@ -45,18 +47,24 @@ function PageRouter() {
 
   console.debug(`PageRouter: pathname=${pathname}, state=${state}`);
 
-  if(auth0.isLoading){
-    return <InitPage></InitPage>
-  }
-
-  if(!auth0.isAuthenticated){
-    return <LoginPage></LoginPage>
-  }
-
   let page;
-  let pathSegments: string[] = pathname.split('/').toSpliced(0, 1);
+  let layout: string = 'MainLayout';
+  let layoutProps = {};
+  const pathSegments: string[] = pathname.split('/').toSpliced(0, 1);
   let subPath: string;
-  if(pathname === "/"){
+
+  const auth0 = useAuth0();
+  if(auth0.isLoading){
+    page = <InitPage></InitPage>
+    layout = 'BlankLayout';
+    layoutProps = {centered: true};
+  }
+  else if(!auth0.isAuthenticated){
+    page = <LoginPage></LoginPage>
+    layout = 'BlankLayout';
+    layoutProps = {centered: true};
+  }
+  else if(pathname === "/"){
     page = <HomePage></HomePage>
   }
   else if(pathname === "/about"){
@@ -84,11 +92,38 @@ function PageRouter() {
 
   if(page === undefined){
     page = <ErrorPage error={404}></ErrorPage>
+    layout = 'ErrorLayout';
+    layoutProps = {error: 404};
+  }
+
+  if(layout === undefined){
+    layout = MainLayout;
   }
 
   return (
     <>
-      {page}
+      {
+        layout === 'MainLayout' &&
+          <MainLayout {...layoutProps}>
+            {page}
+          </MainLayout>
+      }
+
+      {
+        layout === 'ErrorLayout' &&
+          <ErrorLayout {...layoutProps}>
+            {page}
+          </ErrorLayout>
+      }
+
+      {
+        layout === 'BlankLayout' &&
+          <BlankLayout {...layoutProps}>
+            {page}
+          </BlankLayout>
+      }
+
+      { layout === null && page}
     </>
   )
 }

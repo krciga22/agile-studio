@@ -1,5 +1,4 @@
 import './BacklogPage.css'
-import MainLayout from "../../layouts/MainLayout.tsx";
 import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
 import type {ProjectDto} from "../../services/api/dtos/ProjectDtos.tsx";
@@ -47,19 +46,17 @@ function BacklogPage(props: BacklogPageProps) {
   }
 
   return (
-    <MainLayout>
-      <div className={"BacklogPage"}>
-        { isRefreshing !== false && <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> }
+    <div className={"BacklogPage"}>
+      { isRefreshing !== false && <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> }
 
-        {
-          isRefreshing === false && project &&
-            <div>
-                <h1>Backlog</h1>
-                <p>{project.title}</p>
-            </div>
-        }
-      </div>
-    </MainLayout>
+      {
+        isRefreshing === false && project &&
+          <div>
+              <h1>Backlog</h1>
+              <p>{project.title}</p>
+          </div>
+      }
+    </div>
   )
 }
 

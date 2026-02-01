@@ -22,20 +22,18 @@ function LoginPage() {
   };
 
   return (
-    <BlankLayout centered={true}>
-      <div className={"LoginPage d-flex"}>
-        <div className="card">
-          <div className="card-header">
-            {Constants.PRODUCT_NAME}
-          </div>
-          <div className="card-body">
-            <div className={"d-flex justify-content-center mb-3"}>
-              <a className="btn btn-primary mx-2" onClick={doLogin}>Log In</a>
-            </div>
+    <div className={"LoginPage d-flex"}>
+      <div className="card">
+        <div className="card-header">
+          {Constants.PRODUCT_NAME}
+        </div>
+        <div className="card-body">
+          <div className={"d-flex justify-content-center mb-3"}>
+            <a className="btn btn-primary mx-2" onClick={doLogin}>Log In</a>
           </div>
         </div>
       </div>
-    </BlankLayout>
+    </div>
   )
 }
 

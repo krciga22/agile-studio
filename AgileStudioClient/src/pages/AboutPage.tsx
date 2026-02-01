@@ -1,5 +1,4 @@
 import './AboutPage.css'
-import MainLayout from "../layouts/MainLayout.tsx";
 import {useEffect} from "react";
 import Utils from "../Utils.tsx";
 
@@ -10,9 +9,9 @@ function AboutPage() {
   }, []);
 
   return (
-    <MainLayout>
+    <div className={"AboutPage"}>
       <h1>About</h1>
-    </MainLayout>
+    </div>
   )
 }
 

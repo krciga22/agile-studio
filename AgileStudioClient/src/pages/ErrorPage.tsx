@@ -1,5 +1,4 @@
 import './ErrorPage.css'
-import ErrorLayout from "../layouts/ErrorLayout.tsx";
 
 type ErrorPageProps = {
   error: number
@@ -7,10 +6,10 @@ type ErrorPageProps = {
 
 function ErrorPage(props: ErrorPageProps) {
   return (
-    <ErrorLayout error={props.error}>
+    <div className={"ErrorPage"}>
       <h1>Error {props.error}</h1>
       <p>Oops! Couldn't find exactly what you're looking for.</p>
-    </ErrorLayout>
+    </div>
   )
 }
 

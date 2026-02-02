@@ -71,8 +71,8 @@ function PageRouter() {
     page = <AboutPage></AboutPage>
   }
   else if(pathname.match(/\/projects\/\d+/)?.length === 1){
-    const projectId = pathSegments[1];
-    if(projectId !== null){
+    const projectId = parseInt(pathSegments[1]);
+    if(!isNaN(projectId)){
       subPath = pathSegments.toSpliced(0, 2).join('/');
 
       if(subPath === 'backlog'){

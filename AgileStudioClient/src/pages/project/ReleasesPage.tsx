@@ -12,8 +12,9 @@ type ReleasesPageProps = {
 }
 
 function ReleasesPage(props: ReleasesPageProps) {
+  const {projectId} = props;
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
-  const [project, setProject] = useState<ProjectDto>(null);
+  const [project, setProject] = useState<ProjectDto|null>(null);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function ReleasesPage(props: ReleasesPageProps) {
 
     setIsRefreshing(true);
 
-    getProject(props.projectId)
+    getProject(projectId)
       .then(response => {
         setProject(response.data);
       })
@@ -41,7 +42,7 @@ function ReleasesPage(props: ReleasesPageProps) {
       });
   }
 
-  if(isRefreshing === null && !currentUser.isLoading && currentUser.user){
+  if((project === null || project.id !== projectId) && !currentUser.isLoading && currentUser.user){
     refresh();
   }
 

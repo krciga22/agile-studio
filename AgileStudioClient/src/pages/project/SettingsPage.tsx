@@ -12,8 +12,9 @@ type SettingsPageProps = {
 }
 
 function SettingsPage(props: SettingsPageProps) {
+  const {projectId} = props;
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
-  const [project, setProject] = useState<ProjectDto>(null);
+  const [project, setProject] = useState<ProjectDto|null>(null);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function SettingsPage(props: SettingsPageProps) {
 
     setIsRefreshing(true);
 
-    getProject(props.projectId)
+    getProject(projectId)
       .then(response => {
         setProject(response.data);
       })
@@ -41,7 +42,7 @@ function SettingsPage(props: SettingsPageProps) {
       });
   }
 
-  if(isRefreshing === null && !currentUser.isLoading && currentUser.user){
+  if((project === null || project.id !== projectId) && !currentUser.isLoading && currentUser.user){
     refresh();
   }
 

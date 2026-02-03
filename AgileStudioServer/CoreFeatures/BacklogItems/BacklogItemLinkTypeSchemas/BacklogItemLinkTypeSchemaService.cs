@@ -11,6 +11,11 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
             _BacklogItemLinkTypeSchemaRepository = backlogItemLinkTypeSchemaRepository;
         }
 
+        public virtual List<BacklogItemLinkTypeSchemaModel> GetAll()
+        {
+            return _BacklogItemLinkTypeSchemaRepository.GetAll();
+        }
+
         public virtual BacklogItemLinkTypeSchemaModel? Get(int id)
         {
             return _BacklogItemLinkTypeSchemaRepository.Get(id);

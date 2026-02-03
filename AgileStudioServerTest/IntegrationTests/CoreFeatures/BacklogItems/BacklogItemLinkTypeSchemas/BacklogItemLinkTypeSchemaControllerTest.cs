@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 {
@@ -18,6 +18,25 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
         {
             _Controller = controller;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+        }
+
+        [Fact]
+        public void List_ReturnsDtos()
+        {
+            List<BacklogItemLinkTypeSchemaModel> backlogItemLinkTypeSchemas = new() {
+                _BacklogItemLinkTypeSchemaFixture.Create("Test Backlog Item Link Type Schema 1"),
+                _BacklogItemLinkTypeSchemaFixture.Create("Test Backlog Item Link Type Schema 2")
+            };
+
+            List<BacklogItemLinkTypeSchemaDto>? dtos = null;
+            IActionResult result = _Controller.List();
+            if (result is OkObjectResult okResult)
+            {
+                dtos = okResult.Value as List<BacklogItemLinkTypeSchemaDto>;
+            }
+
+            Assert.IsType<List<BacklogItemLinkTypeSchemaDto>>(dtos);
+            Assert.Equal(backlogItemLinkTypeSchemas.Count, dtos.Count);
         }
 
         [Fact]

@@ -17,6 +17,13 @@ namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
             return model.ID;
         }
 
+        public virtual List<BacklogItemLinkTypeSchemaModel> GetAll()
+        {
+            List<BacklogItemLinkTypeSchema> entities = _DBContext.BacklogItemLinkTypeSchema.ToList();
+
+            return HydrateModels(entities);
+        }
+
         protected override DbSet<BacklogItemLinkTypeSchema> GetDbSet()
         {
             return _DBContext.BacklogItemLinkTypeSchema;

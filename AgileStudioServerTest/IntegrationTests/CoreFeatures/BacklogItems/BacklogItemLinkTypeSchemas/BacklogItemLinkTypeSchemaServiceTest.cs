@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
@@ -39,6 +39,21 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.Backl
 
             Assert.NotNull(returnedBacklogItemLinkTypeSchema);
             Assert.Equal(backlogItemLinkTypeSchema.ID, returnedBacklogItemLinkTypeSchema.ID);
+        }
+
+        [Fact]
+        public void GetAll_ReturnsAllBacklogItemLinkTypeSchemas()
+        {
+            var backlogItemLinkTypeSchemas = new List<BacklogItemLinkTypeSchemaModel>
+            {
+                _BacklogItemLinkTypeSchemaFixture.Create("Test BacklogItemLinkTypeSchema 1"),
+                _BacklogItemLinkTypeSchemaFixture.Create("Test BacklogItemLinkTypeSchema 2")
+            };
+
+            List<BacklogItemLinkTypeSchemaModel> returnedBacklogItemLinkTypeSchemas = _backlogItemLinkTypeSchemaService
+                .GetAll();
+
+            Assert.Equal(backlogItemLinkTypeSchemas.Count, returnedBacklogItemLinkTypeSchemas.Count);
         }
 
         [Fact]

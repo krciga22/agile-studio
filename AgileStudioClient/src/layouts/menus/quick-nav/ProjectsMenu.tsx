@@ -50,7 +50,7 @@ function ProjectsMenu() {
 
     if(isActiveProject){
       listItems.push(
-        <li key={`${project.id}-sub-menu`} className={"list-group-item"}>
+        <li key={`${project.id}-sub-menu`} className={"list-group-item p-0"}>
           <ProjectSubMenu Project={project}></ProjectSubMenu>
         </li>
       );

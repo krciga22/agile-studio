@@ -11,9 +11,9 @@ import SprintsPage from "./pages/project/SprintsPage.tsx";
 import ReleasesPage from "./pages/project/ReleasesPage.tsx";
 import SettingsPage from "./pages/project/SettingsPage.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
-import * as React from "react";
 import ErrorLayout from "./layouts/ErrorLayout.tsx";
 import BlankLayout from "./layouts/BlankLayout.tsx";
+import CurrentPageContext from "./services/CurrentPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -101,7 +101,7 @@ function PageRouter() {
   }
 
   return (
-    <>
+    <CurrentPageContext value={{pathname: pathname, state: state}}>
       {
         layout === 'MainLayout' &&
           <MainLayout {...layoutProps}>
@@ -124,7 +124,7 @@ function PageRouter() {
       }
 
       { layout === null && page}
-    </>
+    </CurrentPageContext>
   )
 }
 

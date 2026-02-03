@@ -1,7 +1,7 @@
 import './QuickNav.css'
 import type {ReactElement} from "react";
 import type {BacklogItem} from "../../../models/BacklogItem.tsx";
-import ProjectMenu from "./ProjectMenu.tsx";
+import ProjectMenu from "./ProjectsMenu.tsx";
 
 function QuickNav() {
 

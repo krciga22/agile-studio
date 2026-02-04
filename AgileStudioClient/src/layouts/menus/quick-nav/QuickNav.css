@@ -1,4 +1,40 @@
-.QuickNav{
-    width:260px;
-    background:#ddd;
+.QuickNav {
+    width: 260px;
+    background: #ddd;
+
+    .QuickNavMenu {
+
+        .QuickNavSubMenu {
+            padding: 0;
+            list-style: none;
+            background: #333;
+            border-top: 2px solid #222;
+            border-bottom: 2px solid #222;
+
+            li {
+                padding: 0;
+                border-left: 4px solid #666;
+            }
+
+            li a {
+                display: block;
+                padding: .5rem 1rem;
+            }
+
+            li:last-child {
+                border-bottom: 0;
+            }
+
+            li.active {
+                background: #666;
+                border-bottom: 1px solid #888;
+                border-left: 4px solid #888;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
 }

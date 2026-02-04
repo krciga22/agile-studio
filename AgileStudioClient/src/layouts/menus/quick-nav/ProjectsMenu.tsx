@@ -69,7 +69,7 @@ function ProjectsMenu() {
   }
 
   return (
-    <div className={"ProjectsMenu"}>
+    <div className={"ProjectsMenu QuickNavMenu"}>
       <div className={"d-flex justify-content-between mb-2"}>
         <span>Projects:</span>
         <button className="btn btn-sm btn-secondary" onClick={() => setIsCreateOpen(true)} aria-label="Create project">

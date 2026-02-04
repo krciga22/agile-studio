@@ -36,7 +36,7 @@ function QuickNav() {
       </div>
       <div className={"mb-2"}>
         <p>Backlog Items:</p>
-        <ul className="list-group">
+        <ul className="QuickNavMenu list-group">
           {renderBacklogItems(backlogItems)}
         </ul>
       </div>

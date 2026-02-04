@@ -6,15 +6,23 @@
     border-bottom: 2px solid #222;
 
     li{
-        padding: .5rem 1rem .5rem 1rem;
+        padding: 0;
+        border-left: 4px solid #666;
+    }
+
+    li a{
+        display: block;
+        padding: .5rem 1rem;
     }
 
     li:last-child{
         border-bottom: 0;
     }
 
-    li.active a{
-        text-decoration: underline;
+    li.active{
+        background: #666;
+        border-bottom: 1px solid #888;
+        border-left: 4px solid #888;
     }
 
     a{

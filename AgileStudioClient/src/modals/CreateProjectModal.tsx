@@ -8,6 +8,20 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
 import {getBacklogItemLinkTypeSchemas} from "../services/api/endpoints/BacklogItemLinkTypeSchema.tsx";
 import Constants from "../Constants.tsx";
+import type {
+  ProblemDetailsErrorMap
+} from "../services/api/dtos/ProblemDetailsDtos.tsx";
+import axios from "axios";
+import {
+  getProblemDetailsErrorMapFromReponse
+} from "../services/api/Api.tsx";
+import FormError from "../components/form/FormError.tsx";
+import {debounce} from "../Utils.tsx";
+import {
+  ERROR_CONTEXT,
+  ERROR_MESSAGE_DEFAULT,
+  getErrorMessageForAxiosError
+} from "../services/util/error.tsx";
 
 type Props = {
   isOpen: boolean;
@@ -27,6 +41,9 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
   const [backlogItemLinkTypeSchemaId, setBacklogItemLinkTypeSchemaId] = useState<string>(defaultValue);
   const [backlogItemTypeSchemas, setBacklogItemTypeSchemas] = useState<BacklogItemTypeSchemaDto[]>([]);
   const [backlogItemLinkTypeSchemas, setBacklogItemLinkTypeSchemas] = useState<BacklogItemLinkTypeSchemaDto[]>([]);
+  const [formFieldErrors, setFormFieldErrors] = useState<ProblemDetailsErrorMap>({});
+  const [formSubmissionError, setFormSubmissionError] = useState<string|null>(null);
+  const [enableRequiredFieldValidation] = useState<boolean>(false);
 
   useEffect(() => {
     if(isOpen){
@@ -57,12 +74,25 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
     }, Constants.EXTRA_WAIT_TIME_MS);
   }
 
+  const submitTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (isSubmitting) return;
 
     setIsSubmitting(true);
+    setFormFieldErrors({});
+    setFormSubmissionError(null);
+
+    debounce(
+      _handleSubmit,
+      Constants.EXTRA_WAIT_TIME_MS,
+      submitTimeoutIdRef
+    );
+  };
+
+  const _handleSubmit = async () => {
     try {
       const response = await createProject({
         title: title.trim(),
@@ -81,7 +111,19 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
       onClose();
     }
     catch (err) {
-      console.error('Create project failed', err);
+      let newFormSubmissionError = ERROR_MESSAGE_DEFAULT;
+
+      if (axios.isAxiosError(err) && err.response) {
+        newFormSubmissionError = getErrorMessageForAxiosError(
+          err, ERROR_CONTEXT.FORM_SUBMISSION);
+
+        const newFormFieldErrors = await getProblemDetailsErrorMapFromReponse(err.response);
+        if(newFormFieldErrors && Object.keys(newFormFieldErrors).length > 0){
+          setFormFieldErrors(newFormFieldErrors);
+        }
+      }
+
+      setFormSubmissionError(newFormSubmissionError);
     }
     finally {
       setIsWorking(false);
@@ -120,8 +162,9 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
               value={title}
               onChange={e => setTitle(e.target.value)}
               disabled={isWorking}
-              required={true}
+              required={enableRequiredFieldValidation}
             />
+            <FormError error={formFieldErrors} id="title" />
           </div>
 
           <div className="form-group" style={{ marginBottom: 12 }}>
@@ -132,7 +175,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
               value={backlogItemTypeSchemaId}
               onChange={e => setBacklogItemTypeSchemaId(e.target.value)}
               disabled={isWorking}
-              required={true}
+              required={enableRequiredFieldValidation}
             >
               <option value={defaultValue}></option>
 
@@ -148,6 +191,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
                 );
               })}
             </select>
+            <FormError error={formFieldErrors} id="backlogitemtypeschemaid" />
           </div>
 
           <div className="form-group" style={{ marginBottom: 12 }}>
@@ -158,7 +202,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
               value={backlogItemLinkTypeSchemaId}
               onChange={e => setBacklogItemLinkTypeSchemaId(e.target.value)}
               disabled={isWorking}
-              required={true}
+              required={enableRequiredFieldValidation}
             >
               <option value={defaultValue}></option>
 
@@ -174,6 +218,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
                 );
               })}
             </select>
+            <FormError error={formFieldErrors} id="backlogitemlinktypeschemaid" />
           </div>
 
           <div className="form-group" style={{ marginBottom: 12 }}>
@@ -186,9 +231,11 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
               rows={3}
               disabled={isWorking}
             />
+            <FormError error={formFieldErrors} id="description" />
           </div>
 
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+            <FormError error={formSubmissionError} />
             <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isWorking}>
               Cancel
             </button>

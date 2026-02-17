@@ -1,4 +1,6 @@
 import type {UserSummaryDto} from "./UserDtos.tsx";
+import type {BacklogItemTypeSchemaSummaryDto} from "./BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemLinkTypeSchemaSummaryDto} from "./BacklogItemLinkTypeSchemaDtos.tsx";
 
 export type ProjectDto = {
   id: number,
@@ -6,8 +8,8 @@ export type ProjectDto = {
   description?: string,
   createdOn: string,
   createdBy: UserSummaryDto,
-  backlogItemTypeSchema: null,
-  backlogItemLinkTypeSchema: null,
+  backlogItemTypeSchema: BacklogItemTypeSchemaSummaryDto,
+  backlogItemLinkTypeSchema: BacklogItemLinkTypeSchemaSummaryDto,
 };
 
 export type ProjectPostDto = {

@@ -7,3 +7,9 @@ export type BacklogItemLinkTypeSchemaDto = {
   createdOn: string,
   createdBy: UserSummaryDto
 };
+
+export type BacklogItemLinkTypeSchemaSummaryDto = {
+  id: number,
+  title?: string,
+  description?: string
+};

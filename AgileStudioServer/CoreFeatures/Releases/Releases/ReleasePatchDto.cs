@@ -5,7 +5,7 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
     public class ReleasePatchDto
     {
         [Required]
-        public int ID;
+        public int ID { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 3)]

@@ -5,7 +5,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
     public class ProjectPatchDto
     {
         [Required]
-        public int ID;
+        public int ID { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 3)]

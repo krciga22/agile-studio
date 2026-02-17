@@ -5,7 +5,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
     public class SprintPatchDto
     {
         [Required]
-        public int ID;
+        public int ID { get; set; }
 
         [StringLength(255)]
         public string? Description { get; set; }

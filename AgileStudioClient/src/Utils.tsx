@@ -31,3 +31,13 @@ export const debounce = (callback: () => void, delay: number, timeoutIdRef: Reac
     timeoutIdRef.current = null;
   }, delay);
 }
+
+export const numberToString = (value: number): string => {
+  return value === Constants.DEFAULT_VALUE_NUMBER ?
+    Constants.DEFAULT_VALUE_STRING : value.toString();
+}
+
+export const stringToNumber = (value: string): number => {
+  return value === Constants.DEFAULT_VALUE_STRING ?
+    Constants.DEFAULT_VALUE_NUMBER : parseInt(value);
+}

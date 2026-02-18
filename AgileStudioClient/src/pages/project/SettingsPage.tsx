@@ -1,6 +1,6 @@
 import './SettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
-import Utils, {debounce} from "../../Utils.tsx";
+import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
 import type {ProjectDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {getProject, updateProject} from "../../services/api/endpoints/project.tsx";
@@ -183,12 +183,15 @@ function SettingsPage(props: SettingsPageProps) {
                       <div className={"col col-12 col-md-7"}>
                           <select
                             className={"form-control"}
-                            value={backlogItemTypeSchemaId}
-                            onChange={e => setBacklogItemTypeSchemaId(parseInt(e.target.value))}
+                            value={numberToString(backlogItemTypeSchemaId)}
+                            onChange={e => {
+                              setBacklogItemTypeSchemaId(
+                                stringToNumber(e.target.value))
+                            }}
                             disabled={isWorking}
                             required={enableRequiredFieldValidation}
                           >
-                              <option value={Constants.DEFAULT_VALUE_NUMBER}></option>
+                              <option value={Constants.DEFAULT_VALUE_STRING}></option>
 
                               {backlogItemTypeSchemas.map(schema => {
                                 let label:string = `${schema.title}`;
@@ -213,12 +216,15 @@ function SettingsPage(props: SettingsPageProps) {
                       <div className={"col col-12 col-md-7"}>
                           <select
                               className={"form-control"}
-                              value={backlogItemLinkTypeSchemaId}
-                              onChange={e => setBacklogItemLinkTypeSchemaId(parseInt(e.target.value))}
+                              value={numberToString(backlogItemLinkTypeSchemaId)}
+                              onChange={e => {
+                                setBacklogItemLinkTypeSchemaId(
+                                  stringToNumber(e.target.value))
+                              }}
                               disabled={isWorking}
                               required={enableRequiredFieldValidation}
                           >
-                              <option value={Constants.DEFAULT_VALUE_NUMBER}></option>
+                              <option value={Constants.DEFAULT_VALUE_STRING}></option>
 
                               {backlogItemLinkTypeSchemas.map(schema => {
                                 let label:string = `${schema.title}`;

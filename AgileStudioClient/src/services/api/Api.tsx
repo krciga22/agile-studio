@@ -47,7 +47,7 @@ export const setApiAuthBearerToken = (token: string|null) => {
  * Get a map of problem details errors from an
  * axios response.
  */
-export async function getProblemDetailsErrorMapFromReponse (response: AxiosResponse): Promise<ProblemDetailsErrorMap|null> {
+export async function getProblemDetailsErrorMapFromResponse (response: AxiosResponse): Promise<ProblemDetailsErrorMap|null> {
   let errors = null;
   if(response && response.status === 400){
     const dto = await getProblemDetailsDto(response);

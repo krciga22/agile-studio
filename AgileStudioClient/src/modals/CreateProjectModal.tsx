@@ -13,7 +13,7 @@ import type {
 } from "../services/api/dtos/ProblemDetailsDtos.tsx";
 import axios from "axios";
 import {
-  getProblemDetailsErrorMapFromReponse
+  getProblemDetailsErrorMapFromResponse
 } from "../services/api/Api.tsx";
 import FormError from "../components/form/FormError.tsx";
 import {debounce} from "../Utils.tsx";
@@ -117,7 +117,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
         newFormSubmissionError = getErrorMessageForAxiosError(
           err, ERROR_CONTEXT.FORM_SUBMISSION);
 
-        const newFormFieldErrors = await getProblemDetailsErrorMapFromReponse(err.response);
+        const newFormFieldErrors = await getProblemDetailsErrorMapFromResponse(err.response);
         if(newFormFieldErrors && Object.keys(newFormFieldErrors).length > 0){
           setFormFieldErrors(newFormFieldErrors);
         }

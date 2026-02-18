@@ -13,7 +13,7 @@ import {getBacklogItemLinkTypeSchemas} from "../../services/api/endpoints/Backlo
 import Constants from "../../Constants.tsx";
 import axios, {type AxiosResponse} from "axios";
 import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from "../../services/util/error.tsx";
-import {getProblemDetailsErrorMapFromReponse} from "../../services/api/Api.tsx";
+import {getProblemDetailsErrorMapFromResponse} from "../../services/api/Api.tsx";
 import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";
 
@@ -133,7 +133,7 @@ function SettingsPage(props: SettingsPageProps) {
         newFormSubmissionError = getErrorMessageForAxiosError(
           err, ERROR_CONTEXT.FORM_SUBMISSION);
 
-        const newFormFieldErrors = await getProblemDetailsErrorMapFromReponse(err.response);
+        const newFormFieldErrors = await getProblemDetailsErrorMapFromResponse(err.response);
         if(newFormFieldErrors && Object.keys(newFormFieldErrors).length > 0){
           setFormFieldErrors(newFormFieldErrors);
         }

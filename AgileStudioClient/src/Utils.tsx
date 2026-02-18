@@ -27,8 +27,8 @@ export const debounce = (callback: Callable, delay: number, timeoutIdRef: React.
   }
 
   timeoutIdRef.current = setTimeout(() => {
-    callback();
     timeoutIdRef.current = null;
+    callback();
   }, delay);
 }
 

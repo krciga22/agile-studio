@@ -16,6 +16,8 @@ import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from
 import {getProblemDetailsErrorMapFromResponse} from "../../services/api/Api.tsx";
 import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";
+import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
+import {linkToPage} from "../../PageRouterUtils.tsx";
 
 type SettingsPageProps = {
   projectId: number
@@ -150,16 +152,25 @@ function SettingsPage(props: SettingsPageProps) {
     refresh();
   }
 
+  // todo create links in a more reusable way
+  const projectsPage = `/projects`;
+  const projectPage = project ? `${projectsPage}/${project.id}/backlog` : '';
+
   return (
     <div className={"SettingsPage"}>
       { isRefreshing && <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> }
 
       {
         !isRefreshing && project &&
-          <div>
-              <h1>Settings</h1>
+          <div style={{maxWidth: '700px'}}>
 
-              <form className={"py-4"} style={{maxWidth: '700px'}} onSubmit={handleSubmit}>
+              <Breadcrumbs>
+                <Breadcrumb href={projectsPage} onClick={linkToPage}>Projects</Breadcrumb>
+                <Breadcrumb href={projectPage} onClick={linkToPage}>{project.title}</Breadcrumb>
+              </Breadcrumbs>
+
+              <h1>Settings</h1>
+              <form className={"py-4"} onSubmit={handleSubmit}>
                   <div className={"row py-2"}>
                       <div className={"col col-12 col-md-5 text-start"}>
                           <label>Project Name *</label>

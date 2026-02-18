@@ -1,8 +1,10 @@
 
-export const linkToPage = (mouseEvent: React.MouseEvent<HTMLAnchorElement>, state: object|null = null) => {
+export const linkToPage = (mouseEvent: React.MouseEvent<Element, MouseEvent>, state: object|null = null) => {
   mouseEvent.preventDefault();
 
-  window.history.pushState(state, "random title :)", mouseEvent.currentTarget.href);
+  const target = mouseEvent.currentTarget as HTMLAnchorElement;
+
+  window.history.pushState(state, "random title :)", target.href);
 
   const pushStateEvent = new CustomEvent('pushstate', {
     detail: {

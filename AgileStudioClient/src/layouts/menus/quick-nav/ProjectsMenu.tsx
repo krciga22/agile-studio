@@ -9,6 +9,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import CreateProjectModal from "../../../modals/CreateProjectModal.tsx";
 import {goToPage, linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
+import {
+  getProjectHomePagePath,
+  getProjectPagePath,
+  isCurrentPageBasePath,
+} from "../../../PageRoutes.tsx";
 
 function ProjectsMenu() {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
@@ -37,13 +42,16 @@ function ProjectsMenu() {
   }
 
   const renderProject = (project:ProjectDto) => {
-    const href = `/projects/${project.id}/backlog`;
-    const pathname:string = currentPage.pathname ?? "";
-    const isActiveProject:boolean = (pathname.startsWith(`/projects/${project.id}/`));
+    const projectPagePath = getProjectPagePath(project.id);
+    const projectHomePath = getProjectHomePagePath(project.id);
+    const isActiveProject:boolean = isCurrentPageBasePath(currentPage, projectPagePath);
 
     const listItems:ReactElement[] = [];
     listItems.push(
-      <a key={project.id} className={`list-group-item ${isActiveProject ? 'active' : ''}`} href={href} onClick={linkToPage}>
+      <a key={project.id}
+         className={`list-group-item ${isActiveProject ? 'active' : ''}`}
+         href={projectHomePath}
+         onClick={linkToPage}>
         {project.title}
       </a>
     );
@@ -51,7 +59,7 @@ function ProjectsMenu() {
     if(isActiveProject){
       listItems.push(
         <li key={`${project.id}-sub-menu`} className={"list-group-item p-0"}>
-          <ProjectSubMenu Project={project}></ProjectSubMenu>
+          <ProjectSubMenu project={project}></ProjectSubMenu>
         </li>
       );
     }
@@ -61,7 +69,7 @@ function ProjectsMenu() {
 
   const handleCreated = (newProject: ProjectDto) => {
     setProjects(prev => [newProject, ...prev]);
-    goToPage(`/projects/${newProject.id}/backlog`);
+    goToPage(getProjectHomePagePath(newProject.id));
   };
 
   if(isRefreshing === null && !currentUser.isLoading && currentUser.user){

@@ -3,33 +3,44 @@ import type {ProjectDto} from "../../../services/api/dtos/ProjectDtos.tsx";
 import {linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {useContext} from "react";
+import {
+  getProjectBacklogPagePath,
+  getProjectReleasesPagePath,
+  getProjectSettingsPagePath,
+  getProjectSprintsPagePath,
+  isCurrentPageBasePath,
+} from "../../../PageRoutes.tsx";
 
 type ProjectSubMenuProps = {
-  Project: ProjectDto
+  project: ProjectDto
 }
 
 function ProjectSubMenu(props:ProjectSubMenuProps) {
-  const projectPage = `/projects/${props.Project.id}`;
+  const {project} = props;
   const pageContext = useContext(CurrentPageContext);
 
-  const activePageClassName = (subPath:string):string => {
-    const pathname:string = pageContext.pathname ?? "";
-    return pathname.startsWith(projectPage + subPath) ? "active" : "";
+  const activePageClassName = (pagePath:string):string => {
+    return isCurrentPageBasePath(pageContext, pagePath) ? "active" : "";
   }
+
+  const backlogPagePath = getProjectBacklogPagePath(project.id);
+  const sprintsPagePath = getProjectSprintsPagePath(project.id);
+  const releasesPagePath = getProjectReleasesPagePath(project.id);
+  const settingsPagePath = getProjectSettingsPagePath(project.id);
 
   return (
     <ul className={"ProjectSubMenu QuickNavSubMenu"}>
-      <li className={activePageClassName("/backlog")}>
-        <a href={projectPage + "/backlog"} onClick={linkToPage}>Backlog</a>
+      <li className={activePageClassName(backlogPagePath)}>
+        <a href={backlogPagePath} onClick={linkToPage}>Backlog</a>
       </li>
-      <li className={activePageClassName("/sprints")}>
-        <a href={projectPage + "/sprints"} onClick={linkToPage}>Sprints</a>
+      <li className={activePageClassName(sprintsPagePath)}>
+        <a href={sprintsPagePath} onClick={linkToPage}>Sprints</a>
       </li>
-      <li className={activePageClassName("/releases")}>
-        <a href={projectPage + "/releases"} onClick={linkToPage}>Releases</a>
+      <li className={activePageClassName(releasesPagePath)}>
+        <a href={releasesPagePath} onClick={linkToPage}>Releases</a>
       </li>
-      <li className={activePageClassName("/settings")}>
-        <a href={projectPage + "/settings"} onClick={linkToPage}>Settings</a>
+      <li className={activePageClassName(settingsPagePath)}>
+        <a href={settingsPagePath} onClick={linkToPage}>Settings</a>
       </li>
     </ul>
   )

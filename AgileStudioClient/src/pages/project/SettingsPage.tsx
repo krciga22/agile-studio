@@ -18,6 +18,7 @@ import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetail
 import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
 import {linkToPage} from "../../PageRouterUtils.tsx";
+import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
 
 type SettingsPageProps = {
   projectId: number
@@ -152,10 +153,6 @@ function SettingsPage(props: SettingsPageProps) {
     refresh();
   }
 
-  // todo create links in a more reusable way
-  const projectsPage = `/projects`;
-  const projectPage = project ? `${projectsPage}/${project.id}/backlog` : '';
-
   return (
     <div className={"SettingsPage"}>
       { isRefreshing && <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> }
@@ -165,8 +162,8 @@ function SettingsPage(props: SettingsPageProps) {
           <div style={{maxWidth: '700px'}}>
 
               <Breadcrumbs>
-                <Breadcrumb href={projectsPage} onClick={linkToPage}>Projects</Breadcrumb>
-                <Breadcrumb href={projectPage} onClick={linkToPage}>{project.title}</Breadcrumb>
+                <Breadcrumb href={getProjectsPagePath()} onClick={linkToPage}>Projects</Breadcrumb>
+                <Breadcrumb href={getProjectPagePath(project.id)} onClick={linkToPage}>{project.title}</Breadcrumb>
               </Breadcrumbs>
 
               <h1>Settings</h1>

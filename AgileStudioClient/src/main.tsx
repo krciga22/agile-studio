@@ -4,6 +4,8 @@ import './index.css'
 import App from './App.tsx'
 import {Auth0Provider} from "@auth0/auth0-react";
 import ENV from "./config/ENV.tsx";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,7 +16,10 @@ createRoot(document.getElementById('root')!).render(
         redirect_uri: window.location.origin
       }}
     >
-      <App />
+      <>
+        <App />
+        <ToastContainer position="bottom-right" autoClose={3500} pauseOnHover />
+      </>
     </Auth0Provider>
   </StrictMode>,
 )

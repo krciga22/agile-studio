@@ -22,6 +22,7 @@ import {
   ERROR_MESSAGE_DEFAULT,
   getErrorMessageForAxiosError
 } from "../services/util/error.tsx";
+import {toast} from "react-toastify";
 
 type Props = {
   isOpen: boolean;
@@ -100,6 +101,8 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
         backlogItemTypeSchemaId: parseInt(backlogItemTypeSchemaId),
         backlogItemLinkTypeSchemaId: parseInt(backlogItemLinkTypeSchemaId)
       });
+
+      toast.success("Project Created", Constants.DEFAULT_TOAST_PROPS);
 
       onCreated(response.data);
 

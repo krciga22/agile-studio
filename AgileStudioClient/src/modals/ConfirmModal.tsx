@@ -11,6 +11,7 @@ import {
 } from "../services/util/error.tsx";
 import axios from "axios";
 import Modal from '../components/modal/Modal';
+import {toast} from "react-toastify";
 
 type Props = {
   isOpen: boolean;
@@ -56,6 +57,8 @@ export default function ConfirmModal({
         }
 
         setError(errorMessage);
+
+        toast.error(errorMessage, Constants.DEFAULT_TOAST_PROPS);
       }
       finally {
         setIsWorking(false);

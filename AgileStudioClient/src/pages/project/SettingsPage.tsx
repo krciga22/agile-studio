@@ -188,7 +188,7 @@ function SettingsPage(props: SettingsPageProps) {
                               setBacklogItemTypeSchemaId(
                                 stringToNumber(e.target.value))
                             }}
-                            disabled={isWorking}
+                            disabled={true}
                             required={enableRequiredFieldValidation}
                           >
                               <option value={Constants.DEFAULT_VALUE_STRING}></option>
@@ -221,7 +221,7 @@ function SettingsPage(props: SettingsPageProps) {
                                 setBacklogItemLinkTypeSchemaId(
                                   stringToNumber(e.target.value))
                               }}
-                              disabled={isWorking}
+                              disabled={true}
                               required={enableRequiredFieldValidation}
                           >
                               <option value={Constants.DEFAULT_VALUE_STRING}></option>

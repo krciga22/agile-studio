@@ -8,6 +8,8 @@ const Constants = {
    * states.
    */
   EXTRA_WAIT_TIME_MS: 400,
+  DEFAULT_VALUE_STRING: '',
+  DEFAULT_VALUE_NUMBER: 0,
 };
 
 export default Constants;

@@ -18,3 +18,9 @@ export type ProjectPostDto = {
   backlogItemTypeSchemaId: number,
   backlogItemLinkTypeSchemaId: number,
 };
+
+export type ProjectPatchDto = {
+  id: number,
+  title: string,
+  description?: string,
+};

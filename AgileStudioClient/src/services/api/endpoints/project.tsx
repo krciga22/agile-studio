@@ -21,3 +21,7 @@ export const updateProject = async (id:number, project:ProjectPatchDto): Promise
 export const getProject = async (id:number): Promise<AxiosResponse<ProjectDto>> => {
   return await Api.get(`/Project/${id}`);
 };
+
+export const deleteProject = async (id:number): Promise<AxiosResponse> => {
+  return await Api.delete(`/Project/${id}`);
+};

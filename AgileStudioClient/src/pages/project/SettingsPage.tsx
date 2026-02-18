@@ -19,6 +19,9 @@ import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
+import ConfirmModal from '../../modals/ConfirmModal';
+import { deleteProject } from '../../services/api/endpoints/project.tsx';
+import { goToPage } from '../../PageRouterUtils.tsx';
 
 type SettingsPageProps = {
   projectId: number
@@ -42,6 +45,7 @@ function SettingsPage(props: SettingsPageProps) {
   const [formFieldErrors, setFormFieldErrors] = useState<ProblemDetailsErrorMap>({});
   const [formSubmissionError, setFormSubmissionError] = useState<string|null>(null);
   const [enableRequiredFieldValidation] = useState<boolean>(true);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState<boolean>(false);
 
   useEffect(() => {
     setIsWorking(isRefreshing || isSubmitting);
@@ -280,6 +284,37 @@ function SettingsPage(props: SettingsPageProps) {
                   </div>
               </form>
 
+              <hr />
+
+              <h3>Danger Zone</h3>
+              <div className={"row py-2"}>
+                  <div className={"col col-12 col-md-5 text-start"}>
+                      <label>Delete Project</label>
+                  </div>
+                  <div className={"col col-12 col-md-7"}>
+                      <button type="button" className={"btn btn-danger"} disabled={isWorking} onClick={() => setIsConfirmingDelete(true)}>
+                        {
+                          isWorking ?
+                            <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> :
+                            'Delete Project'
+                        }
+                      </button>
+                  </div>
+              </div>
+
+              <ConfirmModal
+                isOpen={isConfirmingDelete}
+                title={`Delete Project`}
+                message={<span>Are you sure you want to delete the project <strong>{project?.title}</strong>? This action cannot be undone.</span>}
+                confirmText={'Delete Project'}
+                onCancel={() => setIsConfirmingDelete(false)}
+                onConfirm={async () => {
+                  await deleteProject(project.id);
+                  setIsConfirmingDelete(false);
+                  // todo show toast
+                  goToPage(getProjectsPagePath());
+                }}
+              />
           </div>
       }
     </div>

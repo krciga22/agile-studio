@@ -22,7 +22,7 @@ import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
 import { deleteProject } from '../../services/api/endpoints/project.tsx';
 import { goToPage } from '../../PageRouterUtils.tsx';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 type SettingsPageProps = {
   projectId: number
@@ -311,11 +311,7 @@ function SettingsPage(props: SettingsPageProps) {
                 onCancel={() => setIsConfirmingDelete(false)}
                 onConfirm={async () => {
                   await deleteProject(project.id);
-
-                  toast.success('Project deleted', {
-                    position: "bottom-left"
-                  });
-
+                  toast.success('Project Deleted', Constants.DEFAULT_TOAST_PROPS);
                   goToPage(getProjectsPagePath());
                 }}
               />

@@ -5,7 +5,7 @@ import Footer from "./footers/Footer.tsx";
 
 type ErrorLayoutProps = {
   children: ReactNode,
-  error: number
+  error?: number
 }
 
 function ErrorLayout(props: ErrorLayoutProps) {

@@ -1,0 +1,30 @@
+.ProjectsPage {
+  padding: 16px;
+}
+
+.ProjectsPage .page-header h1{
+  margin: 0;
+}
+
+.ProjectsPage .projects-list {
+  margin-top: 12px;
+}
+
+.ProjectsPage .project-item{
+  padding: 10px 6px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.ProjectsPage .project-item a{
+  font-weight: 600;
+}
+
+.ProjectsPage .project-item .muted{
+  color: #666;
+}
+
+.ProjectsPage .empty{
+  color: #666;
+  padding: 8px 0;
+}

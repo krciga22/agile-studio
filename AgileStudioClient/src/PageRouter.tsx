@@ -6,6 +6,7 @@ import InitPage from "./pages/InitPage.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {useEffect, useState} from "react";
 import LoginPage from "./pages/LoginPage.tsx";
+import ProjectsPage from "./pages/ProjectsPage.tsx";
 import BacklogPage from "./pages/project/BacklogPage.tsx";
 import SprintsPage from "./pages/project/SprintsPage.tsx";
 import ReleasesPage from "./pages/project/ReleasesPage.tsx";
@@ -50,7 +51,7 @@ function PageRouter() {
   let page;
   let layout: string = 'MainLayout';
   let layoutProps = {};
-  const pathSegments: string[] = pathname.split('/').toSpliced(0, 1);
+  const pathSegments: string[] = pathname.split('/').slice(1);
   let subPath: string;
 
   const auth0 = useAuth0();
@@ -70,10 +71,13 @@ function PageRouter() {
   else if(pathname === "/about"){
     page = <AboutPage></AboutPage>
   }
+  else if(pathname === "/projects"){
+    page = <ProjectsPage></ProjectsPage>
+  }
   else if(pathname.match(/\/projects\/\d+/)?.length === 1){
     const projectId = parseInt(pathSegments[1]);
     if(!isNaN(projectId)){
-      subPath = pathSegments.toSpliced(0, 2).join('/');
+      subPath = pathSegments.slice(2).join('/');
 
       if(subPath === 'backlog'){
         page = <BacklogPage projectId={projectId}></BacklogPage>
@@ -96,8 +100,8 @@ function PageRouter() {
     layoutProps = {error: 404};
   }
 
-  if(layout === undefined){
-    layout = MainLayout;
+  if(!layout){
+    layout = 'MainLayout';
   }
 
   return (
@@ -123,7 +127,8 @@ function PageRouter() {
           </BlankLayout>
       }
 
-      { layout === null && page}
+      { !layout && page}
+
     </CurrentPageContext>
   )
 }

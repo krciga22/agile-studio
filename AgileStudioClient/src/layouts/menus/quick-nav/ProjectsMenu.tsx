@@ -11,7 +11,7 @@ import {goToPage, linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {
   getProjectHomePagePath,
-  getProjectPagePath,
+  getProjectPagePath, getProjectsPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
 
@@ -79,7 +79,7 @@ function ProjectsMenu() {
   return (
     <div className={"ProjectsMenu QuickNavMenu"}>
       <div className={"d-flex justify-content-between mb-2"}>
-        <span>Projects:</span>
+        <span><a href={getProjectsPagePath()} onClick={linkToPage}>Projects</a></span>
         <button className="btn btn-sm btn-secondary" onClick={() => setIsCreateOpen(true)} aria-label="Create project">
           <FontAwesomeIcon icon={faPlus} size={"sm"}></FontAwesomeIcon>
         </button>

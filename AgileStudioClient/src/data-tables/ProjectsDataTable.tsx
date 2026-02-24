@@ -84,7 +84,7 @@ function ProjectsDataTable() {
 
   return (
     <div className={"DataTable ProjectsDataTable"}>
-      <DataTableContext value={{
+      <DataTableContext.Provider value={{
         data: data,
         filters: filters,
         sort: sort,
@@ -96,8 +96,11 @@ function ProjectsDataTable() {
         setSort: setSort,
         setPaginationDetails: setPaginationDetails
       }}>
-        <DataTable<ProjectDto> columns={columns} isLoading={isLoading}></DataTable>
-      </DataTableContext>
+        <DataTable<ProjectDto>
+          columns={columns}
+          isLoading={isLoading}>
+        </DataTable>
+      </DataTableContext.Provider>
     </div>
   )
 }

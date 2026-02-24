@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import './DataTable.css'
+import {DataTableContext} from "./DataTableContext.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -14,23 +15,24 @@ export type DataTableColumn<T> = {
 
 type DataTableProps<T> = {
   columns: DataTableColumn<T>[];
-  data: T[];
   isLoading?: boolean;
   emptyMessage?: string;
-  onRowClick?: (item: T) => void;
-  rowKey?: (item: T) => string | number;
+  onRowClick?: (item:T) => void;
+  rowKey?: (item:T) => string | number;
   tableClassName?: string; // allow additional classes (eg: 'table-hover')
 }
 
 function DataTableInner<T>({
   columns,
-  data,
   isLoading,
   emptyMessage = 'No records found.',
   onRowClick,
   rowKey,
-  tableClassName = 'table table-hover mb-0'
+  tableClassName = 'table table-hover mb-0',
 }: DataTableProps<T>) {
+
+  const ctx = useContext(DataTableContext);
+  const data = ctx.data as T[];
 
   const defaultRowKey = (item: Record<string, unknown>): string | number => {
     const id = item['id'];

@@ -13,6 +13,10 @@ export type DataTableColumn<T> = {
   width?: string;
 }
 
+export type DataTableItem = {
+  id?: number;
+};
+
 type DataTableProps<T> = {
   columns: DataTableColumn<T>[];
   isLoading?: boolean;
@@ -34,10 +38,16 @@ function DataTableInner<T>({
   const ctx = useContext(DataTableContext);
   const data = ctx.data as T[];
 
-  const defaultRowKey = (item: Record<string, unknown>): string | number => {
+  const defaultRowKey = (item: DataTableItem): number => {
     const id = item['id'];
-    if(typeof id === 'number' || typeof id === 'string') return id;
-    return JSON.stringify(item);
+    if(typeof id !== 'number'){
+      throw new Error(
+        'DataTable: Default row key requires items to have a numeric "id" field. ' +
+        'Please provide a custom rowKey function or ensure your data items have an "id" field of type number.'
+      );
+    }
+
+    return id;
   }
 
   return (
@@ -74,7 +84,7 @@ function DataTableInner<T>({
             ) : (
               data.map(item => (
                 <tr
-                  key={rowKey ? rowKey(item) : defaultRowKey(item as unknown as Record<string, unknown>)}
+                  key={rowKey ? rowKey(item) : defaultRowKey(item as DataTableItem)}
                   className={onRowClick ? 'DataTable-row-clickable' : ''}
                   onClick={onRowClick ? () => onRowClick(item) : undefined}
                 >

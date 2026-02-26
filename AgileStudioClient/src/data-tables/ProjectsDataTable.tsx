@@ -7,6 +7,7 @@ import CurrentUserContext from "../services/CurrentUser.tsx";
 import {debounce} from "../Utils.tsx";
 import Constants from "../Constants.tsx";
 import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
+import Sort from "../components/data-table/Sort";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZING = 'initializing';
@@ -77,9 +78,16 @@ function ProjectsDataTable() {
       key: 'title',
       field: 'title',
       header: 'Title',
-      width: '90%'
+      width: '90%',
+      sortable: true
     }
   ];
+
+  const sortableFields = columns.filter(c => c?.sortable)
+    .map(c => ({
+      fieldKey: c.key,
+      label: typeof c.header === 'string' ? c.header : String(c.key)
+    }));
 
   if(initializationStatus === INIT_STATUS_NOT_INITIALIZED &&
     !currentUser.isLoading && currentUser.user){
@@ -105,6 +113,10 @@ function ProjectsDataTable() {
         setSort: setSort,
         setPaginationDetails: setPaginationDetails
       }}>
+        <div className={"mb-3 d-flex align-items-start gap-2"}>
+          <Sort sortableFields={sortableFields} setSort={setSort}></Sort>
+        </div>
+
         <div className={"mb-3"}>
           <DataTable<ProjectDto>
             columns={columns}

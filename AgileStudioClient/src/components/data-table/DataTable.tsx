@@ -6,11 +6,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export type DataTableColumn<T> = {
   key: string; // unique column key
-  header?: React.ReactNode;
+  header?: React.ReactNode|string;
   field?: keyof T; // optional shorthand to display a field
   render?: (item: T) => React.ReactNode; // custom renderer
   className?: string;
   width?: string;
+  sortable?: boolean;
 }
 
 export type DataTableItem = {

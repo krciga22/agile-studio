@@ -1,6 +1,7 @@
 import {useMemo, useState, useContext} from 'react';
 import Modal from '../modal/Modal';
 import { DataTableContext } from './DataTableContext.tsx';
+import {DATA_TABLE_SORT_ASC, DATA_TABLE_SORT_DESC, type DataTableSortDirection} from "./DataTableConstants.tsx";
 
 type SortOption = {
   fieldKey: string;
@@ -10,7 +11,7 @@ type SortOption = {
 type SortRow = {
   id: number;
   fieldKey: string;
-  direction: 'asc' | 'desc';
+  direction: DataTableSortDirection;
 }
 
 type Props = {
@@ -36,7 +37,7 @@ export default function Sort({ sortableFields, setSort }: Props) {
       const parsedRows: SortRow[] = currentSort.map(s => {
         const parts = s.split(':');
         const fieldKey = parts[0] ?? '';
-        const dir = (parts[1] === 'desc') ? 'desc' : 'asc';
+        const dir:DataTableSortDirection = (parts[1] === DATA_TABLE_SORT_DESC) ? DATA_TABLE_SORT_DESC : DATA_TABLE_SORT_ASC;
         return {
           id: nextId(),
           fieldKey,
@@ -52,8 +53,7 @@ export default function Sort({ sortableFields, setSort }: Props) {
       initialRows.push({
         id: nextId(),
         fieldKey: '',
-        direction: 'asc'
-      });
+        direction: DATA_TABLE_SORT_ASC });
     }
 
     if(initialRows.length > 0){
@@ -66,7 +66,7 @@ export default function Sort({ sortableFields, setSort }: Props) {
 
   const addRow = () => {
     setError(null);
-    setRows(prev => [...prev, { id: nextId(), fieldKey: '', direction: 'asc' }]);
+    setRows(prev => [...prev, { id: nextId(), fieldKey: '', direction: DATA_TABLE_SORT_ASC }]);
   }
 
   const updateRowField = (id: number, fieldKey: string) => {
@@ -74,7 +74,7 @@ export default function Sort({ sortableFields, setSort }: Props) {
     setRows(prev => prev.map(r => r.id === id ? { ...r, fieldKey } : r));
   }
 
-  const updateRowDirection = (id: number, direction: 'asc' | 'desc') => {
+  const updateRowDirection = (id: number, direction: DataTableSortDirection) => {
     setError(null);
     setRows(prev => prev.map(r => r.id === id ? { ...r, direction } : r));
   }
@@ -149,10 +149,10 @@ export default function Sort({ sortableFields, setSort }: Props) {
                     <select
                       className="form-select me-2"
                       value={row.direction}
-                      onChange={e => updateRowDirection(row.id, e.target.value as 'asc' | 'desc')}
+                      onChange={e => updateRowDirection(row.id, e.target.value as DataTableSortDirection)}
                     >
-                      <option value="asc">Ascending</option>
-                      <option value="desc">Descending</option>
+                      <option value={DATA_TABLE_SORT_ASC}>Ascending</option>
+                      <option value={DATA_TABLE_SORT_DESC}>Descending</option>
                     </select>
                   </div>
 

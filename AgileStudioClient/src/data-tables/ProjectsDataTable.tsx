@@ -7,6 +7,7 @@ import CurrentUserContext from "../services/CurrentUser.tsx";
 import {debounce} from "../Utils.tsx";
 import Constants from "../Constants.tsx";
 import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
+import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
@@ -17,6 +18,7 @@ function ProjectsDataTable() {
   const [initializationStatus, setInitializationStatus] = useState(INIT_STATUS_NOT_INITIALIZED);
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<ProjectDto[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [filters, setFilters] = useState<Record<string, unknown>>({});
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -26,7 +28,7 @@ function ProjectsDataTable() {
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const _fetchData = useCallback(async (pageToFetch: number = 1) => {
-    const fetchedData = await fetcher.fetchData(filters, sort, pageToFetch);
+    const fetchedData = await fetcher.fetchData(searchQuery, filters, sort, pageToFetch);
     setData(fetchedData);
 
     // TODO: this should come from the API, but for now we can just set it to a fixed value
@@ -35,8 +37,7 @@ function ProjectsDataTable() {
       currentPage: pageToFetch,
       totalPages: 5
     });
-
-  }, [fetcher, filters, sort]);
+  }, [fetcher, searchQuery, filters, sort]);
 
   const fetchData = useCallback((pageToFetch: number = 1) => {
     return new Promise((resolve, reject) => {
@@ -103,6 +104,7 @@ function ProjectsDataTable() {
     <div className={"DataTable ProjectsDataTable"}>
       <DataTableContext.Provider value={{
         data: data,
+        searchQuery: searchQuery,
         filters: filters,
         sort: sort,
         paginationDetails: paginationDetails,
@@ -114,6 +116,7 @@ function ProjectsDataTable() {
         setPaginationDetails: setPaginationDetails
       }}>
         <div className={"mb-3 d-flex align-items-start gap-2"}>
+          <Search setSearchQuery={setSearchQuery}></Search>
           <Sort sortableFields={sortableFields} setSort={setSort}></Sort>
         </div>
 

@@ -4,6 +4,7 @@ import type {PaginationDetails} from "./Pagination.tsx";
 
 type DataTableContextValue = {
   data: DataTableItem[];
+  searchQuery: string;
   filters: Record<string, unknown>;
   sort: string[];
   paginationDetails: PaginationDetails|null;
@@ -15,6 +16,7 @@ type DataTableContextValue = {
 
 export const DataTableContext = React.createContext<DataTableContextValue>({
   data: [],
+  searchQuery: '',
   filters: {},
   sort: [],
   paginationDetails: null,

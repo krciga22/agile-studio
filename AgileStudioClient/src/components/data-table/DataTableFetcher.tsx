@@ -2,7 +2,7 @@ import './DataTable.css'
 import api from "../../services/api/Api.tsx";
 
 export interface IDataTableFetcher<T> {
-  fetchData (filters: Record<string, unknown>, sort: string[], page: number): Promise<T[]>;
+  fetchData (searchQuery: string, filters: Record<string, unknown>, sort: string[], page: number): Promise<T[]>;
 }
 
 /**
@@ -17,12 +17,16 @@ export class DataTableFetcher<T> implements IDataTableFetcher<T> {
     this.apiEndpoint = apiEndpoint;
   }
 
-  async fetchData (filters: Record<string, unknown>, sort: string[], page: number = 1): Promise<T[]>{
+  async fetchData (searchQuery: string, filters: Record<string, unknown>, sort: string[], page: number = 1): Promise<T[]>{
     try{
       const queryParams: Record<string, any> = {
         ...filters,
         page
       };
+
+      if(searchQuery.length > 0){
+        queryParams.searchQuery = searchQuery;
+      }
 
       if(sort.length > 0){
         queryParams.sort = sort.join(',');

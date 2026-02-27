@@ -11,7 +11,6 @@ import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
-const INIT_STATUS_INITIALIZING = 'initializing';
 const INIT_STATUS_INITIALIZED = 'initialized';
 
 function ProjectsDataTable() {
@@ -66,7 +65,7 @@ function ProjectsDataTable() {
     if(initializationStatus === INIT_STATUS_INITIALIZED){
       fetchData(page);
     }
-  }, [initializationStatus, fetchData, page]);
+  }, [fetchData, initializationStatus, page]);
 
   const columns: DataTableColumn<ProjectDto>[] = [
     {
@@ -92,12 +91,7 @@ function ProjectsDataTable() {
 
   if(initializationStatus === INIT_STATUS_NOT_INITIALIZED &&
     !currentUser.isLoading && currentUser.user){
-    setInitializationStatus(INIT_STATUS_INITIALIZING);
-
-    fetchData()
-      .finally(() => {
-        setInitializationStatus(INIT_STATUS_INITIALIZED);
-      });
+    setInitializationStatus(INIT_STATUS_INITIALIZED);
   }
 
   return (

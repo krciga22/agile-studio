@@ -2,6 +2,8 @@ import {useMemo, useState, useContext} from 'react';
 import Modal from '../modal/Modal';
 import { DataTableContext } from './DataTableContext.tsx';
 import {DATA_TABLE_SORT_ASC, DATA_TABLE_SORT_DESC, type DataTableSortDirection} from "./DataTableConstants.tsx";
+import {faArrowDownShortWide} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 type SortOption = {
   fieldKey: string;
@@ -116,11 +118,11 @@ export default function Sort({ sortableFields, setSort }: Props) {
     <>
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-outline-secondary"
         onClick={openModal}
         disabled={sortableFields.length === 0}
       >
-        Sort
+        <FontAwesomeIcon icon={faArrowDownShortWide} />
       </button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title={"Sort"}>

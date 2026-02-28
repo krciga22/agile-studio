@@ -9,6 +9,7 @@ import Constants from "../Constants.tsx";
 import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
 import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
+import Filters from "../components/data-table/filters/Filters";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -18,7 +19,7 @@ function ProjectsDataTable() {
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<ProjectDto[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filters] = useState<Record<string, unknown>>({});
+  const [filters, setFilters] = useState<Record<string, unknown>>({});
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [paginationDetails, setPaginationDetails] = useState<PaginationDetails|null>(null);
@@ -71,6 +72,11 @@ function ProjectsDataTable() {
     setPage(1);
   };
 
+  const doFilter = (filters: Record<string, unknown>) => {
+    setFilters({ ...filters });
+    setPage(1);
+  };
+
   useEffect(() => {
     if(initializationStatus === INIT_STATUS_INITIALIZED){
       fetchData(page);
@@ -115,6 +121,7 @@ function ProjectsDataTable() {
       }}>
         <div className={"mb-3 d-flex align-items-start gap-2"}>
           <Search setSearchQuery={doSearch}></Search>
+          <Filters setFilters={(filters) => doFilter(filters)}></Filters>
           <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
         </div>
 

@@ -114,11 +114,19 @@ export default function Sort({ sortableFields, setSort }: Props) {
     setIsOpen(false);
   }
 
+  const btnClassName = ['btn'];
+  if(ctx.sort.length > 0){
+    btnClassName.push('btn-secondary')
+  }
+  else{
+    btnClassName.push('btn-outline-secondary')
+  }
+
   return (
     <>
       <button
         type="button"
-        className="btn btn-outline-secondary"
+        className={btnClassName.join(' ')}
         onClick={openModal}
         disabled={sortableFields.length === 0}
       >

@@ -18,7 +18,7 @@ function ProjectsDataTable() {
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<ProjectDto[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filters, setFilters] = useState<Record<string, unknown>>({});
+  const [filters] = useState<Record<string, unknown>>({});
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [paginationDetails, setPaginationDetails] = useState<PaginationDetails|null>(null);
@@ -111,13 +111,7 @@ function ProjectsDataTable() {
         searchQuery: searchQuery,
         filters: filters,
         sort: sort,
-        paginationDetails: paginationDetails,
-        setData: (data) => {
-          setData(data as ProjectDto[]);
-        },
-        setFilters: setFilters,
-        setSort: setSort,
-        setPaginationDetails: setPaginationDetails
+        paginationDetails: paginationDetails
       }}>
         <div className={"mb-3 d-flex align-items-start gap-2"}>
           <Search setSearchQuery={doSearch}></Search>

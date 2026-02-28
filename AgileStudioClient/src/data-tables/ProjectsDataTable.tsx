@@ -9,7 +9,8 @@ import Constants from "../Constants.tsx";
 import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
 import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
-import Filters from "../components/data-table/filters/Filters";
+import Filters, {type FilterValue} from "../components/data-table/filters/Filters";
+import MultiSelectFilter from "../components/data-table/filters/MultiSelectFilter.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -19,7 +20,8 @@ function ProjectsDataTable() {
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<ProjectDto[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filters, setFilters] = useState<Record<string, unknown>>({});
+  const [filters, setFilters] = useState<Record<string, FilterValue>>({});
+  const [stagedFilters, setStagedFilters] = useState<Record<string, FilterValue>>({});
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [paginationDetails, setPaginationDetails] = useState<PaginationDetails|null>(null);
@@ -72,9 +74,27 @@ function ProjectsDataTable() {
     setPage(1);
   };
 
-  const doFilter = (filters: Record<string, unknown>) => {
-    setFilters({ ...filters });
+  const cancelFilters = () => {
+    setStagedFilters(filters);
     setPage(1);
+  };
+
+  const applyFilters = () => {
+    setFilters({...stagedFilters});
+    setPage(1);
+  };
+
+  const clearFilters = () => {
+    setStagedFilters({});
+    setFilters({});
+    setPage(1);
+  };
+
+  const setStagedFilter = (name: string, value: FilterValue) => {
+    setStagedFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   useEffect(() => {
@@ -121,7 +141,15 @@ function ProjectsDataTable() {
       }}>
         <div className={"mb-3 d-flex align-items-start gap-2"}>
           <Search setSearchQuery={doSearch}></Search>
-          <Filters setFilters={(filters) => doFilter(filters)}></Filters>
+          <Filters onCancel={cancelFilters}
+                   onApply={applyFilters}
+                   onClear={clearFilters}>
+            <MultiSelectFilter
+              name={"project"}
+              endpoint={"/Project"}
+              value={stagedFilters?.project}
+              setValue={setStagedFilter} />
+          </Filters>
           <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
         </div>
 

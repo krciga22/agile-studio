@@ -1,5 +1,6 @@
 import './DataTable.css'
 import api from "../../services/api/Api.tsx";
+import type {FilterValue} from "./filters/Filters.tsx";
 
 export interface IDataTableFetcher<T> {
   fetchData (searchQuery: string, filters: Record<string, unknown>, sort: string[], page: number): Promise<T[]>;
@@ -17,7 +18,7 @@ export class DataTableFetcher<T> implements IDataTableFetcher<T> {
     this.apiEndpoint = apiEndpoint;
   }
 
-  async fetchData (searchQuery: string, filters: Record<string, unknown>, sort: string[], page: number = 1): Promise<T[]>{
+  async fetchData (searchQuery: string, filters: Record<string, FilterValue>, sort: string[], page: number = 1): Promise<T[]>{
     try{
       const queryParams: Record<string, string | number | boolean | object | null | undefined> = {
         page
@@ -25,7 +26,8 @@ export class DataTableFetcher<T> implements IDataTableFetcher<T> {
 
       if(filters){
         for(const k in filters){
-          const v = filters[k];
+          const v = (filters[k] as FilterValue).value;
+
           if(Array.isArray(v)){
             queryParams[k] = v.join(',');
           }

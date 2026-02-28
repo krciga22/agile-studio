@@ -5,30 +5,37 @@ import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {DataTableContext} from "../DataTableContext.tsx";
 
+export type FilterValue = { value: unknown; label: string | string[] };
+
 type Props = {
-  setFilters: (newFilters: Record<string, unknown>) => void;
+  onCancel: () => void;
+  onApply: () => void;
+  onClear: () => void;
   children?: React.ReactNode;
 }
 
-export default function Filters({ setFilters, children }: Props){
+export default function Filters({ onCancel, onApply, onClear, children }: Props){
   const ctx = useContext(DataTableContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [stagedFilters, setStagedFilters] = useState<Record<string, unknown>>(() => ({ ...ctx.filters }));
 
   const activeCount = useMemo(() => {
     return Object.keys(ctx.filters || {}).length
   }, [ctx.filters]);
 
   const clearAll = () => {
-    setStagedFilters({});
-    setFilters({});
+    onClear();
     setIsOpen(false);
   }
 
   const apply = () => {
-    setFilters(stagedFilters);
+    onApply();
     setIsOpen(false);
   }
+
+  const cancel = () => {
+    onCancel();
+    setIsOpen(false);
+  };
 
   const openBtnClassName = ['btn'];
   if(activeCount > 0){
@@ -54,7 +61,7 @@ export default function Filters({ setFilters, children }: Props){
           {children ? children : <div>No filters available.</div>}
 
           <div className="d-flex justify-content-end mt-3">
-            <button type="button" className="btn btn-secondary me-2" onClick={() => setIsOpen(false)}>Cancel</button>
+            <button type="button" className="btn btn-secondary me-2" onClick={cancel}>Cancel</button>
             <button type="button" className="btn btn-primary me-2" onClick={apply}>Apply</button>
             {
               activeCount > 0 &&

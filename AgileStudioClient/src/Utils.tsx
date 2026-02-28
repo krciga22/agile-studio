@@ -21,7 +21,7 @@ export default Utils;
  * Debounce a given callback function, using a
  * timeout ID stored in a React ref.
  */
-export const debounce = (callback: Callable, delay: number, timeoutIdRef: React.RefObject<number|null>) => {
+export const debounce = (callback: () => void|Promise<unknown>, delay: number, timeoutIdRef: React.RefObject<number|null>) => {
   if(timeoutIdRef.current){
     clearTimeout(timeoutIdRef.current);
   }

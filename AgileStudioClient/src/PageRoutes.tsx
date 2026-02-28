@@ -16,5 +16,6 @@ export const isCurrentPagePath = (currentPage: CurrentPageContextValue, path: st
 }
 
 export const isCurrentPageBasePath = (currentPage: CurrentPageContextValue, path: string) => {
-  return currentPage.pathname.startsWith(path);
+  return currentPage.pathname ?
+      currentPage.pathname.startsWith(path) : false;
 }

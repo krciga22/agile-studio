@@ -1,5 +1,4 @@
 import './LoginPage.css'
-import BlankLayout from "../layouts/BlankLayout.tsx";
 import Constants from "../Constants.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {setApiAuthBearerToken} from "../services/api/Api.tsx";

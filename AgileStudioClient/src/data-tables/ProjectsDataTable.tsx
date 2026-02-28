@@ -61,6 +61,16 @@ function ProjectsDataTable() {
     });
   }, [_fetchData]);
 
+  const doSearch = (searchQuery: string) => {
+    setSearchQuery(searchQuery);
+    setPage(1);
+  };
+
+  const doSort = (sort: string[]) => {
+    setSort(sort);
+    setPage(1);
+  };
+
   useEffect(() => {
     if(initializationStatus === INIT_STATUS_INITIALIZED){
       fetchData(page);
@@ -110,8 +120,8 @@ function ProjectsDataTable() {
         setPaginationDetails: setPaginationDetails
       }}>
         <div className={"mb-3 d-flex align-items-start gap-2"}>
-          <Search setSearchQuery={setSearchQuery}></Search>
-          <Sort sortableFields={sortableFields} setSort={setSort}></Sort>
+          <Search setSearchQuery={doSearch}></Search>
+          <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
         </div>
 
         <div className={"mb-3"}>

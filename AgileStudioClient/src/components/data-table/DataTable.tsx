@@ -1,8 +1,11 @@
-import React, {useContext} from "react";
+import React, {useCallback, useContext} from "react";
 import './DataTable.css'
 import {DataTableContext} from "./DataTableContext.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {DATA_TABLE_SORT_DESC} from "./DataTableConstants.tsx";
+import {faSortUp, faSortDown} from "@fortawesome/free-solid-svg-icons";
+import type {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 
 export type DataTableColumn<T> = {
   key: string; // unique column key
@@ -51,6 +54,23 @@ function DataTableInner<T>({
     return id;
   }
 
+  const getSortForColumnKey = useCallback((colKey: string): string | undefined => {
+    return ctx.sort.find(s => {
+      return (s ?? '').split(':')[0] === colKey;
+    });
+  }, [ctx.sort]);
+
+  const getSortIconForColumn = useCallback((col: DataTableColumn<T>): IconDefinition | null => {
+    let icon = null;
+    if(col.sortable){
+      const sortEntry = getSortForColumnKey(col.key);
+      if(sortEntry){
+        icon = (sortEntry.split(':')[1] === DATA_TABLE_SORT_DESC) ? faSortDown : faSortUp;
+      }
+    }
+    return icon;
+  }, [getSortForColumnKey]);
+
   return (
     <div className="DataTable table-responsive">
       { isLoading === undefined && <></> }
@@ -68,11 +88,17 @@ function DataTableInner<T>({
         <table className={tableClassName}>
             <thead>
             <tr>
-              {columns.map(col => (
-                <th key={col.key} style={col.width ? {width: col.width} : undefined} className={col.className ?? ''}>
-                  {col.header}
-                </th>
-              ))}
+              {columns.map(col => {
+                const icon = getSortIconForColumn(col);
+                return (
+                  <th key={col.key} style={col.width ? {width: col.width} : undefined} className={col.className ?? ''}>
+                    <span className="d-flex align-items-center">
+                      <span>{col.header}</span>
+                      {icon && <FontAwesomeIcon icon={icon} className="ms-2" />}
+                    </span>
+                  </th>
+                );
+              })}
             </tr>
             </thead>
             <tbody>

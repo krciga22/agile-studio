@@ -25,26 +25,32 @@ export class DataTableFetcher<T> implements IDataTableFetcher<T> {
       };
 
       if(filters){
+        const filtersQueryParams: Record<string, string | number | boolean | object | null | undefined> = {};
+
         for(const k in filters){
           const v = (filters[k] as FilterValue).value;
 
           if(Array.isArray(v)){
-            queryParams[k] = v.join(',');
+            filtersQueryParams[k] = v.join(',');
           }
           else if (v === null || v === undefined){
             // don't include in queryParams
           }
           else if (typeof v === 'object'){
             try{
-              queryParams[k] = JSON.stringify(v as object);
+              filtersQueryParams[k] = JSON.stringify(v as object);
             }
             catch{
-              queryParams[k] = String(v);
+              filtersQueryParams[k] = String(v);
             }
           }
           else{
-            queryParams[k] = v as string | number | boolean;
+            filtersQueryParams[k] = v as string | number | boolean;
           }
+        }
+
+        if(Object.keys(filtersQueryParams).length > 0){
+          queryParams.filters = filtersQueryParams;
         }
       }
 

@@ -31,7 +31,7 @@ function ProjectsMenu() {
 
     getProjects()
       .then(response => {
-        setProjects(response.data);
+        setProjects(response.data.items);
       })
       .catch(error => {
         console.error("Error fetching projects:", error);

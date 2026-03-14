@@ -65,7 +65,7 @@ export class DataTableFetcher<T> implements IDataTableFetcher<T> {
       const response = await api.get(this.apiEndpoint, {
         params: queryParams
       });
-      return response.data as T[];
+      return response.data.items as T[];
     }
     catch(error){
       console.error("Error fetching data:", error);

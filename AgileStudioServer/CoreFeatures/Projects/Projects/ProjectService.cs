@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
@@ -11,9 +12,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             _ProjectRepository = projectRepository;
         }
 
-        public virtual List<ProjectModel> GetAll()
+        public virtual PaginationResults<ProjectModel> GetAll(ServiceContext serviceContext)
         {
-            return _ProjectRepository.GetAll();
+            return _ProjectRepository.GetAll(serviceContext);
         }
 
         public virtual List<ProjectModel> GetByCreatedByUserId(int userId)

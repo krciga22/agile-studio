@@ -1,4 +1,6 @@
+using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
@@ -39,11 +41,19 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         [HttpGet(Name = "GetProjects")]
         [ProducesResponseType(typeof(List<ProjectDto>), StatusCodes.Status200OK)]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] GetCollectionQueryParams queryParams)
         {
-            var models = _ProjectService.GetAll();
-            var dtos = _Hydrator.HydrateList<ProjectDto>(models);
-            return Ok(dtos);
+            var serviceContext = new ServiceContext();
+            serviceContext.WithGetCollectionQueryParams(queryParams);
+
+            var paginationResults = _ProjectService.GetAll(serviceContext);
+
+            PaginatedResultsDto<ProjectDto, ProjectModel> paginatedResultsDto = new(
+                _Hydrator.HydrateList<ProjectDto>(paginationResults.Items),
+                paginationResults
+            );
+
+            return Ok(paginatedResultsDto);
         }
 
         [HttpGet("{id}", Name = "GetProject")]

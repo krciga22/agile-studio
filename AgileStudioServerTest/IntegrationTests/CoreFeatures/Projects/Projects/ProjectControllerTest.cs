@@ -11,6 +11,7 @@ using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
 using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.Data;
+using AgileStudioServer.Core.APIs.DTOs;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -61,15 +62,16 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
                 _ProjectFixture.Create("Test Project 2")
             };
 
-            List<ProjectDto>? projectDtos = null;
-            IActionResult result = _Controller.Get();
+            PaginatedResultsDto<ProjectDto, ProjectModel>? projectDtos = null;
+            IActionResult result = _Controller.Get(
+                new GetCollectionQueryParams());
             if (result is OkObjectResult okResult)
             {
-                projectDtos = okResult.Value as List<ProjectDto>;
+                projectDtos = okResult.Value as PaginatedResultsDto<ProjectDto, ProjectModel>;
             }
 
-            Assert.IsType<List<ProjectDto>>(projectDtos);
-            Assert.Equal(projects.Count, projectDtos.Count);
+            Assert.IsType<PaginatedResultsDto<ProjectDto, ProjectModel>>(projectDtos);
+            Assert.Equal(projects.Count, projectDtos.Items.Count);
         }
 
         [Fact]

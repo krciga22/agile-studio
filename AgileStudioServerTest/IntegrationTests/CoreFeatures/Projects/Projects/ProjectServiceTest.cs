@@ -5,6 +5,8 @@ using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
+using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -66,9 +68,9 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 
             _DBContext.GetType();
 
-            List<ProjectModel> returnedProjects = _projectService.GetAll();
-
-            Assert.Equal(projects.Count, returnedProjects.Count);
+            ServiceContext serviceContext = new();
+            PaginationResults<ProjectModel> returnedProjects = _projectService.GetAll(serviceContext);
+            Assert.Equal(projects.Count, returnedProjects.Items.Count);
         }
 
         [Fact]

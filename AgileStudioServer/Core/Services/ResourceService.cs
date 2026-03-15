@@ -1,24 +1,27 @@
 ﻿using AgileStudioServer.Core.Pagination;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServer.Core.Repositories;
 
 namespace AgileStudioServer.Core.Services
 {
     public class ResourceService : AbstractService
     {
+        private IEnumerable<IResourceRepository> _ResourceRepositories;
+        
+        public ResourceService(IEnumerable<IResourceRepository> resourceRepositories)
+        {
+            _ResourceRepositories = resourceRepositories;
+        }
         public PaginationResults<object> GetAll(string type, ServiceContext serviceContext)
         {
-            // todo get resources using appropriate repository
-            List<object> resources = new();
-            resources.Add(new BacklogItemTypeSchemaDto(123, "test", new DateTime()));
+            IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
+                repo => repo.IsTypeSupported(type));
 
-            PaginationResults<object> paginationResults = new(
-                resources,
-                0,
-                serviceContext.Page,
-                serviceContext.ItemsPerPage
-            );
+            if (repository == null) {
+                throw new Exception($"Resource type '{type}' is not supported");
+            }
 
-            return paginationResults;
+
+            return repository.GetAllResources(serviceContext);
         }
     }
 }

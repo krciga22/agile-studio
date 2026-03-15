@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
-    public class ProjectRepository : EntityRepository<DBContext, ProjectModel, Project, int>
+    public class ProjectRepository : EntityRepository<DBContext, ProjectModel, Project, int>, IResourceRepository
     {
         public ProjectRepository(DBContext dbContext, Hydrator hydrator) : base(dbContext, hydrator)
         {
@@ -86,6 +86,23 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         protected override DbSet<Project> GetDbSet()
         {
             return _DBContext.Project;
+        }
+
+        public bool IsTypeSupported(string type)
+        {
+            return type.Equals("projects.project", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public PaginationResults<object> GetAllResources(ServiceContext serviceContext)
+        {
+            var result = GetAll(serviceContext);
+            var dtos = _Hydrator.HydrateList<ProjectDto>(result.Items);
+            return new PaginationResults<object>(
+                [.. dtos.Cast<object>()],
+                result.Total,
+                result.Page,
+                result.ItemsPerPage
+            );
         }
     }
 }

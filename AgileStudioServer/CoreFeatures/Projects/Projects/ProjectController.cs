@@ -40,7 +40,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         }
 
         [HttpGet(Name = "GetProjects")]
-        [ProducesResponseType(typeof(List<ProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginatedResultsDto<ProjectDto, ProjectModel>), StatusCodes.Status200OK)]
         public IActionResult Get([FromQuery] GetCollectionQueryParams queryParams)
         {
             var serviceContext = new ServiceContext();

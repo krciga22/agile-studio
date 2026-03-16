@@ -11,13 +11,10 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
     [Authorize]
     public class ResourceController : ControllerBase
     {
-        private readonly Hydrator _Hydrator;
-
         private readonly ResourceService _ResourceService;
 
-        public ResourceController(Hydrator Hydrator, ResourceService resourceService)
+        public ResourceController(ResourceService resourceService)
         {
-            _Hydrator = Hydrator;
             _ResourceService = resourceService;
         }
 
@@ -33,6 +30,21 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             PaginatedResults2Dto<object> paginatedResultsDto = PaginatedResults2Dto<object>.FromPaginatedResults(paginationResults);
 
             return Ok(paginatedResultsDto);
+        }
+
+        [HttpGet("{type}/{id}", Name = "GetResource")]
+        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public IActionResult Get(string type, int id)
+        {
+            var serviceContext = new ServiceContext();
+
+            var dto = _ResourceService.Get(type, id, serviceContext);
+            if(dto == null){
+                return NotFound();
+            }
+
+            return Ok(dto);
         }
     }
 }

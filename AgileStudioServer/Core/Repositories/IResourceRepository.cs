@@ -8,5 +8,7 @@ namespace AgileStudioServer.Core.Repositories
         bool IsTypeSupported(string type);
 
         PaginationResults<object> GetAllResources(ServiceContext serviceContext);
+
+        object? GetResource(int id, ServiceContext serviceContext);
     }
 }

@@ -104,5 +104,11 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
                 result.ItemsPerPage
             );
         }
+
+        public object? GetResource(int id, ServiceContext serviceContext)
+        {
+            var model = Get(id);
+            return model != null ? _Hydrator.Hydrate<ProjectDto>(model) : null;
+        }
     }
 }

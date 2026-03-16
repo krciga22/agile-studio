@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.Core.APIs.DTOs
+﻿namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
     public class ResourceDto{
         public string Type { get; set; }

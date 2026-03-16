@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
+using AgileStudioServer.CoreFeatures.Resources.Resource;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 

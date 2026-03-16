@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.Core.Exceptions;
-using AgileStudioServer.Core.Pagination;
-using AgileStudioServer.Core.Repositories;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 
-namespace AgileStudioServer.Core.Services
+namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
     public class ResourceService : AbstractService
     {

@@ -1,10 +1,9 @@
 using AgileStudioServer.Core.APIs.DTOs;
-using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.Projects.Projects
+namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
     [ApiController]
     [Route("[controller]")]

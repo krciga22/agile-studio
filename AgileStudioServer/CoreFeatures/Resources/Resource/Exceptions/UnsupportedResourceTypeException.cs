@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.Core.Exceptions
+﻿namespace AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions
 {
     public class UnsupportedResourceTypeException : Exception
     {

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 
-namespace AgileStudioServer.Core.Repositories
+namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
     public interface IResourceRepository
     {

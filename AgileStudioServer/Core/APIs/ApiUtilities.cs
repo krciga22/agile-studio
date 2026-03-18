@@ -6,11 +6,17 @@ namespace AgileStudioServer.Core.APIs
     {
         public static TDto GetDtoFromData<TDto>(object data)
         {
-            var dto = JsonSerializer.Deserialize<TDto>(
-                ((JsonElement)data).GetRawText(), GetJsonSerializerOptions());
+            return (TDto) GetDtoFromData(data, typeof(TDto));
+        }
+
+        public static object GetDtoFromData(object data, Type dtoType)
+        {
+            var dto = JsonSerializer.Deserialize(
+                ((JsonElement)data).GetRawText(), dtoType, 
+                GetJsonSerializerOptions());
 
             return dto == null ?
-                throw new ArgumentException($"Data cannot be deserialized to a '{typeof(TDto)}'") :
+                throw new ArgumentException($"Data cannot be deserialized to a '{nameof(dtoType)}'") :
                 dto;
         }
 

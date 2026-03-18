@@ -10,5 +10,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         PaginationResults<object> GetAllResources(ServiceContext serviceContext);
 
         object? GetResource(int id, ServiceContext serviceContext);
+
+        object CreateResource(object data, ServiceContext serviceContext);
     }
 }

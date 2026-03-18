@@ -45,5 +45,32 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
             return Ok(dto);
         }
+
+        [HttpPost("{type}", Name = "PostResource")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        public IActionResult Post(string type, [FromBody] object resourcePostDto)
+        {
+            try
+            {
+                var serviceContext = new ServiceContext();
+                var dto = _ResourceService.Create(type, resourcePostDto, serviceContext);
+
+                string resourceUrl = "";
+                if (Url != null && dto != null)
+                {
+                    resourceUrl = Url.Action(nameof(Get), new { type = type, id = ((dynamic)dto).ID }) ?? resourceUrl;
+                }
+
+                return Created(resourceUrl, dto);
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    "An unexpected error occurred.");
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@
 
         public string? Sort { get; set; }
 
+        public int HydratorDepth { get; set; } = 2;
+
         public void WithGetCollectionQueryParams(GetCollectionQueryParams getCollectionQueryParams)
         {
             Page = getCollectionQueryParams.Page ?? Constants.DefaultPage;

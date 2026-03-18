@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.APIs;
+using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
@@ -97,7 +98,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public PaginationResults<object> GetAllResources(ServiceContext serviceContext)
         {
             var result = GetAll(serviceContext);
-            var dtos = _Hydrator.HydrateList<ProjectDto>(result.Items);
+            var dtos = _Hydrator.HydrateList<ProjectDto>(result.Items, serviceContext.HydratorDepth);
             return new PaginationResults<object>(
                 [.. dtos.Cast<object>()],
                 result.Total,
@@ -109,7 +110,14 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public object? GetResource(int id, ServiceContext serviceContext)
         {
             var model = Get(id);
-            return model != null ? _Hydrator.Hydrate<ProjectDto>(model) : null;
+            return model != null ? _Hydrator.Hydrate<ProjectDto>(model, serviceContext.HydratorDepth) : null;
+        }
+
+        public object CreateResource(object data, ServiceContext serviceContext)
+        {
+            var dto = ApiUtilities.GetDtoFromData<ProjectPostDto>(data);
+            var model = _Hydrator.Hydrate<ProjectModel>(dto, serviceContext.HydratorDepth);
+            return Create(model);
         }
     }
 }

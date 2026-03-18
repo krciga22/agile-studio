@@ -35,5 +35,17 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
             return repository.GetResource(id, serviceContext);
         }
+
+        public object Create(string type, object data, ServiceContext serviceContext)
+        {
+            IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
+                repo => repo.IsTypeSupported(type));
+
+            if (repository == null){
+                throw new UnsupportedResourceTypeException(type);
+            }
+
+            return repository.CreateResource(data, serviceContext);
+        }
     }
 }

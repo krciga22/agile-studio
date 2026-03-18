@@ -7,10 +7,16 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
     {
         bool IsTypeSupported(string type);
 
+        public Type GetResourceDtoType();
+
+        public Type GetCreateResourceDtoType();
+
+        public Type GetResourceModelType();
+
         PaginationResults<object> GetAllResources(ServiceContext serviceContext);
 
-        object? GetResource(int id, ServiceContext serviceContext);
+        object? GetResource(int id);
 
-        object CreateResource(object data, ServiceContext serviceContext);
+        object CreateResource(object data);
     }
 }

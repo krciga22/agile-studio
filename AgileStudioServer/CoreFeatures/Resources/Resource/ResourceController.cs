@@ -1,5 +1,8 @@
+using AgileStudioServer.Core.APIs;
 using AgileStudioServer.Core.APIs.DTOs;
+using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services;
+using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +14,12 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
     public class ResourceController : ControllerBase
     {
         private readonly ResourceService _ResourceService;
+        private readonly Hydrator _Hydrator;
 
-        public ResourceController(ResourceService resourceService)
+        public ResourceController(ResourceService resourceService, Hydrator hydrator)
         {
             _ResourceService = resourceService;
+            _Hydrator = hydrator;
         }
 
         [HttpGet("{type}", Name = "GetResources")]
@@ -24,7 +29,13 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             var serviceContext = new ServiceContext();
             serviceContext.WithGetCollectionQueryParams(queryParams);
 
+            IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+
             var paginationResults = _ResourceService.GetAll(type, serviceContext);
+            paginationResults.Items = _Hydrator.HydrateList(
+                paginationResults.Items,
+                repository.GetResourceDtoType(),
+                serviceContext.HydratorDepth);
 
             PaginatedResults2Dto<object> paginatedResultsDto = PaginatedResults2Dto<object>.FromPaginatedResults(paginationResults);
 
@@ -36,14 +47,29 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Get(string type, int id)
         {
-            var serviceContext = new ServiceContext();
+            try
+            {
+                var resourceModel = _ResourceService.Get(type, id);
 
-            var dto = _ResourceService.Get(type, id, serviceContext);
-            if(dto == null){
+                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+
+                var serviceContext = new ServiceContext();
+
+                var resourceDto = _Hydrator.Hydrate(resourceModel,
+                    repository.GetResourceDtoType(),
+                    serviceContext.HydratorDepth);
+
+                return Ok(resourceDto);
+            }
+            catch(ResourceNotFoundException)
+            {
                 return NotFound();
             }
-
-            return Ok(dto);
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An unexpected error occurred.");
+            }
         }
 
         [HttpPost("{type}", Name = "PostResource")]
@@ -51,20 +77,34 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public IActionResult Post(string type, [FromBody] object resourcePostDto)
+        public IActionResult Post(string type, [FromBody] object data)
         {
             try
             {
+                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+
+                var createDto = ApiUtilities.GetDtoFromData(data, 
+                    repository.GetCreateResourceDtoType());
+
                 var serviceContext = new ServiceContext();
-                var dto = _ResourceService.Create(type, resourcePostDto, serviceContext);
+
+                var createModel = _Hydrator.Hydrate(createDto, 
+                    repository.GetResourceModelType(), 
+                    serviceContext.HydratorDepth);
+
+                var resourceModel = _ResourceService.Create(type, createModel);
+
+                var resourceDto = _Hydrator.Hydrate(resourceModel,
+                    repository.GetResourceDtoType(),
+                    serviceContext.HydratorDepth);
 
                 string resourceUrl = "";
-                if (Url != null && dto != null)
+                if (Url != null && resourceDto != null)
                 {
-                    resourceUrl = Url.Action(nameof(Get), new { type = type, id = ((dynamic)dto).ID }) ?? resourceUrl;
+                    resourceUrl = Url.Action(nameof(Get), new { type = type, id = ((dynamic)resourceDto).ID }) ?? resourceUrl;
                 }
 
-                return Created(resourceUrl, dto);
+                return Created(resourceUrl, resourceDto);
             }
             catch(Exception)
             {

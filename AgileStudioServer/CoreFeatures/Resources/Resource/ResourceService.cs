@@ -7,45 +7,57 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
     public class ResourceService : AbstractService
     {
         private IEnumerable<IResourceRepository> _ResourceRepositories;
-        
+
         public ResourceService(IEnumerable<IResourceRepository> resourceRepositories)
         {
             _ResourceRepositories = resourceRepositories;
         }
+
+        /// <summary>
+        /// Get a paginated list of resources/models of the specified type.
+        /// </summary>
         public PaginationResults<object> GetAll(string type, ServiceContext serviceContext)
         {
-            IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
-                repo => repo.IsTypeSupported(type));
-
-            if (repository == null) {
-                throw new UnsupportedResourceTypeException(type);
-            }
-
+            IResourceRepository repository = GetResourceRepository(type);
             return repository.GetAllResources(serviceContext);
         }
 
-        public object? Get(string type, int id, ServiceContext serviceContext)
+        /// <summary>
+        /// Get a resources/model of the specified type and ID.
+        /// </summary>
+        /// <exception cref="ResourceNotFoundException">
+        /// Thrown when the resource of the specified type and ID is not found.
+        /// </exception>
+        public object Get(string type, int id)
         {
-            IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
-                repo => repo.IsTypeSupported(type));
-
-            if (repository == null){
-                throw new UnsupportedResourceTypeException(type);
+            IResourceRepository repository = GetResourceRepository(type);
+            var model = repository.GetResource(id);
+            if(model == null){
+                throw new ResourceNotFoundException(type, id);
             }
 
-            return repository.GetResource(id, serviceContext);
+            return model;
         }
 
-        public object Create(string type, object data, ServiceContext serviceContext)
+        /// <summary>
+        /// Creates a resources/model of the specified type with the provided model.
+        /// </summary>
+        public object Create(string type, object model)
+        {
+            IResourceRepository repository = GetResourceRepository(type);
+            return repository.CreateResource(model);
+        }
+
+        public IResourceRepository GetResourceRepository(string type)
         {
             IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
                 repo => repo.IsTypeSupported(type));
 
-            if (repository == null){
+            if(repository == null){
                 throw new UnsupportedResourceTypeException(type);
             }
 
-            return repository.CreateResource(data, serviceContext);
+            return repository;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AgileStudioServer.Core.APIs;
-using AgileStudioServer.Core.Hydrator;
+﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
@@ -95,29 +94,41 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return type.Equals("projects.project", StringComparison.OrdinalIgnoreCase);
         }
 
+        public Type GetResourceDtoType()
+        {
+            return typeof(ProjectDto);
+        }
+
+        public Type GetCreateResourceDtoType()
+        {
+            return typeof(ProjectPostDto);
+        }
+
+        public Type GetResourceModelType()
+        {
+            return typeof(ProjectModel);
+        }
+
         public PaginationResults<object> GetAllResources(ServiceContext serviceContext)
         {
             var result = GetAll(serviceContext);
-            var dtos = _Hydrator.HydrateList<ProjectDto>(result.Items, serviceContext.HydratorDepth);
+
             return new PaginationResults<object>(
-                [.. dtos.Cast<object>()],
+                [.. result.Items.Cast<object>()],
                 result.Total,
                 result.Page,
                 result.ItemsPerPage
             );
         }
 
-        public object? GetResource(int id, ServiceContext serviceContext)
+        public object? GetResource(int id)
         {
-            var model = Get(id);
-            return model != null ? _Hydrator.Hydrate<ProjectDto>(model, serviceContext.HydratorDepth) : null;
+            return Get(id);
         }
 
-        public object CreateResource(object data, ServiceContext serviceContext)
+        public object CreateResource(object model)
         {
-            var dto = ApiUtilities.GetDtoFromData<ProjectPostDto>(data);
-            var model = _Hydrator.Hydrate<ProjectModel>(dto, serviceContext.HydratorDepth);
-            return Create(model);
+            return Create((ProjectModel) model);
         }
     }
 }

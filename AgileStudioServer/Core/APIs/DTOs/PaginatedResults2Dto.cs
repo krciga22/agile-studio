@@ -17,16 +17,14 @@ namespace AgileStudioServer.Core.APIs.DTOs
 
         public int? NextPage { get; set; }
 
-        public static PaginatedResults2Dto<T> FromPaginatedResults(PaginationResults<T> paginationResults)
+        public PaginatedResults2Dto(PaginationResults<T> paginationResults)
         {
-            return new PaginatedResults2Dto<T>(paginationResults.Items)
-            {
-                Total = paginationResults.Total,
-                Page = paginationResults.Page,
-                TotalPages = paginationResults.TotalPages,
-                PrevPage = paginationResults.PrevPage,
-                NextPage = paginationResults.NextPage
-            };
+            Items = paginationResults.Items;
+            Total = paginationResults.Total;
+            Page = paginationResults.Page;
+            TotalPages = paginationResults.TotalPages;
+            PrevPage = paginationResults.PrevPage;
+            NextPage = paginationResults.NextPage;
         }
 
         public PaginatedResults2Dto(List<T> items)

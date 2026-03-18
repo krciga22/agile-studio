@@ -37,7 +37,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                 repository.GetResourceDtoType(),
                 serviceContext.HydratorDepth);
 
-            PaginatedResults2Dto<object> paginatedResultsDto = PaginatedResults2Dto<object>.FromPaginatedResults(paginationResults);
+            var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
 
             return Ok(paginatedResultsDto);
         }

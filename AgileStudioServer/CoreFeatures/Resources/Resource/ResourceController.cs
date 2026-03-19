@@ -26,20 +26,27 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         [ProducesResponseType(typeof(PaginatedResults2Dto<ResourceDto>), StatusCodes.Status200OK)]
         public IActionResult Get(string type, [FromQuery] GetCollectionQueryParams queryParams)
         {
-            var serviceContext = new ServiceContext();
-            serviceContext.WithGetCollectionQueryParams(queryParams);
+            try
+            {
+                var serviceContext = new ServiceContext();
+                serviceContext.WithGetCollectionQueryParams(queryParams);
 
-            IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
 
-            var paginationResults = _ResourceService.GetAll(type, serviceContext);
-            paginationResults.Items = _Hydrator.HydrateList(
-                paginationResults.Items,
-                repository.GetResourceDtoType(),
-                serviceContext.HydratorDepth);
+                var paginationResults = _ResourceService.GetAll(type, serviceContext);
+                paginationResults.Items = _Hydrator.HydrateList(
+                    paginationResults.Items,
+                    repository.GetResourceDtoType(),
+                    serviceContext.HydratorDepth);
 
-            var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
+                var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
 
-            return Ok(paginatedResultsDto);
+                return Ok(paginatedResultsDto);
+            }
+            catch(UnsupportedResourceTypeException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("{type}/{id}", Name = "GetResource")]
@@ -61,7 +68,11 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
                 return Ok(resourceDto);
             }
-            catch(ResourceNotFoundException)
+            catch (UnsupportedResourceTypeException)
+            {
+                return NotFound();
+            }
+            catch (ResourceNotFoundException)
             {
                 return NotFound();
             }
@@ -106,7 +117,11 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
                 return Created(resourceUrl, resourceDto);
             }
-            catch(Exception)
+            catch (UnsupportedResourceTypeException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, 
                     "An unexpected error occurred.");

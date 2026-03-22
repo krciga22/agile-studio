@@ -92,7 +92,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         public string GetResourceType()
         {
-            return "projects.project";
+            return ResourceTypes.ProjectsProject;
         }
 
         public Type GetResourceDtoType()

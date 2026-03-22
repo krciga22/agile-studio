@@ -17,6 +17,8 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
         object? GetResource(int id);
 
+        bool IsResource(int id);
+
         object CreateResource(object data);
     }
 }

@@ -40,6 +40,21 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         }
 
         /// <summary>
+        /// Assert a resource/model of the specified type and ID exists.
+        /// </summary>
+        /// <exception cref="ResourceNotFoundException">
+        /// Thrown when the resource/model of the specified type and ID is not found.
+        /// </exception>
+        public void AssertExists(string type, int id)
+        {
+            IResourceRepository repository = GetResourceRepository(type);
+            bool exists = repository.IsResource(id);
+            if(!exists){
+                throw new ResourceNotFoundException(type, id);
+            }
+        }
+
+        /// <summary>
         /// Creates a resources/model of the specified type with the provided model.
         /// </summary>
         public object Create(string type, object model)

@@ -126,6 +126,11 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return Get(id);
         }
 
+        public bool IsResource(int id)
+        {
+            return Exists(id);
+        }
+
         public object CreateResource(object model)
         {
             return Create((ProjectModel) model);

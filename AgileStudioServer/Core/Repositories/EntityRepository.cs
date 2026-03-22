@@ -35,6 +35,20 @@ namespace AgileStudioServer.Core.Repositories
             return HydrateModel(entity);
         }
 
+        public bool Exists(TIdentifier id)
+        {
+            var entityType = _DBContext.Model.FindEntityType(typeof(TEntity)) ?? 
+                throw new Exception($"Unable to find entity type for entity {typeof(TEntity)}");
+
+            var primaryKey = entityType.FindPrimaryKey() ??
+                throw new Exception($"Unable to find primary key for entity {entityType}");
+
+            var primaryKeyProperty = primaryKey.Properties[0];
+
+            return GetDbSet().Any(e => 
+                EF.Property<TIdentifier>(e, primaryKeyProperty.Name).Equals(id));
+        }
+
         public TModel Create(TModel model)
         {
             TEntity entity = HydrateEntity(model);

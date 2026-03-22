@@ -10,6 +10,7 @@
     {
         TIdentifier GetIdentifier(TModel model);
         TModel? Get(TIdentifier id);
+        bool Exists(TIdentifier id);
         TModel Create(TModel model);
         TModel Update(TModel model);
         void Delete(TModel model);

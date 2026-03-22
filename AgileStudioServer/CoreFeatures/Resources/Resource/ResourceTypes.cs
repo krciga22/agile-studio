@@ -6,5 +6,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         public const string ProjectsProject = "projects.project";
 
         public const string ReleasesRelease = "releases.release";
+
+        public const string SprintsSprint = "sprints.sprint";
     }
 }

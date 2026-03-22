@@ -88,7 +88,8 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         public IResourceRepository GetResourceRepository(string type)
         {
             IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(
-                repo => repo.IsSupportedResource(type));
+                repo => repo.GetResourceType()
+                    .Equals(type, StringComparison.OrdinalIgnoreCase));
 
             if(repository == null){
                 throw new UnsupportedResourceTypeException(type);

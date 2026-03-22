@@ -90,9 +90,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return _DBContext.Project;
         }
 
-        public bool IsSupportedResource(string type)
+        public string GetResourceType()
         {
-            return type.Equals("projects.project", StringComparison.OrdinalIgnoreCase);
+            return "projects.project";
         }
 
         public Type GetResourceDtoType()

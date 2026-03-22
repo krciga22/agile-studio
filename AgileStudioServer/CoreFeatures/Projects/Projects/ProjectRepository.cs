@@ -85,11 +85,6 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return HydrateModels(entities);
         }
 
-        protected override DbSet<Project> GetDbSet()
-        {
-            return _DBContext.Project;
-        }
-
         public string GetResourceType()
         {
             return ResourceTypes.ProjectsProject;
@@ -154,6 +149,11 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public void DeleteResource(object model)
         {
             Delete((ProjectModel)model);
+        }
+
+        protected override DbSet<Project> GetDbSet()
+        {
+            return _DBContext.Project;
         }
     }
 }

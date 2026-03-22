@@ -5,11 +5,6 @@ import type {
   ProjectPatchDto,
   ProjectPostDto
 } from "../dtos/ProjectDtos.tsx";
-import type {PaginatedResultsDto} from "../dtos/PaginatedResultsDto.tsx";
-
-export const getProjects = async (): Promise<AxiosResponse<PaginatedResultsDto<ProjectDto>>> => {
-  return await Api.get('/Project');
-};
 
 export const createProject = async (project:ProjectPostDto): Promise<AxiosResponse<ProjectDto>> => {
   return await Api.post('/Project', project);

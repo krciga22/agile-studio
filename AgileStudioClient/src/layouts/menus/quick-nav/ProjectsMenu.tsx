@@ -1,6 +1,7 @@
 import './ProjectsMenu.css'
 import {type ReactElement, useContext, useState} from "react";
-import {getProjects} from "../../../services/api/endpoints/project.tsx";
+import {getResources} from "../../../services/api/endpoints/resource.tsx";
+import ResourceTypes from "../../../services/api/ResourceTypes.tsx";
 import type {ProjectDto} from "../../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import ProjectSubMenu from "./ProjectSubMenu.tsx";
@@ -29,7 +30,7 @@ function ProjectsMenu() {
 
     setIsRefreshing(true);
 
-    getProjects()
+    getResources<ProjectDto>(ResourceTypes.ProjectsProject)
       .then(response => {
         setProjects(response.data.items);
       })

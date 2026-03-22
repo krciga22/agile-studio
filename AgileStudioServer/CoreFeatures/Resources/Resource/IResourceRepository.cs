@@ -9,9 +9,9 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
         public Type GetResourceDtoType();
 
-        public Type GetCreateResourceDtoType();
+        public Type GetResourceDtoCreateType();
 
-        public Type GetUpdateResourceDtoType();
+        public Type GetResourceDtoUpdateType();
 
         public Type GetResourceModelType();
 

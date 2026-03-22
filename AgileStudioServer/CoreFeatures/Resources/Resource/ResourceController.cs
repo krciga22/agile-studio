@@ -95,7 +95,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                 IResourceRepository repository = _ResourceService.GetResourceRepository(type);
 
                 var createDto = ApiUtilities.GetDtoFromData(data, 
-                    repository.GetCreateResourceDtoType());
+                    repository.GetResourceDtoCreateType());
 
                 var serviceContext = new ServiceContext();
 
@@ -142,7 +142,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                 _ResourceService.AssertExists(type, id);
 
                 var patchDto = ApiUtilities.GetDtoFromData(data,
-                    repository.GetUpdateResourceDtoType());
+                    repository.GetResourceDtoUpdateType());
 
                 var serviceContext = new ServiceContext();
 

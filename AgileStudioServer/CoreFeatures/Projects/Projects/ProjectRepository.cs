@@ -100,12 +100,12 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return typeof(ProjectDto);
         }
 
-        public Type GetCreateResourceDtoType()
+        public Type GetResourceDtoCreateType()
         {
             return typeof(ProjectPostDto);
         }
 
-        public Type GetUpdateResourceDtoType()
+        public Type GetResourceDtoUpdateType()
         {
             return typeof(ProjectPatchDto);
         }

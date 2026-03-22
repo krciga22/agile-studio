@@ -7,13 +7,13 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
     {
         string GetResourceType();
 
-        public Type GetResourceDtoType();
+        Type GetResourceDtoType();
 
-        public Type GetResourceDtoCreateType();
+        Type GetResourceDtoCreateType();
 
-        public Type GetResourceDtoUpdateType();
+        Type GetResourceDtoUpdateType();
 
-        public Type GetResourceModelType();
+        Type GetResourceModelType();
 
         PaginationResults<object> GetAllResources(ServiceContext serviceContext);
 

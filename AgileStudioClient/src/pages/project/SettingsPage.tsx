@@ -1,9 +1,11 @@
 import './SettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
-import type {ProjectDto} from "../../services/api/dtos/ProjectDtos.tsx";
+import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
-import {getProject, updateProject} from "../../services/api/endpoints/project.tsx";
+import {getProject} from "../../services/api/endpoints/project.tsx";
+import {deleteResource, updateResource} from "../../services/api/endpoints/resource.tsx";
+import ResourceTypes from "../../services/api/ResourceTypes.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
@@ -20,7 +22,6 @@ import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumb
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
-import { deleteProject } from '../../services/api/endpoints/project.tsx';
 import { goToPage } from '../../PageRouterUtils.tsx';
 import {toast} from 'react-toastify';
 
@@ -125,13 +126,16 @@ function SettingsPage(props: SettingsPageProps) {
 
   const _handleSubmit = async () => {
     try {
-      await updateProject(projectId, {
+      const projectPatchDto: ProjectPatchDto = {
         id: projectId,
         title: title.trim(),
         description: description.trim()
         // todo include backlogItemTypeSchemaId
         // todo include backlogItemLinkTypeSchemaId
-      });
+      };
+
+      await updateResource<ProjectDto>(
+        ResourceTypes.ProjectsProject, projectId, projectPatchDto);
     }
     catch (err) {
       console.log(err);
@@ -310,7 +314,7 @@ function SettingsPage(props: SettingsPageProps) {
                 confirmText={'Delete Project'}
                 onCancel={() => setIsConfirmingDelete(false)}
                 onConfirm={async () => {
-                  await deleteProject(project.id);
+                  await deleteResource(ResourceTypes.ProjectsProject, project.id);
                   toast.success('Project Deleted', Constants.DEFAULT_TOAST_PROPS);
                   goToPage(getProjectsPagePath());
                 }}

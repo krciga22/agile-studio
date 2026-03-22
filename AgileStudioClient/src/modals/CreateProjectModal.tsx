@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { createProject } from '../services/api/endpoints/project.tsx';
-import type { ProjectDto } from '../services/api/dtos/ProjectDtos.tsx';
+import {createResource} from "../services/api/endpoints/resource.tsx";
+import ResourceTypes from "../services/api/ResourceTypes.tsx";
+import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/ProjectDtos.tsx';
 import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
 import {getBacklogItemTypeSchemas} from "../services/api/endpoints/BacklogItemTypeSchema.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -95,12 +96,15 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
 
   const _handleSubmit = async () => {
     try {
-      const response = await createProject({
+      const projectPostDto: ProjectPostDto = {
         title: title.trim(),
         description: description.trim(),
         backlogItemTypeSchemaId: parseInt(backlogItemTypeSchemaId),
         backlogItemLinkTypeSchemaId: parseInt(backlogItemLinkTypeSchemaId)
-      });
+      };
+
+      const response = await createResource<ProjectDto>(
+        ResourceTypes.ProjectsProject, projectPostDto);
 
       toast.success("Project Created", Constants.DEFAULT_TOAST_PROPS);
 

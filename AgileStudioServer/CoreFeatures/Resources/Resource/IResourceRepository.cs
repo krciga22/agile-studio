@@ -11,6 +11,8 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 
         public Type GetCreateResourceDtoType();
 
+        public Type GetUpdateResourceDtoType();
+
         public Type GetResourceModelType();
 
         PaginationResults<object> GetAllResources(ServiceContext serviceContext);
@@ -20,5 +22,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         bool IsResource(int id);
 
         object CreateResource(object data);
+
+        object UpdateResource(int id, object data);
     }
 }

@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
+using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -104,6 +105,11 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return typeof(ProjectPostDto);
         }
 
+        public Type GetUpdateResourceDtoType()
+        {
+            return typeof(ProjectPatchDto);
+        }
+
         public Type GetResourceModelType()
         {
             return typeof(ProjectModel);
@@ -133,7 +139,16 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         public object CreateResource(object model)
         {
-            return Create((ProjectModel) model);
+            return Create((ProjectModel)model);
+        }
+
+        public object UpdateResource(int id, object model)
+        {
+            if(id != GetIdentifier((ProjectModel)model)){
+                throw new ResourceIdentifierMismatchException(id);
+            }
+
+            return Update((ProjectModel)model);
         }
     }
 }

@@ -63,6 +63,18 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             return repository.CreateResource(model);
         }
 
+        /// <summary>
+        /// Updates a resources/model of the specified type with the provided model.
+        /// </summary>
+        public object Update(string type, int id, object model)
+        {
+            IResourceRepository repository = GetResourceRepository(type);
+            return repository.UpdateResource(id, model);
+        }
+
+        /// <exception cref="UnsupportedResourceTypeException">
+        /// Thrown when no repository supports the given type.
+        /// </exception>
         public IResourceRepository GetResourceRepository(string type)
         {
             IResourceRepository? repository = _ResourceRepositories.FirstOrDefault(

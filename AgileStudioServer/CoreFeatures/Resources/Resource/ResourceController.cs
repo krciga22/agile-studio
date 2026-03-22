@@ -127,5 +127,54 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                     "An unexpected error occurred.");
             }
         }
+
+        [HttpPatch("{type}/{id}", Name = "PatchResource")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        public IActionResult Patch(string type, int id, [FromBody] object data)
+        {
+            try
+            {
+                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+
+                _ResourceService.AssertExists(type, id);
+
+                var patchDto = ApiUtilities.GetDtoFromData(data,
+                    repository.GetUpdateResourceDtoType());
+
+                var serviceContext = new ServiceContext();
+
+                var patchModel = _Hydrator.Hydrate(patchDto,
+                    repository.GetResourceModelType(),
+                    serviceContext.HydratorDepth);
+
+                var resourceModel = _ResourceService.Update(type, id, patchModel);
+
+                var resourceDto = _Hydrator.Hydrate(resourceModel,
+                    repository.GetResourceDtoType(),
+                    serviceContext.HydratorDepth);
+
+                return new OkObjectResult(resourceDto);
+            }
+            catch (UnsupportedResourceTypeException)
+            {
+                return NotFound();
+            }
+            catch (ResourceNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ResourceIdentifierMismatchException)
+            {
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An unexpected error occurred.");
+            }
+        }
     }
 }

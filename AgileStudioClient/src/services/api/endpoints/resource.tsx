@@ -6,6 +6,10 @@ export const getResources = async <TDto,>(type: string): Promise<AxiosResponse<P
   return await Api.get(`/Resource/${type}`);
 };
 
+export const getResource = async <TDto,>(type: string, id:number): Promise<AxiosResponse<TDto>> => {
+  return await Api.get(`/Resource/${type}/${id}`);
+};
+
 export const createResource = async <TDto,>(type: string, data: object): Promise<AxiosResponse<TDto>> => {
   return await Api.post(`/Resource/${type}`, data);
 };

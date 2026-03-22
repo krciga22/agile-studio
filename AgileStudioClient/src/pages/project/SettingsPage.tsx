@@ -3,8 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
 import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
-import {getProject} from "../../services/api/endpoints/project.tsx";
-import {deleteResource, updateResource} from "../../services/api/endpoints/resource.tsx";
+import {deleteResource, getResource, updateResource} from "../../services/api/endpoints/resource.tsx";
 import ResourceTypes from "../../services/api/ResourceTypes.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -80,7 +79,7 @@ function SettingsPage(props: SettingsPageProps) {
   const _refresh = async () => {
     try{
       const promises = [
-        getProject(projectId),
+        getResource<ProjectDto>(ResourceTypes.ProjectsProject, projectId),
         getBacklogItemTypeSchemas(),
         getBacklogItemLinkTypeSchemas()
       ];

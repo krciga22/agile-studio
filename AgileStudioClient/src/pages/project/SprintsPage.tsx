@@ -3,7 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
 import type {ProjectDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
-import {getProject} from "../../services/api/endpoints/project.tsx";
+import {getResource} from "../../services/api/endpoints/resource.tsx";
+import ResourceTypes from "../../services/api/ResourceTypes.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +31,7 @@ function SprintsPage(props: SprintsPageProps) {
 
     setIsRefreshing(true);
 
-    getProject(projectId)
+    getResource<ProjectDto>(ResourceTypes.ProjectsProject, projectId)
       .then(response => {
         setProject(response.data);
       })

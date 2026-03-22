@@ -72,6 +72,16 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             return repository.UpdateResource(id, model);
         }
 
+        /// <summary>
+        /// Deletes a resources/model of the specified type with the provided id.
+        /// </summary>
+        public void Delete(string type, int id)
+        {
+            IResourceRepository repository = GetResourceRepository(type);
+            var model = Get(type, id);
+            repository.DeleteResource(model);
+        }
+
         /// <exception cref="UnsupportedResourceTypeException">
         /// Thrown when no repository supports the given type.
         /// </exception>

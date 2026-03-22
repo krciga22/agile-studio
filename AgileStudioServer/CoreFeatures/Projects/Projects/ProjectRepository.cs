@@ -150,5 +150,10 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
             return Update((ProjectModel)model);
         }
+
+        public void DeleteResource(object model)
+        {
+            Delete((ProjectModel)model);
+        }
     }
 }

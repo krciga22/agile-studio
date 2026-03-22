@@ -24,5 +24,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
         object CreateResource(object data);
 
         object UpdateResource(int id, object data);
+
+        void DeleteResource(object model);
     }
 }

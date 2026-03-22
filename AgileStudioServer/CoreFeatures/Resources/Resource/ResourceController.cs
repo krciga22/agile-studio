@@ -176,5 +176,36 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                     "An unexpected error occurred.");
             }
         }
+
+        [HttpDelete("{type}/{id}", Name = "DeleteResource")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public IActionResult Delete(string type, int id)
+        {
+            try
+            {
+                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+
+                _ResourceService.AssertExists(type, id);
+
+                _ResourceService.Delete(type, id);
+
+                return Ok();
+            }
+            catch (UnsupportedResourceTypeException)
+            {
+                return NotFound();
+            }
+            catch (ResourceNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "An unexpected error occurred.");
+            }
+        }
     }
 }

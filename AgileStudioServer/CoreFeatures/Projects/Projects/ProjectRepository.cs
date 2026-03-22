@@ -90,7 +90,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return _DBContext.Project;
         }
 
-        public bool IsTypeSupported(string type)
+        public bool IsSupportedResource(string type)
         {
             return type.Equals("projects.project", StringComparison.OrdinalIgnoreCase);
         }

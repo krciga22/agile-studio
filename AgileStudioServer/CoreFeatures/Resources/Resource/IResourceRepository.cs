@@ -5,7 +5,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
     public interface IResourceRepository
     {
-        bool IsTypeSupported(string type);
+        bool IsSupportedResource(string type);
 
         public Type GetResourceDtoType();
 

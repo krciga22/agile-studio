@@ -16,6 +16,17 @@ namespace AgileStudioServer.CoreFeatures.Users.Users
             return model.ID;
         }
 
+        public UserModel? GetByEmail(string email)
+        {
+            DbSet<User> dbSet = GetDbSet();
+            var user = dbSet.Select(e => e).Where(e => e.Email == email).FirstOrDefault();
+            if (user is null){
+                return null;
+            }
+
+            return HydrateModel(user);
+        }
+
         protected override DbSet<User> GetDbSet()
         {
             return _DBContext.User;

@@ -1,4 +1,5 @@
 using AgileStudioServer.CoreFeatures.Auth.APIs.DTOs;
+using AgileStudioServer.CoreFeatures.Users.Users;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -12,13 +13,15 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration Config;
+        private readonly UserService _UserService;
 
         public IHostEnvironment HostEnvironment { get; }
 
-        public AuthController(IHostEnvironment hostEnvironment, IConfiguration config)
+        public AuthController(IHostEnvironment hostEnvironment, IConfiguration config, UserService userService)
         {
             HostEnvironment = hostEnvironment;
             Config = config;
+            _UserService = userService;
         }
 
         /// <summary>
@@ -50,7 +53,16 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
 
                 UserInfo userInfo = await client.GetUserInfoAsync(accessToken);
                 var name = userInfo.FullName;
-                var currentUserDto = new CurrentUserDto(name);
+
+                // todo user userInfo.UserId instead
+                var user = _UserService.GetByEmail(userInfo.Email);
+                if(user == null){
+                    user = _UserService.Create(
+                        new UserModel(userInfo.Email, userInfo.FirstName, userInfo.LastName)
+                    );
+                }
+
+                var currentUserDto = new CurrentUserDto(name, user.FirstName, user.LastName);
                 return Ok(currentUserDto);
             }
             catch (Exception ex)

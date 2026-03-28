@@ -3,11 +3,17 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs.DTOs
 {
     public class CurrentUserDto
     {
-        public string Name { get; set; }
+        public string FullName { get; set; }
 
-        public CurrentUserDto(string name)
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public CurrentUserDto(string fullName, string firstName, string lastName)
         {
-            Name = name;
+            FullName = fullName;
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }

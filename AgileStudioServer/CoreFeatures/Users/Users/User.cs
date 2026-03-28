@@ -12,6 +12,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public string? AuthServerUserID { get; set; } = null;
+
         public User(string email, string firstName, string lastName)
         {
             Email = email;

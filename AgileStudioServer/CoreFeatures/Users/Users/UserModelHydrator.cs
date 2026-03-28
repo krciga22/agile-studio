@@ -69,6 +69,7 @@ namespace AgileStudioServer.CoreFeatures.Users.Users
                 model.FirstName = entity.FirstName;
                 model.LastName = entity.LastName;
                 model.CreatedOn = entity.CreatedOn;
+                model.AuthServerUserID = entity.AuthServerUserID;
             }
         }
     }

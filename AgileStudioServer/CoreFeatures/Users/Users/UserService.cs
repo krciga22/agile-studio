@@ -22,6 +22,11 @@ namespace AgileStudioServer.CoreFeatures.Users.Users
             return _UserRepository.GetByEmail(email);
         }
 
+        public virtual UserModel? GetByAuthServerUserId(string authServerUserId)
+        {
+            return _UserRepository.GetByAuthServerUserId(authServerUserId);
+        }
+
         public virtual UserModel Create(UserModel user)
         {
             return _UserRepository.Create(user);

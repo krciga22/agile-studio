@@ -27,6 +27,20 @@ namespace AgileStudioServer.CoreFeatures.Users.Users
             return HydrateModel(user);
         }
 
+        public UserModel? GetByAuthServerUserId(string authServerUserId)
+        {
+            DbSet<User> dbSet = GetDbSet();
+            var user = dbSet.Select(e => e)
+                .Where(e => e.AuthServerUserID == authServerUserId)
+                .FirstOrDefault();
+
+            if (user is null){
+                return null;
+            }
+
+            return HydrateModel(user);
+        }
+
         protected override DbSet<User> GetDbSet()
         {
             return _DBContext.User;

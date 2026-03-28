@@ -52,17 +52,28 @@ namespace AgileStudioServer.CoreFeatures.Auth.APIs
                 var client = new AuthenticationApiClient(new Uri($"https://{auth0Domain}/"));
 
                 UserInfo userInfo = await client.GetUserInfoAsync(accessToken);
-                var name = userInfo.FullName;
 
-                // todo user userInfo.UserId instead
-                var user = _UserService.GetByEmail(userInfo.Email);
-                if(user == null){
-                    user = _UserService.Create(
-                        new UserModel(userInfo.Email, userInfo.FirstName, userInfo.LastName)
-                    );
+                UserModel? user = null;
+                if (userInfo.UserId != null){
+                    user = _UserService.GetByAuthServerUserId(userInfo.UserId);
+                }
+                else if (userInfo.Email != null)
+                {
+                    user = _UserService.GetByEmail(userInfo.Email);
+                }
+                else
+                {
+                    return Forbid();
                 }
 
-                var currentUserDto = new CurrentUserDto(name, user.FirstName, user.LastName);
+                user ??= _UserService.Create(
+                    new UserModel(userInfo.Email, userInfo.FirstName, userInfo.LastName)
+                    {
+                        AuthServerUserID = userInfo.UserId
+                    }
+                );
+
+                var currentUserDto = new CurrentUserDto(userInfo.FullName, user.FirstName, user.LastName);
                 return Ok(currentUserDto);
             }
             catch (Exception ex)

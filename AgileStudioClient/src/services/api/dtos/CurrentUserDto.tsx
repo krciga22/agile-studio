@@ -1,3 +1,5 @@
 export type CurrentUserDto = {
-  name: string,
+  fullName: string,
+  firstName: string,
+  lastName: string,
 };

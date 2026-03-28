@@ -23,7 +23,7 @@ function App() {
 
       getCurrentUser()
         .then((response) => {
-          console.info('Current user', response.data.name);
+          console.info('Current user', response.data.fullName);
           setCurrentUser(response.data);
         })
         .catch((error) => {

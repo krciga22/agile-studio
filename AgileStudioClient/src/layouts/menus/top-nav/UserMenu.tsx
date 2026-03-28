@@ -38,7 +38,7 @@ function UserMenu() {
           user &&
           <>
               <FontAwesomeIcon icon={faUser} size={"lg"}></FontAwesomeIcon>
-              <span className={"text-nowrap"}>{user.name}</span>
+              <span className={"text-nowrap"}>{user.firstName}</span>
               <a className={"text-nowrap ms-2"} onClick={doLogout}>Logout</a>
           </>
         }

@@ -6,16 +6,17 @@ import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {setApiAuthBearerToken} from "../../../services/api/Api.tsx";
 import {goToPage} from "../../../PageRouterUtils.tsx";
+import AuthService from "../../../services/AuthService.tsx";
 
 function UserMenu() {
   const {user, error, isLoading} = useContext(CurrentUserContext);
   const auth0 = useAuth0();
 
   const doLogin = async () => {
-    await auth0.loginWithPopup();
-    const accessToken = await auth0.getAccessTokenSilently();
-    setApiAuthBearerToken(accessToken);
-    goToPage('/');
+    const accessToken = await AuthService.loginWithPopup(auth0);
+    if(accessToken){
+      goToPage('/');
+    }
   };
 
   const doLogout = async () => {
@@ -48,6 +49,11 @@ function UserMenu() {
           <>
               <FontAwesomeIcon icon={faWarning} size={"lg"}></FontAwesomeIcon>
               <span>Error</span>
+
+              {
+                auth0.isAuthenticated &&
+                  <a className={"text-nowrap ms-2"} onClick={doLogout}>Logout</a>
+              }
           </>
         }
       </>

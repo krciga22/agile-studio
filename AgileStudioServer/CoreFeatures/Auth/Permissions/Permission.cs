@@ -6,6 +6,8 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
     {
         public int ID { get; set; }
 
+        public string? UUID { get; set; }
+
         public string Title { get; set; } = title;
 
         public string? Description { get; set; }

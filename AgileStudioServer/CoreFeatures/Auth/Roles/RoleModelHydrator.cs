@@ -61,6 +61,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
                 var entity = (Role)from;
 
                 model.ID = entity.ID;
+                model.UUID = entity.UUID;
                 model.Title = entity.Title;
                 model.Description = entity.Description;
                 model.Scope = entity.Scope;

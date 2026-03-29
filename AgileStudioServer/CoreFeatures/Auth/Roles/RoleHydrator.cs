@@ -75,6 +75,7 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
             var model = (RoleModel)from;
 
             entity.ID = model.ID;
+            entity.UUID = model.UUID;
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.Scope = model.Scope;

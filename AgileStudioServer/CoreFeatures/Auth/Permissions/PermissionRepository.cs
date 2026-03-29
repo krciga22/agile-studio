@@ -17,8 +17,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 
         public PermissionModel? GetByUUID(string uuid)
         {
-            IQueryable<Permission> query = _DBContext.Permission;
-            var entity = query.Where(p => p.UUID == uuid).FirstOrDefault();
+            var entity = GetDbSet().Where(p => p.UUID == uuid).FirstOrDefault();
             if (entity == null){
                 return null;
             }

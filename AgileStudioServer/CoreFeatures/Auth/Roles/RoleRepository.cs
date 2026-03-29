@@ -15,6 +15,16 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
             return model.ID;
         }
 
+        public RoleModel? GetByUUID(string uuid)
+        {
+            var entity = GetDbSet().Where(p => p.UUID == uuid).FirstOrDefault();
+            if (entity == null){
+                return null;
+            }
+
+            return HydrateModel(entity);
+        }
+
         public virtual PaginationResults<RoleModel> GetAll(ServiceContext serviceContext)
         {
             IQueryable<Role> query = _DBContext.Role;

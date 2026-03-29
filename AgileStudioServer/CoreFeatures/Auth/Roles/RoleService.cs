@@ -17,6 +17,11 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
             return _RoleRepository.Get(id);
         }
 
+        public virtual RoleModel? GetByUUID(string uuid)
+        {
+            return _RoleRepository.GetByUUID(uuid);
+        }
+
         public virtual RoleModel Create(RoleModel role)
         {
             return _RoleRepository.Create(role);

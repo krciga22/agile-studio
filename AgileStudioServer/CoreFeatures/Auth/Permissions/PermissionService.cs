@@ -17,6 +17,11 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             return _PermissionRepository.Get(id);
         }
 
+        public virtual PermissionModel? GetByUUID(string uuid)
+        {
+            return _PermissionRepository.GetByUUID(uuid);
+        }
+
         public virtual PermissionModel Create(PermissionModel permission)
         {
             return _PermissionRepository.Create(permission);

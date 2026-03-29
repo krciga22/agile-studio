@@ -15,6 +15,17 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             return model.ID;
         }
 
+        public PermissionModel? GetByUUID(string uuid)
+        {
+            IQueryable<Permission> query = _DBContext.Permission;
+            var entity = query.Where(p => p.UUID == uuid).FirstOrDefault();
+            if (entity == null){
+                return null;
+            }
+
+            return HydrateModel(entity);
+        }
+
         public virtual PaginationResults<PermissionModel> GetAll(ServiceContext serviceContext)
         {
             IQueryable<Permission> query = _DBContext.Permission;

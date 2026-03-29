@@ -75,6 +75,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
             var model = (PermissionModel)from;
 
             entity.ID = model.ID;
+            entity.UUID = model.UUID;
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.Scope = model.Scope;

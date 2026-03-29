@@ -14,6 +14,7 @@ using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.CoreFeatures.Auth.Permissions;
+using AgileStudioServer.CoreFeatures.Auth.RolePermissions;
 
 namespace AgileStudioServer.Data
 {
@@ -44,6 +45,8 @@ namespace AgileStudioServer.Data
         public DbSet<Role> Role { get; set; }
 
         public DbSet<Permission> Permission { get; set; }
+
+        public DbSet<RolePermission> RolePermission { get; set; }
 
         public DbSet<Workflow> Workflow { get; set; }
 
@@ -132,6 +135,18 @@ namespace AgileStudioServer.Data
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("fk_backlog_item_type_workflow_workflow_id");
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(e => e.Role)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_role_permission_role_id");
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(e => e.Permission)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_role_permission_permission_id");
         }
     }
 }

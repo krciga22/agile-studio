@@ -11,6 +11,21 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
             return _RolePermissionRepository.Get(id);
         }
 
+        public List<RolePermissionModel> GetByRole(int roleId, string? scope, int? scopeId)
+        {
+            return _RolePermissionRepository.GetByRole(roleId, scope, scopeId);
+        }
+
+        public List<RolePermissionModel> GetByPermission(int permissionId, string? scope, int? scopeId)
+        {
+            return _RolePermissionRepository.GetByPermission(permissionId, scope, scopeId);
+        }
+
+        public List<RolePermissionModel> GetByScope(string scope, int scopeId)
+        {
+            return _RolePermissionRepository.GetByScope(scope, scopeId);
+        }
+
         public virtual RolePermissionModel Create(RolePermissionModel model)
         {
             return _RolePermissionRepository.Create(model);

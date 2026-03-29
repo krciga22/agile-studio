@@ -147,6 +147,16 @@ namespace AgileStudioServer.Data
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_role_permission_permission_id");
+
+            modelBuilder.Entity<Role>()
+                .HasIndex(r => new { r.UUID })
+                .IsUnique()
+                .HasDatabaseName("ix_role_uuid_unique");
+
+            modelBuilder.Entity<Permission>()
+                .HasIndex(p => new { p.UUID })
+                .IsUnique()
+                .HasDatabaseName("ix_permission_uuid_unique");
         }
     }
 }

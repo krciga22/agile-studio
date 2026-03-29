@@ -79,8 +79,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                 entity.ID = model.ID;
                 entity.RoleID = model.RoleID;
                 entity.PermissionID = model.PermissionID;
-                entity.Scope = model.Scope;
-                entity.ScopeID = model.ScopeID;
                 entity.CreatedOn = model.CreatedOn;
                 entity.CreatedByID = model.CreatedByID;
 

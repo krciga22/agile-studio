@@ -8,10 +8,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 
         public int PermissionID { get; set; } = permissionID;
 
-        public string? Scope { get; set; }
-
-        public int? ScopeID { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public int? CreatedByID { get; set; } = null!;

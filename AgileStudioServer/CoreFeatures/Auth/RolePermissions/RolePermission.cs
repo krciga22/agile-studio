@@ -16,18 +16,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 
         public Permission Permission { get; set; } = null!;
 
-        /// <summary>
-        /// Gets or sets the scope in which this role 
-        /// has been assigned this permission.
-        /// </summary>
-        public string? Scope { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ID of the resource to which 
-        /// this role has been assigned this permission.
-        /// </summary>
-        public int? ScopeID { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public int? CreatedByID { get; set; } = null!;

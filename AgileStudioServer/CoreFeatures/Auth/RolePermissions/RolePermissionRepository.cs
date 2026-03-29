@@ -17,19 +17,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         /// Get all role permissions (permissions) assigned 
         /// to a given role.
         /// </summary>
-        public List<RolePermissionModel> GetByRole(
-            int roleId, string? scope, int? scopeId)
+        public List<RolePermissionModel> GetByRole(int roleId)
         {
             var entities = GetDbSet().Where(rp => rp.RoleID == roleId);
-
-            if(!string.IsNullOrWhiteSpace(scope)){
-                entities = entities.Where(rp => rp.Scope == scope);
-            }
-
-            if(scopeId.HasValue){
-                entities = entities.Where(rp => rp.ScopeID == scopeId.Value);
-            }
-
             return HydrateModels([.. entities]);
         }
 
@@ -37,19 +27,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         /// Get all role permissions (roles) assigned 
         /// to a given permission.
         /// </summary>
-        public List<RolePermissionModel> GetByPermission(
-            int permissionId, string? scope, int? scopeId)
+        public List<RolePermissionModel> GetByPermission(int permissionId)
         {
             var entities = GetDbSet().Where(rp => rp.PermissionID == permissionId);
-
-            if (!string.IsNullOrWhiteSpace(scope)){
-                entities = entities.Where(rp => rp.Scope == scope);
-            }
-
-            if (scopeId.HasValue){
-                entities = entities.Where(rp => rp.ScopeID == scopeId.Value);
-            }
-
             return HydrateModels([.. entities]);
         }
 
@@ -60,11 +40,8 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         public List<RolePermissionModel> GetByScope(
             string scope, int? scopeId)
         {
-            var entities = GetDbSet().Where(rp => rp.Scope == scope);
-
-            if (scopeId.HasValue){
-                entities = entities.Where(rp => rp.ScopeID == scopeId.Value);
-            }
+            var entities = GetDbSet().Where(rp => rp.Role.Scope == scope)
+                .Where(rp => rp.Role.ScopeID == (scopeId.HasValue ? scopeId.Value : null));
 
             return HydrateModels([.. entities]);
         }

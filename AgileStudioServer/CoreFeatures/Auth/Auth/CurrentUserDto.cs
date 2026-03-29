@@ -1,5 +1,4 @@
-﻿
-namespace AgileStudioServer.CoreFeatures.Auth.APIs.DTOs
+﻿namespace AgileStudioServer.CoreFeatures.Auth.Auth
 {
     public class CurrentUserDto
     {

@@ -1,4 +1,3 @@
-using AgileStudioServer.CoreFeatures.Auth.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
@@ -6,7 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.Auth.APIs
+namespace AgileStudioServer.CoreFeatures.Auth.Auth
 {
     [ApiController]
     [Route("[controller]")]

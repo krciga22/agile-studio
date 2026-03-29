@@ -13,6 +13,7 @@ using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.Auth.Roles;
+using AgileStudioServer.CoreFeatures.Auth.Permissions;
 
 namespace AgileStudioServer.Data
 {
@@ -41,6 +42,8 @@ namespace AgileStudioServer.Data
         public DbSet<User> User { get; set; }
 
         public DbSet<Role> Role { get; set; }
+
+        public DbSet<Permission> Permission { get; set; }
 
         public DbSet<Workflow> Workflow { get; set; }
 

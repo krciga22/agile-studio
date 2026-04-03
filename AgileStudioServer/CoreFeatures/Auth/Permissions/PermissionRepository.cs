@@ -9,11 +9,11 @@ using System.Security;
 namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
     public class PermissionRepository(DBContext dbContext, Hydrator hydrator) :
-        EntityRepository<DBContext, PermissionModel, Permission, int>(dbContext, hydrator)
+        EntityRepository<DBContext, PermissionModel, Permission, string>(dbContext, hydrator)
     {
-        public override int GetIdentifier(PermissionModel model)
+        public override string GetIdentifier(PermissionModel model)
         {
-            return model.ID;
+            return model.PermissionKey;
         }
 
         public PermissionModel? GetByPermissionKey(string permissionKey)
@@ -56,10 +56,10 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
                                 query.OrderByDescending(p => p.Title) :
                                 query.OrderBy(p => p.Title);
                             break;
-                        case "id":
+                        case "permissionKey":
                             query = descending ?
-                                query.OrderByDescending(p => p.ID) :
-                                query.OrderBy(p => p.ID);
+                                query.OrderByDescending(p => p.PermissionKey) :
+                                query.OrderBy(p => p.PermissionKey);
                             break;
                         default:
                             sortedFieldsCount--;
@@ -70,7 +70,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 
             if (sortedFieldsCount == 0)
             {
-                query = query.OrderByDescending(p => p.ID);
+                query = query.OrderBy(p => p.Title);
             }
 
             int page = serviceContext.Page;

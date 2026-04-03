@@ -2,8 +2,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
     public class PermissionModel(string permissionKey, string title)
     {
-        public int ID { get; set; }
-
         public string PermissionKey { get; set; } = permissionKey;
 
         public string Title { get; set; } = title;

@@ -4,7 +4,7 @@ using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 {
-    public class RolePermission(string roleKey, int permissionID)
+    public class RolePermission(string roleKey, string permissionKey)
     {
         public int ID { get; set; }
 
@@ -12,7 +12,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 
         public Role Role { get; set; } = null!;
 
-        public int PermissionID { get; set; } = permissionID;
+        public string PermissionKey { get; set; } = permissionKey;
 
         public Permission Permission { get; set; } = null!;
 

@@ -41,7 +41,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                 }
                 else
                 {
-                    entity = new RolePermission(model.RoleKey, model.PermissionID);
+                    entity = new RolePermission(model.RoleKey, model.PermissionKey);
                 }
 
                 if (entity != null)
@@ -78,7 +78,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 
                 entity.ID = model.ID;
                 entity.RoleKey = model.RoleKey;
-                entity.PermissionID = model.PermissionID;
+                entity.PermissionKey = model.PermissionKey;
                 entity.CreatedOn = model.CreatedOn;
                 entity.CreatedByID = model.CreatedByID;
 
@@ -89,7 +89,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                     );
 
                     entity.Permission = (Permission)referenceHydrator.Hydrate(
-                        model.PermissionID, typeof(Permission), maxDepth, nextDepth
+                        model.PermissionKey, typeof(Permission), maxDepth, nextDepth
                     );
 
                     if (model.CreatedByID != null)

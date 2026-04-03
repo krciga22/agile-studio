@@ -1,6 +1,5 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
-using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 
@@ -28,18 +27,13 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
         if (from is PermissionModel)
         {
             var model = (PermissionModel)from;
-            if (model.ID > 0)
+            if (model.PermissionKey != null)
             {
-                entity = _DBContext.Permission.Find(model.ID);
+                entity = _DBContext.Permission.Find(model.PermissionKey);
                 if (entity == null)
                 {
-                    throw new EntityNotFoundException(
-                        nameof(Permission), model.ID.ToString());
+                    entity = new Permission(model.PermissionKey, model.Title);
                 }
-            }
-            else
-            {
-                entity = new Permission(model.PermissionKey, model.Title);
             }
 
             if (entity != null)
@@ -74,7 +68,6 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
         {
             var model = (PermissionModel)from;
 
-            entity.ID = model.ID;
             entity.PermissionKey = model.PermissionKey;
             entity.Title = model.Title;
             entity.Description = model.Description;

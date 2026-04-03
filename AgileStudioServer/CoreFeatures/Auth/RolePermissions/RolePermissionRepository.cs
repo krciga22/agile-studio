@@ -27,9 +27,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         /// Get all role permissions (roles) assigned 
         /// to a given permission.
         /// </summary>
-        public List<RolePermissionModel> GetByPermission(int permissionId)
+        public List<RolePermissionModel> GetByPermission(string permissionKey)
         {
-            var entities = GetDbSet().Where(rp => rp.PermissionID == permissionId);
+            var entities = GetDbSet().Where(rp => rp.PermissionKey == permissionKey);
             return HydrateModels([.. entities]);
         }
 

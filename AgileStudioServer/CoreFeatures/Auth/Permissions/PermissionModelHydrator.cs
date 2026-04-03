@@ -60,7 +60,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             {
                 var entity = (Permission)from;
 
-                model.ID = entity.ID;
                 model.PermissionKey = entity.PermissionKey;
                 model.Title = entity.Title;
                 model.Description = entity.Description;

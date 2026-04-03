@@ -1,12 +1,12 @@
 namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 {
-    public class RolePermissionModel(string roleKey, int permissionID)
+    public class RolePermissionModel(string roleKey, string permissionKey)
     {
         public int ID { get; set; }
 
         public string RoleKey { get; set; } = roleKey;
 
-        public int PermissionID { get; set; } = permissionID;
+        public string PermissionKey { get; set; } = permissionKey;
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 

@@ -13,9 +13,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             return _PermissionRepository.GetAll(serviceContext);
         }
 
-        public virtual PermissionModel? Get(int id)
+        public virtual PermissionModel? Get(string permissionKey)
         {
-            return _PermissionRepository.Get(id);
+            return _PermissionRepository.Get(permissionKey);
         }
 
         public virtual PermissionModel? GetByPermissionKey(string permissionKey)

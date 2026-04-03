@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 {
     public class RolePermissionRepository(DBContext dbContext, Hydrator hydrator) :
-        EntityRepository<DBContext, RolePermissionModel, RolePermission, int>(dbContext, hydrator)
+        EntityRepository<DBContext, RolePermissionModel, RolePermission, string[]>(dbContext, hydrator)
     {
-        public override int GetIdentifier(RolePermissionModel model)
+        public override string[] GetIdentifier(RolePermissionModel model)
         {
-            return model.ID;
+            return [model.RoleKey, model.PermissionKey];
         }
 
         /// <summary>

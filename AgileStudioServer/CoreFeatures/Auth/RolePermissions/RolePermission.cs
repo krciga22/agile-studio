@@ -6,8 +6,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 {
     public class RolePermission(string roleKey, string permissionKey)
     {
-        public int ID { get; set; }
-
         public string RoleKey { get; set; } = roleKey;
 
         public Role Role { get; set; } = null!;

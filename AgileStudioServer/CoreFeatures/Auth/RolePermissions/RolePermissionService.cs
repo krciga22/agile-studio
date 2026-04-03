@@ -6,9 +6,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
     {
         private readonly RolePermissionRepository _RolePermissionRepository = rolePermissionRepository;
 
-        public virtual RolePermissionModel? Get(int id)
+        public virtual RolePermissionModel? Get(string roleKey, string permissionKey)
         {
-            return _RolePermissionRepository.Get(id);
+            return _RolePermissionRepository.Get([roleKey, permissionKey]);
         }
 
         public List<RolePermissionModel> GetByRole(string roleKey)

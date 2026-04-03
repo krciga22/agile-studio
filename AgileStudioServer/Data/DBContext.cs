@@ -137,18 +137,28 @@ namespace AgileStudioServer.Data
                 .HasConstraintName("fk_backlog_item_type_workflow_workflow_id");
 
             modelBuilder.Entity<RolePermission>()
+                .HasKey(rp => new { rp.RoleKey, rp.PermissionKey })
+                .HasName("pk_role_permission");
+
+            modelBuilder.Entity<RolePermission>()
                 .HasOne(e => e.Role)
                 .WithMany()
-                .HasForeignKey(rp => rp.RoleKey)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_role_permission_role_key");
 
             modelBuilder.Entity<RolePermission>()
+                .HasIndex(r => new { r.RoleKey })
+                .HasDatabaseName("ix_role_permission_role_key");
+
+            modelBuilder.Entity<RolePermission>()
                 .HasOne(e => e.Permission)
                 .WithMany()
-                .HasForeignKey(rp => rp.PermissionKey)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_role_permission_permission_key");
+
+            modelBuilder.Entity<RolePermission>()
+                .HasIndex(r => new { r.PermissionKey })
+                .HasDatabaseName("ix_role_permission_permission_key");
 
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);

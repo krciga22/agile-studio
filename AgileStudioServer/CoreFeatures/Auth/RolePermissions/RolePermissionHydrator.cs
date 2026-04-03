@@ -30,18 +30,13 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
             if (from is RolePermissionModel)
             {
                 var model = (RolePermissionModel)from;
-                if (model.ID > 0)
+                if (model.RoleKey != null && model.PermissionKey != null)
                 {
-                    entity = _DBContext.RolePermission.Find(model.ID);
+                    entity = _DBContext.RolePermission.Find([model.RoleKey, model.PermissionKey]);
                     if (entity == null)
                     {
-                        throw new EntityNotFoundException(
-                            nameof(RolePermission), model.ID.ToString());
+                        entity = new RolePermission(model.RoleKey, model.PermissionKey);
                     }
-                }
-                else
-                {
-                    entity = new RolePermission(model.RoleKey, model.PermissionKey);
                 }
 
                 if (entity != null)
@@ -76,7 +71,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
             {
                 var model = (RolePermissionModel)from;
 
-                entity.ID = model.ID;
                 entity.RoleKey = model.RoleKey;
                 entity.PermissionKey = model.PermissionKey;
                 entity.CreatedOn = model.CreatedOn;

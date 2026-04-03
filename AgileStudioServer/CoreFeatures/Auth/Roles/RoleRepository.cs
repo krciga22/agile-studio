@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 namespace AgileStudioServer.CoreFeatures.Auth.Roles
 {
     public class RoleRepository(DBContext dbContext, Hydrator hydrator) : 
-        EntityRepository<DBContext, RoleModel, Role, int>(dbContext, hydrator)
+        EntityRepository<DBContext, RoleModel, Role, string>(dbContext, hydrator)
     {
-        public override int GetIdentifier(RoleModel model)
+        public override string GetIdentifier(RoleModel model)
         {
-            return model.ID;
+            return model.RoleKey;
         }
 
         public RoleModel? GetByRoleKey(string roleKey)
@@ -55,10 +55,10 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
                                 query.OrderByDescending(p => p.Title) : 
                                 query.OrderBy(p => p.Title);
                             break;
-                        case "id":
+                        case "roleKey":
                             query = descending ? 
-                                query.OrderByDescending(p => p.ID) : 
-                                query.OrderBy(p => p.ID);
+                                query.OrderByDescending(p => p.RoleKey) : 
+                                query.OrderBy(p => p.RoleKey);
                             break;
                         default:
                             sortedFieldsCount--;
@@ -69,7 +69,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
 
             if(sortedFieldsCount == 0)
             {
-                query = query.OrderByDescending(p => p.ID);
+                query = query.OrderBy(p => p.Title);
             }
 
             int page = serviceContext.Page;

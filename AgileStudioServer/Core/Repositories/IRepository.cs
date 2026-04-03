@@ -6,7 +6,7 @@
     /// </summary>
     public interface IRepository<TModel, TIdentifier> 
         where TModel : class
-        where TIdentifier : struct
+        where TIdentifier : notnull
     {
         TIdentifier GetIdentifier(TModel model);
         TModel? Get(TIdentifier id);

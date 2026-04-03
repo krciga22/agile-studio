@@ -12,9 +12,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
             return _RoleRepository.GetAll(serviceContext);
         }
 
-        public virtual RoleModel? Get(int id)
+        public virtual RoleModel? Get(string roleKey)
         {
-            return _RoleRepository.Get(id);
+            return _RoleRepository.Get(roleKey);
         }
 
         public virtual RoleModel? GetByUUID(string roleKey)

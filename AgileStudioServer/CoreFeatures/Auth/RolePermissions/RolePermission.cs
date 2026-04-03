@@ -4,11 +4,11 @@ using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 {
-    public class RolePermission(int roleID, int permissionID)
+    public class RolePermission(string roleKey, int permissionID)
     {
         public int ID { get; set; }
 
-        public int RoleID { get; set; } = roleID;
+        public string RoleKey { get; set; } = roleKey;
 
         public Role Role { get; set; } = null!;
 

@@ -3,8 +3,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
 {
     public class RoleModel(string roleKey, string title)
     {
-        public int ID { get; set; }
-
         public string RoleKey { get; set; } = roleKey;
 
         public string Title { get; set; } = title;

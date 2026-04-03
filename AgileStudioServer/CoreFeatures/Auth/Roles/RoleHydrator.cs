@@ -28,18 +28,13 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
         if (from is RoleModel)
         {
             var model = (RoleModel)from;
-            if (model.ID > 0)
+            if(model.RoleKey != null)
             {
-                entity = _DBContext.Role.Find(model.ID);
+                entity = _DBContext.Role.Find(model.RoleKey);
                 if (entity == null)
                 {
-                    throw new EntityNotFoundException(
-                        nameof(Role), model.ID.ToString());
+                    entity = new Role(model.RoleKey, model.Title);
                 }
-            }
-            else
-            {
-                entity = new Role(model.RoleKey, model.Title);
             }
 
             if (entity != null)
@@ -74,7 +69,6 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
         {
             var model = (RoleModel)from;
 
-            entity.ID = model.ID;
             entity.RoleKey = model.RoleKey;
             entity.Title = model.Title;
             entity.Description = model.Description;

@@ -10,7 +10,7 @@ namespace AgileStudioServer.Core.Repositories
         where TDBContext : DbContext
         where TModel : class
         where TEntity : class
-        where TIdentifier : struct
+        where TIdentifier : notnull
     {
         protected TDBContext _DBContext;
         protected Hydrator.Hydrator _Hydrator;

@@ -139,14 +139,18 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<RolePermission>()
                 .HasOne(e => e.Role)
                 .WithMany()
+                .HasForeignKey(rp => rp.RoleKey)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("fk_role_permission_role_id");
+                .HasConstraintName("fk_role_permission_role_key");
 
             modelBuilder.Entity<RolePermission>()
                 .HasOne(e => e.Permission)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_role_permission_permission_id");
+
+            modelBuilder.Entity<Role>()
+                .HasKey(r => r.RoleKey);
 
             modelBuilder.Entity<Role>()
                 .HasIndex(r => new { r.RoleKey })

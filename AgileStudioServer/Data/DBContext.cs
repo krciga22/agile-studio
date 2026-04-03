@@ -149,9 +149,9 @@ namespace AgileStudioServer.Data
                 .HasConstraintName("fk_role_permission_permission_id");
 
             modelBuilder.Entity<Role>()
-                .HasIndex(r => new { r.UUID })
+                .HasIndex(r => new { r.RoleKey })
                 .IsUnique()
-                .HasDatabaseName("ix_role_uuid_unique");
+                .HasDatabaseName("ix_role_rolekey_unique");
 
             modelBuilder.Entity<Permission>()
                 .HasIndex(p => new { p.UUID })

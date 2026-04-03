@@ -15,9 +15,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
             return model.ID;
         }
 
-        public RoleModel? GetByUUID(string uuid)
+        public RoleModel? GetByRoleKey(string roleKey)
         {
-            var entity = GetDbSet().Where(p => p.UUID == uuid).FirstOrDefault();
+            var entity = GetDbSet().Where(p => p.RoleKey == roleKey).FirstOrDefault();
             if (entity == null){
                 return null;
             }

@@ -163,20 +163,8 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);
 
-            // todo maybe not needed if role key is the primary key
-            modelBuilder.Entity<Role>()
-                .HasIndex(r => new { r.RoleKey })
-                .IsUnique()
-                .HasDatabaseName("ix_role_rolekey_unique");
-
             modelBuilder.Entity<Permission>()
                 .HasKey(r => r.PermissionKey);
-
-            // todo maybe not needed if permission key is the primary key
-            modelBuilder.Entity<Permission>()
-                .HasIndex(p => new { p.PermissionKey })
-                .IsUnique()
-                .HasDatabaseName("ix_permission_permissionkey_unique");
 
             // todo move this to separate seeding class
             SeedStandardRolesAndPermissions(modelBuilder);

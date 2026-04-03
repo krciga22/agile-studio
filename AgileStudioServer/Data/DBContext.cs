@@ -163,6 +163,7 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);
 
+            // todo maybe not needed if role key is the primary key
             modelBuilder.Entity<Role>()
                 .HasIndex(r => new { r.RoleKey })
                 .IsUnique()
@@ -171,10 +172,503 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Permission>()
                 .HasKey(r => r.PermissionKey);
 
+            // todo maybe not needed if permission key is the primary key
             modelBuilder.Entity<Permission>()
                 .HasIndex(p => new { p.PermissionKey })
                 .IsUnique()
                 .HasDatabaseName("ix_permission_permissionkey_unique");
+
+            // todo move this to separate seeding class
+            SeedStandardRolesAndPermissions(modelBuilder);
+        }
+
+        private void SeedStandardRolesAndPermissions(ModelBuilder modelBuilder)
+        {
+            SeedProjectRoles(modelBuilder);
+            SeedProjectPermissions(modelBuilder);
+            SeedProjectAdminRolePermissions(modelBuilder);
+            SeedProjectManagerRolePermissions(modelBuilder);
+            SeedProjectDeveloperRolePermissions(modelBuilder);
+            SeedProjectTesterRolePermissions(modelBuilder);
+            SeedProjectBusinessAnalystRolePermissions(modelBuilder);
+        }
+
+        private void SeedProjectRoles(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(
+                new Role(RoleKeys.PROJECTS_PROJECT_ADMIN, "Project Admin")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Role(RoleKeys.PROJECTS_PROJECT_MANAGER, "Project Manager")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Role(RoleKeys.PROJECTS_PROJECT_DEVELOPER, "Developer")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Role(RoleKeys.PROJECTS_PROJECT_TESTER, "Tester")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Role(RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST, "Business Analyst")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectPermissions(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Permission>().HasData(
+                new Permission(PermissionKeys.PROJECTS_PROJECTS_CREATE, "Projects Create")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECTS_READ, "Projects Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_READ, "Project Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_UPDATE, "Project Update")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_DELETE, "Project Delete")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD, "Project Members Add")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, "Project Members Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, "Project Member Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE, "Project Member Remove")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE, "Project Member Grant Role")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE, "Project Member Revoke Role")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, "Backlog Items Create")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, "Backlog Items Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, "Backlog Item Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, "Backlog Item Update")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, "Backlog Item Delete")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_RELEASES_CREATE, "Releases Create")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_RELEASES_READ, "Releases Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_RELEASE_READ, "Release Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_RELEASE_UPDATE, "Release Update")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_RELEASE_DELETE, "Release Delete")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_SPRINTS_CREATE, "Sprints Create")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_SPRINTS_READ, "Sprints Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_SPRINT_READ, "Sprint Read")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_SPRINT_UPDATE, "Sprint Update")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new Permission(PermissionKeys.PROJECTS_SPRINT_DELETE, "Sprint Delete")
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectAdminRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.PROJECTS_PROJECT_ADMIN;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectManagerRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.PROJECTS_PROJECT_MANAGER;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectDeveloperRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.PROJECTS_PROJECT_DEVELOPER;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectTesterRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.PROJECTS_PROJECT_TESTER;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
+        }
+
+        private void SeedProjectBusinessAnalystRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                },
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                {
+                    CreatedOn = new DateTime(2024, 4, 3)
+                }
+            );
         }
     }
 }

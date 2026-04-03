@@ -1,5 +1,6 @@
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
+using System.Security;
 
 namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
@@ -17,9 +18,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             return _PermissionRepository.Get(id);
         }
 
-        public virtual PermissionModel? GetByUUID(string uuid)
+        public virtual PermissionModel? GetByPermissionKey(string permissionKey)
         {
-            return _PermissionRepository.GetByUUID(uuid);
+            return _PermissionRepository.GetByPermissionKey(permissionKey);
         }
 
         public virtual PermissionModel Create(PermissionModel permission)

@@ -1,9 +1,10 @@
-using AgileStudioServer.Data;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
-using Microsoft.EntityFrameworkCore;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
+using AgileStudioServer.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Security;
 
 namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
@@ -15,9 +16,9 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             return model.ID;
         }
 
-        public PermissionModel? GetByUUID(string uuid)
+        public PermissionModel? GetByPermissionKey(string permissionKey)
         {
-            var entity = GetDbSet().Where(p => p.UUID == uuid).FirstOrDefault();
+            var entity = GetDbSet().Where(p => p.PermissionKey == permissionKey).FirstOrDefault();
             if (entity == null){
                 return null;
             }

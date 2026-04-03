@@ -2,11 +2,11 @@
 
 namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
-    public class Permission(string title)
+    public class Permission(string PermissionKey, string title)
     {
         public int ID { get; set; }
 
-        public string? UUID { get; set; }
+        public string PermissionKey { get; set; } = PermissionKey;
 
         public string Title { get; set; } = title;
 

@@ -35,7 +35,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
             if (from is Permission)
             {
                 var entity = (Permission)from;
-                model = new PermissionModel(entity.Title);
+                model = new PermissionModel(entity.PermissionKey, entity.Title);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
@@ -61,7 +61,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
                 var entity = (Permission)from;
 
                 model.ID = entity.ID;
-                model.UUID = entity.UUID;
+                model.PermissionKey = entity.PermissionKey;
                 model.Title = entity.Title;
                 model.Description = entity.Description;
                 model.Scope = entity.Scope;

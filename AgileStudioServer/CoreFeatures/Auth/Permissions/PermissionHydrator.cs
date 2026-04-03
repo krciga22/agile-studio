@@ -39,7 +39,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
             }
             else
             {
-                entity = new Permission(model.Title);
+                entity = new Permission(model.PermissionKey, model.Title);
             }
 
             if (entity != null)
@@ -75,7 +75,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
             var model = (PermissionModel)from;
 
             entity.ID = model.ID;
-            entity.UUID = model.UUID;
+            entity.PermissionKey = model.PermissionKey;
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.Scope = model.Scope;

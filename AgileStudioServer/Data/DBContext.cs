@@ -15,6 +15,7 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntri
 using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.CoreFeatures.Auth.Permissions;
 using AgileStudioServer.CoreFeatures.Auth.RolePermissions;
+using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
 
 namespace AgileStudioServer.Data
 {
@@ -47,6 +48,8 @@ namespace AgileStudioServer.Data
         public DbSet<Permission> Permission { get; set; }
 
         public DbSet<RolePermission> RolePermission { get; set; }
+
+        public DbSet<RoleGrant> RoleGrant { get; set; }
 
         public DbSet<Workflow> Workflow { get; set; }
 
@@ -159,6 +162,18 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<RolePermission>()
                 .HasIndex(r => new { r.PermissionKey })
                 .HasDatabaseName("ix_role_permission_permission_key");
+
+            modelBuilder.Entity<RoleGrant>()
+                .HasOne(e => e.Role)
+                .WithMany()
+                .HasForeignKey("RoleKey")
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_role_subject_role_key");
+
+            modelBuilder.Entity<RoleGrant>()
+                .HasIndex(r => new { r.Hash })
+                .IsUnique()
+                .HasDatabaseName("ix_role_grant_hash");
 
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);

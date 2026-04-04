@@ -26,7 +26,7 @@ namespace AgileStudioServer.Core.Repositories
         public TModel? Get(TIdentifier id)
         {
             DbSet<TEntity> dbSet = GetDbSet();
-            var entity = dbSet.Find(id);
+            var entity = (id is object[] arr) ? dbSet.Find(arr) : dbSet.Find(id);
             if (entity is null)
             {
                 return null;

@@ -35,13 +35,8 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
             if (from is RoleGrant)
             {
                 var entity = (RoleGrant)from;
-                model = new RoleGrantModel(entity.RoleKey, entity.SubjectType, entity.SubjectID)
-                {
-                    Scope = entity.Scope,
-                    ScopeID = entity.ScopeID,
-                    CreatedOn = entity.CreatedOn,
-                    CreatedByID = entity.CreatedByID
-                };
+                model = new RoleGrantModel(entity.RoleKey, entity.SubjectType, entity.SubjectID);
+                Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
             if (model == null)

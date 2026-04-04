@@ -11,7 +11,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
 
         public string? Scope { get; set; }
 
-        public int? ScopeID { get; set; }
+        public string? ScopeID { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 

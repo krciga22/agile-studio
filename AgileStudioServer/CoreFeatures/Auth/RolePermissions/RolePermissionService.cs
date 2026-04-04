@@ -31,11 +31,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
             return _RolePermissionRepository.Create(model);
         }
 
-        public virtual RolePermissionModel Update(RolePermissionModel model)
-        {
-            return _RolePermissionRepository.Update(model);
-        }
-
         public virtual void Delete(RolePermissionModel model)
         {
             _RolePermissionRepository.Delete(model);

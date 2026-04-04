@@ -73,7 +73,6 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.Scope = model.Scope;
-            entity.ScopeID = model.ScopeID;
             entity.CreatedOn = model.CreatedOn;
             entity.CreatedByID = model.CreatedByID;
 

@@ -15,12 +15,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
         /// </summary>
         public string? Scope { get; set; }
 
-        /// <summary>
-        /// Gets or sets the ID of the resource to which 
-        /// this role can be applied.
-        /// </summary>
-        public string? ScopeID { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public int? CreatedByID { get; set; } = null!;

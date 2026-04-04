@@ -16,7 +16,6 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Roles
             string? title = null,
             string? description = null,
             string? scope = null,
-            int? scopeId = null,
             UserModel? createdBy = null)
         {
             roleKey ??= "test-role";
@@ -27,7 +26,6 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Roles
             {
                 Description = description,
                 Scope = scope,
-                ScopeID = scopeId,
                 CreatedByID = createdBy.ID
             };
 

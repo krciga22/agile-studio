@@ -56,6 +56,24 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
             return HydrateModels([.. query]);
         }
 
+        public List<RoleGrantModel> GetRoleGrantsBySubjectScopeAndPermission(
+            string subjectType, string subjectId, string scope, 
+            string? scopeId, string permissionKey)
+        {
+            var query = from rg in _DBContext.RoleGrant
+                        join rp in _DBContext.RolePermission on rg.RoleKey equals rp.RoleKey
+                        join p in _DBContext.Permission on rp.PermissionKey equals p.PermissionKey
+                        where rg.SubjectType == subjectType
+                              && rg.SubjectID == subjectId
+                              && rg.Scope == scope
+                              && rg.ScopeID == scopeId
+                              && p.Scope == scope
+                              && p.PermissionKey == permissionKey
+                        select rg;
+
+            return HydrateModels([.. query]);
+        }
+
         protected override DbSet<RoleGrant> GetDbSet()
         {
             return _DBContext.RoleGrant;

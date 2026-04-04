@@ -13,7 +13,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) ||
+                from == typeof(object[]) ||
                 from == typeof(RolePermissionModel)
             ) && to == typeof(RolePermission);
         }
@@ -44,7 +44,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                     Hydrate(model, entity, maxDepth, depth, referenceHydrator);
                 }
             }
-            else if (from is int)
+            else if (from is object[])
             {
                 entity = _DBContext.RolePermission.Find(from);
             }

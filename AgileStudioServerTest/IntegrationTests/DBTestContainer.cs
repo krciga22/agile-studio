@@ -25,10 +25,21 @@ namespace AgileStudioServerTest.IntegrationTests
 
                 configuration = builder.Build();
             }
-            
-            dbName = configuration.GetValue<string>("DB_NAME");
-            dbUser = configuration.GetValue<string>("DB_USER");
-            dbPass = configuration.GetValue<string>("DB_PASS");
+
+            dbName = configuration.GetValue<string>("DB_NAME") ?? "";
+            if(String.IsNullOrEmpty(dbName)){
+                throw new Exception("DB_NAME not found in configuration");
+            }
+
+            dbUser = configuration.GetValue<string>("DB_USER") ?? "";
+            if (String.IsNullOrEmpty(dbUser)){
+                throw new Exception("DB_USER not found in configuration");
+            }
+
+            dbPass = configuration.GetValue<string>("DB_PASS") ?? "";
+            if (String.IsNullOrEmpty(dbPass)){
+                throw new Exception("DB_PASS not found in configuration");
+            }
 
             _dbTestContainer = new MySqlBuilder()
                 .WithImage("mysql:8.0.42")

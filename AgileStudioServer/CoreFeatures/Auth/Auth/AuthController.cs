@@ -75,7 +75,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Auth
                 var currentUserDto = new CurrentUserDto(userInfo.FullName, user.FirstName, user.LastName);
                 return Ok(currentUserDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Problem();
             }

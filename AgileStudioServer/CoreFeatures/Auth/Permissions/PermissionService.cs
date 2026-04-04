@@ -1,6 +1,4 @@
-using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
-using System.Security;
 
 namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 {
@@ -8,19 +6,14 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
     {
         private readonly PermissionRepository _PermissionRepository = permissionRepository;
 
-        public virtual PaginationResults<PermissionModel> GetAll(ServiceContext serviceContext)
-        {
-            return _PermissionRepository.GetAll(serviceContext);
-        }
-
         public virtual PermissionModel? Get(string permissionKey)
         {
             return _PermissionRepository.Get(permissionKey);
         }
 
-        public virtual PermissionModel? GetByPermissionKey(string permissionKey)
+        public virtual List<PermissionModel> GetByScope(string scope)
         {
-            return _PermissionRepository.GetByPermissionKey(permissionKey);
+            return _PermissionRepository.GetByScope(scope);
         }
 
         public virtual PermissionModel Create(PermissionModel permission)

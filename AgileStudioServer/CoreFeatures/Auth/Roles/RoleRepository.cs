@@ -15,14 +15,10 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
             return model.RoleKey;
         }
 
-        public RoleModel? GetByRoleKey(string roleKey)
+        public List<RoleModel> GetByScope(string scope)
         {
-            var entity = GetDbSet().Where(p => p.RoleKey == roleKey).FirstOrDefault();
-            if (entity == null){
-                return null;
-            }
-
-            return HydrateModel(entity);
+            var query = GetDbSet().Where(r => r.Scope == scope);
+            return HydrateModels([.. query]);
         }
 
         public virtual PaginationResults<RoleModel> GetAll(ServiceContext serviceContext)

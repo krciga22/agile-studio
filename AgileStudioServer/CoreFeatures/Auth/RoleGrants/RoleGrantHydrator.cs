@@ -75,6 +75,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
             {
                 var model = (RoleGrantModel)from;
 
+                entity.ID = model.ID;
                 entity.RoleKey = model.RoleKey;
                 entity.SubjectType = model.SubjectType;
                 entity.SubjectID = model.SubjectID;

@@ -9,7 +9,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) ||
+                from == typeof(string) ||
                 from == typeof(Role)
             ) && to == typeof(RoleModel);
         }
@@ -23,7 +23,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
 
             object? model = null;
 
-            if (from is int)
+            if (from is string)
             {
                 var role = _DBContext.Role.Find(from);
                 if (role != null)

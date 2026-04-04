@@ -10,7 +10,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
     public override bool Supports(Type from, Type to)
     {
         return (
-            from == typeof(int) ||
+            from == typeof(string) ||
             from == typeof(PermissionModel)
         ) && to == typeof(Permission);
     }
@@ -41,7 +41,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
                 Hydrate(model, entity, maxDepth, depth, referenceHydrator);
             }
         }
-        else if (from is int)
+        else if (from is string)
         {
             entity = _DBContext.Permission.Find(from);
         }

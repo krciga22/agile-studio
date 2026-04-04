@@ -11,7 +11,7 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
     public override bool Supports(Type from, Type to)
     {
         return (
-            from == typeof(int) ||
+            from == typeof(string) ||
             from == typeof(RoleModel)
         ) && to == typeof(Role);
     }
@@ -42,7 +42,7 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
                 Hydrate(model, entity, maxDepth, depth, referenceHydrator);
             }
         }
-        else if (from is int)
+        else if (from is string)
         {
             entity = _DBContext.Role.Find(from);
         }

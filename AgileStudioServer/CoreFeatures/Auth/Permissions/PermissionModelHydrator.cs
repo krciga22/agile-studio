@@ -9,7 +9,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
         public override bool Supports(Type from, Type to)
         {
             return (
-                from == typeof(int) ||
+                from == typeof(string) ||
                 from == typeof(Permission)
             ) && to == typeof(PermissionModel);
         }
@@ -23,7 +23,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
 
             object? model = null;
 
-            if (from is int)
+            if (from is string)
             {
                 var permission = _DBContext.Permission.Find(from);
                 if (permission != null)

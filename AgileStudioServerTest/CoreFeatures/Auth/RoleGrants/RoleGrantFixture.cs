@@ -36,7 +36,7 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.RoleGrants
 
         public RoleGrantModel? Get(int id)
         {
-            return _Repository.GetById(id);
+            return _Repository.Get(id);
         }
     }
 }

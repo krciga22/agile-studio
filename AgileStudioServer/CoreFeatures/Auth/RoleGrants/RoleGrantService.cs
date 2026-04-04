@@ -8,7 +8,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
 
         public virtual RoleGrantModel? Get(int id)
         {
-            return _RoleGrantRepository.GetById(id);
+            return _RoleGrantRepository.Get(id);
         }
 
         public virtual List<RoleGrantModel> GetRoleGrants(

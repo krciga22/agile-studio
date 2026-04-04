@@ -13,16 +13,6 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
             return model.ID;
         }
 
-        public RoleGrantModel? GetById(int id)
-        {
-            var entity = GetDbSet().FirstOrDefault(g => g.ID == id);
-            if (entity == null)
-            {
-                return null;
-            }
-            return HydrateModel(entity);
-        }
-
         public List<RoleGrantModel> Get(string roleKey)
         {
             var query = GetDbSet().Where(g => g.RoleKey == roleKey);

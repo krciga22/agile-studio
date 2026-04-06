@@ -1,8 +1,10 @@
 using AgileStudioServer.Core.APIs.DTOs;
+using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServer.CoreFeatures.Projects.Projects.Commands;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using Microsoft.AspNetCore.Authorization;
@@ -24,19 +26,22 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         private readonly ReleaseService _ReleaseService;
 
         private readonly Hydrator _Hydrator;
+        private readonly CommandDispatcher _CommandDispatcher;
 
         public ProjectController(
             ProjectService projectService,
             BacklogItemService backlogItemDataProvider,
             SprintService sprintDataProvider,
             ReleaseService releaseDataProvider,
-            Hydrator Hydrator)
+            Hydrator Hydrator, 
+            CommandDispatcher commandDispatcher)
         {
             _ProjectService = projectService;
             _BacklogItemService = backlogItemDataProvider;
             _SprintService = sprintDataProvider;
             _ReleaseService = releaseDataProvider;
             _Hydrator = Hydrator;
+            _CommandDispatcher = commandDispatcher;
         }
 
         [HttpGet(Name = "GetProjects")]
@@ -113,7 +118,11 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public CreatedResult Post(ProjectPostDto projectPostDto)
         {
             ProjectModel model = _Hydrator.Hydrate<ProjectModel>(projectPostDto);
-            model = _ProjectService.Create(model);
+
+            var serviceContext = GetServiceContext();
+            var command = new ProjectCreateCommand(model, serviceContext);
+            _CommandDispatcher.Dispatch(command);
+            model = command.Result;
 
             string projectUrl = "";
             if (Url != null)
@@ -176,6 +185,13 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             _ProjectService.Delete(model);
 
             return new OkResult();
+        }
+
+        private ServiceContext GetServiceContext()
+        {
+            return new ServiceContext(){
+                currentUser = HttpContext?.User // use fromHttpContext()
+            };
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace AgileStudioServer.Core.Services
+﻿using System.Security.Claims;
+
+namespace AgileStudioServer.Core.Services
 {
     public class ServiceContext()
     {
@@ -11,6 +13,8 @@
         public string? Sort { get; set; }
 
         public int HydratorDepth { get; set; } = 2;
+
+        public ClaimsPrincipal? currentUser { get; set; } = null!;
 
         public void WithGetCollectionQueryParams(GetCollectionQueryParams getCollectionQueryParams)
         {

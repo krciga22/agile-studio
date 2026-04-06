@@ -14,6 +14,7 @@ namespace AgileStudioServer
             builder.Services.AddMyDB(builder.Configuration);
             builder.Services.AddMyRepositories();
             builder.Services.AddMyCoreServices();
+            builder.Services.AddMyCoreCommands();
             builder.Services.AddControllers();
             builder.Services.AddMyCoreFeatureServices();
             builder.Services.AddMyDtoHydrators();

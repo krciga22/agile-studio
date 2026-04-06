@@ -48,6 +48,7 @@ namespace AgileStudioServer
 
             app.UseCors(Constants.CorsPolicyDefault);
             app.UseAuthentication();
+            app.UseMiddleware<CoreFeatures.Auth.Auth.AddCurrentUserClaimsIdentityMiddleware>();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

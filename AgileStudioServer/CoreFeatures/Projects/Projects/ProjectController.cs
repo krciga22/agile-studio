@@ -1,11 +1,8 @@
 using AgileStudioServer.Core.APIs.DTOs;
-using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Core.Services;
-using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.Projects.Projects.Commands;
 using AgileStudioServer.CoreFeatures.Releases.Releases;
+using AgileStudioServer.CoreFeatures.Resources.Resource;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
     [Authorize]
     public class ProjectController : ControllerBase
     {
-        private readonly ProjectService _ProjectService;
+        private readonly ResourceController _ResourceController;
 
         private readonly BacklogItemService _BacklogItemService;
 
@@ -26,39 +23,27 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         private readonly ReleaseService _ReleaseService;
 
         private readonly Hydrator _Hydrator;
-        private readonly CommandDispatcher _CommandDispatcher;
 
         public ProjectController(
+            ResourceController resourceController,
             ProjectService projectService,
             BacklogItemService backlogItemDataProvider,
             SprintService sprintDataProvider,
             ReleaseService releaseDataProvider,
-            Hydrator Hydrator, 
-            CommandDispatcher commandDispatcher)
+            Hydrator Hydrator)
         {
-            _ProjectService = projectService;
+            _ResourceController = resourceController;
             _BacklogItemService = backlogItemDataProvider;
             _SprintService = sprintDataProvider;
             _ReleaseService = releaseDataProvider;
             _Hydrator = Hydrator;
-            _CommandDispatcher = commandDispatcher;
         }
 
         [HttpGet(Name = "GetProjects")]
         [ProducesResponseType(typeof(PaginatedResultsDto<ProjectDto, ProjectModel>), StatusCodes.Status200OK)]
         public IActionResult Get([FromQuery] GetCollectionQueryParams queryParams)
-        {
-            var serviceContext = new ServiceContext();
-            serviceContext.WithGetCollectionQueryParams(queryParams);
-
-            var paginationResults = _ProjectService.GetAll(serviceContext);
-
-            PaginatedResultsDto<ProjectDto, ProjectModel> paginatedResultsDto = new(
-                _Hydrator.HydrateList<ProjectDto>(paginationResults.Items),
-                paginationResults
-            );
-
-            return Ok(paginatedResultsDto);
+        {   
+            return _ResourceController.Get(ResourceTypes.ProjectsProject, queryParams);
         }
 
         [HttpGet("{id}", Name = "GetProject")]
@@ -67,14 +52,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [ProducesResponseType(typeof(ProjectDto), StatusCodes.Status200OK)]
         public IActionResult Get(int id)
         {
-            var model = _ProjectService.Get(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            var dto = _Hydrator.Hydrate<ProjectDto>(model);
-            return Ok(dto);
+            return _ResourceController.Get(ResourceTypes.ProjectsProject, id);
         }
 
         [HttpGet("{id}/BacklogItems", Name = "GetProjectBacklogItems")]
@@ -115,24 +93,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedResult Post(ProjectPostDto projectPostDto)
+        public IActionResult Post([FromBody] object data)
         {
-            ProjectModel model = _Hydrator.Hydrate<ProjectModel>(projectPostDto);
-
-            var serviceContext = GetServiceContext();
-            var command = new ProjectCreateCommand(model, serviceContext);
-            _CommandDispatcher.Dispatch(command);
-            model = command.Result;
-
-            string projectUrl = "";
-            if (Url != null)
-            {
-                projectUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? projectUrl;
-            }
-
-            var dto = _Hydrator.Hydrate<ProjectDto>(model);
-
-            return Created(projectUrl, dto);
+            return _ResourceController.Post(ResourceTypes.ProjectsProject, data);
         }
 
         [HttpPatch("{id}", Name = "UpdateProject")]
@@ -141,33 +104,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [ProducesResponseType(typeof(ProjectDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Patch(int id, ProjectPatchDto projectPatchDto)
+        public IActionResult Patch(int id, [FromBody] object data)
         {
-            if (id != projectPatchDto.ID)
-            {
-                return BadRequest();
-            }
-
-            ProjectDto dto;
-            try
-            {
-                ProjectModel model = _Hydrator.Hydrate<ProjectModel>(projectPatchDto);
-                model = _ProjectService.Update(model);
-                dto = _Hydrator.Hydrate<ProjectDto>(model);
-            }
-            catch (ModelNotFoundException e)
-            {
-                if (e.ModelClassName.Equals(nameof(ProjectModel)))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new OkObjectResult(dto);
+            return _ResourceController.Patch(ResourceTypes.ProjectsProject, id, data);
         }
 
         [HttpDelete("{id}", Name = "DeleteProject")]
@@ -176,22 +115,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            ProjectModel? model = _ProjectService.Get(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            _ProjectService.Delete(model);
-
-            return new OkResult();
-        }
-
-        private ServiceContext GetServiceContext()
-        {
-            return new ServiceContext(){
-                currentUser = HttpContext?.User // use fromHttpContext()
-            };
+            return _ResourceController.Delete(ResourceTypes.ProjectsProject, id);
         }
     }
 }

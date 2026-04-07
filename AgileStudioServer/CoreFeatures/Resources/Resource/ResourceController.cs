@@ -3,14 +3,10 @@ using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
-    [ApiController]
-    [Route("[controller]")]
-    [Authorize]
     public class ResourceController : ControllerBase
     {
         private readonly ResourceService _ResourceService;
@@ -22,8 +18,6 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             _Hydrator = hydrator;
         }
 
-        [HttpGet("{type}", Name = "GetResources")]
-        [ProducesResponseType(typeof(PaginatedResults2Dto<ResourceDto>), StatusCodes.Status200OK)]
         public IActionResult Get(string type, [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
@@ -49,9 +43,6 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
         }
 
-        [HttpGet("{type}/{id}", Name = "GetResource")]
-        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Get(string type, int id)
         {
             try
@@ -83,11 +74,6 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
         }
 
-        [HttpPost("{type}", Name = "PostResource")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Post(string type, [FromBody] object data)
         {
             try
@@ -128,11 +114,6 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
         }
 
-        [HttpPatch("{type}/{id}", Name = "PatchResource")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult Patch(string type, int id, [FromBody] object data)
         {
             try
@@ -177,10 +158,6 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
         }
 
-        [HttpDelete("{type}/{id}", Name = "DeleteResource")]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(string type, int id)
         {
             try

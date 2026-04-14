@@ -1,98 +1,98 @@
 using AgileStudioServer.Core.APIs;
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Resources;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgileStudioServer.CoreFeatures.Resources.Resource
 {
-    public class ResourceController : ControllerBase
+    public class ResourceController(
+        Hydrator hydrator,
+        IEnumerable<IResourceMap> resourceMaps,
+        ResourceService resourceService
+        ) : ControllerBase
     {
-        private readonly ResourceService _ResourceService;
-        private readonly Hydrator _Hydrator;
+        private readonly Hydrator _Hydrator = hydrator;
+        private readonly IEnumerable<IResourceMap> _ResourceMaps = resourceMaps;
+        private readonly ResourceService _ResourceService = resourceService;
 
-        public ResourceController(ResourceService resourceService, Hydrator hydrator)
-        {
-            _ResourceService = resourceService;
-            _Hydrator = hydrator;
-        }
-
-        public IActionResult Get(string type, [FromQuery] GetCollectionQueryParams queryParams)
+        public IResult GetCollection(HttpContext httpContext, string type, [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
             {
-                var serviceContext = new ServiceContext();
+                IResourceMap resourceMap = GetResourceMap(type);
+
+                var serviceContext = GetServiceContext(httpContext);
                 serviceContext.WithGetCollectionQueryParams(queryParams);
 
-                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+                var paginationResults = _ResourceService.GetCollection(type, serviceContext);
 
-                var paginationResults = _ResourceService.GetAll(type, serviceContext);
                 paginationResults.Items = _Hydrator.HydrateList(
                     paginationResults.Items,
-                    repository.GetResourceDtoType(),
+                    resourceMap.GetResourceDtoType(),
                     serviceContext.HydratorDepth);
 
                 var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
 
-                return Ok(paginatedResultsDto);
+                return Results.Ok(paginationResults);
             }
             catch(UnsupportedResourceTypeException)
             {
-                return NotFound();
+                return Results.NotFound();
             }
         }
 
-        public IActionResult Get(string type, int id)
+        public IResult Get(HttpContext httpContext, string type, object[] id)
         {
             try
             {
-                var resourceModel = _ResourceService.Get(type, id);
+                var serviceContext = GetServiceContext(httpContext);
 
-                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+                var resourceModel = _ResourceService.Get(type, id, serviceContext);
 
-                var serviceContext = new ServiceContext();
+                IResourceMap resourceMap = GetResourceMap(type);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
-                    repository.GetResourceDtoType(),
+                    resourceMap.GetResourceDtoType(),
                     serviceContext.HydratorDepth);
 
-                return Ok(resourceDto);
+                return Results.Ok(resourceDto);
             }
             catch (UnsupportedResourceTypeException)
             {
-                return NotFound();
+                return Results.NotFound();
             }
             catch (ResourceNotFoundException)
             {
-                return NotFound();
+                return Results.NotFound();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "An unexpected error occurred.");
+                return Results.Problem();
             }
         }
 
-        public IActionResult Post(string type, [FromBody] object data)
+        public IResult Post(HttpContext httpContext, string type, object data)
         {
             try
             {
-                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
+                IResourceMap resourceMap = GetResourceMap(type);
 
-                var createDto = ApiUtilities.GetDtoFromData(data, 
-                    repository.GetResourceDtoCreateType());
+                var createDto = ApiUtilities.GetDtoFromData(data,
+                    resourceMap.GetResourceDtoCreateType());
 
-                var serviceContext = new ServiceContext();
+                var serviceContext = GetServiceContext(httpContext);
 
-                var createModel = _Hydrator.Hydrate(createDto, 
-                    repository.GetResourceModelType(), 
+                var createModel = _Hydrator.Hydrate(createDto,
+                    resourceMap.GetResourceModelType(), 
                     serviceContext.HydratorDepth);
 
-                var resourceModel = _ResourceService.Create(type, createModel);
+                var resourceModel = _ResourceService.Create(type, createModel, serviceContext);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
-                    repository.GetResourceDtoType(),
+                    resourceMap.GetResourceDtoType(),
                     serviceContext.HydratorDepth);
 
                 string resourceUrl = "";
@@ -101,88 +101,102 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                     resourceUrl = Url.Action(nameof(Get), new { type = type, id = ((dynamic)resourceDto).ID }) ?? resourceUrl;
                 }
 
-                return Created(resourceUrl, resourceDto);
+                return Results.Created(resourceUrl, resourceDto);
             }
             catch (UnsupportedResourceTypeException)
             {
-                return NotFound();
+                return Results.NotFound();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
-                    "An unexpected error occurred.");
+                return Results.Problem();
             }
         }
 
-        public IActionResult Patch(string type, int id, [FromBody] object data)
+        public IResult Patch(HttpContext httpContext, string type, object[] id, [FromBody] object data)
         {
             try
             {
-                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
-
-                _ResourceService.AssertExists(type, id);
+                IResourceMap resourceMap = GetResourceMap(type);
 
                 var patchDto = ApiUtilities.GetDtoFromData(data,
-                    repository.GetResourceDtoUpdateType());
+                    resourceMap.GetResourceDtoUpdateType());
 
-                var serviceContext = new ServiceContext();
+                var serviceContext = GetServiceContext(httpContext);
 
                 var patchModel = _Hydrator.Hydrate(patchDto,
-                    repository.GetResourceModelType(),
+                    resourceMap.GetResourceModelType(),
                     serviceContext.HydratorDepth);
 
-                var resourceModel = _ResourceService.Update(type, id, patchModel);
+                var resourceModel = _ResourceService.Update(type, id, patchModel, serviceContext);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
-                    repository.GetResourceDtoType(),
+                    resourceMap.GetResourceDtoType(),
                     serviceContext.HydratorDepth);
 
-                return new OkObjectResult(resourceDto);
+                return Results.Ok(resourceDto);
             }
             catch (UnsupportedResourceTypeException)
             {
-                return NotFound();
-            }
-            catch (ResourceNotFoundException)
-            {
-                return NotFound();
+                return Results.BadRequest();
             }
             catch (ResourceIdentifierMismatchException)
             {
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "An unexpected error occurred.");
-            }
-        }
-
-        public IActionResult Delete(string type, int id)
-        {
-            try
-            {
-                IResourceRepository repository = _ResourceService.GetResourceRepository(type);
-
-                _ResourceService.AssertExists(type, id);
-
-                _ResourceService.Delete(type, id);
-
-                return Ok();
-            }
-            catch (UnsupportedResourceTypeException)
-            {
-                return NotFound();
+                return Results.BadRequest();
             }
             catch (ResourceNotFoundException)
             {
-                return NotFound();
+                return Results.NotFound();
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "An unexpected error occurred.");
+                return Results.Problem();
             }
+        }
+
+        public IResult Delete(HttpContext httpContext, string type, object[] id)
+        {
+            try
+            {
+                var serviceContext = GetServiceContext(httpContext);
+
+                _ResourceService.Delete(type, id, serviceContext);
+
+                return Results.Ok();
+            }
+            catch (UnsupportedResourceTypeException)
+            {
+                return Results.NotFound();
+            }
+            catch (ResourceNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (Exception)
+            {
+                return Results.Problem();
+            }
+        }
+
+        private ServiceContext GetServiceContext(HttpContext httpContext)
+        {
+            return new ServiceContext()
+            {
+                currentUser = httpContext?.User
+            };
+        }
+
+        /// <exception cref="UnsupportedResourceTypeException"></exception>
+        private IResourceMap GetResourceMap(string type)
+        {
+            var resourceMap = _ResourceMaps.FirstOrDefault(r =>
+                    r.GetResourceType() == type);
+            if (resourceMap == null)
+            {
+                throw new UnsupportedResourceTypeException(type);
+            }
+
+            return resourceMap;
         }
     }
 }

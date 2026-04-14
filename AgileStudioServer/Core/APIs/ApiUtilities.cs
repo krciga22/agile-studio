@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace AgileStudioServer.Core.APIs
 {
@@ -11,9 +12,15 @@ namespace AgileStudioServer.Core.APIs
 
         public static object GetDtoFromData(object data, Type dtoType)
         {
-            var dto = JsonSerializer.Deserialize(
-                ((JsonElement)data).GetRawText(), dtoType, 
-                GetJsonSerializerOptions());
+            var options = GetJsonSerializerOptions();
+            var dto = (data is JsonNode) ? (
+                    JsonSerializer.Deserialize(
+                    ((JsonNode)data), dtoType, options)
+                ) :
+                (data is JsonElement) ? (
+                    JsonSerializer.Deserialize(
+                    ((JsonElement)data).GetRawText(), dtoType, options)
+                ) : null;
 
             return dto == null ?
                 throw new ArgumentException($"Data cannot be deserialized to a '{nameof(dtoType)}'") :

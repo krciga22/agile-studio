@@ -20,6 +20,7 @@ namespace AgileStudioServer
             builder.Services.AddMyDtoHydrators();
             builder.Services.AddMyModelHydrators();
             builder.Services.AddMyEntityHydrators();
+            builder.Services.AddMyResourceMaps();
             builder.Services.AddMyAuth(builder.Configuration);
             builder.Services.AddMyCors(builder.Configuration);
             builder.Services.AddMySwaggerGen(builder.Configuration);
@@ -51,6 +52,7 @@ namespace AgileStudioServer
             app.UseAuthentication();
             app.UseMiddleware<CoreFeatures.Auth.Auth.AddCurrentUserClaimsIdentityMiddleware>();
             app.UseAuthorization();
+            app.MapResourceControllers();
             app.MapControllers();
             app.Run();
         }

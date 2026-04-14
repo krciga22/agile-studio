@@ -6,5 +6,11 @@
         {
 
         }
+
+        public AbstractException(string? message, Exception? innerException) : 
+            base(message, innerException)
+        {
+
+        }
     }
 }

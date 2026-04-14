@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.Workflows.Workflows;
+﻿using AgileStudioServer.Core.Repositories.Exceptions;
+using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServer.Core.Repositories
@@ -33,6 +34,39 @@ namespace AgileStudioServer.Core.Repositories
             }
 
             return HydrateModel(entity);
+        }
+
+        /// <summary>
+        /// Convert an object array into the appropriate TIdentifier type.
+        /// </summary>
+        /// <exception cref="ToIdentifierException"></exception>
+        /// <exception cref="UnsupportedIdentifierException"></exception>
+        public TIdentifier ToIdentifier(object[] id)
+        {
+            var targetType = typeof(TIdentifier);
+
+            try
+            {
+                if (id.Length == 1)
+                {
+                    // Try to convert single value to TIdentifier (e.g., int, Guid, string, etc.)
+                    return (TIdentifier)Convert.ChangeType(id[0], targetType);
+                }
+                else if (targetType == typeof(int[]))
+                {
+                    return (TIdentifier)(object)id.Select(x => Convert.ToInt32(x)).ToArray();
+                }
+                else if (targetType == typeof(string[]))
+                {
+                    return (TIdentifier)(object)id.Select(x => Convert.ToString(x)).ToArray();
+                }
+            }
+            catch(Exception e)
+            {
+                throw new ToIdentifierException(targetType, e);
+            }
+
+            throw new UnsupportedIdentifierException(targetType);
         }
 
         public bool Exists(TIdentifier id)

@@ -2,14 +2,12 @@
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
-using AgileStudioServer.CoreFeatures.Resources.Resource;
-using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
-    public class ProjectRepository : EntityRepository<DBContext, ProjectModel, Project, int>, IResourceRepository
+    public class ProjectRepository : EntityRepository<DBContext, ProjectModel, Project, int>
     {
         public ProjectRepository(DBContext dbContext, Hydrator hydrator) : base(dbContext, hydrator)
         {
@@ -83,72 +81,6 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
                 project.CreatedBy != null && project.CreatedBy.ID == userId).ToList();
 
             return HydrateModels(entities);
-        }
-
-        public string GetResourceType()
-        {
-            return ResourceTypes.ProjectsProject;
-        }
-
-        public Type GetResourceDtoType()
-        {
-            return typeof(ProjectDto);
-        }
-
-        public Type GetResourceDtoCreateType()
-        {
-            return typeof(ProjectPostDto);
-        }
-
-        public Type GetResourceDtoUpdateType()
-        {
-            return typeof(ProjectPatchDto);
-        }
-
-        public Type GetResourceModelType()
-        {
-            return typeof(ProjectModel);
-        }
-
-        public PaginationResults<object> GetAllResources(ServiceContext serviceContext)
-        {
-            var result = GetAll(serviceContext);
-
-            return new PaginationResults<object>(
-                [.. result.Items.Cast<object>()],
-                result.Total,
-                result.Page,
-                result.ItemsPerPage
-            );
-        }
-
-        public object? GetResource(int id)
-        {
-            return Get(id);
-        }
-
-        public bool IsResource(int id)
-        {
-            return Exists(id);
-        }
-
-        public object CreateResource(object model)
-        {
-            return Create((ProjectModel)model);
-        }
-
-        public object UpdateResource(int id, object model)
-        {
-            if(id != GetIdentifier((ProjectModel)model)){
-                throw new ResourceIdentifierMismatchException(id);
-            }
-
-            return Update((ProjectModel)model);
-        }
-
-        public void DeleteResource(object model)
-        {
-            Delete((ProjectModel)model);
         }
 
         protected override DbSet<Project> GetDbSet()

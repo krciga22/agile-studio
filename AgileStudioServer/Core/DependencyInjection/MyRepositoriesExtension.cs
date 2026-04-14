@@ -18,10 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             foreach (var classType in classCollection)
             {
                 services.AddScoped(classType);
-
-                if (typeof(IResourceRepository).IsAssignableFrom(classType)){
-                    services.AddScoped(typeof(IResourceRepository), classType);
-                }
+                services.AddScoped(typeof(Repository), classType);
             }
 
             return services;

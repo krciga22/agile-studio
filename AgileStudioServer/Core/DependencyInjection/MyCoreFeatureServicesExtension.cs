@@ -11,12 +11,19 @@ namespace Microsoft.Extensions.DependencyInjection
             var classCollection = Assembly.GetExecutingAssembly()
                             .DefinedTypes.Where(t =>
                                 t.IsSubclassOf(typeof(AbstractService)) &&
-                                t.IsPublic &&
-                                !t.IsAbstract);
+                                t.IsPublic && !t.IsAbstract);
 
-            foreach (var classType in classCollection)
-            {
+            foreach (var classType in classCollection){
                 services.AddScoped(classType);
+            }
+
+            classCollection = Assembly.GetExecutingAssembly()
+                            .DefinedTypes.Where(t =>
+                                t.ImplementedInterfaces.Contains(typeof(IModelService)) &&
+                                t.IsPublic && !t.IsAbstract);
+
+            foreach (var classType in classCollection){
+                services.AddScoped(typeof(IModelService), classType);
             }
 
             return services;

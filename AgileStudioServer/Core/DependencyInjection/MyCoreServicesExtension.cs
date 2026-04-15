@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -11,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<Hydrator>();
             services.AddScoped<HydratorRegistry>();
             services.AddScoped<ResourceController>();
+            services.AddScoped<ServiceContext>();
 
             return services;
         }

@@ -15,6 +15,6 @@ namespace AgileStudioServer.Core.Resources
 
         Type GetResourceDtoUpdateType();
 
-        Type GetResourceRepositoryType();
+        Type GetResourceServiceType();
     }
 }

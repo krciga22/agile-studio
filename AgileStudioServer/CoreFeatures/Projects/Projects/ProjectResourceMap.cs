@@ -1,8 +1,6 @@
 ﻿
 using AgileStudioServer.Core.Resources;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
-using AgileStudioServer.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
@@ -33,9 +31,9 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
             return typeof(ProjectPatchDto);
         }
 
-        public Type GetResourceRepositoryType()
+        public Type GetResourceServiceType()
         {
-            return typeof(ProjectRepository);
+            return typeof(ProjectService);
         }
     }
 }

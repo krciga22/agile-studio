@@ -1,45 +1,47 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
-    public class ProjectService : AbstractService
+    public class ProjectService : AbstractModelService<ProjectModel, int>
     {
         private readonly ProjectRepository _ProjectRepository;
+        private readonly ServiceContext _ServiceContext;
 
-        public ProjectService(ProjectRepository projectRepository)
+        public ProjectService(ProjectRepository projectRepository, ServiceContext serviceContext)
         {
             _ProjectRepository = projectRepository;
+            _ServiceContext = serviceContext;
         }
 
-        public virtual PaginationResults<ProjectModel> GetAll(ServiceContext serviceContext)
+        public override PaginationResults<ProjectModel> GetCollection()
         {
-            return _ProjectRepository.GetAll(serviceContext);
+            return _ProjectRepository.GetAll(_ServiceContext);
         }
 
-        public virtual List<ProjectModel> GetByCreatedByUserId(int userId)
+        /// <exception cref="ModelNotFoundException"></exception>
+        public override ProjectModel Get(int id)
         {
-            return _ProjectRepository.GetByCreatedByUserId(userId);
+            var project = _ProjectRepository.Get(id) ??
+                throw new ModelNotFoundException(nameof(ProjectModel), id.ToString());
+
+            return project;
         }
 
-        public virtual ProjectModel? Get(int id)
+        public override ProjectModel Create(ProjectModel model)
         {
-            return _ProjectRepository.Get(id);
+            return _ProjectRepository.Create(model);
         }
 
-        public virtual ProjectModel Create(ProjectModel project)
+        public override ProjectModel Update(ProjectModel model)
         {
-            return _ProjectRepository.Create(project);
+            return _ProjectRepository.Update(model);
         }
 
-        public virtual ProjectModel Update(ProjectModel project)
+        public override void Delete(ProjectModel model)
         {
-            return _ProjectRepository.Update(project);
-        }
-
-        public virtual void Delete(ProjectModel project)
-        {
-            _ProjectRepository.Delete(project);
+            _ProjectRepository.Delete(model);
         }
     }
 }

@@ -1,7 +1,9 @@
+using AgileStudioServer.Core.APIs;
 using AgileStudioServer.Core.Resources;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
 using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System.Reflection;
 using System.Text.Json.Nodes;
 
@@ -65,7 +67,8 @@ public static class MyRouteBuilderExtensions
         })
         .Produces(200, typeof(IEnumerable<>).MakeGenericType(resourceDtoType))
         .Produces(400, typeof(ProblemDetails))
-        .WithTags(resourceName);
+        .WithTags(resourceName)
+        .WithName($"GetResourceCollection/{attribute.Type}");
     }
 
     private static void MapResourceGet(
@@ -80,14 +83,16 @@ public static class MyRouteBuilderExtensions
         app.MapGet(basePath + "/{id}", (
             ResourceController resourceController,
             HttpContext httpContext,
-            string id) => {
-                var ids = id.Split(',');
+            string id) =>
+        {
+            var ids = id.Split(',');
 
-                return resourceController.Get(httpContext, attribute.Type, ids);
-            })
+            return resourceController.Get(httpContext, attribute.Type, ids);
+        })
         .Produces(200, resourceDtoType)
         .Produces(404, typeof(ProblemDetails))
-        .WithTags(resourceName);
+        .WithTags(resourceName)
+        .WithName($"GetResource/{attribute.Type}");
     }
 
     private static void MapResourcePost(
@@ -102,17 +107,27 @@ public static class MyRouteBuilderExtensions
 
         app.MapPost(basePath, async (
             [FromServices] ResourceController resourceController,
-            HttpContext httpContext) =>
+            [FromServices] IUrlHelperFactory urlHelperFactory,
+            HttpContext httpContext
+        ) =>
         {
             JsonNode body = await JsonNode.ParseAsync(httpContext.Request.Body)
                     ?? throw new Exception("Failed to parse request body.");
 
-            return resourceController.Post(httpContext, attribute.Type, body);
+            var urlHelper = urlHelperFactory.GetUrlHelper(new ActionContext
+            {
+                HttpContext = httpContext,
+                RouteData = httpContext.GetRouteData(),
+                ActionDescriptor = new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor()
+            });
+
+            return resourceController.Post(httpContext, attribute.Type, body, urlHelper);
         })
         .Accepts(resourceDtoCreateType, "application/json")
         .Produces(201, resourceDtoType)
         .Produces(400, typeof(ProblemDetails))
-        .WithTags(resourceName);
+        .WithTags(resourceName)
+        .WithName($"PostResource/{attribute.Type}");
     }
 
     private static void MapResourcePatch(
@@ -140,7 +155,8 @@ public static class MyRouteBuilderExtensions
         .Produces(200, resourceDtoType)
         .Produces(400, typeof(ProblemDetails))
         .Produces(404, typeof(ProblemDetails))
-        .WithTags(resourceName);
+        .WithTags(resourceName)
+        .WithName($"PatchResource/{attribute.Type}");
     }
 
     private static void MapResourceDelete(
@@ -162,7 +178,8 @@ public static class MyRouteBuilderExtensions
         })
         .Produces(204)
         .Produces(404, typeof(ProblemDetails))
-        .WithTags(resourceName);
+        .WithTags(resourceName)
+        .WithName($"DeleteResource/{attribute.Type}");
     }
 
     private static IResourceMap GetResourceMap(IEndpointRouteBuilder app, string resourceType)

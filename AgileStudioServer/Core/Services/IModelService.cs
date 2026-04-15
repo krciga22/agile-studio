@@ -1,0 +1,26 @@
+﻿using AgileStudioServer.Core.Pagination;
+
+namespace AgileStudioServer.Core.Services
+{
+    public interface IModelService
+    {
+        
+    }
+
+    public interface IModelService<TModel, TIdentifier>  : IModelService
+        where TModel : class
+        where TIdentifier : notnull
+    {
+        TIdentifier ToIdentifier(object[] id);
+
+        PaginationResults<TModel> GetCollection();
+
+        TModel Get(TIdentifier id);
+
+        TModel Create(TModel model);
+
+        TModel Update(TModel model);
+
+        void Delete(TModel model);
+    }
+}

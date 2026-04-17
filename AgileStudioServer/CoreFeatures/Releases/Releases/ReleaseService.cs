@@ -1,8 +1,10 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServer.CoreFeatures.Releases.Releases
 {
-    public class ReleaseService : AbstractService
+    public class ReleaseService : AbstractModelService<ReleaseModel, int>
     {
         private readonly ReleaseRepository _releaseRepository;
 
@@ -13,25 +15,32 @@ namespace AgileStudioServer.CoreFeatures.Releases.Releases
 
         public virtual List<ReleaseModel> GetByProjectId(int projectId)
         {
+            // todo use pagination from service context
             return _releaseRepository.GetByProjectId(projectId);
         }
 
-        public virtual ReleaseModel? Get(int id)
+        public override PaginationResults<ReleaseModel> GetCollection()
         {
-            return _releaseRepository.Get(id);
+            throw new NotImplementedException();
         }
 
-        public virtual ReleaseModel Create(ReleaseModel release)
+        public override ReleaseModel Get(int id)
+        {
+            return _releaseRepository.Get(id) ?? 
+                throw new ModelNotFoundException(nameof(ReleaseModel), id.ToString());
+        }
+
+        public override ReleaseModel Create(ReleaseModel release)
         {
             return _releaseRepository.Create(release);
         }
 
-        public virtual ReleaseModel Update(ReleaseModel release)
+        public override ReleaseModel Update(ReleaseModel release)
         {
             return _releaseRepository.Update(release);
         }
 
-        public virtual void Delete(ReleaseModel release)
+        public override void Delete(ReleaseModel release)
         {
             _releaseRepository.Delete(release);
         }

@@ -1,6 +1,5 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using Microsoft.AspNetCore.Authorization;
@@ -22,20 +21,16 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 
         private readonly SprintService _SprintService;
 
-        private readonly ReleaseService _ReleaseService;
-
         private readonly Hydrator _Hydrator;
 
         public ProjectController(
             ProjectService projectService,
             BacklogItemService backlogItemDataProvider,
             SprintService sprintDataProvider,
-            ReleaseService releaseDataProvider,
             Hydrator Hydrator)
         {
             _BacklogItemService = backlogItemDataProvider;
             _SprintService = sprintDataProvider;
-            _ReleaseService = releaseDataProvider;
             _Hydrator = Hydrator;
         }
 
@@ -58,17 +53,6 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         {
             var models = _SprintService.GetByProjectId(id);
             var dtos = _Hydrator.HydrateList<SprintSummaryDto>(models);
-            return Ok(dtos);
-        }
-
-        [HttpGet("{id}/Releases", Name = "GetProjectReleases")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(List<ReleaseSummaryDto>), StatusCodes.Status200OK)]
-        public IActionResult GetReleasesForProject(int id)
-        {
-            var models = _ReleaseService.GetByProjectId(id);
-            var dtos = _Hydrator.HydrateList<ReleaseSummaryDto>(models);
             return Ok(dtos);
         }
     }

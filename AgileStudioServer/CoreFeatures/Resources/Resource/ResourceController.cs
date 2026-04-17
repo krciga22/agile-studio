@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Resources;
 using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -63,7 +64,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
             catch(UnsupportedResourceTypeException)
             {
-                return Results.NotFound();
+                return Results.BadRequest();
             }
         }
 
@@ -87,6 +88,10 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                 return Results.Ok(resourceDto);
             }
             catch (UnsupportedResourceTypeException)
+            {
+                return Results.BadRequest();
+            }
+            catch (ModelNotFoundException)
             {
                 return Results.NotFound();
             }
@@ -131,7 +136,7 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             }
             catch (UnsupportedResourceTypeException)
             {
-                return Results.NotFound();
+                return Results.BadRequest();
             }
             catch (Exception)
             {
@@ -174,6 +179,10 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
             {
                 return Results.BadRequest();
             }
+            catch(ModelNotFoundException)
+            {
+                return Results.NotFound();
+            }
             catch (ResourceNotFoundException)
             {
                 return Results.NotFound();
@@ -201,6 +210,10 @@ namespace AgileStudioServer.CoreFeatures.Resources.Resource
                 return Results.Ok();
             }
             catch (UnsupportedResourceTypeException)
+            {
+                return Results.BadRequest();
+            }
+            catch(ModelNotFoundException)
             {
                 return Results.NotFound();
             }

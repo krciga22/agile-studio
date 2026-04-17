@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
-using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
+using AgileStudioServer.CoreFeatures.Projects.Releases;
+using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Releases
 {
     public class ReleaseControllerTest : AbstractControllerTest
     {

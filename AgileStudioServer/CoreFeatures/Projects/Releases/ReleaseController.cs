@@ -4,11 +4,11 @@ using AgileStudioServer.CoreFeatures.Resources.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     [ApiController]
     [MapResourceGet(ResourceTypes.ReleasesRelease)]
-    [MapResourcePostAttribute(ResourceTypes.ReleasesRelease)]
+    [MapResourcePost(ResourceTypes.ReleasesRelease)]
     [MapResourcePatch(ResourceTypes.ReleasesRelease)]
     [MapResourceDelete(ResourceTypes.ReleasesRelease)]
     [Authorize]

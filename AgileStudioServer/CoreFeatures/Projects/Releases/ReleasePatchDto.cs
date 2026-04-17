@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     public class ReleasePatchDto
     {

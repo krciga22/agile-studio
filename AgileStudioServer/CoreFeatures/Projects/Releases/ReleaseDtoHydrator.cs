@@ -5,7 +5,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     public class ReleaseDtoHydrator : AbstractDtoHydrator
     {

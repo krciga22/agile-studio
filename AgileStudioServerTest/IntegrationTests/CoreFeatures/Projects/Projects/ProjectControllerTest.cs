@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Sprints.Sprints;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
+using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
-using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
+using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {

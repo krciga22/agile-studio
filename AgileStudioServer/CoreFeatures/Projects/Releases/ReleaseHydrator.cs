@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases;
+namespace AgileStudioServer.CoreFeatures.Projects.Releases;
 
 public class ReleaseHydrator : AbstractEntityHydrator
 {

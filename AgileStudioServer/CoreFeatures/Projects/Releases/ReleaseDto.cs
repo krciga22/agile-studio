@@ -1,35 +1,36 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
-    public class Release
+    public class ReleaseDto
     {
         public int ID { get; set; }
 
         public string Title { get; set; }
 
-        public int ProjectID { get; set; }
-
-        public Project Project { get; set; } = null!;
+        public ProjectSummaryDto Project { get; set; }
 
         public string? Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public int? CreatedByID { get; set; } = null!;
-
-        public User? CreatedBy { get; set; } = null!;
+        public UserSummaryDto? CreatedBy { get; set; }
 
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
 
-        public Release(string title, int projectID)
+        public ReleaseDto(
+            int id,
+            string title,
+            ProjectSummaryDto project,
+            DateTime createdOn)
         {
+            ID = id;
             Title = title;
-            CreatedOn = DateTime.Now;
-            ProjectID = projectID;
+            Project = project;
+            CreatedOn = createdOn;
         }
     }
 }

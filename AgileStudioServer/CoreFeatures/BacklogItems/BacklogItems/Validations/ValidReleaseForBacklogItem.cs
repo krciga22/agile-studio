@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
+using AgileStudioServer.CoreFeatures.Projects.Releases;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations

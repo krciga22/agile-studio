@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     public class ReleaseRepository : EntityRepository<DBContext, ReleaseModel, Release, int>
     {

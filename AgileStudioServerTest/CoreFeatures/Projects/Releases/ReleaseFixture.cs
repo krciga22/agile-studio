@@ -1,12 +1,12 @@
 ﻿
 using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.Releases.Releases;
+using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
-namespace AgileStudioServerTest.CoreFeatures.Releases.Releases
+namespace AgileStudioServerTest.CoreFeatures.Projects.Releases
 {
     public class ReleaseFixture : AbstractEntityFixture<ReleaseRepository>
     {

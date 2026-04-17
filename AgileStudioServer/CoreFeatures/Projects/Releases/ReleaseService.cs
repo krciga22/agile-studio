@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 
-namespace AgileStudioServer.CoreFeatures.Releases.Releases
+namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     public class ReleaseService : AbstractModelService<ReleaseModel, int>
     {

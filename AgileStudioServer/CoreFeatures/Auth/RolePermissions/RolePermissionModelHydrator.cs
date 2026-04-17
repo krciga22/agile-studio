@@ -64,6 +64,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                 model.PermissionKey = entity.PermissionKey;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+                model.IsSystemRolePermission = entity.IsSystemRolePermission;
             }
         }
     }

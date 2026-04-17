@@ -11,5 +11,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public int? CreatedByID { get; set; } = null!;
+
+        public bool IsSystemRolePermission { get; set; } = false;
     }
 }

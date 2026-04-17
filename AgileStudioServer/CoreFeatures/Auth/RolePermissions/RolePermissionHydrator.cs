@@ -75,6 +75,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
                 entity.PermissionKey = model.PermissionKey;
                 entity.CreatedOn = model.CreatedOn;
                 entity.CreatedByID = model.CreatedByID;
+                entity.IsSystemRolePermission = model.IsSystemRolePermission;
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {

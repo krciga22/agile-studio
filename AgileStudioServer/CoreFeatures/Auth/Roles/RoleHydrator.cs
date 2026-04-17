@@ -75,6 +75,7 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
             entity.Scope = model.Scope;
             entity.CreatedOn = model.CreatedOn;
             entity.CreatedByID = model.CreatedByID;
+            entity.IsSystemRole = model.IsSystemRole;
 
             if (referenceHydrator != null && nextDepth <= maxDepth)
             {

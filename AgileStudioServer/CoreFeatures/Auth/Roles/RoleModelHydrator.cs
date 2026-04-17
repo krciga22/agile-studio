@@ -66,6 +66,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
                 model.Scope = entity.Scope;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+                model.IsSystemRole = entity.IsSystemRole;
             }
         }
     }

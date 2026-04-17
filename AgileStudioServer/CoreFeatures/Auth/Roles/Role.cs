@@ -20,5 +20,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
         public int? CreatedByID { get; set; } = null!;
 
         public User? CreatedBy { get; set; } = null!;
+
+        public bool IsSystemRole { get; set; } = false;
     }
 }

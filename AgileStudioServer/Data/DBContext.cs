@@ -202,27 +202,32 @@ namespace AgileStudioServer.Data
                 new Role(RoleKeys.PROJECTS_PROJECT_ADMIN, "Project Admin")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemRole = true
                 },
                 new Role(RoleKeys.PROJECTS_PROJECT_MANAGER, "Project Manager")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemRole = true
                 },
                 new Role(RoleKeys.PROJECTS_PROJECT_DEVELOPER, "Developer")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemRole = true
                 },
                 new Role(RoleKeys.PROJECTS_PROJECT_TESTER, "Tester")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemRole = true
                 },
                 new Role(RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST, "Business Analyst")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemRole = true
                 }
             );
         }

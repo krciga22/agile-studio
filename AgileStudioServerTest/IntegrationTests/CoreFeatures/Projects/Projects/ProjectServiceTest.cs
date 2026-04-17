@@ -6,6 +6,7 @@ using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {
@@ -91,8 +92,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 
             _projectService.Delete(project);
 
-            project = _projectService.Get(project.ID);
-            Assert.Null(project);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _projectService.Get(project.ID));
         }
     }
 }

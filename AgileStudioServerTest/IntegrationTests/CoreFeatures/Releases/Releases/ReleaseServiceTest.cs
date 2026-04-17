@@ -3,6 +3,7 @@ using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Releases.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 {
@@ -83,8 +84,8 @@ namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Releases.Releases
 
             _releaseService.Delete(release);
 
-            release = _releaseService.Get(release.ID);
-            Assert.Null(release);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _releaseService.Get(release.ID));
         }
     }
 }

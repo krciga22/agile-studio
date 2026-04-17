@@ -1,4 +1,11 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.CoreFeatures.Auth.Permissions;
+using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
+using AgileStudioServer.CoreFeatures.Auth.Roles;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
+using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.Data;
+using AgileStudioServerTest.CoreFeatures.Auth.RoleGrants;
+using AgileStudioServerTest.CoreFeatures.Auth.Roles;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
@@ -26,6 +33,8 @@ namespace AgileStudioCLI.FixtureSets
         private readonly ChildBacklogItemTypeFixture _ChildBacklogItemTypeFixture;
         private readonly ProjectFixture _ProjectFixture;
         private readonly ReleaseFixture _ReleaseFixture;
+        private readonly RoleFixture _RoleFixture;
+        private readonly RoleGrantFixture _RoleGrantFixture;
         private readonly SprintFixture _SprintFixture;
         private readonly UserFixture _UserFixture;
         private readonly WorkflowFixture _WorkflowFixture;
@@ -41,6 +50,8 @@ namespace AgileStudioCLI.FixtureSets
             ChildBacklogItemTypeFixture childBacklogItemTypeFixture, 
             ProjectFixture projectFixture, 
             ReleaseFixture releaseFixture, 
+            RoleFixture roleFixture,
+            RoleGrantFixture roleGrantFixture,
             SprintFixture sprintFixture, 
             UserFixture userFixture, 
             WorkflowFixture workflowFixture, 
@@ -55,6 +66,8 @@ namespace AgileStudioCLI.FixtureSets
             _ChildBacklogItemTypeFixture = childBacklogItemTypeFixture;
             _ProjectFixture = projectFixture;
             _ReleaseFixture = releaseFixture;
+            _RoleFixture = roleFixture;
+            _RoleGrantFixture = roleGrantFixture;
             _SprintFixture = sprintFixture;
             _UserFixture = userFixture;
             _WorkflowFixture = workflowFixture;
@@ -207,6 +220,12 @@ namespace AgileStudioCLI.FixtureSets
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 createdBy: user);
 
+            var projectAdminRole = _RoleFixture.Get(RoleKeys.PROJECTS_PROJECT_ADMIN);
+            if(projectAdminRole == null){
+                throw new Exception($"Project admin role not found.");
+            }
+            AssignUserToProject(user, project, projectAdminRole);
+
             var sprint1 = _SprintFixture.Create(
                 sprintNumber: 1, 
                 project: project,
@@ -236,6 +255,17 @@ namespace AgileStudioCLI.FixtureSets
                     parentBacklogItem: testStory,
                     createdBy: user);
             }
+        }
+
+        private void AssignUserToProject(UserModel user, ProjectModel project, RoleModel role)
+        {
+            _RoleGrantFixture.Create(
+                roleKey: role.RoleKey,
+                subjectType: RoleSubjectTypes.USER,
+                subjectID: user.ID.ToString(),
+                scope: PermissionScopes.PROJECTS,
+                scopeID: project.ID.ToString(),
+                createdBy: user);
         }
     }
 }

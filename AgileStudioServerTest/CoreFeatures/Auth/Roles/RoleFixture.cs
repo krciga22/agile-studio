@@ -16,7 +16,8 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Roles
             string? title = null,
             string? description = null,
             string? scope = null,
-            UserModel? createdBy = null)
+            UserModel? createdBy = null,
+            bool? isSystemRole = false)
         {
             roleKey ??= "test-role";
             title ??= "Test Role";
@@ -26,7 +27,8 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Roles
             {
                 Description = description,
                 Scope = scope,
-                CreatedByID = createdBy.ID
+                CreatedByID = createdBy.ID,
+                IsSystemRole = isSystemRole ?? false
             };
 
             return _Repository.Create(role);

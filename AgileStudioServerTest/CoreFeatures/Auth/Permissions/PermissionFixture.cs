@@ -16,7 +16,8 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Permissions
             string? title = null,
             string? description = null,
             string? scope = null,
-            UserModel? createdBy = null)
+            UserModel? createdBy = null,
+            bool? isSystemPermission = false)
         {
             permissionKey ??= "test-permission";
             title ??= "Test Permission";
@@ -26,7 +27,8 @@ namespace AgileStudioServerTest.CoreFeatures.Auth.Permissions
             {
                 Description = description,
                 Scope = scope,
-                CreatedByID = createdBy.ID
+                CreatedByID = createdBy.ID,
+                IsSystemPermission = isSystemPermission ?? false
             };
 
             return _Repository.Create(permission);

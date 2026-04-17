@@ -37,9 +37,22 @@ namespace AgileStudioCLI.Commands
             await _DBContext.WorkflowState.ForEachAsync(x => _DBContext.WorkflowState.Remove(x));
             await _DBContext.Workflow.ForEachAsync(x => _DBContext.Workflow.Remove(x));
             await _DBContext.User.ForEachAsync(x => _DBContext.User.Remove(x));
-            await _DBContext.RolePermission.ForEachAsync(x => _DBContext.RolePermission.Remove(x));
-            await _DBContext.Role.ForEachAsync(x => _DBContext.Role.Remove(x));
-            await _DBContext.Permission.ForEachAsync(x => _DBContext.Permission.Remove(x));
+            await _DBContext.RoleGrant.ForEachAsync(x => _DBContext.RoleGrant.Remove(x));
+            await _DBContext.RolePermission.ForEachAsync(x => {
+                if (!x.IsSystemRolePermission){
+                    _DBContext.RolePermission.Remove(x);
+                }
+            });
+            await _DBContext.Role.ForEachAsync(x => {
+                if (!x.IsSystemRole){
+                    _DBContext.Role.Remove(x);
+                }
+            });
+            await _DBContext.Permission.ForEachAsync(x => {
+                if (!x.IsSystemPermission){
+                    _DBContext.Permission.Remove(x);
+                }
+            });
             _DBContext.SaveChanges();
         }
     }

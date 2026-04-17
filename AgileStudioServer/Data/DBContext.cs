@@ -238,132 +238,158 @@ namespace AgileStudioServer.Data
                 new Permission(PermissionKeys.PROJECTS_PROJECTS_CREATE, "Projects Create")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECTS_READ, "Projects Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_READ, "Project Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_UPDATE, "Project Update")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_DELETE, "Project Delete")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD, "Project Members Add")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, "Project Members Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, "Project Member Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE, "Project Member Remove")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE, "Project Member Grant Role")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE, "Project Member Revoke Role")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, "Backlog Items Create")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, "Backlog Items Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, "Backlog Item Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, "Backlog Item Update")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, "Backlog Item Delete")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASES_CREATE, "Releases Create")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASES_READ, "Releases Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_READ, "Release Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_UPDATE, "Release Update")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_DELETE, "Release Delete")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINTS_CREATE, "Sprints Create")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINTS_READ, "Sprints Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_READ, "Sprint Read")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_UPDATE, "Sprint Update")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_DELETE, "Sprint Delete")
                 {
                     Scope = PermissionScopes.PROJECTS,
-                    CreatedOn = new DateTime(2024, 4, 3)
+                    CreatedOn = new DateTime(2024, 4, 3),
+                    IsSystemPermission = true
                 }
             );
         }

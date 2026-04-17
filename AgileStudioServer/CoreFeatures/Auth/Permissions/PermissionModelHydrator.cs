@@ -66,6 +66,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Permissions
                 model.Scope = entity.Scope;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+                model.IsSystemPermission = entity.IsSystemPermission;
             }
         }
     }

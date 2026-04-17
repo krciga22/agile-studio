@@ -74,6 +74,7 @@ public class PermissionHydrator(DBContext dBContext) : AbstractEntityHydrator(dB
             entity.Scope = model.Scope;
             entity.CreatedOn = model.CreatedOn;
             entity.CreatedByID = model.CreatedByID;
+            entity.IsSystemPermission = model.IsSystemPermission;
 
             if (referenceHydrator != null && nextDepth <= maxDepth)
             {

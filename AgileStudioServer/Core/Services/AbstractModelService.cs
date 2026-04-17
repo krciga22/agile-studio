@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Repositories.Exceptions;
 
 namespace AgileStudioServer.Core.Services
 {
-    public abstract class AbstractModelService<TModel, TIdentifier> : IModelService<TModel, TIdentifier>
+    public abstract class AbstractModelService<TModel, TIdentifier> : AbstractService, IModelService<TModel, TIdentifier>
         where TModel : class
         where TIdentifier : notnull
     {

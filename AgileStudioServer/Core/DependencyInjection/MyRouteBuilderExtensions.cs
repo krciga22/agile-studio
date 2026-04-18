@@ -207,7 +207,19 @@ public static class MyRouteBuilderExtensions
 
     private static string GetBasePath(Type controller)
     {
-        return "/" + GetResourceName(controller);
+        var basePath = "";
+
+        var routeAttribute = controller.GetCustomAttribute<RouteAttribute>();
+        if (routeAttribute != null){
+            var resourceName = GetResourceName(controller);
+            basePath = routeAttribute.Template.Replace("[controller]", resourceName) ?? "";
+        }
+
+        if (String.IsNullOrEmpty(basePath)){
+            basePath = "/" + GetResourceName(controller);
+        }
+
+        return basePath;
     }
 
     private static string GetResourceName(Type controller)

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     [ApiController]
+    [Route("Projects/[controller]")]
     [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGet(ResourceTypes.ReleasesRelease)]
     [MapResourcePost(ResourceTypes.ReleasesRelease)]
@@ -28,7 +29,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Releases
         }
 
         [Tags("Project")]
-        [HttpGet("/Project/{id}/Releases", Name = "GetProjectReleases")]
+        [HttpGet("/Projects/Project/{id}/Releases", Name = "GetProjectReleases")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(List<ReleaseDto>), StatusCodes.Status200OK)]

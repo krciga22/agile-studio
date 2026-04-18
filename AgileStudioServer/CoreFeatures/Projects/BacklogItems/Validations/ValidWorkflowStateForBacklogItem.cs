@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Accounts.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations

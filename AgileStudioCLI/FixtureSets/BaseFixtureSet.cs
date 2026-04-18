@@ -10,6 +10,8 @@ using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Accounts.ChildBacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
+using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
 using AgileStudioServerTest.CoreFeatures.Auth.RoleGrants;
 using AgileStudioServerTest.CoreFeatures.Auth.Roles;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
@@ -17,8 +19,6 @@ using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
-using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
-using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
 namespace AgileStudioCLI.FixtureSets
 {

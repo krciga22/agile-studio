@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
-using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.CoreFeatures.Auth.Permissions;
@@ -16,6 +14,8 @@ using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Accounts.Workflows;
+using AgileStudioServer.CoreFeatures.Accounts.WorkflowStates;
 
 namespace AgileStudioServer.Data
 {

@@ -3,12 +3,12 @@ using AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
+using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
-using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
-using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems

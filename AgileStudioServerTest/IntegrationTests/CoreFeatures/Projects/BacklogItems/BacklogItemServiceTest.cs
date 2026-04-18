@@ -1,13 +1,13 @@
 ﻿using AgileStudioServer.Core.Pagination;
-using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.Data;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
+using AgileStudioServer.CoreFeatures.Accounts.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
 {

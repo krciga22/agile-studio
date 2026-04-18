@@ -2,11 +2,11 @@
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
 {

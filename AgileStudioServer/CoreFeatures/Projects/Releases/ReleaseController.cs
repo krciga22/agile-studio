@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.CoreFeatures.Projects.Releases
 {
     [ApiController]
+    [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGet(ResourceTypes.ReleasesRelease)]
     [MapResourcePost(ResourceTypes.ReleasesRelease)]
     [MapResourcePatch(ResourceTypes.ReleasesRelease)]

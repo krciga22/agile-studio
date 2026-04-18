@@ -7,6 +7,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "accounts")]
     [Authorize]
     public class BacklogItemLinkTypeSchemaController : ControllerBase
     {

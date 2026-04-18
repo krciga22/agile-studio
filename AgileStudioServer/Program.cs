@@ -34,7 +34,9 @@ namespace AgileStudioServer
             app.UseSwaggerUI(options =>
             {
                 string majorVersion = Constants.ProductVersion.Split('.')[0];
-                options.SwaggerEndpoint($"/swagger/v{majorVersion}/swagger.json", "AgileStudioServer v4");
+                options.SwaggerEndpoint($"/swagger/accounts/swagger.json", "Accounts");
+                options.SwaggerEndpoint($"/swagger/auth/swagger.json", "Auth");
+                options.SwaggerEndpoint($"/swagger/projects/swagger.json", "Projects");
             });
 
             bool webProxyEnabled = builder.Configuration.GetValue<bool>("WEB_PROXY_ENABLED");

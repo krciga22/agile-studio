@@ -11,8 +11,20 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSwaggerGen(options =>
             {
                 string majorVersion = Constants.ProductVersion.Split('.')[0];
-                options.SwaggerDoc($"v{majorVersion}", new OpenApiInfo { 
-                    Title = Constants.ProductName, 
+                options.SwaggerDoc("accounts", new OpenApiInfo { 
+                    Title = "Accounts", 
+                    Version = $"v{Constants.ProductVersion}"
+                });
+
+                options.SwaggerDoc("auth", new OpenApiInfo
+                {
+                    Title = "Auth",
+                    Version = $"v{Constants.ProductVersion}",
+                });
+
+                options.SwaggerDoc("projects", new OpenApiInfo
+                {
+                    Title = "Projects",
                     Version = $"v{Constants.ProductVersion}"
                 });
 

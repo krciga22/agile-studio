@@ -9,6 +9,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Auth
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "auth")]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration Config;

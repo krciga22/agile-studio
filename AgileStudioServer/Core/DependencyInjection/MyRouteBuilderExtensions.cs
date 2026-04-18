@@ -56,6 +56,7 @@ public static class MyRouteBuilderExtensions
         IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
         app.MapGet(basePath, (
@@ -68,7 +69,8 @@ public static class MyRouteBuilderExtensions
         .Produces(200, typeof(IEnumerable<>).MakeGenericType(resourceDtoType))
         .Produces(400, typeof(ProblemDetails))
         .WithTags(resourceName)
-        .WithName($"GetResourceCollection/{attribute.Type}");
+        .WithName($"GetResourceCollection/{attribute.Type}")
+        .WithGroupName(groupName);
     }
 
     private static void MapResourceGet(
@@ -78,6 +80,7 @@ public static class MyRouteBuilderExtensions
         IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
         app.MapGet(basePath + "/{id}", (
@@ -92,7 +95,8 @@ public static class MyRouteBuilderExtensions
         .Produces(200, resourceDtoType)
         .Produces(404, typeof(ProblemDetails))
         .WithTags(resourceName)
-        .WithName($"GetResource/{attribute.Type}");
+        .WithName($"GetResource/{attribute.Type}")
+        .WithGroupName(groupName);
     }
 
     private static void MapResourcePost(
@@ -102,6 +106,7 @@ public static class MyRouteBuilderExtensions
         IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
         Type resourceDtoCreateType = resourceMap.GetResourceDtoCreateType();
 
@@ -127,7 +132,8 @@ public static class MyRouteBuilderExtensions
         .Produces(201, resourceDtoType)
         .Produces(400, typeof(ProblemDetails))
         .WithTags(resourceName)
-        .WithName($"PostResource/{attribute.Type}");
+        .WithName($"PostResource/{attribute.Type}")
+        .WithGroupName(groupName);
     }
 
     private static void MapResourcePatch(
@@ -137,6 +143,7 @@ public static class MyRouteBuilderExtensions
         IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
         Type resourceDtoUpdateType = resourceMap.GetResourceDtoUpdateType();
 
@@ -156,7 +163,8 @@ public static class MyRouteBuilderExtensions
         .Produces(400, typeof(ProblemDetails))
         .Produces(404, typeof(ProblemDetails))
         .WithTags(resourceName)
-        .WithName($"PatchResource/{attribute.Type}");
+        .WithName($"PatchResource/{attribute.Type}")
+        .WithGroupName(groupName);
     }
 
     private static void MapResourceDelete(
@@ -166,6 +174,7 @@ public static class MyRouteBuilderExtensions
         IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
 
         app.MapDelete(basePath + "/{id}", (
             ResourceController resourceController,
@@ -179,7 +188,8 @@ public static class MyRouteBuilderExtensions
         .Produces(204)
         .Produces(404, typeof(ProblemDetails))
         .WithTags(resourceName)
-        .WithName($"DeleteResource/{attribute.Type}");
+        .WithName($"DeleteResource/{attribute.Type}")
+        .WithGroupName(groupName);
     }
 
     private static IResourceMap GetResourceMap(IEndpointRouteBuilder app, string resourceType)
@@ -203,5 +213,15 @@ public static class MyRouteBuilderExtensions
     private static string GetResourceName(Type controller)
     {
         return controller.Name.Replace("Controller", "");
+    }
+
+    private static string GetGroupName(Type controller)
+    {
+        var apiExplorerSettingsAttribute = controller.GetCustomAttribute<ApiExplorerSettingsAttribute>();
+        if (apiExplorerSettingsAttribute != null){
+            return apiExplorerSettingsAttribute.GroupName ?? "";
+        }
+
+        return "";
     }
 }

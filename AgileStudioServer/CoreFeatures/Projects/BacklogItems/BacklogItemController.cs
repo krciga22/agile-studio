@@ -9,6 +9,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemController : ControllerBase
     {

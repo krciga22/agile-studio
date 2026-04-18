@@ -7,6 +7,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class SprintController : ControllerBase
     {

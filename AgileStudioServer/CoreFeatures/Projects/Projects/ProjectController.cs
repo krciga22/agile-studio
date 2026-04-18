@@ -9,6 +9,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGetCollection(ResourceTypes.ProjectsProject)]
     [MapResourceGet(ResourceTypes.ProjectsProject)]
     [MapResourcePostAttribute(ResourceTypes.ProjectsProject)]

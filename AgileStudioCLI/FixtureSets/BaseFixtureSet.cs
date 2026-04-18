@@ -15,7 +15,7 @@ using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;
-using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;

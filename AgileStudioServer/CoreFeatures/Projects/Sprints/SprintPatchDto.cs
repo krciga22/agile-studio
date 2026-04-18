@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     public class SprintPatchDto
     {

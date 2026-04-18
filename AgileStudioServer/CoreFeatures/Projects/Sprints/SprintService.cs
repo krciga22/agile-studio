@@ -1,7 +1,6 @@
-﻿
-using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Services;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     public class SprintService : AbstractService
     {

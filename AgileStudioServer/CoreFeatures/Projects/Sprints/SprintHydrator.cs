@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints;
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints;
 
 public class SprintHydrator : AbstractEntityHydrator
 {

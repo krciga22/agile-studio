@@ -5,7 +5,6 @@ using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
@@ -16,6 +15,7 @@ using AgileStudioServer.CoreFeatures.Auth.Permissions;
 using AgileStudioServer.CoreFeatures.Auth.RolePermissions;
 using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
+using AgileStudioServer.CoreFeatures.Projects.Sprints;
 
 namespace AgileStudioServer.Data
 {

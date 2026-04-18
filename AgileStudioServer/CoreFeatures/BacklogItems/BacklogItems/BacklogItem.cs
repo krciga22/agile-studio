@@ -1,9 +1,9 @@
 ﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
+using AgileStudioServer.CoreFeatures.Projects.Sprints;
 
 namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
 {

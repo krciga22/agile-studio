@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     [ApiController]
     [Route("[controller]")]

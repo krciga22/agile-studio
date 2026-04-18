@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
-using AgileStudioServerTest.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
+using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Sprints
 {
     public class SprintControllerTest : AbstractControllerTest
     {

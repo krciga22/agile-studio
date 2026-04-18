@@ -1,7 +1,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Resources.Resource;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

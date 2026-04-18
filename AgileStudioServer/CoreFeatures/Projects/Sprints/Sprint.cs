@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     public class Sprint
     {

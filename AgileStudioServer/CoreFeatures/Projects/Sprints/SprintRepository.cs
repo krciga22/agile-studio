@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     public class SprintRepository : EntityRepository<DBContext, SprintModel, Sprint, int>
     {

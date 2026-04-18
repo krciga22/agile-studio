@@ -2,7 +2,7 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
     public class SprintModelHydrator : AbstractModelHydrator
     {

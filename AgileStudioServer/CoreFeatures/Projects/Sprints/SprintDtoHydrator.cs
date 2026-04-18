@@ -2,17 +2,19 @@
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.CoreFeatures.Users.Users;
+using AgileStudioServer.CoreFeatures.Projects.Projects;
 
-namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServer.CoreFeatures.Projects.Sprints
 {
-    public class SprintSummaryDtoHydrator : AbstractDtoHydrator
+    public class SprintDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
                 from == typeof(SprintModel)
-            ) && to == typeof(SprintSummaryDto);
+            ) && to == typeof(SprintDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -28,7 +30,7 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
             }
 
             SprintModel? model = null;
-            if (from is int && referenceHydrator != null)
+            if (from is int)
             {
                 model = (SprintModel)referenceHydrator.Hydrate(
                     from, typeof(SprintModel), maxDepth, depth, referenceHydrator
@@ -42,7 +44,11 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
             object? dto = null;
             if (model != null)
             {
-                dto = new SprintSummaryDto(model.ID, model.SprintNumber);
+                var projectSummaryDto = (ProjectSummaryDto)referenceHydrator.Hydrate(
+                    model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
+                );
+
+                dto = new SprintDto(model.ID, model.SprintNumber, projectSummaryDto, model.CreatedOn);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -61,13 +67,32 @@ namespace AgileStudioServer.CoreFeatures.Sprints.Sprints
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (SprintSummaryDto)to;
+            var dto = (SprintDto)to;
+            int nextDepth = depth + 1;
 
             if (from is SprintModel)
             {
                 var model = (SprintModel)from;
                 dto.ID = model.ID;
                 dto.SprintNumber = model.SprintNumber;
+                dto.Description = model.Description;
+                dto.CreatedOn = model.CreatedOn;
+                dto.StartDate = model.StartDate;
+                dto.EndDate = model.EndDate;
+
+                if (referenceHydrator != null && nextDepth <= maxDepth)
+                {
+                    dto.Project = (ProjectSummaryDto)referenceHydrator.Hydrate(
+                        model.ProjectID, typeof(ProjectSummaryDto), maxDepth, depth
+                    );
+
+                    if (model.CreatedByID != null)
+                    {
+                        dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(
+                            model.CreatedByID, typeof(UserSummaryDto), maxDepth, depth
+                        );
+                    }
+                }
             }
         }
     }

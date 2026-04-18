@@ -1,12 +1,12 @@
 ﻿
 using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.Sprints.Sprints;
+using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
-namespace AgileStudioServerTest.CoreFeatures.Sprints.Sprints
+namespace AgileStudioServerTest.CoreFeatures.Projects.Sprints
 {
     public class SprintFixture : AbstractEntityFixture<SprintRepository>
     {

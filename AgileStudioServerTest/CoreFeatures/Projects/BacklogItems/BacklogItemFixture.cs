@@ -1,7 +1,6 @@
-﻿
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Sprints;
@@ -13,7 +12,7 @@ using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 
-namespace AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServerTest.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemFixture : AbstractEntityFixture<BacklogItemRepository>
     {

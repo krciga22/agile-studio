@@ -1,9 +1,9 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations;
+﻿using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
+using AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
@@ -11,7 +11,7 @@ using AgileStudioServerTest.CoreFeatures.Workflows.Workflows;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemValidationTest : DBTest
     {

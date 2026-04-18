@@ -9,7 +9,7 @@ using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Sprints;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemDtoHydrator : AbstractDtoHydrator
     {

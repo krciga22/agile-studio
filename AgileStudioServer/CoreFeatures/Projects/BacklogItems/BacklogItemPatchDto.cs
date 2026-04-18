@@ -1,7 +1,7 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations;
+﻿using AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     [ValidSprintForBacklogItem]
     [ValidReleaseForBacklogItem]

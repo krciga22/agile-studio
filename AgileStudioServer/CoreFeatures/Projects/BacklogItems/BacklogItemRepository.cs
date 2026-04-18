@@ -4,7 +4,7 @@ using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemRepository : EntityRepository<DBContext, BacklogItemModel, BacklogItem, int>
     {

@@ -5,7 +5,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     [ApiController]
     [Route("[controller]")]

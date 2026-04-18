@@ -1,4 +1,4 @@
-﻿namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+﻿namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemSummaryDto
     {

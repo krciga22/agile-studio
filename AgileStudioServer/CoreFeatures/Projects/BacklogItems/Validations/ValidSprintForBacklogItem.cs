@@ -1,10 +1,10 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems;
+using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.Validations
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ValidSprintForBacklogItem : ValidationAttribute

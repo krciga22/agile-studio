@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemService : AbstractService
     {

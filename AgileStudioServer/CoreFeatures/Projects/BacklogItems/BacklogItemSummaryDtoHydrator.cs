@@ -3,7 +3,7 @@ using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemSummaryDtoHydrator : AbstractDtoHydrator
     {

@@ -5,7 +5,7 @@ using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 
-namespace AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems
+namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
 {
     public class BacklogItemDto
     {

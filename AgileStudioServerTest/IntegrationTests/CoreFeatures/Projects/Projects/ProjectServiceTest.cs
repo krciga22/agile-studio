@@ -1,12 +1,12 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {

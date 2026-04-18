@@ -4,14 +4,14 @@ using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;
 using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
 {

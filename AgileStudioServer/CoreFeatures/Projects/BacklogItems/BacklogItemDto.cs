@@ -1,4 +1,4 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Sprints;

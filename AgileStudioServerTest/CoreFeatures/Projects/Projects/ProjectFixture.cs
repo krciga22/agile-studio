@@ -1,11 +1,11 @@
 ﻿
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 
 namespace AgileStudioServerTest.CoreFeatures.Projects.Projects

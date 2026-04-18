@@ -1,14 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServer.CoreFeatures.Workflows.Workflows;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.CoreFeatures.Auth.Permissions;
 using AgileStudioServer.CoreFeatures.Auth.RolePermissions;
@@ -16,6 +10,12 @@ using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
 using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes;
 
 namespace AgileStudioServer.Data
 {

@@ -1,8 +1,8 @@
 ﻿using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Projects.Releases;

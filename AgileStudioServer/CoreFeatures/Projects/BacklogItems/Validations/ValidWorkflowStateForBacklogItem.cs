@@ -1,5 +1,5 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using System.ComponentModel.DataAnnotations;

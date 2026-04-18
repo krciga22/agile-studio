@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
 using AgileStudioServer.CoreFeatures.Projects.Projects;
 using AgileStudioServer.CoreFeatures.Projects.Releases;
@@ -7,7 +7,7 @@ using AgileStudioServer.CoreFeatures.Projects.Sprints;
 using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.CoreFeatures.Workflows.WorkflowStates;
 using AgileStudioServerTest.Core.Fixtures;
-using AgileStudioServerTest.CoreFeatures.BacklogItems.BacklogItemTypes;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServerTest.CoreFeatures.Users.Users;
 using AgileStudioServerTest.CoreFeatures.Workflows.WorkflowStates;

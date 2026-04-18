@@ -1,5 +1,5 @@
-﻿using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.CoreFeatures.Users.Users;
 
 namespace AgileStudioServer.CoreFeatures.Projects.Projects

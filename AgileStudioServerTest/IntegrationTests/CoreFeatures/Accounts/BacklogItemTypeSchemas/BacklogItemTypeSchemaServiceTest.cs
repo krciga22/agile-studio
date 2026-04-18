@@ -1,0 +1,83 @@
+﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.Data;
+using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
+
+namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.BacklogItemTypeSchemas
+{
+    public class BacklogItemTypeSchemaServiceTest : AbstractServiceTest
+    {
+        private readonly BacklogItemTypeSchemaService _backlogItemTypeSchemaService;
+
+        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
+
+        public BacklogItemTypeSchemaServiceTest(
+            DBContext dbContext,
+            BacklogItemTypeSchemaService backlogItemTypeSchemaService,
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
+        {
+            _backlogItemTypeSchemaService = backlogItemTypeSchemaService;
+            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+        }
+
+        [Fact]
+        public void Create_ReturnsBacklogItemTypeSchema()
+        {
+            BacklogItemTypeSchemaModel backlogItemTypeSchema = new("Test BacklogItemTypeSchema");
+
+            backlogItemTypeSchema = _backlogItemTypeSchemaService.Create(backlogItemTypeSchema);
+
+            Assert.NotNull(backlogItemTypeSchema);
+            Assert.True(backlogItemTypeSchema.ID > 0);
+        }
+
+        [Fact]
+        public void Get_ReturnsBacklogItemTypeSchema()
+        {
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+
+            var returnedBacklogItemTypeSchema = _backlogItemTypeSchemaService.Get(backlogItemTypeSchema.ID);
+
+            Assert.NotNull(returnedBacklogItemTypeSchema);
+            Assert.Equal(backlogItemTypeSchema.ID, returnedBacklogItemTypeSchema.ID);
+        }
+
+        [Fact]
+        public void GetAll_ReturnsAllBacklogItemTypeSchemas()
+        {
+            var backlogItemTypeSchemas = new List<BacklogItemTypeSchemaModel>
+            {
+                _BacklogItemTypeSchemaFixture.Create("Test BacklogItemTypeSchema 1"),
+                _BacklogItemTypeSchemaFixture.Create("Test BacklogItemTypeSchema 2")
+            };
+
+            List<BacklogItemTypeSchemaModel> returnedBacklogItemTypeSchemas = _backlogItemTypeSchemaService
+                .GetAll();
+
+            Assert.Equal(backlogItemTypeSchemas.Count, returnedBacklogItemTypeSchemas.Count);
+        }
+
+        [Fact]
+        public void Update_ReturnsUpdatedBacklogItemTypeSchema()
+        {
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+            var title = $"{backlogItemTypeSchema.Title} Updated";
+
+            backlogItemTypeSchema.Title = title;
+            backlogItemTypeSchema = _backlogItemTypeSchemaService.Update(backlogItemTypeSchema);
+
+            Assert.NotNull(backlogItemTypeSchema);
+            Assert.Equal(title, backlogItemTypeSchema.Title);
+        }
+
+        [Fact]
+        public void Delete_DeletesBacklogItemTypeSchema()
+        {
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
+
+            _backlogItemTypeSchemaService.Delete(backlogItemTypeSchema);
+
+            backlogItemTypeSchema = _backlogItemTypeSchemaService.Get(backlogItemTypeSchema.ID);
+            Assert.Null(backlogItemTypeSchema);
+        }
+    }
+}

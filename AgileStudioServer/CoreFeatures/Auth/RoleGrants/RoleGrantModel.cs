@@ -14,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
 
         public string? ScopeID { get; set; }
 
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; }
     }

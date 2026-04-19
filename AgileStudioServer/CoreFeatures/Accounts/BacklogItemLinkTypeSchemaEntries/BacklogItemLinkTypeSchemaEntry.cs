@@ -26,7 +26,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntri
         {
             BacklogItemLinkTypeSchemaID = backlogItemLinkTypeSchemaID;
             BacklogItemLinkTypeID = backlogItemLinkTypeID;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

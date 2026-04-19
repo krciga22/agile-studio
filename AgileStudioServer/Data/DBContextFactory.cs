@@ -22,12 +22,8 @@ namespace AgileStudioServer.Data
 
         public static DbContextOptions ConfigureDefaultOptions(ref DbContextOptionsBuilder optionsBuilder, IConfiguration? configuration = null)
         {
-            return optionsBuilder.UseMySql(
-                    GetConnectionString(configuration),
-                    ServerVersion.Create(
-                        new Version("8.0"),
-                        Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql
-                    )
+            return optionsBuilder.UseNpgsql(
+                    GetConnectionString(configuration)
                 )
                 .UseSnakeCaseNamingConvention()
                 .Options;
@@ -57,7 +53,7 @@ namespace AgileStudioServer.Data
             dbPass = configuration.GetValue<string>("DB_PASS");
 
             return string.Format(
-                "server={0};port={1};database={2};user={3};password={4};",
+                "Host={0};Port={1};Database={2};Username={3};Password={4};",
                 dbHost, dbPort, dbName, dbUser, dbPass
             );
         }

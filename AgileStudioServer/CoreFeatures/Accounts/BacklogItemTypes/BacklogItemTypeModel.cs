@@ -19,7 +19,7 @@
         public BacklogItemTypeModel(string title, int backlogItemTypeSchemaId, int workflowId)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             BacklogItemTypeSchemaID = backlogItemTypeSchemaId;
             WorkflowID = workflowId;
         }

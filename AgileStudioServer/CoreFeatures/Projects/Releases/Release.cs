@@ -28,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Releases
         public Release(string title, int projectID)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectID;
         }
     }

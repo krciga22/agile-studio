@@ -28,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes
 
         public ChildBacklogItemType(int childTypeID, int parentTypeID, int schemaID)
         {
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ChildTypeID = childTypeID;
             ParentTypeID = parentTypeID;
             SchemaID = schemaID;

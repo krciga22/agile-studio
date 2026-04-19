@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas
         public BacklogItemLinkTypeSchema(string title)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

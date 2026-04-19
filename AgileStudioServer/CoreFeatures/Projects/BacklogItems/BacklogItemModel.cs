@@ -27,7 +27,7 @@
         public BacklogItemModel(string title, int projectId, int backlogItemTypeId, int workflowStateId)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectId;
             BacklogItemTypeID = backlogItemTypeId;
             WorkflowStateID = workflowStateId;

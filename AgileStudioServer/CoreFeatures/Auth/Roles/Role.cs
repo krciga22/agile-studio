@@ -15,7 +15,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.Roles
         /// </summary>
         public string? Scope { get; set; }
 
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;
 

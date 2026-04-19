@@ -21,7 +21,7 @@
         public ReleaseModel(string title, int projectId)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectId;
         }
     }

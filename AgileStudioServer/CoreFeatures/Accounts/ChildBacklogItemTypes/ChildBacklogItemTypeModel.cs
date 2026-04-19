@@ -16,7 +16,7 @@
 
         public ChildBacklogItemTypeModel(int childTypeId, int parentTypeId, int schemaId)
         {
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ChildTypeID = childTypeId;
             ParentTypeID = parentTypeId;
             SchemaID = schemaId;

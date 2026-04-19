@@ -48,7 +48,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.BacklogItems
         public BacklogItem(string title, int projectID, int backlogItemTypeID, int workflowStateID)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectID;
             BacklogItemTypeID = backlogItemTypeID;
             WorkflowStateID = workflowStateID;

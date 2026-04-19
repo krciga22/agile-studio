@@ -39,7 +39,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RoleGrants
 
         public string Hash { get; set; } = CreateHash(roleKey, subjectType, subjectID, scope, scopeID);
 
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;
 

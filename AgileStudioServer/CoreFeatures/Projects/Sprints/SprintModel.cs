@@ -21,7 +21,7 @@
         public SprintModel(int sprintNumber, int projectId)
         {
             SprintNumber = sprintNumber;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectId;
         }
     }

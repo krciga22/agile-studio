@@ -18,7 +18,7 @@
         {
             Title = title;
             TitleOpposite = titleOpposite;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

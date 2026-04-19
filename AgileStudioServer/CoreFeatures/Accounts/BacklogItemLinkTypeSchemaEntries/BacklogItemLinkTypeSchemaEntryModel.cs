@@ -16,7 +16,7 @@
         {
             BacklogItemLinkTypeSchemaID = backlogItemLinkTypeSchemaID;
             BacklogItemLinkTypeID = backlogItemLinkTypeID;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace AgileStudioServer.CoreFeatures.Auth.RolePermissions
 
         public Permission Permission { get; set; } = null!;
 
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;
 

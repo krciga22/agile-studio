@@ -29,7 +29,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes
         public BacklogItemType(string title, int backlogItemTypeSchemaID, int workflowID)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             BacklogItemTypeSchemaID = backlogItemTypeSchemaID;
             WorkflowID = workflowID;
         }

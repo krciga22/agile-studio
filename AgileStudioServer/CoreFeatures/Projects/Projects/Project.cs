@@ -29,7 +29,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Projects
         public Project(string title, int backlogItemTypeSchemaID, int backlogItemLinkTypeSchemaID)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             BacklogItemTypeSchemaID = backlogItemTypeSchemaID;
             BacklogItemLinkTypeSchemaID = backlogItemLinkTypeSchemaID;
         }

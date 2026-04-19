@@ -19,7 +19,7 @@
             Email = email;
             FirstName = firstName;
             LastName = lastName;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.WorkflowStates
         public WorkflowState(string title, int workflowID)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             WorkflowID = workflowID;
         }
     }

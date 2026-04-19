@@ -28,7 +28,7 @@ namespace AgileStudioServer.CoreFeatures.Projects.Sprints
         public Sprint(int sprintNumber, int projectID)
         {
             SprintNumber = sprintNumber;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
             ProjectID = projectID;
         }
     }

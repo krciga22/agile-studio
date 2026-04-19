@@ -3,17 +3,17 @@ using System;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace AgileStudioServer.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20260417231104_AddIsSystemRolePermissionColumnToRolePermissionEntity")]
-    partial class AddIsSystemRolePermissionColumnToRolePermissionEntity
+    [Migration("20260419000256_InitialCreateForPostgres")]
+    partial class InitialCreateForPostgres
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,948 +21,33 @@ namespace AgileStudioServer.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.18")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", b =>
-                {
-                    b.Property<string>("PermissionKey")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("permission_key");
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext")
-                        .HasColumnName("description");
-
-                    b.Property<bool>("IsSystemPermission")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_system_permission");
-
-                    b.Property<string>("Scope")
-                        .HasColumnType("longtext")
-                        .HasColumnName("scope");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("title");
-
-                    b.HasKey("PermissionKey")
-                        .HasName("pk_permission");
-
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_permission_created_by_id");
-
-                    b.ToTable("permission", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PermissionKey = "projects-projects-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Projects Create"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-projects-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Projects Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Update"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Delete"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-members-add",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Members Add"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Members Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Member Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-member-remove",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Member Remove"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-member-grant-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Member Grant Role"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-project-member-revoke-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Project Member Revoke Role"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-backlog-items-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Backlog Items Create"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Backlog Items Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Backlog Item Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Backlog Item Update"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Backlog Item Delete"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-releases-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Releases Create"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-releases-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Releases Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-release-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Release Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-release-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Release Update"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-release-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Release Delete"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-sprints-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Sprints Create"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-sprints-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Sprints Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-sprint-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Sprint Read"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-sprint-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Sprint Update"
-                        },
-                        new
-                        {
-                            PermissionKey = "projects-sprint-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemPermission = true,
-                            Scope = "projects",
-                            Title = "Sprint Delete"
-                        });
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RoleGrants.RoleGrant", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<string>("Hash")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("hash");
-
-                    b.Property<string>("RoleKey")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("role_key");
-
-                    b.Property<string>("Scope")
-                        .HasColumnType("longtext")
-                        .HasColumnName("scope");
-
-                    b.Property<string>("ScopeID")
-                        .HasColumnType("longtext")
-                        .HasColumnName("scope_id");
-
-                    b.Property<string>("SubjectID")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("subject_id");
-
-                    b.Property<string>("SubjectType")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("subject_type");
-
-                    b.HasKey("ID")
-                        .HasName("pk_role_grant");
-
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_role_grant_created_by_id");
-
-                    b.HasIndex("Hash")
-                        .IsUnique()
-                        .HasDatabaseName("ix_role_grant_hash");
-
-                    b.HasIndex("RoleKey")
-                        .HasDatabaseName("ix_role_grant_role_key");
-
-                    b.ToTable("role_grant", (string)null);
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RolePermissions.RolePermission", b =>
-                {
-                    b.Property<string>("RoleKey")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("role_key");
-
-                    b.Property<string>("PermissionKey")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("permission_key");
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<bool>("IsSystemRolePermission")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_system_role_permission");
-
-                    b.HasKey("RoleKey", "PermissionKey")
-                        .HasName("pk_role_permission");
-
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_role_permission_created_by_id");
-
-                    b.HasIndex("PermissionKey")
-                        .HasDatabaseName("ix_role_permission_permission_key");
-
-                    b.HasIndex("RoleKey")
-                        .HasDatabaseName("ix_role_permission_role_key");
-
-                    b.ToTable("role_permission", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-members-add",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-member-remove",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-member-grant-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-project-member-revoke-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-backlog-items-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-releases-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-releases-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-release-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-release-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-release-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-sprints-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-sprints-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-sprint-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-sprint-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            PermissionKey = "projects-sprint-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-members-add",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-member-remove",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-member-grant-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-project-member-revoke-role",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-backlog-items-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-releases-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-releases-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-release-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-release-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-release-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-sprints-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-sprints-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-sprint-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-sprint-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            PermissionKey = "projects-sprint-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-backlog-items-create",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-project-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-project-members-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-project-member-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-backlog-items-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-backlog-item-read",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-backlog-item-update",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            PermissionKey = "projects-backlog-item-delete",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRolePermission = true
-                        });
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Roles.Role", b =>
-                {
-                    b.Property<string>("RoleKey")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("role_key");
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext")
-                        .HasColumnName("description");
-
-                    b.Property<bool>("IsSystemRole")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_system_role");
-
-                    b.Property<string>("Scope")
-                        .HasColumnType("longtext")
-                        .HasColumnName("scope");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("title");
-
-                    b.HasKey("RoleKey")
-                        .HasName("pk_role");
-
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_role_created_by_id");
-
-                    b.ToTable("role", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            RoleKey = "projects-project-admin",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRole = true,
-                            Scope = "projects",
-                            Title = "Project Admin"
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-manager",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRole = true,
-                            Scope = "projects",
-                            Title = "Project Manager"
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-developer",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRole = true,
-                            Scope = "projects",
-                            Title = "Developer"
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-tester",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRole = true,
-                            Scope = "projects",
-                            Title = "Tester"
-                        },
-                        new
-                        {
-                            RoleKey = "projects-project-business-analyst",
-                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsSystemRole = true,
-                            Scope = "projects",
-                            Title = "Business Analyst"
-                        });
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int>("BacklogItemLinkTypeID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("backlog_item_link_type_id");
 
                     b.Property<int>("BacklogItemLinkTypeSchemaID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("backlog_item_link_type_schema_id");
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.HasKey("ID")
@@ -984,30 +69,30 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type_schema_entry", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("ID")
@@ -1019,35 +104,35 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type_schema", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes.BacklogItemLinkType", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.Property<string>("TitleOpposite")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title_opposite");
 
                     b.HasKey("ID")
@@ -1059,30 +144,30 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("ID")
@@ -1094,38 +179,38 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_type_schema", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes.BacklogItemType", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int>("BacklogItemTypeSchemaID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("backlog_item_type_schema_id");
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.Property<int>("WorkflowID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("workflow_id");
 
                     b.HasKey("ID")
@@ -1143,54 +228,1093 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_type", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.BacklogItem", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("BacklogItemTypeID")
-                        .HasColumnType("int")
-                        .HasColumnName("backlog_item_type_id");
+                    b.Property<int>("ChildTypeID")
+                        .HasColumnType("integer")
+                        .HasColumnName("child_type_id");
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<int>("ParentTypeID")
+                        .HasColumnType("integer")
+                        .HasColumnName("parent_type_id");
+
+                    b.Property<int>("SchemaID")
+                        .HasColumnType("integer")
+                        .HasColumnName("schema_id");
+
+                    b.HasKey("ID")
+                        .HasName("pk_child_backlog_item_type");
+
+                    b.HasIndex("ChildTypeID")
+                        .HasDatabaseName("ix_child_backlog_item_type_child_type_id");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_child_backlog_item_type_created_by_id");
+
+                    b.HasIndex("ParentTypeID")
+                        .HasDatabaseName("ix_child_backlog_item_type_parent_type_id");
+
+                    b.HasIndex("SchemaID")
+                        .HasDatabaseName("ix_child_backlog_item_type_schema_id");
+
+                    b.ToTable("child_backlog_item_type", (string)null);
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<int>("WorkflowID")
+                        .HasColumnType("integer")
+                        .HasColumnName("workflow_id");
+
+                    b.HasKey("ID")
+                        .HasName("pk_workflow_state");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_workflow_state_created_by_id");
+
+                    b.HasIndex("WorkflowID")
+                        .HasDatabaseName("ix_workflow_state_workflow_id");
+
+                    b.ToTable("workflow_state", (string)null);
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("ID")
+                        .HasName("pk_workflow");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_workflow_created_by_id");
+
+                    b.ToTable("workflow", (string)null);
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", b =>
+                {
+                    b.Property<string>("PermissionKey")
+                        .HasColumnType("text")
+                        .HasColumnName("permission_key");
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<bool>("IsSystemPermission")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_system_permission");
+
+                    b.Property<string>("Scope")
+                        .HasColumnType("text")
+                        .HasColumnName("scope");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("PermissionKey")
+                        .HasName("pk_permission");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_permission_created_by_id");
+
+                    b.ToTable("permission", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PermissionKey = "projects-projects-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Projects Create"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-projects-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Projects Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Update"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Delete"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-members-add",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Members Add"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Members Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Member Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-member-remove",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Member Remove"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-member-grant-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Member Grant Role"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-project-member-revoke-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Project Member Revoke Role"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-backlog-items-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Backlog Items Create"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Backlog Items Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Backlog Item Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Backlog Item Update"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Backlog Item Delete"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-releases-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Releases Create"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-releases-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Releases Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-release-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Release Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-release-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Release Update"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-release-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Release Delete"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-sprints-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Sprints Create"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-sprints-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Sprints Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-sprint-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Sprint Read"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-sprint-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Sprint Update"
+                        },
+                        new
+                        {
+                            PermissionKey = "projects-sprint-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemPermission = true,
+                            Scope = "projects",
+                            Title = "Sprint Delete"
+                        });
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RoleGrants.RoleGrant", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash");
+
+                    b.Property<string>("RoleKey")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("role_key");
+
+                    b.Property<string>("Scope")
+                        .HasColumnType("text")
+                        .HasColumnName("scope");
+
+                    b.Property<string>("ScopeID")
+                        .HasColumnType("text")
+                        .HasColumnName("scope_id");
+
+                    b.Property<string>("SubjectID")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("subject_id");
+
+                    b.Property<string>("SubjectType")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("subject_type");
+
+                    b.HasKey("ID")
+                        .HasName("pk_role_grant");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_role_grant_created_by_id");
+
+                    b.HasIndex("Hash")
+                        .IsUnique()
+                        .HasDatabaseName("ix_role_grant_hash");
+
+                    b.HasIndex("RoleKey")
+                        .HasDatabaseName("ix_role_grant_role_key");
+
+                    b.ToTable("role_grant", (string)null);
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RolePermissions.RolePermission", b =>
+                {
+                    b.Property<string>("RoleKey")
+                        .HasColumnType("text")
+                        .HasColumnName("role_key");
+
+                    b.Property<string>("PermissionKey")
+                        .HasColumnType("text")
+                        .HasColumnName("permission_key");
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<bool>("IsSystemRolePermission")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_system_role_permission");
+
+                    b.HasKey("RoleKey", "PermissionKey")
+                        .HasName("pk_role_permission");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_role_permission_created_by_id");
+
+                    b.HasIndex("PermissionKey")
+                        .HasDatabaseName("ix_role_permission_permission_key");
+
+                    b.HasIndex("RoleKey")
+                        .HasDatabaseName("ix_role_permission_role_key");
+
+                    b.ToTable("role_permission", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-members-add",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-member-remove",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-member-grant-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-project-member-revoke-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-backlog-items-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-releases-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-releases-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-release-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-release-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-release-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-sprints-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-sprints-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-sprint-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-sprint-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            PermissionKey = "projects-sprint-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-members-add",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-member-remove",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-member-grant-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-project-member-revoke-role",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-backlog-items-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-releases-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-releases-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-release-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-release-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-release-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-sprints-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-sprints-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-sprint-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-sprint-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            PermissionKey = "projects-sprint-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-backlog-items-create",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-project-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-project-members-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-project-member-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-backlog-items-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-backlog-item-read",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-backlog-item-update",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            PermissionKey = "projects-backlog-item-delete",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRolePermission = true
+                        });
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Roles.Role", b =>
+                {
+                    b.Property<string>("RoleKey")
+                        .HasColumnType("text")
+                        .HasColumnName("role_key");
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<bool>("IsSystemRole")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_system_role");
+
+                    b.Property<string>("Scope")
+                        .HasColumnType("text")
+                        .HasColumnName("scope");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("RoleKey")
+                        .HasName("pk_role");
+
+                    b.HasIndex("CreatedByID")
+                        .HasDatabaseName("ix_role_created_by_id");
+
+                    b.ToTable("role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleKey = "projects-project-admin",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRole = true,
+                            Scope = "projects",
+                            Title = "Project Admin"
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-manager",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRole = true,
+                            Scope = "projects",
+                            Title = "Project Manager"
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-developer",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRole = true,
+                            Scope = "projects",
+                            Title = "Developer"
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-tester",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRole = true,
+                            Scope = "projects",
+                            Title = "Tester"
+                        },
+                        new
+                        {
+                            RoleKey = "projects-project-business-analyst",
+                            CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsSystemRole = true,
+                            Scope = "projects",
+                            Title = "Business Analyst"
+                        });
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("BacklogItemTypeID")
+                        .HasColumnType("integer")
+                        .HasColumnName("backlog_item_type_id");
+
+                    b.Property<int?>("CreatedByID")
+                        .HasColumnType("integer")
+                        .HasColumnName("created_by_id");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_on");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<int?>("ParentBacklogItemId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("parent_backlog_item_id");
 
                     b.Property<int>("ProjectID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.Property<int?>("ReleaseID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("release_id");
 
                     b.Property<int?>("SprintID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("sprint_id");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.Property<int>("WorkflowStateID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("workflow_state_id");
 
                     b.HasKey("ID")
@@ -1220,85 +1344,38 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes.ChildBacklogItemType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("ChildTypeID")
-                        .HasColumnType("int")
-                        .HasColumnName("child_type_id");
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<int>("ParentTypeID")
-                        .HasColumnType("int")
-                        .HasColumnName("parent_type_id");
-
-                    b.Property<int>("SchemaID")
-                        .HasColumnType("int")
-                        .HasColumnName("schema_id");
-
-                    b.HasKey("ID")
-                        .HasName("pk_child_backlog_item_type");
-
-                    b.HasIndex("ChildTypeID")
-                        .HasDatabaseName("ix_child_backlog_item_type_child_type_id");
-
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_child_backlog_item_type_created_by_id");
-
-                    b.HasIndex("ParentTypeID")
-                        .HasDatabaseName("ix_child_backlog_item_type_parent_type_id");
-
-                    b.HasIndex("SchemaID")
-                        .HasDatabaseName("ix_child_backlog_item_type_schema_id");
-
-                    b.ToTable("child_backlog_item_type", (string)null);
-                });
-
             modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Projects.Project", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int>("BacklogItemLinkTypeSchemaID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("backlog_item_link_type_schema_id");
 
                     b.Property<int>("BacklogItemTypeSchemaID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("backlog_item_type_schema_id");
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("ID")
@@ -1316,42 +1393,42 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("project", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Releases.Releases.Release", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Releases.Release", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_date");
 
                     b.Property<int>("ProjectID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("ID")
@@ -1366,41 +1443,41 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("release", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Sprints.Sprints.Sprint", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("description");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_date");
 
                     b.Property<int>("ProjectID")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("project_id");
 
                     b.Property<int>("SprintNumber")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("sprint_number");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
                     b.HasKey("ID")
@@ -1419,32 +1496,32 @@ namespace AgileStudioServer.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<string>("AuthServerUserID")
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("auth_server_user_id");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("text")
                         .HasColumnName("last_name");
 
                     b.HasKey("ID")
@@ -1453,81 +1530,156 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Workflows.WorkflowStates.WorkflowState", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Title")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", "BacklogItemLinkType")
+                        .WithMany()
+                        .HasForeignKey("BacklogItemLinkTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("title");
+                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_id");
 
-                    b.Property<int>("WorkflowID")
-                        .HasColumnType("int")
-                        .HasColumnName("workflow_id");
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
+                        .WithMany()
+                        .HasForeignKey("BacklogItemLinkTypeSchemaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_schema_id");
 
-                    b.HasKey("ID")
-                        .HasName("pk_workflow_state");
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_user_created_by_id");
 
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_workflow_state_created_by_id");
+                    b.Navigation("BacklogItemLinkType");
 
-                    b.HasIndex("WorkflowID")
-                        .HasDatabaseName("ix_workflow_state_workflow_id");
+                    b.Navigation("BacklogItemLinkTypeSchema");
 
-                    b.ToTable("workflow_state", (string)null);
+                    b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Workflows.Workflows.Workflow", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_backlog_item_link_type_schema_user_created_by_id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
+                    b.Navigation("CreatedBy");
+                });
 
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int")
-                        .HasColumnName("created_by_id");
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_backlog_item_link_type_user_created_by_id");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_on");
+                    b.Navigation("CreatedBy");
+                });
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext")
-                        .HasColumnName("description");
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_backlog_item_type_schema_user_created_by_id");
 
-                    b.Property<string>("Title")
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
+                        .WithMany()
+                        .HasForeignKey("BacklogItemTypeSchemaID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("title");
+                        .HasConstraintName("fk_backlog_item_type_backlog_item_type_schema_id");
 
-                    b.HasKey("ID")
-                        .HasName("pk_workflow");
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_backlog_item_type_user_created_by_id");
 
-                    b.HasIndex("CreatedByID")
-                        .HasDatabaseName("ix_workflow_created_by_id");
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", "Workflow")
+                        .WithMany()
+                        .HasForeignKey("WorkflowID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_backlog_item_type_workflow_workflow_id");
 
-                    b.ToTable("workflow", (string)null);
+                    b.Navigation("BacklogItemTypeSchema");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Workflow");
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "ChildType")
+                        .WithMany()
+                        .HasForeignKey("ChildTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_child_backlog_item_type_child_type_backlog_item_type_id");
+
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_child_backlog_item_type_user_created_by_id");
+
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "ParentType")
+                        .WithMany()
+                        .HasForeignKey("ParentTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_child_backlog_item_type_parent_type_backlog_item_type_id");
+
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "Schema")
+                        .WithMany()
+                        .HasForeignKey("SchemaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_child_backlog_item_type_schema_backlog_item_type_schema_id");
+
+                    b.Navigation("ChildType");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ParentType");
+
+                    b.Navigation("Schema");
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_workflow_state_user_created_by_id");
+
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", "Workflow")
+                        .WithMany()
+                        .HasForeignKey("WorkflowID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_workflow_state_workflow_workflow_id");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Workflow");
+                });
+
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", b =>
+                {
+                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedByID")
+                        .HasConstraintName("fk_workflow_user_created_by_id");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", b =>
@@ -1597,95 +1749,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes.BacklogItemLinkType", "BacklogItemLinkType")
-                        .WithMany()
-                        .HasForeignKey("BacklogItemLinkTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
-                        .WithMany()
-                        .HasForeignKey("BacklogItemLinkTypeSchemaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_schema_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_backlog_item_link_type_schema_entry_user_created_by_id");
-
-                    b.Navigation("BacklogItemLinkType");
-
-                    b.Navigation("BacklogItemLinkTypeSchema");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_backlog_item_link_type_schema_user_created_by_id");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypes.BacklogItemLinkType", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_backlog_item_link_type_user_created_by_id");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_backlog_item_type_schema_user_created_by_id");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes.BacklogItemType", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
-                        .WithMany()
-                        .HasForeignKey("BacklogItemTypeSchemaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_backlog_item_type_backlog_item_type_schema_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_backlog_item_type_user_created_by_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.Workflows.Workflows.Workflow", "Workflow")
-                        .WithMany()
-                        .HasForeignKey("WorkflowID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("fk_backlog_item_type_workflow_workflow_id");
-
-                    b.Navigation("BacklogItemTypeSchema");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Workflow");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.BacklogItem", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes.BacklogItemType", "BacklogItemType")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "BacklogItemType")
                         .WithMany()
                         .HasForeignKey("BacklogItemTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1697,7 +1763,7 @@ namespace AgileStudioServer.Migrations
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItems.BacklogItem", "ParentBacklogItem")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", "ParentBacklogItem")
                         .WithMany()
                         .HasForeignKey("ParentBacklogItemId")
                         .HasConstraintName("fk_backlog_item_parent_backlog_item_id");
@@ -1709,17 +1775,17 @@ namespace AgileStudioServer.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_project_project_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Releases.Releases.Release", "Release")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Releases.Release", "Release")
                         .WithMany()
                         .HasForeignKey("ReleaseID")
                         .HasConstraintName("fk_backlog_item_release_release_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Sprints.Sprints.Sprint", "Sprint")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", "Sprint")
                         .WithMany()
                         .HasForeignKey("SprintID")
                         .HasConstraintName("fk_backlog_item_sprint_sprint_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Workflows.WorkflowStates.WorkflowState", "WorkflowState")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", "WorkflowState")
                         .WithMany()
                         .HasForeignKey("WorkflowStateID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1741,53 +1807,16 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("WorkflowState");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.BacklogItems.ChildBacklogItemTypes.ChildBacklogItemType", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes.BacklogItemType", "ChildType")
-                        .WithMany()
-                        .HasForeignKey("ChildTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_child_backlog_item_type_child_type_backlog_item_type_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_child_backlog_item_type_user_created_by_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypes.BacklogItemType", "ParentType")
-                        .WithMany()
-                        .HasForeignKey("ParentTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_child_backlog_item_type_parent_type_backlog_item_type_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas.BacklogItemTypeSchema", "Schema")
-                        .WithMany()
-                        .HasForeignKey("SchemaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_child_backlog_item_type_schema_backlog_item_type_schema_id");
-
-                    b.Navigation("ChildType");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("ParentType");
-
-                    b.Navigation("Schema");
-                });
-
             modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Projects.Project", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemLinkTypeSchemaID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_project_backlog_item_link_type_schema_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.BacklogItems.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
+                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemTypeSchemaID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1806,7 +1835,7 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Releases.Releases.Release", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Releases.Release", b =>
                 {
                     b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
                         .WithMany()
@@ -1825,7 +1854,7 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Sprints.Sprints.Sprint", b =>
+            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", b =>
                 {
                     b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
                         .WithMany()
@@ -1842,35 +1871,6 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Workflows.WorkflowStates.WorkflowState", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_workflow_state_user_created_by_id");
-
-                    b.HasOne("AgileStudioServer.CoreFeatures.Workflows.Workflows.Workflow", "Workflow")
-                        .WithMany()
-                        .HasForeignKey("WorkflowID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_workflow_state_workflow_workflow_id");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Workflow");
-                });
-
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Workflows.Workflows.Workflow", b =>
-                {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID")
-                        .HasConstraintName("fk_workflow_user_created_by_id");
-
-                    b.Navigation("CreatedBy");
                 });
 #pragma warning restore 612, 618
         }

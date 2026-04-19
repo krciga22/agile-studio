@@ -19,7 +19,7 @@ namespace AgileStudioServer.CoreFeatures.Accounts.Workflows
         public Workflow(string title)
         {
             Title = title;
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }

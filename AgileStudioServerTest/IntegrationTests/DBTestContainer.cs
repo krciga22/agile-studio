@@ -1,5 +1,4 @@
-﻿using Docker.DotNet.Models;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Testcontainers.PostgreSql;

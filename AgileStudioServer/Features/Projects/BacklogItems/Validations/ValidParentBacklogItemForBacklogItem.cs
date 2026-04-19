@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.Features.Projects.BacklogItems;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.Features.Projects.BacklogItems.Validations

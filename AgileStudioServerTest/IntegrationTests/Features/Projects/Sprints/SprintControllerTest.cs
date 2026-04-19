@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Sprints;
 

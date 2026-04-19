@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AgileStudioServer.Features.Projects.Projects
+﻿namespace AgileStudioServer.Features.Projects.Projects
 {
     public class ProjectModel
     {

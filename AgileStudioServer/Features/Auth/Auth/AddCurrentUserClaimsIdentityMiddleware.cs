@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Core.Middleware;
-using AgileStudioServer.Features.Auth.Auth;
 using AgileStudioServer.Features.Users.Users;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;

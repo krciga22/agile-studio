@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServerTest.IntegrationTests
 {

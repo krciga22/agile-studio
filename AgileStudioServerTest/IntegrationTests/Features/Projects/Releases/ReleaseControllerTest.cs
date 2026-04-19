@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
 using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;

@@ -1,7 +1,6 @@
 ﻿using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Features.Auth.Auth;
-using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServer.Features.Resources.Resource.Commands;
 using System.Reflection;
 

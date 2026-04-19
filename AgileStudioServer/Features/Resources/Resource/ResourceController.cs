@@ -7,7 +7,6 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace AgileStudioServer.Features.Resources.Resource
 {

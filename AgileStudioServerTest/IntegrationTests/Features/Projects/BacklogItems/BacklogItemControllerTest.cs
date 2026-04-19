@@ -2,7 +2,6 @@
 using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.WorkflowStates;

@@ -4,7 +4,6 @@ using AgileStudioServer.Features.Auth.Auth;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
-using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServer.Features.Resources.Resource.Commands;
 

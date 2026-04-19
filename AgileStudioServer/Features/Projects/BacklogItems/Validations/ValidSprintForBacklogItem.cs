@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Sprints;
 using System.ComponentModel.DataAnnotations;

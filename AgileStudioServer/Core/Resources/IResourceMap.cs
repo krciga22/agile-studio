@@ -1,7 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-
-namespace AgileStudioServer.Core.Resources
+﻿namespace AgileStudioServer.Core.Resources
 {
     public interface IResourceMap
     {

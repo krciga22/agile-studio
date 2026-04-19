@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypes

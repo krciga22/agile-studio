@@ -1,6 +1,5 @@
 ﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using Microsoft.AspNetCore.Mvc;
 

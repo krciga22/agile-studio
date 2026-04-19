@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.ChildBacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;

@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Features.Projects.BacklogItems;
-using AgileStudioServer.Features.Projects.Sprints;
-using AgileStudioServer.Features.Projects.Releases;
-using AgileStudioServer.Data;
-using AgileStudioServer.Core.APIs.DTOs;
+﻿using AgileStudioServer.Data;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;

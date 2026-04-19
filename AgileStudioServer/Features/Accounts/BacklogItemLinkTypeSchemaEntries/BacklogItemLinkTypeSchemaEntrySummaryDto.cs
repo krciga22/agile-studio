@@ -1,5 +1,4 @@
-﻿using AgileStudioServer.Features.Users.Users;
-using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
+﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries

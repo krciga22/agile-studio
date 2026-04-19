@@ -5,7 +5,7 @@ name: Agile Studio Server Build
 
 on:
   push:
-    branches: [ "v4.0" ]
+    branches: [ "v5.0-dev" ]
 
 jobs:
   build:

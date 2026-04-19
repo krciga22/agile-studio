@@ -62,6 +62,8 @@ namespace AgileStudioServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ConfigureTableNamesAndSchemas(modelBuilder);
+
             modelBuilder.Entity<Project>()
                 .HasOne(e => e.BacklogItemTypeSchema)
                 .WithMany()
@@ -183,6 +185,30 @@ namespace AgileStudioServer.Data
 
             // todo move this to separate seeding class
             SeedStandardRolesAndPermissions(modelBuilder);
+        }
+
+        private void ConfigureTableNamesAndSchemas(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().ToTable("user", "users");
+
+            modelBuilder.Entity<Role>().ToTable("role", "security");
+            modelBuilder.Entity<Permission>().ToTable("permission", "security");
+            modelBuilder.Entity<RolePermission>().ToTable("role_permission", "security");
+            modelBuilder.Entity<RoleGrant>().ToTable("role_grant", "security");
+
+            modelBuilder.Entity<Project>().ToTable("project", "projects");
+            modelBuilder.Entity<BacklogItem>().ToTable("backlog_item", "projects");
+            modelBuilder.Entity<Sprint>().ToTable("sprint", "projects");
+            modelBuilder.Entity<Release>().ToTable("release", "projects");
+
+            modelBuilder.Entity<BacklogItemType>().ToTable("backlog_item_type", "accounts");
+            modelBuilder.Entity<BacklogItemTypeSchema>().ToTable("backlog_item_type_schema", "accounts");
+            modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>().ToTable("backlog_item_link_type_schema_entry", "accounts");
+            modelBuilder.Entity<BacklogItemLinkType>().ToTable("backlog_item_link_type", "accounts");
+            modelBuilder.Entity<ChildBacklogItemType>().ToTable("child_backlog_item_type", "accounts");
+            modelBuilder.Entity<BacklogItemLinkTypeSchema>().ToTable("backlog_item_link_type_schema", "accounts");
+            modelBuilder.Entity<Workflow>().ToTable("workflow", "accounts");
+            modelBuilder.Entity<WorkflowState>().ToTable("workflow_state", "accounts");
         }
 
         private void SeedStandardRolesAndPermissions(ModelBuilder modelBuilder)

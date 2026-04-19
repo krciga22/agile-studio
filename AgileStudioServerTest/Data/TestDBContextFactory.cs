@@ -1,9 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServerTest.IntegrationTests;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-using Testcontainers.MySql;
 
 namespace AgileStudioServerTest.Data
 {
@@ -19,12 +16,9 @@ namespace AgileStudioServerTest.Data
         public static DbContextOptions ConfigureDefaultOptions(ref DbContextOptionsBuilder optionsBuilder)
         {
             DBTestContainer dbTestContainer = DBTestContainer.GetInstance();
-            return optionsBuilder.UseMySql(
-                    dbTestContainer.GetConnectionString(),
-                    ServerVersion.Create(
-                        new Version("8.0"),
-                        Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql
-                    )
+
+            return optionsBuilder.UseNpgsql(
+                    dbTestContainer.GetConnectionString()
                 )
                 .UseSnakeCaseNamingConvention()
                 .Options;

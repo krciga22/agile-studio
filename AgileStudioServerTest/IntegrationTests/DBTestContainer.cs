@@ -1,7 +1,8 @@
-﻿using DotNet.Testcontainers.Builders;
+﻿using Docker.DotNet.Models;
+using DotNet.Testcontainers.Builders;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
-using Testcontainers.MySql;
+using Testcontainers.PostgreSql;
 
 namespace AgileStudioServerTest.IntegrationTests
 {
@@ -9,13 +10,13 @@ namespace AgileStudioServerTest.IntegrationTests
     {
         private static DBTestContainer? _singletonInstance = null;
 
-        private MySqlContainer _dbTestContainer;
+        private PostgreSqlContainer _dbTestContainer;
 
         private bool _IsStarted { get; set; } = false;
 
         private DBTestContainer(IConfiguration? configuration = null)
         {
-            string dbName, dbUser, dbPass;
+            string dbName, dbPort, dbUser, dbPass;
 
             if(configuration == null)
             {
@@ -31,6 +32,12 @@ namespace AgileStudioServerTest.IntegrationTests
                 throw new Exception("DB_NAME not found in configuration");
             }
 
+            dbPort = configuration.GetValue<string>("DB_PORT") ?? "";
+            if (String.IsNullOrEmpty(dbPort))
+            {
+                throw new Exception("DB_PORT not found in configuration");
+            }
+
             dbUser = configuration.GetValue<string>("DB_USER") ?? "";
             if (String.IsNullOrEmpty(dbUser)){
                 throw new Exception("DB_USER not found in configuration");
@@ -41,20 +48,19 @@ namespace AgileStudioServerTest.IntegrationTests
                 throw new Exception("DB_PASS not found in configuration");
             }
 
-            _dbTestContainer = new MySqlBuilder()
-                .WithImage("mysql:8.0.42")
+            _dbTestContainer = new PostgreSqlBuilder()
+                .WithImage("postgres:18-alpine3.22")
                 .WithLabel("reuse-id", "8d58e958-abd1-438b-a481-90ee0ccbfc09")
                 .WithDatabase(dbName)
                 .WithUsername(dbUser)
                 .WithPassword(dbPass)
-                .WithPortBinding(3306, false)
-                .WithExposedPort(3306)
-                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(3306))
+                .WithPortBinding(dbPort, false)
+                .WithExposedPort(dbPort)
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(int.Parse(dbPort)))
                 .WithReuse(true)
-                .WithEnvironment("MYSQL_RANDOM_ROOT_PASSWORD", "yes")
-                .WithEnvironment("MYSQL_DATABASE", dbName)
-                .WithEnvironment("MYSQL_USER", dbUser)
-                .WithEnvironment("MYSQL_PASSWORD", dbPass)
+                .WithEnvironment("POSTGRES_DATABASE", dbName)
+                .WithEnvironment("POSTGRES_USER", dbUser)
+                .WithEnvironment("POSTGRES_PASSWORD", dbPass)
                 .Build();
         }
 

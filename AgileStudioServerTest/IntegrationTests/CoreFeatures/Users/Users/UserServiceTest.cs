@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.CoreFeatures.Users.Users;
-using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Users.Users;
+﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Users.Users;
+using AgileStudioServerTest.Features.Users.Users;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Users.Users
+namespace AgileStudioServerTest.IntegrationTests.Features.Users.Users
 {
     public class UserServiceTest : AbstractServiceTest
     {

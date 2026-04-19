@@ -1,11 +1,11 @@
-using AgileStudioServer.CoreFeatures.Auth.RolePermissions;
-using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Auth.Permissions;
-using AgileStudioServerTest.CoreFeatures.Auth.RolePermissions;
-using AgileStudioServerTest.CoreFeatures.Auth.Roles;
+using AgileStudioServer.Features.Auth.RolePermissions;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServerTest.Features.Auth.Permissions;
+using AgileStudioServerTest.Features.Auth.RolePermissions;
+using AgileStudioServerTest.Features.Auth.Roles;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Auth.RolePermissions
+namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RolePermissions
 {
     public class RolePermissionServiceTest : AbstractServiceTest
     {

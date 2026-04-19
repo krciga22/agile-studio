@@ -1,15 +1,15 @@
-using AgileStudioServer.CoreFeatures.Auth.Permissions;
-using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
-using AgileStudioServer.CoreFeatures.Auth.Roles;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServer.CoreFeatures.Users.Users;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Auth.RoleGrants;
-using AgileStudioServerTest.CoreFeatures.Auth.Roles;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Users.Users;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServer.Features.Users.Users;
+using AgileStudioServerTest.Features.Auth.RoleGrants;
+using AgileStudioServerTest.Features.Auth.Roles;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Users.Users;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Auth.RoleGrants
+namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RoleGrants
 {
     public class RoleGrantServiceTest : AbstractServiceTest
     {

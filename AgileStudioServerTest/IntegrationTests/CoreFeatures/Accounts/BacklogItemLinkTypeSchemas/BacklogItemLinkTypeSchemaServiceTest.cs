@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaServiceTest : AbstractServiceTest
     {

@@ -1,8 +1,8 @@
-using AgileStudioServer.CoreFeatures.Auth.Permissions;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Auth.Permissions;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServerTest.Features.Auth.Permissions;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Auth.Permissions
+namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 {
     public class PermissionServiceTest : AbstractServiceTest
     {

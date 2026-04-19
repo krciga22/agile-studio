@@ -1,14 +1,14 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 {
     public class ProjectServiceTest : AbstractServiceTest
     {

@@ -1,12 +1,12 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypeSchemaEntries
 {
     public class BacklogItemLinkTypeSchemaEntryServiceTest : AbstractServiceTest
     {

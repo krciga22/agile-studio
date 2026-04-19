@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
-using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
-using AgileStudioServer.CoreFeatures.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
+using AgileStudioServerTest.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.WorkflowStates;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.WorkflowStates
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.WorkflowStates
 {
     public class WorkflowStateControllerTest : AbstractControllerTest
     {

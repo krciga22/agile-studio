@@ -22,7 +22,7 @@ namespace AgileStudioServer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type_schema_entry", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type_schema", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_link_type", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -176,7 +176,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_type_schema", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemTypes.BacklogItemType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -225,7 +225,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item_type", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -272,7 +272,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("child_backlog_item_type", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.WorkflowStates.WorkflowState", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -314,7 +314,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("workflow_state", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.Workflows.Workflow", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -349,7 +349,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("workflow", "accounts");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.Permissions.Permission", b =>
                 {
                     b.Property<string>("PermissionKey")
                         .HasColumnType("text")
@@ -599,7 +599,7 @@ namespace AgileStudioServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RoleGrants.RoleGrant", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.RoleGrants.RoleGrant", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -660,7 +660,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("role_grant", "security");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RolePermissions.RolePermission", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.RolePermissions.RolePermission", b =>
                 {
                     b.Property<string>("RoleKey")
                         .HasColumnType("text")
@@ -1182,7 +1182,7 @@ namespace AgileStudioServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Roles.Role", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.Roles.Role", b =>
                 {
                     b.Property<string>("RoleKey")
                         .HasColumnType("text")
@@ -1264,7 +1264,7 @@ namespace AgileStudioServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.BacklogItems.BacklogItem", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -1341,7 +1341,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("backlog_item", "projects");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Projects.Project", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Projects.Project", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -1390,7 +1390,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("project", "projects");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Releases.Release", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Releases.Release", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -1440,7 +1440,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("release", "projects");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Sprints.Sprint", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -1489,7 +1489,7 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("sprint", "projects");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Users.Users.User", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Users.Users.User", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -1527,23 +1527,23 @@ namespace AgileStudioServer.Migrations
                     b.ToTable("user", "users");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries.BacklogItemLinkTypeSchemaEntry", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", "BacklogItemLinkType")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", "BacklogItemLinkType")
                         .WithMany()
                         .HasForeignKey("BacklogItemLinkTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemLinkTypeSchemaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_link_type_schema_entry_link_type_schema_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_link_type_schema_entry_user_created_by_id");
@@ -1555,9 +1555,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_link_type_schema_user_created_by_id");
@@ -1565,9 +1565,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemLinkTypes.BacklogItemLinkType", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_link_type_user_created_by_id");
@@ -1575,9 +1575,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_type_schema_user_created_by_id");
@@ -1585,21 +1585,21 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.BacklogItemTypes.BacklogItemType", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemTypeSchemaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_type_backlog_item_type_schema_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_type_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", "Workflow")
+                    b.HasOne("AgileStudioServer.Features.Accounts.Workflows.Workflow", "Workflow")
                         .WithMany()
                         .HasForeignKey("WorkflowID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1613,28 +1613,28 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Workflow");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.ChildBacklogItemTypes.ChildBacklogItemType", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "ChildType")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypes.BacklogItemType", "ChildType")
                         .WithMany()
                         .HasForeignKey("ChildTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_child_backlog_item_type_child_type_backlog_item_type_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_child_backlog_item_type_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "ParentType")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypes.BacklogItemType", "ParentType")
                         .WithMany()
                         .HasForeignKey("ParentTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_child_backlog_item_type_parent_type_backlog_item_type_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "Schema")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "Schema")
                         .WithMany()
                         .HasForeignKey("SchemaID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1650,14 +1650,14 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Schema");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.WorkflowStates.WorkflowState", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_workflow_state_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", "Workflow")
+                    b.HasOne("AgileStudioServer.Features.Accounts.Workflows.Workflow", "Workflow")
                         .WithMany()
                         .HasForeignKey("WorkflowID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1669,9 +1669,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Workflow");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Accounts.Workflows.Workflow", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Accounts.Workflows.Workflow", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_workflow_user_created_by_id");
@@ -1679,9 +1679,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.Permissions.Permission", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_permission_user_created_by_id");
@@ -1689,14 +1689,14 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RoleGrants.RoleGrant", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.RoleGrants.RoleGrant", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_role_grant_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Auth.Roles.Role", "Role")
+                    b.HasOne("AgileStudioServer.Features.Auth.Roles.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleKey")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1708,21 +1708,21 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.RolePermissions.RolePermission", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.RolePermissions.RolePermission", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_role_permission_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Auth.Permissions.Permission", "Permission")
+                    b.HasOne("AgileStudioServer.Features.Auth.Permissions.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionKey")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_role_permission_permission_key");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Auth.Roles.Role", "Role")
+                    b.HasOne("AgileStudioServer.Features.Auth.Roles.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleKey")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1736,9 +1736,9 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Auth.Roles.Role", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Auth.Roles.Role", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_role_user_created_by_id");
@@ -1746,43 +1746,43 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.BacklogItems.BacklogItem", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes.BacklogItemType", "BacklogItemType")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypes.BacklogItemType", "BacklogItemType")
                         .WithMany()
                         .HasForeignKey("BacklogItemTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_backlog_item_type_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_backlog_item_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.BacklogItems.BacklogItem", "ParentBacklogItem")
+                    b.HasOne("AgileStudioServer.Features.Projects.BacklogItems.BacklogItem", "ParentBacklogItem")
                         .WithMany()
                         .HasForeignKey("ParentBacklogItemId")
                         .HasConstraintName("fk_backlog_item_parent_backlog_item_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Projects.Project", "Project")
+                    b.HasOne("AgileStudioServer.Features.Projects.Projects.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_backlog_item_project_project_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Releases.Release", "Release")
+                    b.HasOne("AgileStudioServer.Features.Projects.Releases.Release", "Release")
                         .WithMany()
                         .HasForeignKey("ReleaseID")
                         .HasConstraintName("fk_backlog_item_release_release_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", "Sprint")
+                    b.HasOne("AgileStudioServer.Features.Projects.Sprints.Sprint", "Sprint")
                         .WithMany()
                         .HasForeignKey("SprintID")
                         .HasConstraintName("fk_backlog_item_sprint_sprint_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.WorkflowStates.WorkflowState", "WorkflowState")
+                    b.HasOne("AgileStudioServer.Features.Accounts.WorkflowStates.WorkflowState", "WorkflowState")
                         .WithMany()
                         .HasForeignKey("WorkflowStateID")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1804,23 +1804,23 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("WorkflowState");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Projects.Project", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Projects.Project", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas.BacklogItemLinkTypeSchema", "BacklogItemLinkTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemLinkTypeSchemaID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_project_backlog_item_link_type_schema_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
+                    b.HasOne("AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas.BacklogItemTypeSchema", "BacklogItemTypeSchema")
                         .WithMany()
                         .HasForeignKey("BacklogItemTypeSchemaID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_project_backlog_item_type_schema_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_project_user_created_by_id");
@@ -1832,14 +1832,14 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Releases.Release", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Releases.Release", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_release_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Projects.Project", "Project")
+                    b.HasOne("AgileStudioServer.Features.Projects.Projects.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1851,14 +1851,14 @@ namespace AgileStudioServer.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("AgileStudioServer.CoreFeatures.Projects.Sprints.Sprint", b =>
+            modelBuilder.Entity("AgileStudioServer.Features.Projects.Sprints.Sprint", b =>
                 {
-                    b.HasOne("AgileStudioServer.CoreFeatures.Users.Users.User", "CreatedBy")
+                    b.HasOne("AgileStudioServer.Features.Users.Users.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedByID")
                         .HasConstraintName("fk_sprint_user_created_by_id");
 
-                    b.HasOne("AgileStudioServer.CoreFeatures.Projects.Projects.Project", "Project")
+                    b.HasOne("AgileStudioServer.Features.Projects.Projects.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade)

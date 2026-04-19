@@ -1,15 +1,15 @@
 ﻿using AgileStudioServer.Core.Pagination;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
 using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
-using AgileStudioServer.CoreFeatures.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Accounts.BacklogItemTypes;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.WorkflowStates;
+using AgileStudioServerTest.Features.Projects.BacklogItems;
+using AgileStudioServerTest.Features.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 {
     public class BacklogItemServiceTest : AbstractServiceTest
     {

@@ -1,0 +1,76 @@
+﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.Data;
+
+namespace AgileStudioServer.Features.Users.Users
+{
+    public class UserModelHydrator : AbstractModelHydrator
+    {
+        public UserModelHydrator(DBContext dbContext) : base(dbContext)
+        {
+
+        }
+
+        public override bool Supports(Type from, Type to)
+        {
+            return (
+                from == typeof(int) ||
+                from == typeof(User)
+            ) && to == typeof(UserModel);
+        }
+
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        {
+            if (!Supports(from.GetType(), to))
+            {
+                throw new HydrationNotSupportedException(from.GetType(), to.GetType());
+            }
+
+            object? model = null;
+
+            if (from is int)
+            {
+                var user = _DBContext.User.Find(from);
+                if (user != null)
+                {
+                    from = user;
+                }
+            }
+
+            if (from is User)
+            {
+                var entity = (User)from;
+                model = new UserModel(entity.Email, entity.FirstName, entity.LastName);
+                Hydrate(from, model, maxDepth, depth, referenceHydrator);
+            }
+
+            if (model == null)
+            {
+                throw new HydrationFailedException(from.GetType(), to);
+            }
+
+            return model;
+        }
+
+        public override void Hydrate(object from, object to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        {
+            if (!Supports(from.GetType(), to.GetType()))
+            {
+                throw new HydrationNotSupportedException(from.GetType(), to.GetType());
+            }
+
+            if (from is User && to is UserModel)
+            {
+                var entity = (User)from;
+                var model = (UserModel)to;
+
+                model.ID = entity.ID;
+                model.Email = entity.Email;
+                model.FirstName = entity.FirstName;
+                model.LastName = entity.LastName;
+                model.CreatedOn = entity.CreatedOn;
+                model.AuthServerUserID = entity.AuthServerUserID;
+            }
+        }
+    }
+}

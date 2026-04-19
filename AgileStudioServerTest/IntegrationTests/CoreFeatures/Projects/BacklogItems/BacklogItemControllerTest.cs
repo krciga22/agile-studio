@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Core.APIs.DTOs;
-using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.WorkflowStates;
+using AgileStudioServerTest.Features.Projects.BacklogItems;
+using AgileStudioServerTest.Features.Projects.Projects;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 {
     public class BacklogItemControllerTest : AbstractControllerTest
     {

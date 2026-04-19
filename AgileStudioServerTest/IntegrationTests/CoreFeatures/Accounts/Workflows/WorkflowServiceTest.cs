@@ -1,8 +1,8 @@
-﻿using AgileStudioServer.CoreFeatures.Accounts.Workflows;
-using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
+﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.Workflows;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.Workflows
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 {
     public class WorkflowServiceTest : AbstractServiceTest
     {

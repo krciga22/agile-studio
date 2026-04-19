@@ -1,7 +1,7 @@
 using AgileStudioServer.Core.APIs;
 using AgileStudioServer.Core.Resources;
-using AgileStudioServer.CoreFeatures.Resources.Resource;
-using AgileStudioServer.CoreFeatures.Resources.Resource.Exceptions;
+using AgileStudioServer.Features.Resources.Resource.Exceptions;
+using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Reflection;

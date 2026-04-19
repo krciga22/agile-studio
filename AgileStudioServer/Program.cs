@@ -1,3 +1,4 @@
+using AgileStudioServer.Features.Auth.Auth;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
 using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
@@ -16,7 +17,7 @@ namespace AgileStudioServer
             builder.Services.AddMyCoreServices();
             builder.Services.AddMyCoreCommands();
             builder.Services.AddControllers();
-            builder.Services.AddMyCoreFeatureServices();
+            builder.Services.AddMyFeatureServices();
             builder.Services.AddMyDtoHydrators();
             builder.Services.AddMyModelHydrators();
             builder.Services.AddMyEntityHydrators();
@@ -52,7 +53,7 @@ namespace AgileStudioServer
 
             app.UseCors(Constants.CorsPolicyDefault);
             app.UseAuthentication();
-            app.UseMiddleware<CoreFeatures.Auth.Auth.AddCurrentUserClaimsIdentityMiddleware>();
+            app.UseMiddleware<AddCurrentUserClaimsIdentityMiddleware>();
             app.UseMiddleware<Core.Services.ServiceContextMiddleware>();
             app.UseAuthorization();
             app.MapResourceControllers();

@@ -1,10 +1,10 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Projects.Sprints;
-using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
+﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServer.Features.Projects.Sprints;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Projects.Sprints;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Sprints
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Sprints
 {
     public class SprintServiceTest : AbstractServiceTest
     {

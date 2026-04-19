@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services;
-using AgileStudioServer.CoreFeatures.Resources.Resource;
+using AgileStudioServer.Features.Resources.Resource;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

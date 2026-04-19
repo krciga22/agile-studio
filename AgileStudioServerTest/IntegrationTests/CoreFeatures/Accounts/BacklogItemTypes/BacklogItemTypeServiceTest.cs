@@ -1,12 +1,12 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServer.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
-using AgileStudioServer.CoreFeatures.Accounts.Workflows;
+using AgileStudioServer.Features.Accounts.BacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Workflows;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.BacklogItemTypes
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTypes
 {
     public class BacklogItemTypeServiceTest : AbstractServiceTest
     {

@@ -32,7 +32,7 @@ namespace AgileStudioServerTest
             services.AddMyCoreServices();
             services.AddMyCoreCommands();
             services.AddMyControllers();
-            services.AddMyCoreFeatureServices();
+            services.AddMyFeatureServices();
             services.AddMyDtoHydrators();
             services.AddMyModelHydrators();
             services.AddMyEntityHydrators();

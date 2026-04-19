@@ -1,17 +1,17 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServer.CoreFeatures.Projects.BacklogItems.Validations;
+﻿using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServer.Features.Projects.BacklogItems.Validations;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.Workflows;
-using AgileStudioServerTest.CoreFeatures.Accounts.WorkflowStates;
-using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Releases;
-using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.WorkflowStates;
+using AgileStudioServerTest.Features.Projects.BacklogItems;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Projects.Releases;
+using AgileStudioServerTest.Features.Projects.Sprints;
 using System.ComponentModel.DataAnnotations;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.BacklogItems
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 {
     public class BacklogItemValidationTest : DBTest
     {

@@ -1,8 +1,8 @@
-using AgileStudioServer.CoreFeatures.Auth.Roles;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Auth.Roles;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServerTest.Features.Auth.Roles;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Auth.Roles
+namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Roles
 {
     public class RoleServiceTest : AbstractServiceTest
     {

@@ -1,11 +1,11 @@
-﻿using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
 using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.CoreFeatures.Projects.Releases;
-using AgileStudioServerTest.CoreFeatures.Projects.Releases;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServer.Features.Projects.Releases;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Projects.Releases;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Releases
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Releases
 {
     public class ReleaseServiceTest : AbstractServiceTest
     {

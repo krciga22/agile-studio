@@ -1,9 +1,10 @@
-﻿using AgileStudioServer.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas
+namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypeSchemas
 {
     public class BacklogItemLinkTypeSchemaControllerTest : AbstractControllerTest
     {

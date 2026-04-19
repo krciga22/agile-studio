@@ -1,5 +1,5 @@
 ﻿using AgileStudioServer.Core.Repositories;
-using AgileStudioServer.CoreFeatures.Resources.Resource;
+using AgileStudioServer.Features.Resources.Resource;
 using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection

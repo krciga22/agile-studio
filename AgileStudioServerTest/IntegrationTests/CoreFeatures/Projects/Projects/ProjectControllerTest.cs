@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServer.CoreFeatures.Projects.Sprints;
-using AgileStudioServer.CoreFeatures.Projects.Releases;
-using AgileStudioServer.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
+using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServer.Features.Projects.Sprints;
+using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServer.Data;
 using AgileStudioServer.Core.APIs.DTOs;
-using AgileStudioServerTest.CoreFeatures.Projects.Releases;
-using AgileStudioServerTest.CoreFeatures.Projects.Sprints;
-using AgileStudioServerTest.CoreFeatures.Projects.BacklogItems;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.CoreFeatures.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Projects.BacklogItems;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Projects.Releases;
+using AgileStudioServerTest.Features.Projects.Sprints;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Projects.Projects
+namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 {
     public class ProjectControllerTest : AbstractControllerTest
     {

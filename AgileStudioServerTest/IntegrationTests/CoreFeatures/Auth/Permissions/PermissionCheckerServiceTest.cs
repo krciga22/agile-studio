@@ -1,14 +1,14 @@
-using AgileStudioServer.CoreFeatures.Auth.Permissions;
-using AgileStudioServer.CoreFeatures.Auth.RoleGrants;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.CoreFeatures.Auth.Permissions;
-using AgileStudioServerTest.CoreFeatures.Auth.RoleGrants;
-using AgileStudioServerTest.CoreFeatures.Auth.RolePermissions;
-using AgileStudioServerTest.CoreFeatures.Auth.Roles;
-using AgileStudioServerTest.CoreFeatures.Projects.Projects;
-using AgileStudioServerTest.CoreFeatures.Users.Users;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServerTest.Features.Auth.Permissions;
+using AgileStudioServerTest.Features.Auth.RoleGrants;
+using AgileStudioServerTest.Features.Auth.RolePermissions;
+using AgileStudioServerTest.Features.Auth.Roles;
+using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Users.Users;
 
-namespace AgileStudioServerTest.IntegrationTests.CoreFeatures.Auth.Permissions
+namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 {
     public class PermissionCheckerServiceTest : AbstractServiceTest
     {

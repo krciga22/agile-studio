@@ -1,0 +1,74 @@
+﻿
+using AgileStudioServer.Core.Hydrators.Exceptions;
+using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Hydrator.Exceptions;
+
+namespace AgileStudioServer.Features.Accounts.WorkflowStates
+{
+    public class WorkflowStateSummaryDtoHydrator : AbstractDtoHydrator
+    {
+        public override bool Supports(Type from, Type to)
+        {
+            return (
+                from == typeof(int) ||
+                from == typeof(WorkflowStateModel)
+            ) && to == typeof(WorkflowStateSummaryDto);
+        }
+
+        public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        {
+            if (!Supports(from.GetType(), to))
+            {
+                throw new HydrationNotSupportedException(from.GetType(), to);
+            }
+
+            if (referenceHydrator == null)
+            {
+                throw new ReferenceHydratorRequiredException(this);
+            }
+
+            WorkflowStateModel? model = null;
+            if (from is int)
+            {
+                model = (WorkflowStateModel)referenceHydrator.Hydrate(
+                    from, typeof(WorkflowStateModel), maxDepth, depth, referenceHydrator
+                );
+            }
+            else if (from is WorkflowStateModel)
+            {
+                model = (WorkflowStateModel)from;
+            }
+
+            object? dto = null;
+            if (model != null)
+            {
+                dto = new WorkflowStateSummaryDto(model.ID, model.Title);
+                Hydrate(model, dto, maxDepth, depth, referenceHydrator);
+            }
+
+            if (dto == null)
+            {
+                throw new HydrationFailedException(from.GetType(), to);
+            }
+
+            return dto;
+        }
+
+        public override void Hydrate(object from, object to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
+        {
+            if (!Supports(from.GetType(), to.GetType()))
+            {
+                throw new HydrationNotSupportedException(from.GetType(), to.GetType());
+            }
+
+            var dto = (WorkflowStateSummaryDto)to;
+
+            if (from is WorkflowStateModel)
+            {
+                var model = (WorkflowStateModel)from;
+                dto.ID = model.ID;
+                dto.Title = model.Title;
+            }
+        }
+    }
+}

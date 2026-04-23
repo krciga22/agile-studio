@@ -33,6 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.Testing.json" Condition="Exists('appsettings.Testing.json')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

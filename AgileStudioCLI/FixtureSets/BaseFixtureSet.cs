@@ -160,59 +160,89 @@ namespace AgileStudioCLI.FixtureSets
             _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeStory,
                 childType: backlogItemTypeTask,
-                schema: backlogItemTypeSchema
+                schema: backlogItemTypeSchema,
+                createdBy: user
             );
 
             _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeStory,
                 childType: backlogItemTypeTest,
-                schema: backlogItemTypeSchema
+                schema: backlogItemTypeSchema,
+                createdBy: user
             );
 
             _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeDefect,
                 childType: backlogItemTypeTask,
-                schema: backlogItemTypeSchema
+                schema: backlogItemTypeSchema,
+                createdBy: user
             );
 
             _ChildBacklogItemTypeFixture.Create(
                 parentType: backlogItemTypeDefect,
                 childType: backlogItemTypeTest,
-                schema: backlogItemTypeSchema
+                schema: backlogItemTypeSchema,
+                createdBy: user
             );
 
-            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create("Agile Studio Backlog Item Link Type Schema");
+            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create(
+                "Agile Studio Backlog Item Link Type Schema",
+                createdBy: user
+            );
 
-            var blocksLinkType = _BacklogItemLinkTypeFixture.Create("blocks", "is blocked by");
-            var relatesToLinkType = _BacklogItemLinkTypeFixture.Create("relates to", "relates to");
-            var splitFromLinkType = _BacklogItemLinkTypeFixture.Create("split from", "split to");
-            var clonedFromLinkType = _BacklogItemLinkTypeFixture.Create("cloned from", "cloned to");
-            var duplicatesLinkType = _BacklogItemLinkTypeFixture.Create("duplicates", "is duplicated by");
-            var causesLinkType = _BacklogItemLinkTypeFixture.Create("causes", "is caused by");
+            var blocksLinkType = _BacklogItemLinkTypeFixture.Create(
+                "blocks", "is blocked by", createdBy: user);
 
-            _BacklogItemLinkTypeSchemaEntryFixture.Create(
-                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: blocksLinkType);
+            var relatesToLinkType = _BacklogItemLinkTypeFixture.Create(
+                "relates to", "relates to", createdBy: user);
 
-            _BacklogItemLinkTypeSchemaEntryFixture.Create(
-                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: relatesToLinkType);
+            var splitFromLinkType = _BacklogItemLinkTypeFixture.Create(
+                "split from", "split to", createdBy: user);
 
-            _BacklogItemLinkTypeSchemaEntryFixture.Create(
-                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: splitFromLinkType);
+            var clonedFromLinkType = _BacklogItemLinkTypeFixture.Create(
+                "cloned from", "cloned to", createdBy: user);
 
-            _BacklogItemLinkTypeSchemaEntryFixture.Create(
-                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: clonedFromLinkType);
+            var duplicatesLinkType = _BacklogItemLinkTypeFixture.Create(
+                "duplicates", "is duplicated by", createdBy: user);
+
+            var causesLinkType = _BacklogItemLinkTypeFixture.Create(
+                "causes", "is caused by", createdBy: user);
 
             _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: duplicatesLinkType);
+                backlogItemLinkType: blocksLinkType,
+                createdBy: user
+            );
 
             _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
-                backlogItemLinkType: causesLinkType);
+                backlogItemLinkType: relatesToLinkType,
+                createdBy: user
+            );
+
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: splitFromLinkType,
+                createdBy: user
+            );
+
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: clonedFromLinkType,
+                createdBy: user
+            );
+
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: duplicatesLinkType,
+                createdBy: user
+            );
+
+            _BacklogItemLinkTypeSchemaEntryFixture.Create(
+                backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
+                backlogItemLinkType: causesLinkType,
+                createdBy: user
+            );
 
             var project = _ProjectFixture.Create(
                 title: "Agile Studio", 

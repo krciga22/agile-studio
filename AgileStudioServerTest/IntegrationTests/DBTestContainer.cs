@@ -17,13 +17,16 @@ namespace AgileStudioServerTest.IntegrationTests
         {
             string dbName, dbPort, dbUser, dbPass;
 
-            if(configuration == null)
+            if (configuration == null)
             {
-                var builder = new ConfigurationBuilder()
-                    .AddUserSecrets(Assembly.GetExecutingAssembly())
-                    .AddEnvironmentVariables();
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
-                configuration = builder.Build();
+                configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: true)
+                    .AddJsonFile($"appsettings.{env}.json", optional: true)
+                    .AddUserSecrets(Assembly.GetExecutingAssembly())
+                    .AddEnvironmentVariables()
+                    .Build();
             }
 
             dbName = configuration.GetValue<string>("DB_NAME") ?? "";

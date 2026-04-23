@@ -2,9 +2,9 @@
 This project contains tests for Agile Studio Server. 
 
 Note: **TestContainers** is used to create a temporary database for testing. 
-The database is automatically created before any tests are run and is destroyed 
-after all tests have completed. This ensures that tests are run in a clean 
-environment and do not affect your local development database.
+The database is automatically created before any tests are run and is stopped  
+after all tests have completed. This ensures that tests are run in a separate 
+database from your local development database.
 
 ## Prerequisites
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)

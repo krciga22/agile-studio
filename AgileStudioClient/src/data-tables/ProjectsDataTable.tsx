@@ -11,7 +11,7 @@ import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
 import Filters, {type FilterValue} from "../components/data-table/filters/Filters";
 import MultiSelectFilter from "../components/data-table/filters/MultiSelectFilter.tsx";
-import ResourceTypes from "../services/api/ResourceTypes.tsx";
+import {baseUrl as projectsEndpoint} from "../services/api/endpoints/projects/Projects.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -26,8 +26,7 @@ function ProjectsDataTable() {
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [paginationDetails, setPaginationDetails] = useState<PaginationDetails|null>(null);
-  const [fetcher] = useState(new DataTableFetcher<ProjectDto>(
-    `/Resource/${ResourceTypes.ProjectsProject}`));
+  const [fetcher] = useState(new DataTableFetcher<ProjectDto>(projectsEndpoint));
   const currentUser = useContext(CurrentUserContext);
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 

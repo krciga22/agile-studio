@@ -7,7 +7,7 @@ import type {
 } from "../../dtos/ProjectDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
 
-const baseUrl = '/Projects/Projects';
+export const baseUrl = '/Projects/Projects';
 
 export const getProjects = async (): Promise<AxiosResponse<PaginatedResultsDto<ProjectDto>>> => {
   return await Api.get(baseUrl);

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/ProjectDtos.tsx';
 import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
-import {getBacklogItemTypeSchemas} from "../services/api/endpoints/BacklogItemTypeSchema.tsx";
+import {getBacklogItemTypeSchemas} from "../services/api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
-import {getBacklogItemLinkTypeSchemas} from "../services/api/endpoints/BacklogItemLinkTypeSchema.tsx";
+import {getBacklogItemLinkTypeSchemas} from "../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../Constants.tsx";
 import type {
   ProblemDetailsErrorMap

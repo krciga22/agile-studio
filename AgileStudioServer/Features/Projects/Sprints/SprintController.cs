@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.Sprints
 {
     [ApiController]
-    [Route("Projects/[controller]")]
+    [Route("Projects/Sprints")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class SprintController : ControllerBase

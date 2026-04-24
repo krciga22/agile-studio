@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.Projects
 {
     [ApiController]
-    [Route("Projects/[controller]")]
+    [Route("Projects/Projects")]
     [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGetCollection(ResourceTypes.ProjectsProject)]
     [MapResourceGet(ResourceTypes.ProjectsProject)]

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
 {
     [ApiController]
-    [Route("Accounts/[controller]")]
+    [Route("Accounts/BacklogItemLinkTypeSchemas")]
     [ApiExplorerSettings(GroupName = "accounts")]
     [Authorize]
     public class BacklogItemLinkTypeSchemaController : ControllerBase

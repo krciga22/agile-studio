@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.BacklogItems
 {
     [ApiController]
-    [Route("Projects/[controller]")]
+    [Route("Projects/BacklogItems")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemController : ControllerBase

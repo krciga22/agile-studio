@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Accounts.WorkflowStates
 {
     [ApiController]
-    [Route("Accounts/[controller]")]
+    [Route("Accounts/WorkflowStates")]
     [ApiExplorerSettings(GroupName = "accounts")]
     [Authorize]
     public class WorkflowStateController : ControllerBase

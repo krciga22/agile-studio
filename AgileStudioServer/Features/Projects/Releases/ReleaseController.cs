@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.Releases
 {
     [ApiController]
-    [Route("Projects/[controller]")]
+    [Route("Projects/Releases")]
     [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGet(ResourceTypes.ReleasesRelease)]
     [MapResourcePost(ResourceTypes.ReleasesRelease)]

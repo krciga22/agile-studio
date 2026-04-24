@@ -1,7 +1,5 @@
 import './ProjectsMenu.css'
 import {type ReactElement, useContext, useState} from "react";
-import {getResources} from "../../../services/api/endpoints/resource.tsx";
-import ResourceTypes from "../../../services/api/ResourceTypes.tsx";
 import type {ProjectDto} from "../../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import ProjectSubMenu from "./ProjectSubMenu.tsx";
@@ -15,6 +13,7 @@ import {
   getProjectPagePath, getProjectsPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
+import {getProjects} from "../../../services/api/endpoints/projects/Projects.tsx";
 
 function ProjectsMenu() {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
@@ -30,7 +29,7 @@ function ProjectsMenu() {
 
     setIsRefreshing(true);
 
-    getResources<ProjectDto>(ResourceTypes.ProjectsProject)
+    getProjects()
       .then(response => {
         setProjects(response.data.items);
       })

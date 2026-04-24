@@ -3,8 +3,6 @@ import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
 import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
-import {deleteResource, getResource, updateResource} from "../../services/api/endpoints/resource.tsx";
-import ResourceTypes from "../../services/api/ResourceTypes.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
@@ -23,6 +21,7 @@ import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
 import { goToPage } from '../../PageRouterUtils.tsx';
 import {toast} from 'react-toastify';
+import {deleteProject, getProject, updateProject} from "../../services/api/endpoints/projects/Projects.tsx";
 
 type SettingsPageProps = {
   projectId: number
@@ -79,7 +78,7 @@ function SettingsPage(props: SettingsPageProps) {
   const _refresh = async () => {
     try{
       const promises = [
-        getResource<ProjectDto>(ResourceTypes.ProjectsProject, projectId),
+        getProject(projectId),
         getBacklogItemTypeSchemas(),
         getBacklogItemLinkTypeSchemas()
       ];
@@ -133,8 +132,7 @@ function SettingsPage(props: SettingsPageProps) {
         // todo include backlogItemLinkTypeSchemaId
       };
 
-      await updateResource<ProjectDto>(
-        ResourceTypes.ProjectsProject, projectId, projectPatchDto);
+      await updateProject(projectId, projectPatchDto);
     }
     catch (err) {
       console.log(err);
@@ -313,7 +311,7 @@ function SettingsPage(props: SettingsPageProps) {
                 confirmText={'Delete Project'}
                 onCancel={() => setIsConfirmingDelete(false)}
                 onConfirm={async () => {
-                  await deleteResource(ResourceTypes.ProjectsProject, project.id);
+                  await deleteProject(project.id);
                   toast.success('Project Deleted', Constants.DEFAULT_TOAST_PROPS);
                   goToPage(getProjectsPagePath());
                 }}

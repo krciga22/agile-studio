@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {createResource} from "../services/api/endpoints/resource.tsx";
-import ResourceTypes from "../services/api/ResourceTypes.tsx";
 import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/ProjectDtos.tsx';
 import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
 import {getBacklogItemTypeSchemas} from "../services/api/endpoints/BacklogItemTypeSchema.tsx";
@@ -24,6 +22,7 @@ import {
   getErrorMessageForAxiosError
 } from "../services/util/error.tsx";
 import {toast} from "react-toastify";
+import {createProject} from "../services/api/endpoints/projects/Projects.tsx";
 
 type Props = {
   isOpen: boolean;
@@ -103,8 +102,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
         backlogItemLinkTypeSchemaId: parseInt(backlogItemLinkTypeSchemaId)
       };
 
-      const response = await createResource<ProjectDto>(
-        ResourceTypes.ProjectsProject, projectPostDto);
+      const response = await createProject(projectPostDto);
 
       toast.success("Project Created", Constants.DEFAULT_TOAST_PROPS);
 

@@ -3,10 +3,9 @@ import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
 import type {ProjectDto} from "../../services/api/dtos/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
-import ResourceTypes from "../../services/api/ResourceTypes.tsx";
-import {getResource} from "../../services/api/endpoints/resource.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {getProject} from "../../services/api/endpoints/projects/Projects.tsx";
 
 type ReleasesPageProps = {
   projectId: number
@@ -31,7 +30,7 @@ function ReleasesPage(props: ReleasesPageProps) {
 
     setIsRefreshing(true);
 
-    getResource<ProjectDto>(ResourceTypes.ProjectsProject, projectId)
+    getProject(projectId)
       .then(response => {
         setProject(response.data);
       })

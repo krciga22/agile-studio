@@ -6,6 +6,7 @@ import type {FilterValue} from "./Filters.tsx";
 type Props = {
   name: string; // filter key
   endpoint: string; // API endpoint to load options from (e.g. '/Project/owners')
+  items: (data: object[]|{items: object[]}) => object[]; // function to extract items from API response
   value?: FilterValue;
   setValue: (name: string, value: FilterValue) => void;
   label?: string;
@@ -17,6 +18,7 @@ type Props = {
 export default function MultiSelectFilter({
   name,
   endpoint,
+  items,
   value,
   setValue,
   label,
@@ -33,21 +35,24 @@ export default function MultiSelectFilter({
       setIsLoading(true);
       try{
         const resp = await api.get(endpoint);
-        const data = resp.data as unknown;
+        if(resp.status !== 200){
+          console.error(`Failed to load filter options from ${endpoint}. Status: ${resp.status}`);
+          setOptions([]);
+          return;
+        }
+
         if(!mounted) return;
+
+        const data = resp.data;
+
         // Accept API responses that are either the new shape [{ value, label }] or
         // old-style objects where we should read valueField/labelField (or id/name/title)
-        const arr = Array.isArray(data) ? data as Array<unknown> : [];
+        const arr:object[] = items ? items(data) : data;
         const mapped = arr.map(d => {
           const obj = d as Record<string, unknown> | null;
-          // If the item already matches { value: unknown, label: string }
-          if(obj && ('value' in obj) && typeof obj['label'] === 'string'){
-            return { value: obj['value'] ?? '', label: String(obj['label']) } as FilterValue;
-          }
 
-          // Fallback to previous behavior: read valueField/labelField or common fallbacks
           const val = (obj && ((obj[valueField] ?? obj['id']))) ?? '';
-          const lab = (obj && ((obj[labelField] ?? obj['name'] ?? obj['title']))) ?? String(val);
+          const lab = (obj && ((obj[labelField] ?? obj['title']))) ?? String(val);
           return { value: val, label: String(lab) } as FilterValue;
         });
         setOptions(mapped as FilterValue[]);

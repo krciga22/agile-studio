@@ -147,7 +147,9 @@ function ProjectsDataTable() {
                    onClear={clearFilters}>
             <MultiSelectFilter
               name={"project"}
-              endpoint={"/Project"}
+              endpoint={projectsEndpoint}
+              items={data => Array.isArray(data) ? data : data.items}
+              label={"Project"}
               value={stagedFilters?.project}
               setValue={setStagedFilter} />
           </Filters>

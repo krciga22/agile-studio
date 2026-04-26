@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.Features.Auth.Auth
 {
-    public class CurrentUserClaimsIdentity : ClaimsIdentity
+    public class CurrentUserClaimsIdentity(string authenticationType) : ClaimsIdentity(authenticationType)
     {
         public void AddUserIdClaim(int userId)
         {

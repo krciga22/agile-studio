@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.APIs;
+using AgileStudioServer.Features.Auth.Auth;
 using System.Security.Claims;
 
 namespace AgileStudioServer.Core.Services
@@ -31,6 +32,25 @@ namespace AgileStudioServer.Core.Services
             SearchQuery = getCollectionQueryParams.SearchQuery;
 
             Sort = getCollectionQueryParams.Sort;
+        }
+
+        public int? GetCurrentUserId()
+        {
+            CurrentUserClaimsIdentity? currentUserIdentity = null;
+            foreach (ClaimsIdentity identity in currentUser?.Identities ?? [])
+            {
+                if (identity is CurrentUserClaimsIdentity claimsIdentity){
+                    currentUserIdentity = claimsIdentity;
+                    break;
+                }
+            }
+
+            if (currentUserIdentity == null){
+                return null;
+            }
+
+            return currentUserIdentity.GetUserIdClaimValue() ??
+                throw new Exception("User ID claim value is null");
         }
     }
 }

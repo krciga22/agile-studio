@@ -1,6 +1,9 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Roles;
 
 namespace AgileStudioServer.Features.Projects.Projects
 {
@@ -8,11 +11,16 @@ namespace AgileStudioServer.Features.Projects.Projects
     {
         private readonly ProjectRepository _ProjectRepository;
         private readonly ServiceContext _ServiceContext;
+        private readonly RoleGrantService _RoleGrantService;
 
-        public ProjectService(ProjectRepository projectRepository, ServiceContext serviceContext)
+        public ProjectService(
+            ProjectRepository projectRepository, 
+            ServiceContext serviceContext,
+            RoleGrantService roleGrantService)
         {
             _ProjectRepository = projectRepository;
             _ServiceContext = serviceContext;
+            _RoleGrantService = roleGrantService;
         }
 
         public override PaginationResults<ProjectModel> GetCollection()
@@ -31,7 +39,29 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public override ProjectModel Create(ProjectModel model)
         {
-            return _ProjectRepository.Create(model);
+            int? createdById = _ServiceContext.GetCurrentUserId();
+            if(createdById != null){
+                model.CreatedByID = createdById;
+            }
+
+            ProjectModel project = _ProjectRepository.Create(model);
+            if(project.CreatedByID != null)
+            {
+                var roleGrant = new RoleGrantModel(
+                    RoleKeys.PROJECTS_PROJECT_ADMIN,
+                    RoleSubjectTypes.USER,
+                    project.CreatedByID.Value.ToString()
+                )
+                {
+                    Scope = PermissionScopes.PROJECTS,
+                    ScopeID = project.ID.ToString(),
+                    CreatedByID = project.CreatedByID
+                };
+                   
+                _RoleGrantService.Create(roleGrant);
+            }
+
+            return project;
         }
 
         public override ProjectModel Update(ProjectModel model)

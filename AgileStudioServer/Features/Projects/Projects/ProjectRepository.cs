@@ -37,13 +37,12 @@ namespace AgileStudioServer.Features.Projects.Projects
             return GetPaginationResultsFromQuery(query, serviceContext, total);
         }
 
+        /// <summary>
+        /// Get projects readable by the current user.
+        /// </summary>
         public virtual PaginationResults<ProjectModel> GetProjectsForCurrentUser(ServiceContext serviceContext)
         {
-            var currentUserId = serviceContext.GetCurrentUserId();
-            if(currentUserId == null){
-                // todo use a dedicated exception
-                throw new Exception("Current user ID not found in service context");
-            }
+            var currentUserId = serviceContext.GetCurrentUserIdStrict();
 
             var query =
                 from project in _DBContext.Project

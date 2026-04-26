@@ -1,10 +1,13 @@
 ﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Auth.RoleGrants;
 using AgileStudioServerTest.Features.Users.Users;
 
 namespace AgileStudioServerTest.Features.Projects.Projects
@@ -17,15 +20,19 @@ namespace AgileStudioServerTest.Features.Projects.Projects
 
         private readonly UserFixture _userFixture;
 
+        private readonly RoleGrantFixture _RoleGrantFixture;
+
         public ProjectFixture(
             ProjectRepository projectRepository,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
             BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
-            UserFixture userFixture) : base(projectRepository)
+            UserFixture userFixture,
+            RoleGrantFixture roleGrantFixture) : base(projectRepository)
         {
             _backlogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _backlogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
             _userFixture = userFixture;
+            _RoleGrantFixture = roleGrantFixture;
         }
 
         public ProjectModel Create(
@@ -50,6 +57,17 @@ namespace AgileStudioServerTest.Features.Projects.Projects
         public ProjectModel? Get(int id)
         {
             return _Repository.Get(id);
+        }
+
+        public RoleGrantModel GrantAccess(int id, int userId, string roleKey)
+        {
+            return _RoleGrantFixture.Create(
+                subjectType: RoleSubjectTypes.USER,
+                subjectID: userId.ToString(),
+                roleKey: roleKey,
+                scope: PermissionScopes.PROJECTS,
+                scopeID: id.ToString()
+            );
         }
     }
 }

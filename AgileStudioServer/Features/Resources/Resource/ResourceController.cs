@@ -5,6 +5,8 @@ using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Resources;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +16,15 @@ namespace AgileStudioServer.Features.Resources.Resource
         Hydrator hydrator,
         IEnumerable<IResourceMap> resourceMaps,
         IEnumerable<IModelService> modelServices,
-        ServiceContext serviceContext
+        ServiceContext serviceContext,
+        PermissionCheckerService _PermissionCheckerService
         ) : ControllerBase
     {
         private readonly Hydrator _Hydrator = hydrator;
         private readonly IEnumerable<IResourceMap> _ResourceMaps = resourceMaps;
         private readonly IEnumerable<IModelService> _ModelServices = modelServices;
         private readonly ServiceContext _ServiceContext = serviceContext;
+        private readonly PermissionCheckerService permissionCheckerService = _PermissionCheckerService;
 
         public IResult GetCollection(HttpContext httpContext, string type, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -77,6 +81,14 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
 
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(), 
+                    resourceMap.GetResourcePermissionScope(),
+                    identifier.ToString(),
+                    resourceMap.GetResourceReadPermissionKey()
+                );
+
                 object? resourceModel = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
                     throw new ResourceNotFoundException(type, id);
 
@@ -89,6 +101,10 @@ namespace AgileStudioServer.Features.Resources.Resource
             catch (UnsupportedResourceTypeException)
             {
                 return Results.BadRequest();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Forbid();
             }
             catch (ModelNotFoundException)
             {

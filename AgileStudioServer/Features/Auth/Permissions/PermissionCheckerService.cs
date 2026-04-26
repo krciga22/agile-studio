@@ -7,6 +7,16 @@ namespace AgileStudioServer.Features.Auth.Permissions
     {
         private readonly RoleGrantRepository _RoleGrantRepository = roleGrantRepository;
 
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        public void ValidatePermissions(
+            string subjectType, string subjectId, string scope, 
+            string? scopeId, string permissionKey)
+        {
+            if (!CheckPermissions(subjectType, subjectId, scope, scopeId, permissionKey)){
+                throw new UnauthorizedAccessException("User does not have the required permissions.");
+            }
+        }
+
         public bool CheckPermissions(
             string subjectType, string subjectId, string scope, 
             string? scopeId, string permissionKey)

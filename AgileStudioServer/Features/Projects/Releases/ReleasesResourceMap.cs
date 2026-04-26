@@ -1,4 +1,5 @@
 using AgileStudioServer.Core.Resources;
+using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Projects.Releases
@@ -9,6 +10,16 @@ namespace AgileStudioServer.Features.Projects.Releases
         public string GetResourceType()
         {
             return ResourceTypes.ReleasesRelease;
+        }
+
+        public string GetResourcePermissionScope()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetResourceReadPermissionKey()
+        {
+            throw new NotImplementedException();
         }
 
         public Type GetResourceModelType()

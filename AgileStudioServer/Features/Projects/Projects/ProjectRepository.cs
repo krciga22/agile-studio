@@ -3,7 +3,10 @@ using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AgileStudioServer.Features.Projects.Projects
 {
@@ -23,49 +26,117 @@ namespace AgileStudioServer.Features.Projects.Projects
         {
             IQueryable<Project> query = _DBContext.Project;
 
-            if (!string.IsNullOrWhiteSpace(serviceContext.SearchQuery))
-            {
+            query = ApplySearchToQuery(query, serviceContext);
+
+            // todo apply filters to query
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query, serviceContext);
+
+            return GetPaginationResultsFromQuery(query, serviceContext, total);
+        }
+
+        public virtual PaginationResults<ProjectModel> GetProjectsForCurrentUser(ServiceContext serviceContext)
+        {
+            var currentUserId = serviceContext.GetCurrentUserId();
+            if(currentUserId == null){
+                // todo use a dedicated exception
+                throw new Exception("Current user ID not found in service context");
+            }
+
+            var query =
+                from project in _DBContext.Project
+                join grant in _DBContext.RoleGrant on project.ID.ToString() equals grant.ScopeID
+                join rolePerm in _DBContext.RolePermission on grant.RoleKey equals rolePerm.RoleKey
+                where grant.SubjectType == RoleSubjectTypes.USER
+                    && grant.SubjectID == currentUserId.ToString()
+                    && grant.Scope == PermissionScopes.PROJECTS
+                    && rolePerm.PermissionKey == PermissionKeys.PROJECTS_PROJECT_READ
+                select project;
+
+            query = ApplySearchToQuery(query, serviceContext);
+
+            // todo apply filters to query
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query, serviceContext);
+
+            return GetPaginationResultsFromQuery(query, serviceContext, total);
+        }
+
+        protected override DbSet<Project> GetDbSet()
+        {
+            return _DBContext.Project;
+        }
+
+        private static IQueryable<Project> ApplySearchToQuery(IQueryable<Project> query, ServiceContext serviceContext)
+        {
+            if (!string.IsNullOrWhiteSpace(serviceContext.SearchQuery)){
                 string searchLower = serviceContext.SearchQuery.ToLower();
                 query = query.Where(p => p.Title.ToLower().Contains(searchLower));
             }
 
-            int total = query.Count();
+            return query;
+        }
+
+        private static IOrderedQueryable<Project> ApplySortToQuery(IQueryable<Project> query, ServiceContext serviceContext)
+        {
+            IOrderedQueryable<Project>? result = null;
 
             int sortedFieldsCount = 0;
             if (!string.IsNullOrWhiteSpace(serviceContext.Sort))
             {
-                var sorts = serviceContext.Sort.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                foreach (var sort in sorts)
+                string[] sorts = serviceContext.Sort.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                foreach (string sort in sorts)
                 {
                     sortedFieldsCount++;
 
                     string[] sortParts = sort.Split(':', StringSplitOptions.RemoveEmptyEntries);
                     string sortField = sortParts[0];
                     bool descending = sortParts.Length > 1 && sortParts[1].Equals("desc", StringComparison.OrdinalIgnoreCase);
+
+                    Expression<Func<Project, string>> sortKeySelector = p => ((DateTimeOffset)p.CreatedOn).ToUnixTimeSeconds().ToString();
                     switch (sortField)
                     {
                         case "title":
-                            query = descending ? 
-                                query.OrderByDescending(p => p.Title) : 
-                                query.OrderBy(p => p.Title);
+                            sortKeySelector = p => p.Title;
                             break;
                         case "id":
-                            query = descending ? 
-                                query.OrderByDescending(p => p.ID) : 
-                                query.OrderBy(p => p.ID);
+                            sortKeySelector = p => p.ID.ToString();
                             break;
                         default:
                             sortedFieldsCount--;
                             break;
                     }
+
+                    if (result == null)
+                    {
+                        result = descending ?
+                            query.OrderByDescending(sortKeySelector) :
+                            query.OrderBy(sortKeySelector);
+                    }
+                    else
+                    {
+                        result = descending ?
+                            result.ThenByDescending(sortKeySelector) :
+                            result.ThenBy(sortKeySelector);
+                    }
                 }
             }
 
-            if(sortedFieldsCount == 0)
+            if (result == null)
             {
-                query = query.OrderByDescending(p => p.ID);
+                Expression<Func<Project, string>> sortKeySelector = p => p.ID.ToString();
+                result = query.OrderByDescending(sortKeySelector);
             }
 
+            return result;
+        }
+
+        private PaginationResults<ProjectModel> GetPaginationResultsFromQuery(IQueryable<Project> query, ServiceContext serviceContext, int total)
+        {
             int page = serviceContext.Page;
             int pageSize = serviceContext.ItemsPerPage;
             query = query.Skip((page - 1) * pageSize).Take(pageSize);
@@ -73,19 +144,6 @@ namespace AgileStudioServer.Features.Projects.Projects
             List<Project> entities = query.ToList();
             List<ProjectModel> models = HydrateModels(entities);
             return new PaginationResults<ProjectModel>(models, total, page, pageSize);
-        }
-
-        public virtual List<ProjectModel> GetByCreatedByUserId(int userId)
-        {
-            List<Project> entities = _DBContext.Project.Where(project =>
-                project.CreatedBy != null && project.CreatedBy.ID == userId).ToList();
-
-            return HydrateModels(entities);
-        }
-
-        protected override DbSet<Project> GetDbSet()
-        {
-            return _DBContext.Project;
         }
     }
 }

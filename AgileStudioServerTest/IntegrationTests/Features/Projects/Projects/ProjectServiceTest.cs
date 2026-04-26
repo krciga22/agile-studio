@@ -1,12 +1,15 @@
-﻿using AgileStudioServer.Data;
-using AgileStudioServer.Core.Pagination;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Users.Users;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 {
@@ -20,17 +23,25 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 
         private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
 
+        private readonly UserFixture _UserFixture;
+
+        private readonly ServiceContext _ServiceContext;
+
         public ProjectServiceTest(
             DBContext dbContext,
             ProjectService projectService,
             ProjectFixture projectFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
+            UserFixture userFixture,
+            ServiceContext serviceContext) : base(dbContext)
         {
             _projectService = projectService;
             _ProjectFixture = projectFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _UserFixture = userFixture;
+            _ServiceContext = serviceContext;
         }
 
         [Fact]
@@ -58,18 +69,34 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         }
 
         [Fact]
-        public void GetAll_ReturnsAllProjects()
+        public void GetCollection_ReturnsProjectsReadableByCurrentUser()
         {
-            var projects = new List<ProjectModel>
-            {
-                _ProjectFixture.Create("Test Project 1"),
-                _ProjectFixture.Create("Test Project 2")
+            var user = _UserFixture.Create();
+
+            var readableProjects = new List<ProjectModel>{
+                _ProjectFixture.Create("Owned Project 1", createdBy: user),
+                _ProjectFixture.Create("Owned Project 2", createdBy: user)
             };
 
-            _DBContext.GetType();
+            readableProjects.ForEach(project =>
+                _ProjectFixture.GrantAccess(
+                    project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN));
+
+            var nonReadableProjects = new List<ProjectModel>{
+                _ProjectFixture.Create("Other Project 1"),
+                _ProjectFixture.Create("Other Project 2")
+            };
+
+            var projects  = readableProjects.Concat(nonReadableProjects).ToList();
+
+            _ServiceContext.currentUser = IntegrationTestsUtil.
+                GenerateCurrentUserClaimsPrincipal(user.ID);
 
             PaginationResults<ProjectModel> returnedProjects = _projectService.GetCollection();
-            Assert.Equal(projects.Count, returnedProjects.Items.Count);
+
+            Assert.Equal(readableProjects.Count, returnedProjects.Items.Count);
+            readableProjects.ForEach(project =>
+                Assert.Contains(returnedProjects.Items, p => p.ID == project.ID));
         }
 
         [Fact]

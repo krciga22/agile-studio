@@ -25,7 +25,7 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public override PaginationResults<ProjectModel> GetCollection()
         {
-            return _ProjectRepository.GetAll(_ServiceContext);
+            return _ProjectRepository.GetProjectsForCurrentUser(_ServiceContext);
         }
 
         /// <exception cref="ModelNotFoundException"></exception>

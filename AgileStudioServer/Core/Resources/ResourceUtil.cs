@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Resources.Resource.Exceptions;
+﻿using AgileStudioServer.Core.Services;
+using AgileStudioServer.Features.Resources.Resource.Exceptions;
 
 namespace AgileStudioServer.Core.Resources
 {
@@ -14,6 +15,23 @@ namespace AgileStudioServer.Core.Resources
             }
 
             return resourceMap;
+        }
+
+        public static IModelService GetResourceService(
+            IEnumerable<IResourceMap> _ResourceMaps, 
+            IEnumerable<IModelService> _ModelServices, 
+            string type)
+        {
+            var resourceMap = GetResourceMap(_ResourceMaps, type);
+
+            IModelService? modelService = _ModelServices.FirstOrDefault(
+                repo => repo.GetType() == resourceMap.GetResourceServiceType());
+
+            if (modelService == null){
+                throw new ResourceServiceNotFound(type);
+            }
+
+            return modelService;
         }
     }
 }

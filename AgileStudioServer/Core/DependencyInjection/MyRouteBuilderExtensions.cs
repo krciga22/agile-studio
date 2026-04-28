@@ -53,7 +53,8 @@ public static class MyRouteBuilderExtensions
         IEndpointRouteBuilder app, Type controller, 
         MapResourceGetCollectionAttribute attribute)
     {
-        IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap resourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
@@ -77,7 +78,8 @@ public static class MyRouteBuilderExtensions
         IEndpointRouteBuilder app, Type controller, 
         MapResourceGetAttribute attribute)
     {
-        IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap resourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
@@ -103,7 +105,8 @@ public static class MyRouteBuilderExtensions
         IEndpointRouteBuilder app, Type controller, 
         MapResourcePostAttribute attribute)
     {
-        IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap resourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
@@ -140,7 +143,8 @@ public static class MyRouteBuilderExtensions
         IEndpointRouteBuilder app, Type controller,
         MapResourcePatchAttribute attribute)
     {
-        IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap resourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
@@ -171,7 +175,8 @@ public static class MyRouteBuilderExtensions
         IEndpointRouteBuilder app, Type controller,
         MapResourceDeleteAttribute attribute)
     {
-        IResourceMap resourceMap = GetResourceMap(app, attribute.Type);
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap resourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.Type);
         string basePath = GetBasePath(controller);
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
@@ -190,19 +195,6 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"DeleteResource/{attribute.Type}")
         .WithGroupName(groupName);
-    }
-
-    private static IResourceMap GetResourceMap(IEndpointRouteBuilder app, string resourceType)
-    {
-        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
-
-        var resourceMap = resourceMaps.FirstOrDefault(r =>
-                r.GetResourceType() == resourceType);
-        if (resourceMap == null){
-            throw new UnsupportedResourceTypeException(resourceType);
-        }
-
-        return resourceMap;
     }
 
     private static string GetBasePath(Type controller)

@@ -93,7 +93,8 @@ namespace AgileStudioServer.Features.Projects.Projects
         private void ValidateCanReadProject(int projectId)
         {
             int currentUserId = _ServiceContext.GetCurrentUserIdStrict();
-            IResourceMap resourceMap = GetResourceMap(ResourceTypes.ProjectsProject);
+            IResourceMap resourceMap = ResourceUtil.GetResourceMap(
+                _ResourceMaps, ResourceTypes.ProjectsProject);
 
             _PermissionCheckerService.ValidatePermissions(
                 RoleSubjectTypes.USER,
@@ -102,20 +103,6 @@ namespace AgileStudioServer.Features.Projects.Projects
                 projectId.ToString(),
                 resourceMap.GetResourceReadPermissionKey()
             );
-        }
-
-        // todo consolidate duplicates
-        /// <exception cref="UnsupportedResourceTypeException"></exception>
-        private IResourceMap GetResourceMap(string type)
-        {
-            var resourceMap = _ResourceMaps.FirstOrDefault(r =>
-                    r.GetResourceType() == type);
-            if (resourceMap == null)
-            {
-                throw new UnsupportedResourceTypeException(type);
-            }
-
-            return resourceMap;
         }
     }
 }

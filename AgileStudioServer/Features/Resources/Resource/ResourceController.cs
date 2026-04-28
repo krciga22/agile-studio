@@ -30,7 +30,7 @@ namespace AgileStudioServer.Features.Resources.Resource
         {
             try
             {
-                IResourceMap resourceMap = GetResourceMap(type);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = GetResourceService(type);
 
                 object? result = (resourceService.GetType().GetMethod("GetCollection")?.Invoke(resourceService, [])) ??
@@ -75,7 +75,7 @@ namespace AgileStudioServer.Features.Resources.Resource
         {
             try
             {
-                IResourceMap resourceMap = GetResourceMap(type);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = GetResourceService(type);
 
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
@@ -125,7 +125,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IModelService resourceService = GetResourceService(type);
-                IResourceMap resourceMap = GetResourceMap(type);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
 
                 var createDto = ApiUtilities.GetDtoFromData(data,
                     resourceMap.GetResourceDtoCreateType());
@@ -164,7 +164,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IModelService resourceService = GetResourceService(type);
-                IResourceMap resourceMap = GetResourceMap(type);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
 
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
@@ -242,22 +242,9 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
-        /// <exception cref="UnsupportedResourceTypeException"></exception>
-        private IResourceMap GetResourceMap(string type)
-        {
-            var resourceMap = _ResourceMaps.FirstOrDefault(r =>
-                    r.GetResourceType() == type);
-            if (resourceMap == null)
-            {
-                throw new UnsupportedResourceTypeException(type);
-            }
-
-            return resourceMap;
-        }
-
         public IModelService GetResourceService(string type)
         {
-            var resourceMap = GetResourceMap(type);
+            var resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
 
             IModelService? modelService = _ModelServices.FirstOrDefault(
                 repo => repo.GetType() == resourceMap.GetResourceServiceType());

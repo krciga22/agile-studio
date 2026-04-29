@@ -17,6 +17,7 @@ namespace AgileStudioServer.Core.Resources
             return resourceMap;
         }
 
+        /// <exception cref="ResourceServiceNotFoundException"></exception>
         public static IModelService GetModelService(
             IEnumerable<IModelService> _ModelServices,
             IResourceMap resourceMap)
@@ -25,7 +26,7 @@ namespace AgileStudioServer.Core.Resources
                 repo => repo.GetType() == resourceMap.GetResourceModelServiceType());
 
             if (modelService == null){
-                throw new ResourceServiceNotFound(resourceMap.GetResourceType());
+                throw new ResourceServiceNotFoundException(resourceMap.GetResourceType());
             }
 
             return modelService;

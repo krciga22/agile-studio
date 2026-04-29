@@ -17,18 +17,15 @@ namespace AgileStudioServer.Core.Resources
             return resourceMap;
         }
 
-        public static IModelService GetResourceService(
-            IEnumerable<IResourceMap> _ResourceMaps, 
-            IEnumerable<IModelService> _ModelServices, 
-            string type)
+        public static IModelService GetModelService(
+            IEnumerable<IModelService> _ModelServices,
+            IResourceMap resourceMap)
         {
-            var resourceMap = GetResourceMap(_ResourceMaps, type);
-
             IModelService? modelService = _ModelServices.FirstOrDefault(
-                repo => repo.GetType() == resourceMap.GetResourceServiceType());
+                repo => repo.GetType() == resourceMap.GetResourceModelServiceType());
 
             if (modelService == null){
-                throw new ResourceServiceNotFound(type);
+                throw new ResourceServiceNotFound(resourceMap.GetResourceType());
             }
 
             return modelService;

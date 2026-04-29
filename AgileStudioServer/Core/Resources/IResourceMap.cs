@@ -16,6 +16,6 @@
 
         Type GetResourceDtoUpdateType();
 
-        Type GetResourceServiceType();
+        Type GetResourceModelServiceType();
     }
 }

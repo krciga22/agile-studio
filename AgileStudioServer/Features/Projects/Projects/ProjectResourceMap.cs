@@ -41,7 +41,7 @@ namespace AgileStudioServer.Features.Projects.Projects
             return typeof(ProjectPatchDto);
         }
 
-        public Type GetResourceServiceType()
+        public Type GetResourceModelServiceType()
         {
             return typeof(ProjectService);
         }

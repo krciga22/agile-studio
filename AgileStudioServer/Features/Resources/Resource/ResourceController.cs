@@ -31,8 +31,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetResourceService(
-                    _ResourceMaps, _ModelServices, type);
+                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
                 object? result = (resourceService.GetType().GetMethod("GetCollection")?.Invoke(resourceService, [])) ??
                     throw new Exception($"Failed to get resource collection of type {type}.");
@@ -77,8 +76,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetResourceService(
-                    _ResourceMaps, _ModelServices, type);
+                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
@@ -127,8 +125,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetResourceService(
-                    _ResourceMaps, _ModelServices, type);
+                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
                 var createDto = ApiUtilities.GetDtoFromData(data,
                     resourceMap.GetResourceDtoCreateType());
@@ -167,8 +164,7 @@ namespace AgileStudioServer.Features.Resources.Resource
             try
             {
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetResourceService(
-                    _ResourceMaps, _ModelServices, type);
+                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
@@ -216,8 +212,8 @@ namespace AgileStudioServer.Features.Resources.Resource
         {
             try
             {
-                IModelService resourceService = ResourceUtil.GetResourceService(
-                    _ResourceMaps, _ModelServices, type);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
+                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");

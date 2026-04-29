@@ -42,7 +42,7 @@ namespace AgileStudioServer.Features.Projects.Releases
             return typeof(ReleasePatchDto);
         }
 
-        public Type GetResourceServiceType()
+        public Type GetResourceModelServiceType()
         {
             return typeof(ReleaseService);
         }

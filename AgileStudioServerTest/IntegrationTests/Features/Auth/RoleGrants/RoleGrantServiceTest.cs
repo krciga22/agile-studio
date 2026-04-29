@@ -147,7 +147,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RoleGrants
             string roleKey = role.RoleKey;
             string subjectType = RoleSubjectTypes.USER;
             string subjectId = user.ID.ToString();
-            string scope = PermissionScopes.PROJECTS;
+            string scope = PermissionScopes.PROJECTS_PROJECT;
             var grant = _RoleGrantFixture.Create(
                 roleKey: role.RoleKey,
                 subjectType: subjectType,
@@ -176,7 +176,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RoleGrants
             string roleKey = role.RoleKey;
             string subjectType = RoleSubjectTypes.USER;
             string subjectId = user.ID.ToString();
-            string scope = PermissionScopes.PROJECTS;
+            string scope = PermissionScopes.PROJECTS_PROJECT;
             string scopeId = project.ID.ToString();
             var grant = _RoleGrantFixture.Create(
                 roleKey: role.RoleKey,

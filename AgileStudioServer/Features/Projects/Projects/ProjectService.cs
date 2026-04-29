@@ -53,7 +53,7 @@ namespace AgileStudioServer.Features.Projects.Projects
                     project.CreatedByID.Value.ToString()
                 )
                 {
-                    Scope = PermissionScopes.PROJECTS,
+                    Scope = PermissionScopes.PROJECTS_PROJECT,
                     ScopeID = project.ID.ToString(),
                     CreatedByID = project.CreatedByID
                 };

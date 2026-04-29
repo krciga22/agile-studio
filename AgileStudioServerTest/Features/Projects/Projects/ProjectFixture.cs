@@ -65,7 +65,7 @@ namespace AgileStudioServerTest.Features.Projects.Projects
                 subjectType: RoleSubjectTypes.USER,
                 subjectID: userId.ToString(),
                 roleKey: roleKey,
-                scope: PermissionScopes.PROJECTS,
+                scope: PermissionScopes.PROJECTS_PROJECT,
                 scopeID: id.ToString()
             );
         }

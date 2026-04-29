@@ -293,7 +293,7 @@ namespace AgileStudioCLI.FixtureSets
                 roleKey: role.RoleKey,
                 subjectType: RoleSubjectTypes.USER,
                 subjectID: user.ID.ToString(),
-                scope: PermissionScopes.PROJECTS,
+                scope: PermissionScopes.PROJECTS_PROJECT,
                 scopeID: project.ID.ToString(),
                 createdBy: user);
         }

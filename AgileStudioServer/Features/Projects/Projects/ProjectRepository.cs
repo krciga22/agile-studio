@@ -50,7 +50,7 @@ namespace AgileStudioServer.Features.Projects.Projects
                 join rolePerm in _DBContext.RolePermission on grant.RoleKey equals rolePerm.RoleKey
                 where grant.SubjectType == RoleSubjectTypes.USER
                     && grant.SubjectID == currentUserId.ToString()
-                    && grant.Scope == PermissionScopes.PROJECTS
+                    && grant.Scope == PermissionScopes.PROJECTS_PROJECT
                     && rolePerm.PermissionKey == PermissionKeys.PROJECTS_PROJECT_READ
                 select project;
 

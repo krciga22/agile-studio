@@ -13,7 +13,7 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public string GetResourcePermissionScope()
         {
-            return PermissionScopes.PROJECTS;
+            return PermissionScopes.PROJECTS_PROJECT;
         }
 
         public string GetResourceReadPermissionKey()

@@ -39,7 +39,7 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
                         RoleSubjectTypes.USER,
                         createdBy.Value.ToString())
                 {
-                    Scope = PermissionScopes.PROJECTS,
+                    Scope = PermissionScopes.PROJECTS_PROJECT,
                     ScopeID = projectModel.ID.ToString()
                 };
                 roleGrantService.Create(roleGrant);

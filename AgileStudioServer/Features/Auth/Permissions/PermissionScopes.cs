@@ -2,6 +2,6 @@
 {
     public class PermissionScopes
     {
-        public const string PROJECTS = "projects";
+        public const string PROJECTS_PROJECT = "projects.project";
     }
 }

@@ -2,6 +2,7 @@
 {
     public class Scopes
     {
+        public const string GLOBAL = "global";
         public const string ACCOUNT = "account";
         public const string PROJECT = "project";
         public const string PROJECT_BACKLOG_ITEM = "project.backlogItem";

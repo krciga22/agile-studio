@@ -1,6 +1,6 @@
 namespace AgileStudioServer.Features.Auth.RolePermissions
 {
-    public class RolePermissionModel(string roleKey, string permissionKey, string? scope = null)
+    public class RolePermissionModel(string roleKey, string permissionKey, string scope = Scopes.Scopes.GLOBAL)
     {
         public int ID { get; set; }
 
@@ -8,7 +8,7 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
 
         public string PermissionKey { get; set; } = permissionKey;
 
-        public string? Scope { get; set; } = scope;
+        public string Scope { get; set; } = scope;
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 

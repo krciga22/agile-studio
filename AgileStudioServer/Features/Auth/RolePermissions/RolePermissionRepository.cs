@@ -10,7 +10,7 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
     {
         public override object[] GetIdentifier(RolePermissionModel model)
         {
-            return [model.RoleKey, model.PermissionKey];
+            return [model.RoleKey, model.PermissionKey, model.Scope];
         }
 
         /// <summary>

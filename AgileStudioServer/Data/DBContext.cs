@@ -147,7 +147,7 @@ namespace AgileStudioServer.Data
                 .HasDefaultValue(Scopes.GLOBAL);
 
             modelBuilder.Entity<RolePermission>()
-                .HasKey(rp => new { rp.RoleKey, rp.PermissionKey }) // todo add scope
+                .HasKey(rp => new { rp.RoleKey, rp.PermissionKey, rp.Scope }) // todo add scope
                 .HasName("pk_role_permission");
 
             modelBuilder.Entity<RolePermission>()

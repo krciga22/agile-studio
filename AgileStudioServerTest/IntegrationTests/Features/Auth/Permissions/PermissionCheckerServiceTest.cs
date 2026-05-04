@@ -1,6 +1,7 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServerTest.Features.Auth.Permissions;
 using AgileStudioServerTest.Features.Auth.RoleGrants;
 using AgileStudioServerTest.Features.Auth.RolePermissions;
@@ -42,7 +43,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsTrue_WhenPermissionExists()
         {
-            var scope = PermissionScopes.PROJECTS_PROJECT;
+            var scope = Scopes.PROJECT;
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
@@ -72,7 +73,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenPermissionNotExists()
         {
-            var scope = PermissionScopes.PROJECTS_PROJECT;
+            var scope = Scopes.PROJECT;
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
@@ -97,7 +98,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenSubjectIsDifferent()
         {
-            var scope = PermissionScopes.PROJECTS_PROJECT;
+            var scope = Scopes.PROJECT;
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
@@ -127,7 +128,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenScopeIsDifferent()
         {
-            var scope = PermissionScopes.PROJECTS_PROJECT;
+            var scope = Scopes.PROJECT;
             var differentScope = "different-scope";
 
             var user = _UserFixture.Create();
@@ -157,7 +158,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenScopeIdIsDifferent()
         {
-            var scope = PermissionScopes.PROJECTS_PROJECT;
+            var scope = Scopes.PROJECT;
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);

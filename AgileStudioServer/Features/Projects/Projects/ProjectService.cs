@@ -1,9 +1,9 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 
 namespace AgileStudioServer.Features.Projects.Projects
 {
@@ -53,7 +53,7 @@ namespace AgileStudioServer.Features.Projects.Projects
                     project.CreatedByID.Value.ToString()
                 )
                 {
-                    Scope = PermissionScopes.PROJECTS_PROJECT,
+                    Scope = Scopes.PROJECT,
                     ScopeID = project.ID.ToString(),
                     CreatedByID = project.CreatedByID
                 };

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
@@ -65,7 +65,7 @@ namespace AgileStudioServerTest.Features.Projects.Projects
                 subjectType: RoleSubjectTypes.USER,
                 subjectID: userId.ToString(),
                 roleKey: roleKey,
-                scope: PermissionScopes.PROJECTS_PROJECT,
+                scope: Scopes.PROJECT,
                 scopeID: id.ToString()
             );
         }

@@ -1,7 +1,7 @@
 ﻿using AgileStudioServer.Data;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
@@ -293,7 +293,7 @@ namespace AgileStudioCLI.FixtureSets
                 roleKey: role.RoleKey,
                 subjectType: RoleSubjectTypes.USER,
                 subjectID: user.ID.ToString(),
-                scope: PermissionScopes.PROJECTS_PROJECT,
+                scope: Scopes.PROJECT,
                 scopeID: project.ID.ToString(),
                 createdBy: user);
         }

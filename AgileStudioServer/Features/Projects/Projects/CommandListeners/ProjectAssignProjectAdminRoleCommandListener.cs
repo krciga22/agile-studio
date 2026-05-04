@@ -1,9 +1,9 @@
 ﻿using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Features.Auth.Auth;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServer.Features.Resources.Resource.Commands;
 
@@ -39,7 +39,7 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
                         RoleSubjectTypes.USER,
                         createdBy.Value.ToString())
                 {
-                    Scope = PermissionScopes.PROJECTS_PROJECT,
+                    Scope = Scopes.PROJECT,
                     ScopeID = projectModel.ID.ToString()
                 };
                 roleGrantService.Create(roleGrant);

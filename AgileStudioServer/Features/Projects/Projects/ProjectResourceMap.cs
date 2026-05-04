@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Core.Resources;
 using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Projects.Projects
@@ -13,7 +14,7 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public string GetResourcePermissionScope()
         {
-            return PermissionScopes.PROJECTS_PROJECT;
+            return Scopes.PROJECT;
         }
 
         public string GetResourceReadPermissionKey()

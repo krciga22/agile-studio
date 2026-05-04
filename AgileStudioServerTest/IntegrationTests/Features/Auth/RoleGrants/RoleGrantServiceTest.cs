@@ -1,7 +1,7 @@
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Features.Auth.RoleGrants;
@@ -147,7 +147,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RoleGrants
             string roleKey = role.RoleKey;
             string subjectType = RoleSubjectTypes.USER;
             string subjectId = user.ID.ToString();
-            string scope = PermissionScopes.PROJECTS_PROJECT;
+            string scope = Scopes.PROJECT;
             var grant = _RoleGrantFixture.Create(
                 roleKey: role.RoleKey,
                 subjectType: subjectType,
@@ -176,7 +176,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RoleGrants
             string roleKey = role.RoleKey;
             string subjectType = RoleSubjectTypes.USER;
             string subjectId = user.ID.ToString();
-            string scope = PermissionScopes.PROJECTS_PROJECT;
+            string scope = Scopes.PROJECT;
             string scopeId = project.ID.ToString();
             var grant = _RoleGrantFixture.Create(
                 roleKey: role.RoleKey,

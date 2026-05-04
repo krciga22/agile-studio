@@ -220,11 +220,11 @@ namespace AgileStudioServer.Data
         {
             SeedProjectRoles(modelBuilder);
             SeedProjectPermissions(modelBuilder);
-            //SeedProjectAdminRolePermissions(modelBuilder);
-            //SeedProjectManagerRolePermissions(modelBuilder);
-            //SeedProjectDeveloperRolePermissions(modelBuilder);
-            //SeedProjectTesterRolePermissions(modelBuilder);
-            //SeedProjectBusinessAnalystRolePermissions(modelBuilder);
+            SeedProjectAdminRolePermissions(modelBuilder);
+            SeedProjectManagerRolePermissions(modelBuilder);
+            SeedProjectDeveloperRolePermissions(modelBuilder);
+            SeedProjectTesterRolePermissions(modelBuilder);
+            SeedProjectBusinessAnalystRolePermissions(modelBuilder);
         }
 
         private void SeedProjectRoles(ModelBuilder modelBuilder)

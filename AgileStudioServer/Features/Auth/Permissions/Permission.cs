@@ -10,11 +10,6 @@ namespace AgileStudioServer.Features.Auth.Permissions
 
         public string? Description { get; set; }
 
-        /// <summary>
-        /// Gets or sets the scope in which this permission can be applied.
-        /// </summary>
-        public string? Scope { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;

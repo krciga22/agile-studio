@@ -41,41 +41,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         }
 
         [Fact]
-        public void GetByScope_ReturnsPermissionsInScope()
-        {
-            var inScope = "in-scope";
-            var notInScope = "not-in-scope";
-
-            var permissionsInScope = new List<PermissionModel>
-            {
-                _PermissionFixture.Create("test-permission-1", scope: inScope),
-                _PermissionFixture.Create("test-permission-2", scope: inScope),
-                _PermissionFixture.Create("test-permission-3", scope: inScope),
-            };
-            var permissionsNotInScope = new List<PermissionModel>
-            {
-                _PermissionFixture.Create("test-permission-4", scope: notInScope),
-                _PermissionFixture.Create("test-permission-5", scope: notInScope),
-                _PermissionFixture.Create("test-permission-6", scope: notInScope),
-            };
-
-            var returnedPermissionsInScope = _PermissionService.GetByScope(inScope);
-            var returnedPermissionsNotInScope = _PermissionService.GetByScope(notInScope);
-
-            Assert.Equal(permissionsInScope.Count, returnedPermissionsInScope.Count);
-            foreach (var permission in returnedPermissionsInScope)
-            {
-                Assert.Equal(permission.Scope, inScope);
-            }
-
-            Assert.Equal(permissionsNotInScope.Count, returnedPermissionsNotInScope.Count);
-            foreach (var permission in returnedPermissionsNotInScope)
-            {
-                Assert.Equal(permission.Scope, notInScope);
-            }
-        }
-
-        [Fact]
         public void Update_ReturnsUpdatedPermission()
         {
             var permission = _PermissionFixture.Create();

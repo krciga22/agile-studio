@@ -264,157 +264,131 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Permission>().HasData(
                 new Permission(PermissionKeys.PROJECTS_PROJECTS_CREATE, "Projects Create")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECTS_READ, "Projects Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_READ, "Project Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_UPDATE, "Project Update")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_DELETE, "Project Delete")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD, "Project Members Add")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, "Project Members Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, "Project Member Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE, "Project Member Remove")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE, "Project Member Grant Role")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE, "Project Member Revoke Role")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, "Backlog Items Create")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, "Backlog Items Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, "Backlog Item Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, "Backlog Item Update")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, "Backlog Item Delete")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASES_CREATE, "Releases Create")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASES_READ, "Releases Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_READ, "Release Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_UPDATE, "Release Update")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_RELEASE_DELETE, "Release Delete")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINTS_CREATE, "Sprints Create")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINTS_READ, "Sprints Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_READ, "Sprint Read")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_UPDATE, "Sprint Update")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 },
                 new Permission(PermissionKeys.PROJECTS_SPRINT_DELETE, "Sprint Delete")
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemPermission = true
                 }

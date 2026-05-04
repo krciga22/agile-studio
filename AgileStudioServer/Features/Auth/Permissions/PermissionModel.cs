@@ -8,8 +8,6 @@ namespace AgileStudioServer.Features.Auth.Permissions
 
         public string? Description { get; set; }
 
-        public string? Scope { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;

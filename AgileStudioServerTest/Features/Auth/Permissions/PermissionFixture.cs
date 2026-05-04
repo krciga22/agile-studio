@@ -26,7 +26,6 @@ namespace AgileStudioServerTest.Features.Auth.Permissions
             var permission = new PermissionModel(permissionKey, title)
             {
                 Description = description,
-                Scope = scope,
                 CreatedByID = createdBy.ID,
                 IsSystemPermission = isSystemPermission ?? false
             };

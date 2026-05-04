@@ -11,11 +11,6 @@ namespace AgileStudioServer.Features.Auth.Permissions
             return _PermissionRepository.Get(permissionKey);
         }
 
-        public virtual List<PermissionModel> GetByScope(string scope)
-        {
-            return _PermissionRepository.GetByScope(scope);
-        }
-
         public virtual PermissionModel Create(PermissionModel permission)
         {
             return _PermissionRepository.Create(permission);

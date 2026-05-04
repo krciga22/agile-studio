@@ -15,7 +15,6 @@ namespace AgileStudioServerTest.Features.Auth.Permissions
             string? permissionKey = null,
             string? title = null,
             string? description = null,
-            string? scope = null,
             UserModel? createdBy = null,
             bool? isSystemPermission = false)
         {

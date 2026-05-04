@@ -29,6 +29,7 @@ namespace AgileStudioServerTest.Features.Auth.RolePermissions
         public RolePermissionModel Create(
             RoleModel? role = null,
             PermissionModel? permission = null,
+            string? scope = null,
             UserModel? createdBy = null,
             bool? isSystemRolePermission = false)
         {
@@ -36,7 +37,7 @@ namespace AgileStudioServerTest.Features.Auth.RolePermissions
             permission ??= _permissionFixture.Create();
             createdBy ??= _userFixture.Create();
 
-            var model = new RolePermissionModel(role.RoleKey, permission.PermissionKey)
+            var model = new RolePermissionModel(role.RoleKey, permission.PermissionKey, scope)
             {
                 CreatedByID = createdBy.ID,
                 IsSystemRolePermission = isSystemRolePermission ?? false

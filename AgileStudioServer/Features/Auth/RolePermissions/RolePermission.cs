@@ -4,7 +4,7 @@ using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Auth.RolePermissions
 {
-    public class RolePermission(string roleKey, string permissionKey)
+    public class RolePermission(string roleKey, string permissionKey, string? scope = null)
     {
         public string RoleKey { get; set; } = roleKey;
 
@@ -13,6 +13,12 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
         public string PermissionKey { get; set; } = permissionKey;
 
         public Permission Permission { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets the scope in which this role can use
+        /// this permission.
+        /// </summary>
+        public string? Scope { get; set; } = scope;
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 

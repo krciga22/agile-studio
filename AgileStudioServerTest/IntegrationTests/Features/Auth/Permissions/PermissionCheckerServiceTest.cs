@@ -47,8 +47,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create(scope: scope);
-            var rolePermission = _RolePermissionFixture.Create(role, permission);
+            var permission = _PermissionFixture.Create();
+            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
             var roleKey = role.RoleKey;
@@ -77,8 +77,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create(scope: scope);
-            var rolePermission = _RolePermissionFixture.Create(role, permission);
+            var permission = _PermissionFixture.Create();
+            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
             var roleKey = role.RoleKey;
@@ -102,8 +102,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create(scope: scope);
-            var rolePermission = _RolePermissionFixture.Create(role, permission);
+            var permission = _PermissionFixture.Create();
+            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
 
             var roleKey = role.RoleKey;
             var permissionKey = permission.PermissionKey;
@@ -133,8 +133,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: differentScope);
-            var permission = _PermissionFixture.Create(scope: differentScope);
-            var rolePermission = _RolePermissionFixture.Create(role, permission);
+            var permission = _PermissionFixture.Create();
+            var rolePermission = _RolePermissionFixture.Create(role, permission, differentScope);
 
             var roleKey = role.RoleKey;
             var permissionKey = permission.PermissionKey;
@@ -162,8 +162,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
 
             var user = _UserFixture.Create();
             var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create(scope: scope);
-            var rolePermission = _RolePermissionFixture.Create(role, permission);
+            var permission = _PermissionFixture.Create();
+            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
             var roleKey = role.RoleKey;

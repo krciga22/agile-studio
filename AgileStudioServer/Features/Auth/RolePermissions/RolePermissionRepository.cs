@@ -35,11 +35,11 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
 
         /// <summary>
         /// Get all role permissions (roles and permissions) 
-        /// assigned to a given scope and scope ID.
+        /// assigned to a given scope.
         /// </summary>
         public List<RolePermissionModel> GetByScope(string scope)
         {
-            var entities = GetDbSet().Where(rp => rp.Role.Scope == scope);
+            var entities = GetDbSet().Where(rp => rp.Scope == scope);
 
             return HydrateModels([.. entities]);
         }

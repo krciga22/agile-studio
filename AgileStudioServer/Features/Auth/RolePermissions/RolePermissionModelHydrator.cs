@@ -35,7 +35,7 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
             if (from is RolePermission)
             {
                 var entity = (RolePermission)from;
-                model = new RolePermissionModel(entity.RoleKey, entity.PermissionKey);
+                model = new RolePermissionModel(entity.RoleKey, entity.PermissionKey, entity.Scope);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
@@ -62,6 +62,7 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
 
                 model.RoleKey = entity.RoleKey;
                 model.PermissionKey = entity.PermissionKey;
+                model.Scope = entity.Scope;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
                 model.IsSystemRolePermission = entity.IsSystemRolePermission;

@@ -104,12 +104,14 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.RolePermissions
 
             var rolePermissionInScope = _RolePermissionFixture.Create(
                 _RoleFixture.Create("test-role-in-scope", scope: inScope),
-                _PermissionFixture.Create("test-permission-in-scope", scope: inScope)
+                _PermissionFixture.Create("test-permission-in-scope"),
+                scope: inScope
             );
 
             var rolePermissionNotInScope = _RolePermissionFixture.Create(
                 _RoleFixture.Create("test-role-not-in-scope", scope: notInScope),
-                _PermissionFixture.Create("test-permission-not-in-scope", scope: notInScope)
+                _PermissionFixture.Create("test-permission-not-in-scope"),
+                scope: notInScope
             );
 
             var returnedRolePermissionsInScope = _RolePermissionService.GetByScope(inScope);

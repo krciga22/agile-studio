@@ -399,122 +399,122 @@ namespace AgileStudioServer.Data
         {
             var roleKey = RoleKeys.PROJECTS_PROJECT_ADMIN;
             modelBuilder.Entity<RolePermission>().HasData(
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_DELETE, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
@@ -526,117 +526,117 @@ namespace AgileStudioServer.Data
         {
             var roleKey = RoleKeys.PROJECTS_PROJECT_MANAGER;
             modelBuilder.Entity<RolePermission>().HasData(
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_UPDATE, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_ADD, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REMOVE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_GRANT_ROLE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_REVOKE_ROLE, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_CREATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASES_READ, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_READ, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_UPDATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_RELEASE_DELETE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_CREATE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINTS_READ, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_READ, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_UPDATE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_SPRINT_DELETE, Scopes.PROJECT_SPRINT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
@@ -648,42 +648,42 @@ namespace AgileStudioServer.Data
         {
             var roleKey = RoleKeys.PROJECTS_PROJECT_DEVELOPER;
             modelBuilder.Entity<RolePermission>().HasData(
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_CREATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
@@ -695,37 +695,37 @@ namespace AgileStudioServer.Data
         {
             var roleKey = RoleKeys.PROJECTS_PROJECT_TESTER;
             modelBuilder.Entity<RolePermission>().HasData(
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
@@ -737,37 +737,37 @@ namespace AgileStudioServer.Data
         {
             var roleKey = RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST;
             modelBuilder.Entity<RolePermission>().HasData(
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_READ, Scopes.PROJECT)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBERS_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_PROJECT_MEMBER_READ, Scopes.PROJECT_MEMBER)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEMS_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_READ, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_UPDATE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
-                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE)
+                new RolePermission(roleKey, PermissionKeys.PROJECTS_BACKLOG_ITEM_DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true

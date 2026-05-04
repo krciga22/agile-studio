@@ -67,7 +67,7 @@ namespace AgileStudioServer.Features.Auth.RoleGrants
                               && rg.SubjectID == subjectId
                               && rg.Scope == scope
                               && rg.ScopeID == scopeId
-                              // && p.Scope == scope // todo change to rp.Scope when implemented
+                              && rp.Scope == scope
                               && p.PermissionKey == permissionKey
                         select rg;
 

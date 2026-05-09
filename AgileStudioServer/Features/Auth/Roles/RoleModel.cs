@@ -10,9 +10,6 @@
 
         public string Scope { get; set; } = scope;
 
-        // todo remove
-        public string? ScopeID { get; set; }
-
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int? CreatedByID { get; set; } = null!;

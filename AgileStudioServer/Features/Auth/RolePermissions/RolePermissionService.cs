@@ -11,14 +11,14 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
             return _RolePermissionRepository.Get([roleKey, permissionKey, scope]);
         }
 
-        public List<RolePermissionModel> GetByRole(string roleKey)
+        public List<RolePermissionModel> GetByRole(string roleKey, string? scope = null)
         {
-            return _RolePermissionRepository.GetByRole(roleKey);
+            return _RolePermissionRepository.GetByRole(roleKey, scope);
         }
 
-        public List<RolePermissionModel> GetByPermission(string permissionKey)
+        public List<RolePermissionModel> GetByPermission(string permissionKey, string? scope = null)
         {
-            return _RolePermissionRepository.GetByPermission(permissionKey);
+            return _RolePermissionRepository.GetByPermission(permissionKey, scope);
         }
 
         public List<RolePermissionModel> GetByScope(string scope)

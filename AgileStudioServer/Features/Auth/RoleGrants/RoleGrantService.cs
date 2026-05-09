@@ -18,6 +18,12 @@ namespace AgileStudioServer.Features.Auth.RoleGrants
             return _RoleGrantRepository.GetRoleGrants(roleKey, subjectType, subjectId, scope, scopeId);
         }
 
+        public virtual List<RoleGrantModel> GetRoleGrantsBySubjectScopeAndPermission(
+            string subjectType, string subjectId, string scope, string? scopeId, string permissionKey)
+        {
+            return _RoleGrantRepository.GetRoleGrantsBySubjectScopeAndPermission(subjectType, subjectId, scope, scopeId, permissionKey);
+        }
+
         public virtual RoleGrantModel Create(RoleGrantModel grant)
         {
             return _RoleGrantRepository.Create(grant);

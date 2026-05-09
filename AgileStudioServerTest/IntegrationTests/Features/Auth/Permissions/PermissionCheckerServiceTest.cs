@@ -1,12 +1,14 @@
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServerTest.Features.Auth.Permissions;
 using AgileStudioServerTest.Features.Auth.RoleGrants;
 using AgileStudioServerTest.Features.Auth.RolePermissions;
 using AgileStudioServerTest.Features.Auth.Roles;
 using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Projects.Sprints;
 using AgileStudioServerTest.Features.Users.Users;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
@@ -19,6 +21,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         private readonly RolePermissionFixture _RolePermissionFixture;
         private readonly UserFixture _UserFixture;
         private readonly ProjectFixture _ProjectFixture;
+        private readonly SprintFixture _SprintFixture;
         private readonly PermissionFixture _PermissionFixture;
 
         public PermissionCheckerServiceTest(
@@ -29,6 +32,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
             RolePermissionFixture rolePermissionFixture,
             UserFixture userFixture,
             ProjectFixture projectFixture,
+            SprintFixture sprintFixture,
             PermissionFixture permissionFixture) : base(dbContext)
         {
             _PermissionCheckerService = permissionCheckerService;
@@ -37,35 +41,43 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
             _RolePermissionFixture = rolePermissionFixture;
             _UserFixture = userFixture;
             _ProjectFixture = projectFixture;
+            _SprintFixture = sprintFixture;
             _PermissionFixture = permissionFixture;
         }
 
         [Fact]
-        public void CheckPermissions_ReturnsTrue_WhenPermissionExists()
+        public void CheckPermissionsForScope_ReturnsTrue_WhenPermissionExists()
         {
-            var scope = Scopes.PROJECT;
-
             var user = _UserFixture.Create();
-            var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create();
-            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
-            var roleKey = role.RoleKey;
-            var permissionKey = permission.PermissionKey;
-            var subjectType = RoleSubjectTypes.USER;
-            var subjectId = user.ID.ToString();
-            var scopeId = project.ID.ToString();
-
-            _RoleGrantFixture.Create(
-                roleKey: roleKey,
-                subjectType: subjectType,
-                subjectID: subjectId,
-                scope: scope,
-                scopeID: scopeId);
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
             var result = _PermissionCheckerService.CheckPermissions(
-                subjectType, subjectId, scope, scopeId, permissionKey);
+                RoleSubjectTypes.USER,
+                user.ID.ToString(),
+                Scopes.PROJECT,
+                project.ID.ToString(),
+                PermissionKeys.READ);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void CheckPermissionsForChildScope_ReturnsTrue_WhenParentScopePermissionExists()
+        {
+            var user = _UserFixture.Create();
+            var project = _ProjectFixture.Create();
+            var sprint = _SprintFixture.Create(project: project);
+
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var result = _PermissionCheckerService.CheckPermissions(
+                RoleSubjectTypes.USER,
+                user.ID.ToString(),
+                Scopes.PROJECT_SPRINT,
+                sprint.ID.ToString(),
+                PermissionKeys.READ);
 
             Assert.True(result);
         }

@@ -17,20 +17,30 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
         /// Get all role permissions (permissions) assigned 
         /// to a given role.
         /// </summary>
-        public List<RolePermissionModel> GetByRole(string roleKey)
+        public List<RolePermissionModel> GetByRole(string roleKey, string? scope = null)
         {
-            var entities = GetDbSet().Where(rp => rp.RoleKey == roleKey);
-            return HydrateModels([.. entities]);
+            var query = GetDbSet().Where(rp => rp.RoleKey == roleKey);
+
+            if(scope != null){
+                query = query.Where(rp => rp.Scope == scope);
+            }
+
+            return HydrateModels([.. query]);
         }
 
         /// <summary>
         /// Get all role permissions (roles) assigned 
         /// to a given permission.
         /// </summary>
-        public List<RolePermissionModel> GetByPermission(string permissionKey)
+        public List<RolePermissionModel> GetByPermission(string permissionKey, string? scope = null)
         {
-            var entities = GetDbSet().Where(rp => rp.PermissionKey == permissionKey);
-            return HydrateModels([.. entities]);
+            var query = GetDbSet().Where(rp => rp.PermissionKey == permissionKey);
+
+            if (scope != null){
+                query = query.Where(rp => rp.Scope == scope);
+            }
+
+            return HydrateModels([.. query]);
         }
 
         /// <summary>

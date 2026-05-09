@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace AgileStudioServer.Features.Auth.RoleGrants
 {
-    public class RoleGrant(string roleKey, string subjectType, string subjectID, string? scope, string? scopeID)
+    public class RoleGrant(string roleKey, string subjectType, string subjectID, string scope = Scopes.Scopes.GLOBAL, string? scopeID = null)
     {
         public int ID { get; set; }
 
@@ -29,7 +29,7 @@ namespace AgileStudioServer.Features.Auth.RoleGrants
         /// Gets or sets the scope in which this role is 
         /// being granted.
         /// </summary>
-        public string? Scope { get; set; } = scope;
+        public string Scope { get; set; } = scope;
 
         /// <summary>
         /// Gets or sets the ID of the resource for which 
@@ -45,7 +45,7 @@ namespace AgileStudioServer.Features.Auth.RoleGrants
 
         public User? CreatedBy { get; set; } = null!;
 
-        private static string CreateHash(string roleKey, string subjectType, string subjectID, string? scope, string? scopeID)
+        private static string CreateHash(string roleKey, string subjectType, string subjectID, string scope, string? scopeID)
         {
             return Convert.ToHexString(MD5.HashData(System.Text.Encoding.UTF8.GetBytes($"{roleKey}:{subjectType}:{subjectID}:{scope}:{scopeID}")));
         }

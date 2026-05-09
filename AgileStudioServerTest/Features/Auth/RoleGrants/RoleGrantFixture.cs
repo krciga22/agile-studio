@@ -1,4 +1,5 @@
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.Features.Auth.Roles;
@@ -25,15 +26,15 @@ namespace AgileStudioServerTest.Features.Auth.RoleGrants
             subjectType ??= RoleSubjectTypes.USER;
             createdBy ??= _userFixture.Create();
             subjectID ??= createdBy.ID.ToString();
+            scope ??= Scopes.GLOBAL;
 
-            if(roleKey == null){
+            if (roleKey == null){
                 var role = _RoleFixture.Create();
                 roleKey = role.RoleKey;
             }
 
-            var grant = new RoleGrantModel(roleKey, subjectType, subjectID)
+            var grant = new RoleGrantModel(roleKey, subjectType, subjectID, scope)
             {
-                Scope = scope,
                 ScopeID = scopeID,
                 CreatedByID = createdBy.ID
             };

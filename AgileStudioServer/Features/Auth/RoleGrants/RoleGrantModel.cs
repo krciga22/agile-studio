@@ -1,6 +1,6 @@
 namespace AgileStudioServer.Features.Auth.RoleGrants
 {
-    public class RoleGrantModel(string roleKey, string subjectType, string subjectID)
+    public class RoleGrantModel(string roleKey, string subjectType, string subjectID, string scope = Scopes.Scopes.GLOBAL)
     {
         public int ID { get; set; }
 
@@ -10,8 +10,7 @@ namespace AgileStudioServer.Features.Auth.RoleGrants
 
         public string SubjectID { get; set; } = subjectID;
 
-        // todo make not nullable and default to global scope
-        public string? Scope { get; set; }
+        public string Scope { get; set; } = scope;
 
         public string? ScopeID { get; set; }
 

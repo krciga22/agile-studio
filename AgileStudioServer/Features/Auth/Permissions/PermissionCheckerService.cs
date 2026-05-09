@@ -48,11 +48,6 @@ namespace AgileStudioServer.Features.Auth.Permissions
 
             foreach (RoleGrantModel roleGrant in roleGrants)
             {
-                // todo remove after scope is made not nullable in RoleGrantModel
-                if (roleGrant.Scope == null){
-                    continue;
-                }
-
                 RolePermissionModel? rolePermission = _RolePermissionService.Get(roleGrant.RoleKey, permissionKey, scope);
                 if (rolePermission != null){
                     return true;

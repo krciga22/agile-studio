@@ -50,10 +50,10 @@ namespace AgileStudioServer.Features.Projects.Projects
                 var roleGrant = new RoleGrantModel(
                     RoleKeys.PROJECTS_PROJECT_ADMIN,
                     RoleSubjectTypes.USER,
-                    project.CreatedByID.Value.ToString()
+                    project.CreatedByID.Value.ToString(),
+                    Scopes.PROJECT
                 )
                 {
-                    Scope = Scopes.PROJECT,
                     ScopeID = project.ID.ToString(),
                     CreatedByID = project.CreatedByID
                 };

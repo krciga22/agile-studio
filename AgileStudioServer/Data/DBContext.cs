@@ -182,6 +182,10 @@ namespace AgileStudioServer.Data
                 .IsUnique()
                 .HasDatabaseName("ix_role_grant_hash");
 
+            modelBuilder.Entity<RoleGrant>()
+                .Property(rg => rg.Scope)
+                .HasDefaultValue(Scopes.GLOBAL);
+
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);
 

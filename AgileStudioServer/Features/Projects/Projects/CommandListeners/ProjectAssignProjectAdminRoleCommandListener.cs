@@ -37,9 +37,9 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
                 var roleGrant = new RoleGrantModel(
                         RoleKeys.PROJECTS_PROJECT_ADMIN,
                         RoleSubjectTypes.USER,
-                        createdBy.Value.ToString())
+                        createdBy.Value.ToString(),
+                        Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     ScopeID = projectModel.ID.ToString()
                 };
                 roleGrantService.Create(roleGrant);

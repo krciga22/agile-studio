@@ -85,24 +85,15 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenPermissionNotExists()
         {
-            var scope = Scopes.PROJECT;
-
             var user = _UserFixture.Create();
-            var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create();
-            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
-            var roleKey = role.RoleKey;
-            var permissionKey = permission.PermissionKey;
-            var subjectType = RoleSubjectTypes.USER;
-            var subjectId = user.ID.ToString();
-            var scopeId = project.ID.ToString();
-
-            // note that we have not granted the role to the subject, so they should not have the permission
-
             var result = _PermissionCheckerService.CheckPermissions(
-                subjectType, subjectId, scope, scopeId, permissionKey);
+                RoleSubjectTypes.USER,
+                user.ID.ToString(),
+                Scopes.PROJECT,
+                project.ID.ToString(),
+                PermissionKeys.READ);
 
             Assert.False(result);
         }
@@ -110,29 +101,19 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenSubjectIsDifferent()
         {
-            var scope = Scopes.PROJECT;
-
             var user = _UserFixture.Create();
-            var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create();
-            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
+            var project = _ProjectFixture.Create();
 
-            var roleKey = role.RoleKey;
-            var permissionKey = permission.PermissionKey;
-            var subjectType = RoleSubjectTypes.USER;
-            var subjectId = user.ID.ToString();
-            var differentSubjectId = "different-subject-id";
-            string? scopeId = null;
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            _RoleGrantFixture.Create(
-                roleKey: roleKey,
-                subjectType: subjectType,
-                subjectID: differentSubjectId,
-                scope: scope,
-                scopeID: scopeId);
+            var otherUser = _UserFixture.Create();
 
             var result = _PermissionCheckerService.CheckPermissions(
-                subjectType, subjectId, scope, scopeId, permissionKey);
+                RoleSubjectTypes.USER,
+                otherUser.ID.ToString(),
+                Scopes.PROJECT,
+                project.ID.ToString(),
+                PermissionKeys.READ);
 
             Assert.False(result);
         }
@@ -140,29 +121,17 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenScopeIsDifferent()
         {
-            var scope = Scopes.PROJECT;
-            var differentScope = "different-scope";
-
             var user = _UserFixture.Create();
-            var role = _RoleFixture.Create(scope: differentScope);
-            var permission = _PermissionFixture.Create();
-            var rolePermission = _RolePermissionFixture.Create(role, permission, differentScope);
+            var project = _ProjectFixture.Create();
 
-            var roleKey = role.RoleKey;
-            var permissionKey = permission.PermissionKey;
-            var subjectType = RoleSubjectTypes.USER;
-            var subjectId = user.ID.ToString();
-            string? scopeId = null;
-
-            _RoleGrantFixture.Create(
-                roleKey: roleKey,
-                subjectType: subjectType,
-                subjectID: subjectId,
-                scope: scope,
-                scopeID: scopeId);
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
             var result = _PermissionCheckerService.CheckPermissions(
-                subjectType, subjectId, scope, scopeId, permissionKey);
+                RoleSubjectTypes.USER,
+                user.ID.ToString(),
+                Scopes.ACCOUNT,
+                project.ID.ToString(),
+                PermissionKeys.READ);
 
             Assert.False(result);
         }
@@ -170,30 +139,19 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         [Fact]
         public void CheckPermissions_ReturnsFalse_WhenScopeIdIsDifferent()
         {
-            var scope = Scopes.PROJECT;
-
             var user = _UserFixture.Create();
-            var role = _RoleFixture.Create(scope: scope);
-            var permission = _PermissionFixture.Create();
-            var rolePermission = _RolePermissionFixture.Create(role, permission, scope);
             var project = _ProjectFixture.Create();
 
-            var roleKey = role.RoleKey;
-            var permissionKey = permission.PermissionKey;
-            var subjectType = RoleSubjectTypes.USER;
-            var subjectId = user.ID.ToString();
-            var scopeId = project.ID.ToString();
-            var differentScopeId = "different-scope-id";
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            _RoleGrantFixture.Create(
-                roleKey: roleKey,
-                subjectType: subjectType,
-                subjectID: subjectId,
-                scope: scope,
-                scopeID: differentScopeId);
+            var otherProject = _ProjectFixture.Create();
 
             var result = _PermissionCheckerService.CheckPermissions(
-                subjectType, subjectId, scope, scopeId, permissionKey);
+                RoleSubjectTypes.USER,
+                user.ID.ToString(),
+                Scopes.PROJECT,
+                otherProject.ID.ToString(),
+                PermissionKeys.READ);
 
             Assert.False(result);
         }

@@ -46,14 +46,15 @@ namespace AgileStudioServer.Features.Projects.Projects
             var currentUserId = serviceContext.GetCurrentUserIdStrict();
 
             var query =
-                from project in _DBContext.Project
-                join grant in _DBContext.RoleGrant on project.ID.ToString() equals grant.ScopeID
-                join rolePerm in _DBContext.RolePermission on grant.RoleKey equals rolePerm.RoleKey
-                where grant.SubjectType == RoleSubjectTypes.USER
-                    && grant.SubjectID == currentUserId.ToString()
-                    && grant.Scope == Scopes.PROJECT
-                    && rolePerm.PermissionKey == PermissionKeys.PROJECTS_PROJECT_READ
-                select project;
+                (from project in _DBContext.Project
+                 join grant in _DBContext.RoleGrant on project.ID.ToString() equals grant.ScopeID
+                 join rolePerm in _DBContext.RolePermission on grant.RoleKey equals rolePerm.RoleKey
+                 where grant.SubjectType == RoleSubjectTypes.USER
+                     && grant.SubjectID == currentUserId.ToString()
+                     && grant.Scope == Scopes.PROJECT
+                     && rolePerm.PermissionKey == PermissionKeys.READ
+                 select project)
+                .Distinct();
 
             query = ApplySearchToQuery(query, serviceContext);
 

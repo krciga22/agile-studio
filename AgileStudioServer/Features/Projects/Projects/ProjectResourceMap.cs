@@ -19,7 +19,7 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public string GetResourceReadPermissionKey()
         {
-            return PermissionKeys.PROJECTS_PROJECT_READ;
+            return PermissionKeys.READ;
         }
 
         public Type GetResourceModelType()

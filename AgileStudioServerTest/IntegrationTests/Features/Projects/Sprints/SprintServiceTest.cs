@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServerTest.Features.Projects.Projects;
@@ -85,8 +86,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Sprints
 
             _sprintService.Delete(sprint);
 
-            sprint = _sprintService.Get(sprint.ID);
-            Assert.Null(sprint);
+            Assert.Throws<ModelNotFoundException>(() =>
+                _sprintService.Get(sprint.ID));
         }
     }
 }

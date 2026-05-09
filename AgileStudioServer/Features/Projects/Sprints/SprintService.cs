@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServer.Features.Projects.Sprints
 {
@@ -16,9 +17,11 @@ namespace AgileStudioServer.Features.Projects.Sprints
             return _SprintRepository.GetByProjectId(projectId);
         }
 
-        public virtual SprintModel? Get(int id)
+        /// <exception cref="ModelNotFoundException"></exception>
+        public virtual SprintModel Get(int id)
         {
-            return _SprintRepository.Get(id);
+            return _SprintRepository.Get(id) ??
+                throw new ModelNotFoundException(nameof(SprintModel), id.ToString());
         }
 
         public virtual SprintModel Create(SprintModel sprint)

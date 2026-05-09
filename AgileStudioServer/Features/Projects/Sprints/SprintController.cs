@@ -29,14 +29,20 @@ namespace AgileStudioServer.Features.Projects.Sprints
         [ProducesResponseType(typeof(SprintDto), StatusCodes.Status200OK)]
         public IActionResult Get(int id)
         {
-            var model = _SprintService.Get(id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                var model = _SprintService.Get(id);
+                var dto = _Hydrator.Hydrate<SprintDto>(model);
+                return Ok(dto);
             }
-
-            var dto = _Hydrator.Hydrate<SprintDto>(model);
-            return Ok(dto);
+            catch (ModelNotFoundException e)
+            {
+                return e.ModelClassName.Equals(nameof(SprintModel)) ? NotFound() : Problem();
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         [HttpPost(Name = "CreateSprint")]
@@ -68,8 +74,7 @@ namespace AgileStudioServer.Features.Projects.Sprints
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Patch(int id, SprintPatchDto sprintPatchDto)
         {
-            if (id != sprintPatchDto.ID)
-            {
+            if (id != sprintPatchDto.ID){
                 return BadRequest();
             }
 
@@ -79,20 +84,16 @@ namespace AgileStudioServer.Features.Projects.Sprints
                 SprintModel model = _Hydrator.Hydrate<SprintModel>(sprintPatchDto);
                 model = _SprintService.Update(model);
                 dto = _Hydrator.Hydrate<SprintDto>(model);
+                return new OkObjectResult(dto);
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(SprintModel)))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return e.ModelClassName.Equals(nameof(SprintModel)) ? NotFound() : Problem();
             }
-
-            return new OkObjectResult(dto);
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         [HttpDelete("{id}", Name = "DeleteSprint")]
@@ -101,15 +102,20 @@ namespace AgileStudioServer.Features.Projects.Sprints
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            SprintModel? model = _SprintService.Get(id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                SprintModel? model = _SprintService.Get(id);
+                _SprintService.Delete(model);
+                return new OkResult();
             }
-
-            _SprintService.Delete(model);
-
-            return new OkResult();
+            catch (ModelNotFoundException e)
+            {
+                return e.ModelClassName.Equals(nameof(SprintModel)) ? NotFound() : Problem();
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Features.Auth.Permissions;
 using AgileStudioServerTest.Features.Auth.Roles;
 using AgileStudioServerTest.Features.Users.Users;
+using AgileStudioServer.Features.Auth.Scopes;
 
 namespace AgileStudioServerTest.Features.Auth.RolePermissions
 {
@@ -29,7 +30,7 @@ namespace AgileStudioServerTest.Features.Auth.RolePermissions
         public RolePermissionModel Create(
             RoleModel? role = null,
             PermissionModel? permission = null,
-            string? scope = null,
+            string scope = Scopes.GLOBAL,
             UserModel? createdBy = null,
             bool? isSystemRolePermission = false)
         {

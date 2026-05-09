@@ -36,6 +36,7 @@ namespace AgileStudioServerTest
             services.AddMyModelHydrators();
             services.AddMyEntityHydrators();
             services.AddMyFixtures();
+            services.AddMyParentScopeResolvers();
         }
     }
 }

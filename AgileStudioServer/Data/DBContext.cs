@@ -185,6 +185,10 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Role>()
                 .HasKey(r => r.RoleKey);
 
+            modelBuilder.Entity<Role>()
+                .Property(r => r.Scope)
+                .HasDefaultValue(Scopes.GLOBAL);
+
             modelBuilder.Entity<Permission>()
                 .HasKey(r => r.PermissionKey);
 
@@ -230,33 +234,28 @@ namespace AgileStudioServer.Data
         private void SeedProjectRoles(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                new Role(RoleKeys.PROJECTS_PROJECT_ADMIN, "Project Admin")
+                new Role(RoleKeys.PROJECTS_PROJECT_ADMIN, "Project Admin", Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRole = true
                 },
-                new Role(RoleKeys.PROJECTS_PROJECT_MANAGER, "Project Manager")
+                new Role(RoleKeys.PROJECTS_PROJECT_MANAGER, "Project Manager", Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRole = true
                 },
-                new Role(RoleKeys.PROJECTS_PROJECT_DEVELOPER, "Developer")
+                new Role(RoleKeys.PROJECTS_PROJECT_DEVELOPER, "Developer", Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRole = true
                 },
-                new Role(RoleKeys.PROJECTS_PROJECT_TESTER, "Tester")
+                new Role(RoleKeys.PROJECTS_PROJECT_TESTER, "Tester", Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRole = true
                 },
-                new Role(RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST, "Business Analyst")
+                new Role(RoleKeys.PROJECTS_PROJECT_BUSINESS_ANALYST, "Business Analyst", Scopes.PROJECT)
                 {
-                    Scope = Scopes.PROJECT,
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRole = true
                 }

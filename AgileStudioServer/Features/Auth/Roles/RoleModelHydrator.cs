@@ -35,7 +35,7 @@ namespace AgileStudioServer.Features.Auth.Roles
             if (from is Role)
             {
                 var entity = (Role)from;
-                model = new RoleModel(entity.RoleKey, entity.Title);
+                model = new RoleModel(entity.RoleKey, entity.Title, entity.Scope);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 

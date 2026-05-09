@@ -1,4 +1,5 @@
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.Features.Users.Users;
@@ -22,11 +23,11 @@ namespace AgileStudioServerTest.Features.Auth.Roles
             roleKey ??= "test-role";
             title ??= "Test Role";
             createdBy ??= _userFixture.Create();
+            scope ??= Scopes.GLOBAL;
 
-            var role = new RoleModel(roleKey, title)
+            var role = new RoleModel(roleKey, title, scope)
             {
                 Description = description,
-                Scope = scope,
                 CreatedByID = createdBy.ID,
                 IsSystemRole = isSystemRole ?? false
             };

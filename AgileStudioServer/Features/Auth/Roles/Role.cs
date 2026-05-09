@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.Features.Auth.Roles
 {
-    public class Role(string roleKey, string title)
+    public class Role(string roleKey, string title, string scope = Scopes.Scopes.GLOBAL)
     {
         public string RoleKey { get; set; } = roleKey;
 
@@ -13,7 +13,7 @@ namespace AgileStudioServer.Features.Auth.Roles
         /// <summary>
         /// Gets or sets the scope in which this role can be applied.
         /// </summary>
-        public string? Scope { get; set; }
+        public string Scope { get; set; } = scope;
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 

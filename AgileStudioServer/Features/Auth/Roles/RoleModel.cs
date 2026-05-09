@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.Features.Auth.Roles
 {
-    public class RoleModel(string roleKey, string title)
+    public class RoleModel(string roleKey, string title, string scope = Scopes.Scopes.GLOBAL)
     {
         public string RoleKey { get; set; } = roleKey;
 
@@ -8,8 +8,9 @@
 
         public string? Description { get; set; }
 
-        public string? Scope { get; set; }
+        public string Scope { get; set; } = scope;
 
+        // todo remove
         public string? ScopeID { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;

@@ -32,7 +32,7 @@ public class RoleHydrator(DBContext dBContext) : AbstractEntityHydrator(dBContex
                 entity = _DBContext.Role.Find(model.RoleKey);
                 if (entity == null)
                 {
-                    entity = new Role(model.RoleKey, model.Title);
+                    entity = new Role(model.RoleKey, model.Title, model.Scope);
                 }
             }
 

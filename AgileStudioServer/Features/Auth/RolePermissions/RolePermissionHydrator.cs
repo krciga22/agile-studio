@@ -31,7 +31,7 @@ namespace AgileStudioServer.Features.Auth.RolePermissions
                 var model = (RolePermissionModel)from;
                 if (model.RoleKey != null && model.PermissionKey != null)
                 {
-                    entity = _DBContext.RolePermission.Find([model.RoleKey, model.PermissionKey]);
+                    entity = _DBContext.RolePermission.Find([model.RoleKey, model.PermissionKey, model.Scope]);
                     if (entity == null)
                     {
                         entity = new RolePermission(model.RoleKey, model.PermissionKey, model.Scope);

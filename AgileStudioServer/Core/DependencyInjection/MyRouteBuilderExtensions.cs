@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Reflection;
 using System.Text.Json.Nodes;
+using Microsoft.AspNetCore.Authorization;
 
 public static class MyRouteBuilderExtensions
 {
@@ -60,7 +61,7 @@ public static class MyRouteBuilderExtensions
         string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
-        app.MapGet(basePath, (
+        var routeHandlerBuilder = app.MapGet(basePath, (
             [FromServices] ResourceController resourceController,
             [AsParameters] GetCollectionQueryParams queryParams,
             HttpContext httpContext) =>
@@ -72,6 +73,8 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"GetResourceCollection/{attribute.Type}")
         .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
     }
 
     private static void MapResourceGet(
@@ -85,7 +88,7 @@ public static class MyRouteBuilderExtensions
         string groupName = GetGroupName(controller);
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
-        app.MapGet(basePath + "/{id}", (
+        var routeHandlerBuilder = app.MapGet(basePath + "/{id}", (
             [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) =>
@@ -99,6 +102,8 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"GetResource/{attribute.Type}")
         .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
     }
 
     private static void MapResourcePost(
@@ -113,7 +118,7 @@ public static class MyRouteBuilderExtensions
         Type resourceDtoType = resourceMap.GetResourceDtoType();
         Type resourceDtoCreateType = resourceMap.GetResourceDtoCreateType();
 
-        app.MapPost(basePath, async (
+        var routeHandlerBuilder = app.MapPost(basePath, async (
             [FromServices] ResourceController resourceController,
             [FromServices] IUrlHelperFactory urlHelperFactory,
             HttpContext httpContext
@@ -137,6 +142,8 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"PostResource/{attribute.Type}")
         .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
     }
 
     private static void MapResourcePatch(
@@ -151,7 +158,7 @@ public static class MyRouteBuilderExtensions
         Type resourceDtoType = resourceMap.GetResourceDtoType();
         Type resourceDtoUpdateType = resourceMap.GetResourceDtoUpdateType();
 
-        app.MapPatch(basePath + "/{id}", async (
+        var routeHandlerBuilder = app.MapPatch(basePath + "/{id}", async (
             [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) => {
@@ -169,6 +176,8 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"PatchResource/{attribute.Type}")
         .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
     }
 
     private static void MapResourceDelete(
@@ -181,7 +190,7 @@ public static class MyRouteBuilderExtensions
         string resourceName = GetResourceName(controller);
         string groupName = GetGroupName(controller);
 
-        app.MapDelete(basePath + "/{id}", (
+        var routeHandlerBuilder = app.MapDelete(basePath + "/{id}", (
             [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) =>
@@ -195,6 +204,20 @@ public static class MyRouteBuilderExtensions
         .WithTags(resourceName)
         .WithName($"DeleteResource/{attribute.Type}")
         .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
+    }
+
+    /// <summary>
+    /// Reuire authorization for the route if the controller 
+    /// has an AuthorizeAttribute.
+    /// </summary>
+    private static void RequireAuthorizationIfSpecified(RouteHandlerBuilder routeHandlerBuilder, Type controller)
+    {
+        var authorizeAttribute = controller.GetCustomAttribute<AuthorizeAttribute>();
+        if (authorizeAttribute != null){
+            routeHandlerBuilder.RequireAuthorization(authorizeAttribute);
+        }
     }
 
     private static string GetBasePath(Type controller)

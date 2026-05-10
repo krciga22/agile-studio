@@ -1,5 +1,8 @@
 using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +21,19 @@ namespace AgileStudioServer.Features.Projects.Releases
     {
         private readonly ReleaseService _ReleaseService;
         private readonly Hydrator _Hydrator;
+        private readonly ServiceContext _ServiceContext;
+        private readonly PermissionCheckerService _PermissionCheckerService;
 
         public ReleaseController(
             ReleaseService releaseService,
-            ProjectService projectService,
-            Hydrator hydrator)
+            Hydrator hydrator,
+            ServiceContext serviceContext,
+            PermissionCheckerService permissionCheckerService)
         {
             _ReleaseService = releaseService;
             _Hydrator = hydrator;
+            _ServiceContext = serviceContext;
+            _PermissionCheckerService = permissionCheckerService;
         }
 
         [Tags("Project")]
@@ -35,10 +43,27 @@ namespace AgileStudioServer.Features.Projects.Releases
         [ProducesResponseType(typeof(List<ReleaseDto>), StatusCodes.Status200OK)]
         public IActionResult GetReleasesForProject(int id)
         {
-            // todo use pagination
-            var models = _ReleaseService.GetByProjectId(id);
-            var dtos = _Hydrator.HydrateList<ReleaseDto>(models);
-            return Ok(dtos);
+            try
+            {
+                int currentUserId = _ServiceContext.GetCurrentUserIdStrict();
+
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    currentUserId.ToString(),
+                    Scopes.PROJECT,
+                    id.ToString(),
+                    PermissionKeys.READ
+                );
+
+                // todo use pagination
+                var models = _ReleaseService.GetByProjectId(id);
+                var dtos = _Hydrator.HydrateList<ReleaseDto>(models);
+                return Ok(dtos);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
         }
     }
 }

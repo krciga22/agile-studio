@@ -16,6 +16,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
             foreach (var classType in classCollection)
             {
+                if (services.Any(s => 
+                    s.ServiceType == classType && 
+                    s.Lifetime == ServiceLifetime.Scoped)){
+                    continue;
+                }
+
                 services.AddScoped(classType);
             }
 

@@ -61,9 +61,9 @@ public static class MyRouteBuilderExtensions
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
         app.MapGet(basePath, (
-            ResourceController resourceController,
-            HttpContext httpContext,
-            [AsParameters] GetCollectionQueryParams queryParams) =>
+            [FromServices] ResourceController resourceController,
+            [AsParameters] GetCollectionQueryParams queryParams,
+            HttpContext httpContext) =>
         {
             return resourceController.GetCollection(httpContext, attribute.Type, queryParams);
         })
@@ -86,7 +86,7 @@ public static class MyRouteBuilderExtensions
         Type resourceDtoType = resourceMap.GetResourceDtoType();
 
         app.MapGet(basePath + "/{id}", (
-            ResourceController resourceController,
+            [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) =>
         {
@@ -152,7 +152,7 @@ public static class MyRouteBuilderExtensions
         Type resourceDtoUpdateType = resourceMap.GetResourceDtoUpdateType();
 
         app.MapPatch(basePath + "/{id}", async (
-            ResourceController resourceController,
+            [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) => {
                 var ids = id.Split(',');
@@ -182,7 +182,7 @@ public static class MyRouteBuilderExtensions
         string groupName = GetGroupName(controller);
 
         app.MapDelete(basePath + "/{id}", (
-            ResourceController resourceController,
+            [FromServices] ResourceController resourceController,
             HttpContext httpContext,
             string id) =>
         {

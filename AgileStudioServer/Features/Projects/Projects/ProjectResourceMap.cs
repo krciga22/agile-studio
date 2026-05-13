@@ -17,11 +17,6 @@ namespace AgileStudioServer.Features.Projects.Projects
             return Scopes.PROJECT;
         }
 
-        public string GetResourceReadPermissionKey()
-        {
-            return PermissionKeys.READ;
-        }
-
         public Type GetResourceModelType()
         {
             return typeof(ProjectModel);

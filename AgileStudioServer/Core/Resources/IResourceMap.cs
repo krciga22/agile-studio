@@ -6,8 +6,6 @@
 
         string GetResourcePermissionScope();
 
-        string GetResourceReadPermissionKey();
-
         Type GetResourceModelType();
 
         Type GetResourceDtoType();

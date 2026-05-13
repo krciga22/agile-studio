@@ -17,11 +17,6 @@ namespace AgileStudioServer.Features.Projects.Releases
             throw new NotImplementedException();
         }
 
-        public string GetResourceReadPermissionKey()
-        {
-            throw new NotImplementedException();
-        }
-
         public Type GetResourceModelType()
         {
             return typeof(ReleaseModel);

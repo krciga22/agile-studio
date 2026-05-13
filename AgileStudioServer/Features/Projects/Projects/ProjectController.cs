@@ -1,12 +1,11 @@
 using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Core.Resources;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Features.Resources.Resource;
-using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +27,6 @@ namespace AgileStudioServer.Features.Projects.Projects
         private readonly SprintService _SprintService;
         private readonly PermissionCheckerService _PermissionCheckerService;
         private readonly ServiceContext _ServiceContext;
-        private readonly IEnumerable<IResourceMap> _ResourceMaps;
         private readonly Hydrator _Hydrator;
 
         public ProjectController(
@@ -37,14 +35,12 @@ namespace AgileStudioServer.Features.Projects.Projects
             SprintService sprintDataProvider,
             PermissionCheckerService permissionCheckerService,
             ServiceContext serviceContext,
-            IEnumerable<IResourceMap> resourceMaps,
             Hydrator Hydrator)
         {
             _BacklogItemService = backlogItemDataProvider;
             _SprintService = sprintDataProvider;
             _PermissionCheckerService = permissionCheckerService;
             _ServiceContext = serviceContext;
-            _ResourceMaps = resourceMaps;
             _Hydrator = Hydrator;
         }
 
@@ -93,15 +89,13 @@ namespace AgileStudioServer.Features.Projects.Projects
         private void ValidateCanReadProject(int projectId)
         {
             int currentUserId = _ServiceContext.GetCurrentUserIdStrict();
-            IResourceMap resourceMap = ResourceUtil.GetResourceMap(
-                _ResourceMaps, ResourceTypes.ProjectsProject);
 
             _PermissionCheckerService.ValidatePermissions(
                 RoleSubjectTypes.USER,
                 currentUserId.ToString(),
-                resourceMap.GetResourcePermissionScope(),
+                Scopes.PROJECT,
                 projectId.ToString(),
-                resourceMap.GetResourceReadPermissionKey()
+                PermissionKeys.READ
             );
         }
     }

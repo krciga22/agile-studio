@@ -24,6 +24,19 @@ namespace AgileStudioServer.Features.Auth.Permissions
             }
         }
 
+        /// <exception cref="UnauthorizedAccessException"></exception>
+        public void ValidatePermissions(
+            string subjectType, string subjectId,
+            string permissionKey, string childScope,
+            string parentScope, string? parentScopeId)
+        {
+            if (!CheckPermissions(subjectType, subjectId, permissionKey, 
+                childScope, parentScope, parentScopeId))
+            {
+                throw new UnauthorizedAccessException("User does not have the required permissions.");
+            }
+        }
+
         public bool CheckPermissions(
             string subjectType, string subjectId, string scope, 
             string? scopeId, string permissionKey)
@@ -54,6 +67,41 @@ namespace AgileStudioServer.Features.Auth.Permissions
                 }
             }
 
+
+            return false;
+        }
+
+        public bool CheckPermissions(
+            string subjectType, string subjectId, 
+            string permissionKey, string childScope,
+            string parentScope, string? parentScopeId)
+        {
+            List<RoleGrantModel> roleGrants = [];
+            roleGrants.AddRange(
+                _RoleGrantService.GetRoleGrantsBySubjectAndScope(
+                    subjectType, subjectId, parentScope, parentScopeId));
+
+            List<ParentScope> parentScopes = ResolveParentScopes(parentScope, parentScopeId);
+            foreach (ParentScope _parentScope in parentScopes)
+            {
+                roleGrants.AddRange(
+                    _RoleGrantService.GetRoleGrantsBySubjectAndScope(
+                        subjectType, subjectId, _parentScope.Scope, _parentScope.ScopeId));
+            }
+
+            roleGrants = roleGrants
+                .GroupBy(grant => grant.ID)
+                .Select(group => group.First())
+                .ToList();
+
+            foreach (RoleGrantModel roleGrant in roleGrants)
+            {
+                RolePermissionModel? rolePermission = _RolePermissionService.Get(roleGrant.RoleKey, permissionKey, childScope);
+                if (rolePermission != null)
+                {
+                    return true;
+                }
+            }
 
             return false;
         }

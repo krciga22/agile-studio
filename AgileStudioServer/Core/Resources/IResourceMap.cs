@@ -1,4 +1,6 @@
-﻿namespace AgileStudioServer.Core.Resources
+﻿using AgileStudioServer.Features.Auth.Scopes;
+
+namespace AgileStudioServer.Core.Resources
 {
     public interface IResourceMap
     {
@@ -15,5 +17,7 @@
         Type GetResourceDtoUpdateType();
 
         Type GetResourceModelServiceType();
+
+        ParentScope GetParentResourceScope(Object model);
     }
 }

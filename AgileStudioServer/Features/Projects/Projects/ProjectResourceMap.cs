@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Core.Resources;
-using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource;
 
@@ -40,6 +39,12 @@ namespace AgileStudioServer.Features.Projects.Projects
         public Type GetResourceModelServiceType()
         {
             return typeof(ProjectService);
+        }
+
+        ParentScope GetParentResourceScope(Object model)
+        {
+            // todo add account id when we have accounts
+            return new ParentScope(Scopes.ACCOUNT, null);
         }
     }
 }

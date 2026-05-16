@@ -42,7 +42,7 @@ namespace AgileStudioServer.Features.Projects.Releases
             return typeof(ReleaseService);
         }
 
-        ParentScope GetParentResourceScope(Object model)
+        public ParentScope GetParentResourceScope(Object model)
         {
             ReleaseModel releaseModel = ((ReleaseModel)model);
             return new ParentScope(Scopes.PROJECT, releaseModel.ProjectID.ToString());

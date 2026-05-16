@@ -41,7 +41,7 @@ namespace AgileStudioServer.Features.Projects.Projects
             return typeof(ProjectService);
         }
 
-        ParentScope GetParentResourceScope(Object model)
+        public ParentScope GetParentResourceScope(Object model)
         {
             // todo add account id when we have accounts
             return new ParentScope(Scopes.ACCOUNT, null);

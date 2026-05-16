@@ -243,6 +243,14 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
 
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    resourceMap.GetResourcePermissionScope(),
+                    identifier.ToString(),
+                    PermissionKeys.UPDATE
+                );
+
                 object? updateModel = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
                     throw new ResourceNotFoundException(type, id);
 
@@ -268,7 +276,11 @@ namespace AgileStudioServer.Features.Resources.Resource
             {
                 return Results.BadRequest();
             }
-            catch(ModelNotFoundException)
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Forbid();
+            }
+            catch (ModelNotFoundException)
             {
                 return Results.NotFound();
             }
@@ -292,6 +304,14 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
                     throw new Exception($"Failed to convert identifier for resource of type {type}.");
 
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    resourceMap.GetResourcePermissionScope(),
+                    identifier.ToString(),
+                    PermissionKeys.DELETE
+                );
+
                 object? model = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
                     throw new ResourceNotFoundException(type, id);
 
@@ -303,7 +323,11 @@ namespace AgileStudioServer.Features.Resources.Resource
             {
                 return Results.BadRequest();
             }
-            catch(ModelNotFoundException)
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Forbid();
+            }
+            catch (ModelNotFoundException)
             {
                 return Results.NotFound();
             }

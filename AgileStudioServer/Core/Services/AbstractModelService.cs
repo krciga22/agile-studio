@@ -11,6 +11,7 @@ namespace AgileStudioServer.Core.Services
         public abstract void Delete(TModel model);
         public abstract TModel Get(TIdentifier id);
         public abstract PaginationResults<TModel> GetCollection();
+        public abstract PaginationResults<TModel> GetSubCollection(String parentResourceType, Object[] id);
         public abstract TModel Update(TModel model);
 
         /// <summary>

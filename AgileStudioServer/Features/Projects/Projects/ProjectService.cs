@@ -28,6 +28,11 @@ namespace AgileStudioServer.Features.Projects.Projects
             return _ProjectRepository.GetProjectsForCurrentUser(_ServiceContext);
         }
 
+        public override PaginationResults<ProjectModel> GetSubCollection(String parentResourceType, Object[] id)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <exception cref="ModelNotFoundException"></exception>
         public override ProjectModel Get(int id)
         {

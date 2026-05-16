@@ -4,6 +4,7 @@ using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;
+using AgileStudioServer.Core.Pagination;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Releases
 {
@@ -59,9 +60,9 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Releases
                 _ReleaseFixture.Create("Test Release 2", project)
             };
 
-            List<ReleaseModel> returnedReleases = _releaseService.GetByProjectId(project.ID);
+            PaginationResults<ReleaseModel> returnedReleases = _releaseService.GetByProjectId(project.ID);
 
-            Assert.Equal(releases.Count, returnedReleases.Count);
+            Assert.Equal(releases.Count, returnedReleases.Items.Count);
         }
 
         [Fact]

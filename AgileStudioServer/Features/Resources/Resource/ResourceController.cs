@@ -17,14 +17,14 @@ namespace AgileStudioServer.Features.Resources.Resource
         IEnumerable<IResourceMap> resourceMaps,
         IEnumerable<IModelService> modelServices,
         ServiceContext serviceContext,
-        PermissionCheckerService _PermissionCheckerService
+        PermissionCheckerService permissionCheckerService
         ) : ControllerBase
     {
         private readonly Hydrator _Hydrator = hydrator;
         private readonly IEnumerable<IResourceMap> _ResourceMaps = resourceMaps;
         private readonly IEnumerable<IModelService> _ModelServices = modelServices;
         private readonly ServiceContext _ServiceContext = serviceContext;
-        private readonly PermissionCheckerService permissionCheckerService = _PermissionCheckerService;
+        private readonly PermissionCheckerService _PermissionCheckerService = permissionCheckerService;
 
         public IResult GetCollection(HttpContext httpContext, string type, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -71,6 +71,80 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
+        public IResult GetSubCollection(
+            HttpContext httpContext,
+            string childType, 
+            string parentType, 
+            object[] parentId, 
+            [FromQuery] GetCollectionQueryParams queryParams)
+        {
+            try
+            {
+                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, parentType);
+                IModelService parentTypeResourceService = ResourceUtil.GetModelService(_ModelServices, parentTypeResourceMap);
+
+                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
+                IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
+
+                var parentIdentifier = parentTypeResourceService.GetType().GetMethod("ToIdentifier")?.Invoke(parentTypeResourceService, [parentId]) ??
+                    throw new Exception($"Failed to convert identifier for resource of type {parentType}.");
+
+                int userId = _ServiceContext.GetCurrentUserIdStrict();
+                string parentScope = parentTypeResourceMap.GetResourcePermissionScope();
+                string childScope = childTypeResourceMap.GetResourcePermissionScope();
+
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER, userId.ToString(),
+                    PermissionKeys.LIST, childScope,
+                    parentScope, parentIdentifier.ToString()
+                );
+
+                object? result = (childTypeResourceService.GetType().GetMethod("GetSubCollection")?.Invoke(childTypeResourceService, [parentType, parentId])) ??
+                    throw new Exception($"Failed to get resource sub collection of type {childType} by parent type {parentType} and parent id {parentId}.");
+
+                var resultType = result.GetType();
+                var itemsProp = resultType.GetProperty("Items");
+                var totalProp = resultType.GetProperty("Total");
+                var pageProp = resultType.GetProperty("Page");
+                var itemsPerPageProp = resultType.GetProperty("ItemsPerPage");
+
+                var items = itemsProp == null ? [] :
+                    ((IEnumerable<object>)itemsProp.GetValue(result)!).Cast<object>().ToList();
+
+                int total = totalProp == null ? 0 :
+                    (int)totalProp.GetValue(result)!;
+
+                int page = pageProp == null ? 0 :
+                    (int)pageProp.GetValue(result)!;
+
+                int itemsPerPage = itemsPerPageProp == null ?
+                    Constants.ItemsPerPage : (int)itemsPerPageProp.GetValue(result)!;
+
+                var paginationResults = new PaginationResults<object>(items, total, page, itemsPerPage);
+
+                paginationResults.Items = _Hydrator.HydrateList(
+                    paginationResults.Items,
+                    childTypeResourceMap.GetResourceDtoType(),
+                    _ServiceContext.HydratorDepth);
+
+                var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
+
+                return Results.Ok(paginationResults);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Forbid();
+            }
+            catch (ModelNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (UnsupportedResourceTypeException)
+            {
+                return Results.BadRequest();
+            }
+        }
+
         public IResult Get(HttpContext httpContext, string type, object[] id)
         {
             try
@@ -86,7 +160,7 @@ namespace AgileStudioServer.Features.Resources.Resource
                     _ServiceContext.GetCurrentUserIdStrict().ToString(), 
                     resourceMap.GetResourcePermissionScope(),
                     identifier.ToString(),
-                    resourceMap.GetResourceReadPermissionKey()
+                    PermissionKeys.READ
                 );
 
                 object? resourceModel = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??

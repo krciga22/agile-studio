@@ -15,6 +15,8 @@ namespace AgileStudioServer.Core.Services
 
         PaginationResults<TModel> GetCollection();
 
+        PaginationResults<TModel> GetSubCollection(String parentResourceType, Object[] id);
+
         TModel Get(TIdentifier id);
 
         TModel Create(TModel model);

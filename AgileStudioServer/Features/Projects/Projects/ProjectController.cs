@@ -19,6 +19,10 @@ namespace AgileStudioServer.Features.Projects.Projects
     [MapResourcePost(ResourceTypes.ProjectsProject)]
     [MapResourcePatch(ResourceTypes.ProjectsProject)]
     [MapResourceDelete(ResourceTypes.ProjectsProject)]
+    [MapSubResourceGetCollection(
+        ResourceTypes.ProjectsProject,
+        ResourceTypes.ReleasesRelease,
+        "Releases")]
     [Authorize]
     public class ProjectController : ControllerBase
     {

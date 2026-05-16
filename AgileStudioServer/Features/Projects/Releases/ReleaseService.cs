@@ -1,27 +1,37 @@
 ﻿using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Projects.Releases
 {
-    public class ReleaseService : AbstractModelService<ReleaseModel, int>
+    public class ReleaseService(
+        ReleaseRepository releaseRepository,
+        ServiceContext serviceContext) : AbstractModelService<ReleaseModel, int>
     {
-        private readonly ReleaseRepository _releaseRepository;
+        private readonly ReleaseRepository _releaseRepository = releaseRepository;
 
-        public ReleaseService(ReleaseRepository releaseRepository)
-        {
-            _releaseRepository = releaseRepository;
-        }
+        private readonly ServiceContext _ServiceContext = serviceContext;
 
-        public virtual List<ReleaseModel> GetByProjectId(int projectId)
+        public virtual PaginationResults<ReleaseModel> GetByProjectId(int projectId)
         {
-            // todo use pagination from service context
-            return _releaseRepository.GetByProjectId(projectId);
+            return _releaseRepository.GetByProjectId(projectId, _ServiceContext);
         }
 
         public override PaginationResults<ReleaseModel> GetCollection()
         {
             throw new NotImplementedException();
+        }
+
+        public override PaginationResults<ReleaseModel> GetSubCollection(String parentResourceType, Object[] id)
+        {
+            switch (parentResourceType)
+            {
+                case ResourceTypes.ProjectsProject:
+                    return GetByProjectId(int.Parse(id[0].ToString()!));
+                default:
+                    throw new ArgumentException($"Unsupported parent resource type: {parentResourceType}");
+            }
         }
 
         public override ReleaseModel Get(int id)

@@ -26,6 +26,14 @@ public static class MyRouteBuilderExtensions
                 MapResourceGetCollection(app, controller, getCollectionAttribute);
             }
 
+            IEnumerable<MapSubResourceGetCollectionAttribute> getSubCollectionAttributes = 
+                controller.GetCustomAttributes<MapSubResourceGetCollectionAttribute>();
+            if (getSubCollectionAttributes.Count() > 0){
+                foreach (var getSubCollectionAttribute in getSubCollectionAttributes){
+                    MapSubResourceGetCollection(app, controller, getSubCollectionAttribute);
+                }
+            }
+
             var getAttribute = controller.GetCustomAttribute<MapResourceGetAttribute>();
             if (getAttribute != null){
                 MapResourceGet(app, controller, getAttribute);
@@ -72,6 +80,38 @@ public static class MyRouteBuilderExtensions
         .Produces(400, typeof(ProblemDetails))
         .WithTags(resourceName)
         .WithName($"GetResourceCollection/{attribute.Type}")
+        .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
+    }
+
+    private static void MapSubResourceGetCollection(
+        IEndpointRouteBuilder app, Type controller,
+        MapSubResourceGetCollectionAttribute attribute)
+    {
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap subResourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.SubType);
+
+        string path = GetBasePath(controller) + "/{id}/" + attribute.Path;
+        string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
+        Type subResourceDtoType = subResourceMap.GetResourceDtoType();
+
+        var routeHandlerBuilder = app.MapGet(path, (
+            [FromServices] ResourceController resourceController,
+            [AsParameters] GetCollectionQueryParams queryParams,
+            HttpContext httpContext,
+            string id) =>
+        {
+            string[] compositeId = id.Split(',');
+            return resourceController.GetSubCollection(httpContext, attribute.SubType, attribute.Type, compositeId, queryParams);
+        })
+        .Produces(200, typeof(IEnumerable<>).MakeGenericType(subResourceDtoType))
+        .Produces(400, typeof(ProblemDetails))
+        .Produces(403, typeof(ProblemDetails))
+        .Produces(404, typeof(ProblemDetails))
+        .WithTags(resourceName)
+        .WithName($"GetSubResourceCollection/{attribute.Type}/{attribute.SubType}")
         .WithGroupName(groupName);
 
         RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);

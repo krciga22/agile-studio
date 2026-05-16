@@ -28,7 +28,7 @@ public static class MyRouteBuilderExtensions
 
             IEnumerable<MapSubResourceGetCollectionAttribute> getSubCollectionAttributes = 
                 controller.GetCustomAttributes<MapSubResourceGetCollectionAttribute>();
-            if (getSubCollectionAttributes.Count() > 0){
+            if (getSubCollectionAttributes.Any()){
                 foreach (var getSubCollectionAttribute in getSubCollectionAttributes){
                     MapSubResourceGetCollection(app, controller, getSubCollectionAttribute);
                 }
@@ -52,6 +52,14 @@ public static class MyRouteBuilderExtensions
             var deleteAttribute = controller.GetCustomAttribute<MapResourceDeleteAttribute>();
             if (deleteAttribute != null){
                 MapResourceDelete(app, controller, deleteAttribute);
+            }
+
+            IEnumerable<MapSubResourcePostAttribute> subResourcePostAttributes =
+                controller.GetCustomAttributes<MapSubResourcePostAttribute>();
+            if (subResourcePostAttributes.Any()){
+                foreach (var subResourcePostAttribute in subResourcePostAttributes){
+                    MapSubResourcePost(app, controller, subResourcePostAttribute);
+                }
             }
         }
 
@@ -243,6 +251,53 @@ public static class MyRouteBuilderExtensions
         .Produces(404, typeof(ProblemDetails))
         .WithTags(resourceName)
         .WithName($"DeleteResource/{attribute.Type}")
+        .WithGroupName(groupName);
+
+        RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);
+    }
+
+    private static void MapSubResourcePost(
+        IEndpointRouteBuilder app, Type controller,
+        MapSubResourcePostAttribute attribute)
+    {
+        IEnumerable<IResourceMap> resourceMaps = app.ServiceProvider.GetServices<IResourceMap>();
+        IResourceMap subResourceMap = ResourceUtil.GetResourceMap(resourceMaps, attribute.SubType);
+
+        string path = GetBasePath(controller) + "/{id}/" + attribute.Path;
+        string resourceName = GetResourceName(controller);
+        string groupName = GetGroupName(controller);
+        Type subResourceDtoCreateType = subResourceMap.GetResourceDtoCreateType();
+        Type subResourceDtoType = subResourceMap.GetResourceDtoType();
+
+        var routeHandlerBuilder = app.MapPost(path, async (
+            [FromServices] ResourceController resourceController,
+            [FromServices] IUrlHelperFactory urlHelperFactory,
+            HttpContext httpContext,
+            string id
+        ) =>
+        {
+            string[] compositeId = id.Split(',');
+
+            JsonNode body = await JsonNode.ParseAsync(httpContext.Request.Body)
+                    ?? throw new Exception("Failed to parse request body.");
+
+            var urlHelper = urlHelperFactory.GetUrlHelper(new ActionContext
+            {
+                HttpContext = httpContext,
+                RouteData = httpContext.GetRouteData(),
+                ActionDescriptor = new Microsoft.AspNetCore.Mvc.Abstractions.ActionDescriptor()
+            });
+
+            return resourceController.PostSub(httpContext, attribute.SubType, 
+                body, attribute.Type, compositeId, urlHelper);
+        })
+        .Accepts(subResourceDtoCreateType, "application/json")
+        .Produces(201, subResourceDtoType)
+        .Produces(400, typeof(ProblemDetails))
+        .Produces(403, typeof(ProblemDetails))
+        .Produces(404, typeof(ProblemDetails))
+        .WithTags(resourceName)
+        .WithName($"PostSubResource/{attribute.Type}/{attribute.SubType}")
         .WithGroupName(groupName);
 
         RequireAuthorizationIfSpecified(routeHandlerBuilder, controller);

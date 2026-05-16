@@ -8,7 +8,6 @@ namespace AgileStudioServer.Features.Projects.Releases
     [Route("Projects/Releases")]
     [ApiExplorerSettings(GroupName = "projects")]
     [MapResourceGet(ResourceTypes.ReleasesRelease)]
-    [MapResourcePost(ResourceTypes.ReleasesRelease)]
     [MapResourcePatch(ResourceTypes.ReleasesRelease)]
     [MapResourceDelete(ResourceTypes.ReleasesRelease)]
     [Authorize]

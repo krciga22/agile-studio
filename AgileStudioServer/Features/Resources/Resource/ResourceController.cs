@@ -340,5 +340,71 @@ namespace AgileStudioServer.Features.Resources.Resource
                 return Results.Problem();
             }
         }
+
+        public IResult PostSub(HttpContext httpContext, string childType,
+            object data, string parentType, object[] parentId, IUrlHelper url)
+        {
+            try
+            {
+                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, parentType);
+                IModelService parentTypeResourceService = ResourceUtil.GetModelService(_ModelServices, parentTypeResourceMap);
+
+                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
+                IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
+
+                var parentIdentifier = parentTypeResourceService.GetType().GetMethod("ToIdentifier")?.Invoke(parentTypeResourceService, [parentId]) ??
+                    throw new Exception($"Failed to convert identifier for resource of type {parentType}.");
+
+                int userId = _ServiceContext.GetCurrentUserIdStrict();
+                string parentScope = parentTypeResourceMap.GetResourcePermissionScope();
+                string childScope = childTypeResourceMap.GetResourcePermissionScope();
+
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER, userId.ToString(),
+                    PermissionKeys.CREATE, childScope,
+                    parentScope, parentIdentifier.ToString()
+                );
+
+                var createDto = ApiUtilities.GetDtoFromData(data,
+                    childTypeResourceMap.GetResourceDtoCreateType());
+
+                var createModel = _Hydrator.Hydrate(createDto,
+                    childTypeResourceMap.GetResourceModelType(),
+                    _ServiceContext.HydratorDepth);
+
+                // todo validate model has same parent id as supplied
+
+                object? resourceModel = (childTypeResourceService.GetType().GetMethod("Create")?.Invoke(childTypeResourceService, [createModel])) ??
+                    throw new Exception($"Failed to create sub resource of type {childType} for parent type {parentType} and parent id {parentId}.");
+
+                var resourceDto = _Hydrator.Hydrate(resourceModel,
+                    childTypeResourceMap.GetResourceDtoType(),
+                    _ServiceContext.HydratorDepth);
+
+                // todo get resource url working
+                string resourceUrl = "";
+                if (url != null && resourceDto != null){
+                    resourceUrl = url.Action($"GetResource/{childType}", new { id = ((dynamic)resourceDto).ID }) ?? resourceUrl;
+                }
+
+                return Results.Created(resourceUrl, resourceDto);
+            }
+            catch (UnsupportedResourceTypeException)
+            {
+                return Results.BadRequest();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Forbid();
+            }
+            catch (ModelNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (Exception)
+            {
+                return Results.Problem();
+            }
+        }
     }
 }

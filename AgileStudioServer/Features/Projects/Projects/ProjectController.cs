@@ -23,6 +23,10 @@ namespace AgileStudioServer.Features.Projects.Projects
         ResourceTypes.ProjectsProject,
         ResourceTypes.ReleasesRelease,
         "Releases")]
+    [MapSubResourcePost(
+        ResourceTypes.ProjectsProject,
+        ResourceTypes.ReleasesRelease,
+        "Releases")]
     [Authorize]
     public class ProjectController : ControllerBase
     {

@@ -7,6 +7,7 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -372,7 +373,11 @@ namespace AgileStudioServer.Features.Resources.Resource
                     childTypeResourceMap.GetResourceModelType(),
                     _ServiceContext.HydratorDepth);
 
-                // todo validate model has same parent id as supplied
+                ParentScope expectedParentScope = childTypeResourceMap.GetParentResourceScope(createModel);
+                if(parentScope != expectedParentScope.Scope ||
+                    parentIdentifier.ToString() != expectedParentScope.ScopeId){
+                    throw new ParentResourceIdentifierMismatchException(parentId);
+                }
 
                 object? resourceModel = (childTypeResourceService.GetType().GetMethod("Create")?.Invoke(childTypeResourceService, [createModel])) ??
                     throw new Exception($"Failed to create sub resource of type {childType} for parent type {parentType} and parent id {parentId}.");
@@ -390,6 +395,10 @@ namespace AgileStudioServer.Features.Resources.Resource
                 return Results.Created(resourceUrl, resourceDto);
             }
             catch (UnsupportedResourceTypeException)
+            {
+                return Results.BadRequest();
+            }
+            catch (ParentResourceIdentifierMismatchException)
             {
                 return Results.BadRequest();
             }

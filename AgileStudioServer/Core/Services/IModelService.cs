@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Features.Projects.Releases;
 
 namespace AgileStudioServer.Core.Services
 {
@@ -12,6 +13,8 @@ namespace AgileStudioServer.Core.Services
         where TIdentifier : notnull
     {
         TIdentifier ToIdentifier(object[] id);
+
+        TIdentifier GetIdentifier(TModel model);
 
         PaginationResults<TModel> GetCollection();
 

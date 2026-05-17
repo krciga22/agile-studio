@@ -78,5 +78,10 @@ namespace AgileStudioServer.Features.Projects.Projects
         {
             _ProjectRepository.Delete(model);
         }
+
+        public override int GetIdentifier(ProjectModel project)
+        {
+            return project.ID;
+        }
     }
 }

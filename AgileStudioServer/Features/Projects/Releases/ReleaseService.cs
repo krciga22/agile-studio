@@ -54,5 +54,10 @@ namespace AgileStudioServer.Features.Projects.Releases
         {
             _releaseRepository.Delete(release);
         }
+
+        public override int GetIdentifier(ReleaseModel release)
+        {
+            return release.ID;
+        }
     }
 }

@@ -186,6 +186,13 @@ namespace AgileStudioServer.Features.Resources.Resource
 
                 _Hydrator.Hydrate(patchDto, updateModel, _ServiceContext.HydratorDepth);
 
+                var updatedIdentifier = resourceService.GetType().GetMethod("GetIdentifier")?.Invoke(resourceService, [updateModel]) ??
+                    throw new Exception($"Failed to get identifier for resource of type {type}.");
+
+                if (!updatedIdentifier.Equals(identifier)){
+                    throw new ResourceIdentifierMismatchException(id);
+                }
+
                 object? resourceModel = (resourceService.GetType().GetMethod("Update")?.Invoke(resourceService, [updateModel])) ??
                     throw new Exception($"Failed to update resource of type {type}.");
 

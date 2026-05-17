@@ -46,5 +46,7 @@ namespace AgileStudioServer.Core.Services
 
             throw new UnsupportedIdentifierException(targetType);
         }
+
+        public abstract TIdentifier GetIdentifier(TModel model);
     }
 }

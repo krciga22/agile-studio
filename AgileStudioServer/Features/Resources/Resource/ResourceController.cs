@@ -38,32 +38,7 @@ namespace AgileStudioServer.Features.Resources.Resource
                 object result = InvokeResourceServiceMethod(
                     resourceService, "GetCollection", []);
 
-                var resultType = result.GetType();
-                var itemsProp = resultType.GetProperty("Items");
-                var totalProp = resultType.GetProperty("Total");
-                var pageProp = resultType.GetProperty("Page");
-                var itemsPerPageProp = resultType.GetProperty("ItemsPerPage");
-
-                var items = itemsProp == null ? [] : 
-                    ((IEnumerable<object>)itemsProp.GetValue(result)!).Cast<object>().ToList();
-
-                int total = totalProp == null ? 0 : 
-                    (int)totalProp.GetValue(result)!;
-
-                int page = pageProp == null ? 0 : 
-                    (int)pageProp.GetValue(result)!;
-
-                int itemsPerPage = itemsPerPageProp == null ? 
-                    Constants.ItemsPerPage : (int)itemsPerPageProp.GetValue(result)!;
-
-                var paginationResults = new PaginationResults<object>(items, total, page, itemsPerPage);
-
-                paginationResults.Items = _Hydrator.HydrateList(
-                    paginationResults.Items,
-                    resourceMap.GetResourceDtoType(),
-                    _ServiceContext.HydratorDepth);
-
-                var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
+                PaginationResults<object> paginationResults = ToGenericPaginatedResults(result, resourceMap);
 
                 return Results.Ok(paginationResults);
             }
@@ -309,32 +284,7 @@ namespace AgileStudioServer.Features.Resources.Resource
                 object result = InvokeResourceServiceMethod(
                     childTypeResourceService, "GetSubCollection", [parentType, parentId]);
 
-                var resultType = result.GetType();
-                var itemsProp = resultType.GetProperty("Items");
-                var totalProp = resultType.GetProperty("Total");
-                var pageProp = resultType.GetProperty("Page");
-                var itemsPerPageProp = resultType.GetProperty("ItemsPerPage");
-
-                var items = itemsProp == null ? [] :
-                    ((IEnumerable<object>)itemsProp.GetValue(result)!).Cast<object>().ToList();
-
-                int total = totalProp == null ? 0 :
-                    (int)totalProp.GetValue(result)!;
-
-                int page = pageProp == null ? 0 :
-                    (int)pageProp.GetValue(result)!;
-
-                int itemsPerPage = itemsPerPageProp == null ?
-                    Constants.ItemsPerPage : (int)itemsPerPageProp.GetValue(result)!;
-
-                var paginationResults = new PaginationResults<object>(items, total, page, itemsPerPage);
-
-                paginationResults.Items = _Hydrator.HydrateList(
-                    paginationResults.Items,
-                    childTypeResourceMap.GetResourceDtoType(),
-                    _ServiceContext.HydratorDepth);
-
-                var paginatedResultsDto = new PaginatedResults2Dto<object>(paginationResults);
+                PaginationResults<object> paginationResults = ToGenericPaginatedResults(result, childTypeResourceMap);
 
                 return Results.Ok(paginationResults);
             }
@@ -455,6 +405,36 @@ namespace AgileStudioServer.Features.Resources.Resource
                         $"Method {method} is not yet implemented for resource service" +
                         $"{nameof(resourceService)}."
                     );
+        }
+
+        private PaginationResults<object> ToGenericPaginatedResults(Object result, IResourceMap resourceMap)
+        {
+            var resultType = result.GetType();
+            var itemsProp = resultType.GetProperty("Items");
+            var totalProp = resultType.GetProperty("Total");
+            var pageProp = resultType.GetProperty("Page");
+            var itemsPerPageProp = resultType.GetProperty("ItemsPerPage");
+
+            var items = itemsProp == null ? [] :
+                ((IEnumerable<object>)itemsProp.GetValue(result)!).Cast<object>().ToList();
+
+            int total = totalProp == null ? 0 :
+                (int)totalProp.GetValue(result)!;
+
+            int page = pageProp == null ? 0 :
+                (int)pageProp.GetValue(result)!;
+
+            int itemsPerPage = itemsPerPageProp == null ?
+                Constants.ItemsPerPage : (int)itemsPerPageProp.GetValue(result)!;
+
+            var paginationResults = new PaginationResults<object>(items, total, page, itemsPerPage);
+
+            paginationResults.Items = _Hydrator.HydrateList(
+                paginationResults.Items,
+                resourceMap.GetResourceDtoType(),
+                _ServiceContext.HydratorDepth);
+
+           return paginationResults;
         }
     }
 }

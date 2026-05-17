@@ -10,6 +10,7 @@ using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace AgileStudioServer.Features.Resources.Resource
 {
@@ -34,8 +35,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
-                object? result = (resourceService.GetType().GetMethod("GetCollection")?.Invoke(resourceService, [])) ??
-                    throw new Exception($"Failed to get resource collection of type {type}.");
+                object result = InvokeResourceServiceMethod(
+                    resourceService, "GetCollection", []);
 
                 var resultType = result.GetType();
                 var itemsProp = resultType.GetProperty("Items");
@@ -79,8 +80,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
-                var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
-                    throw new Exception($"Failed to convert identifier for resource of type {type}.");
+                var identifier = InvokeResourceServiceMethod(
+                    resourceService, "ToIdentifier", [id]);
 
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
@@ -90,7 +91,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     PermissionKeys.READ
                 );
 
-                object? resourceModel = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
+                object resourceModel = InvokeResourceServiceMethodNullable(
+                    resourceService, "Get", [identifier]) ??
                     throw new ResourceNotFoundException(type, id);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
@@ -135,8 +137,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     resourceMap.GetResourceModelType(),
                     _ServiceContext.HydratorDepth);
 
-                object? resourceModel = (resourceService.GetType().GetMethod("Create")?.Invoke(resourceService, [createModel])) ??
-                    throw new Exception($"Failed to create resource of type {type}.");
+                object resourceModel = InvokeResourceServiceMethod(
+                    resourceService, "Create", [createModel]);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
                     resourceMap.GetResourceDtoType(),
@@ -167,8 +169,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
-                var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
-                    throw new Exception($"Failed to convert identifier for resource of type {type}.");
+                var identifier = InvokeResourceServiceMethod(
+                    resourceService, "ToIdentifier", [id]);
 
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
@@ -178,7 +180,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     PermissionKeys.UPDATE
                 );
 
-                object? updateModel = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
+                object updateModel = InvokeResourceServiceMethodNullable(
+                    resourceService, "Get", [identifier]) ??
                     throw new ResourceNotFoundException(type, id);
 
                 var patchDto = ApiUtilities.GetDtoFromData(data,
@@ -186,15 +189,14 @@ namespace AgileStudioServer.Features.Resources.Resource
 
                 _Hydrator.Hydrate(patchDto, updateModel, _ServiceContext.HydratorDepth);
 
-                var updatedIdentifier = resourceService.GetType().GetMethod("GetIdentifier")?.Invoke(resourceService, [updateModel]) ??
-                    throw new Exception($"Failed to get identifier for resource of type {type}.");
-
+                var updatedIdentifier = InvokeResourceServiceMethod(
+                    resourceService, "GetIdentifier", [updateModel]);
                 if (!updatedIdentifier.Equals(identifier)){
                     throw new ResourceIdentifierMismatchException(id);
                 }
 
-                object? resourceModel = (resourceService.GetType().GetMethod("Update")?.Invoke(resourceService, [updateModel])) ??
-                    throw new Exception($"Failed to update resource of type {type}.");
+                object resourceModel = InvokeResourceServiceMethod(
+                    resourceService, "Update", [updateModel]);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
                     resourceMap.GetResourceDtoType(),
@@ -235,8 +237,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
                 IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
 
-                var identifier = resourceService.GetType().GetMethod("ToIdentifier")?.Invoke(resourceService, [id]) ??
-                    throw new Exception($"Failed to convert identifier for resource of type {type}.");
+                var identifier = InvokeResourceServiceMethod(
+                    resourceService, "ToIdentifier", [id]);
 
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
@@ -246,10 +248,11 @@ namespace AgileStudioServer.Features.Resources.Resource
                     PermissionKeys.DELETE
                 );
 
-                object? model = (resourceService.GetType().GetMethod("Get")?.Invoke(resourceService, [identifier])) ??
+                object model = InvokeResourceServiceMethodNullable(
+                    resourceService, "Get", [identifier]) ??
                     throw new ResourceNotFoundException(type, id);
 
-                resourceService.GetType().GetMethod("Delete")?.Invoke(resourceService, [model]);
+                InvokeResourceServiceAction(resourceService, "Delete", [model]);
 
                 return Results.Ok();
             }
@@ -290,8 +293,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
                 IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
 
-                var parentIdentifier = parentTypeResourceService.GetType().GetMethod("ToIdentifier")?.Invoke(parentTypeResourceService, [parentId]) ??
-                    throw new Exception($"Failed to convert identifier for resource of type {parentType}.");
+                var parentIdentifier = InvokeResourceServiceMethod(
+                    parentTypeResourceService, "ToIdentifier", [parentId]);
 
                 int userId = _ServiceContext.GetCurrentUserIdStrict();
                 string parentScope = parentTypeResourceMap.GetResourcePermissionScope();
@@ -303,8 +306,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     parentScope, parentIdentifier.ToString()
                 );
 
-                object? result = (childTypeResourceService.GetType().GetMethod("GetSubCollection")?.Invoke(childTypeResourceService, [parentType, parentId])) ??
-                    throw new Exception($"Failed to get resource sub collection of type {childType} by parent type {parentType} and parent id {parentId}.");
+                object result = InvokeResourceServiceMethod(
+                    childTypeResourceService, "GetSubCollection", [parentType, parentId]);
 
                 var resultType = result.GetType();
                 var itemsProp = resultType.GetProperty("Items");
@@ -360,8 +363,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
                 IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
 
-                var parentIdentifier = parentTypeResourceService.GetType().GetMethod("ToIdentifier")?.Invoke(parentTypeResourceService, [parentId]) ??
-                    throw new Exception($"Failed to convert identifier for resource of type {parentType}.");
+                var parentIdentifier = InvokeResourceServiceMethod(
+                    parentTypeResourceService, "ToIdentifier", [parentId]);
 
                 int userId = _ServiceContext.GetCurrentUserIdStrict();
                 string parentScope = parentTypeResourceMap.GetResourcePermissionScope();
@@ -386,8 +389,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     throw new ParentResourceIdentifierMismatchException(parentId);
                 }
 
-                object? resourceModel = (childTypeResourceService.GetType().GetMethod("Create")?.Invoke(childTypeResourceService, [createModel])) ??
-                    throw new Exception($"Failed to create sub resource of type {childType} for parent type {parentType} and parent id {parentId}.");
+                object resourceModel = InvokeResourceServiceMethod(
+                    childTypeResourceService, "Create", [createModel]);
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
                     childTypeResourceMap.GetResourceDtoType(),
@@ -421,6 +424,37 @@ namespace AgileStudioServer.Features.Resources.Resource
             {
                 return Results.Problem();
             }
+        }
+
+        private static object InvokeResourceServiceMethod(IModelService resourceService, string method, Object[] parameters)
+        {
+            return GetResourceServiceMethod(resourceService, method)
+                    .Invoke(resourceService, parameters) ??
+                        throw new Exception(
+                            $"Method {method} did not return a value for resource service " +
+                            $"{nameof(resourceService)}."
+                        );
+        }
+
+        private static object? InvokeResourceServiceMethodNullable(IModelService resourceService, string method, Object[] parameters)
+        {
+            return GetResourceServiceMethod(resourceService, method)
+                .Invoke(resourceService, parameters);
+        }
+
+        private static void InvokeResourceServiceAction(IModelService resourceService, string method, Object[] parameters)
+        {
+            GetResourceServiceMethod(resourceService, method)
+                    .Invoke(resourceService, parameters);
+        }
+
+        private static MethodInfo GetResourceServiceMethod(IModelService resourceService, string method)
+        {
+            return resourceService.GetType().GetMethod(method) ??
+                    throw new NotImplementedException(
+                        $"Method {method} is not yet implemented for resource service" +
+                        $"{nameof(resourceService)}."
+                    );
         }
     }
 }

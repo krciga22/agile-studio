@@ -404,8 +404,8 @@ namespace AgileStudioServer.Features.Resources.Resource
         }
 
         private static object InvokeResourceServiceMethod(
-            IModelService resourceService, string method, 
-            Object[] parameters)
+            IModelService resourceService, string method,
+            object?[]? parameters)
         {
             return GetResourceServiceMethod(resourceService, method)
                     .Invoke(resourceService, parameters) ??
@@ -416,16 +416,16 @@ namespace AgileStudioServer.Features.Resources.Resource
         }
 
         private static object? InvokeResourceServiceMethodNullable(
-            IModelService resourceService, string method, 
-            Object[] parameters)
+            IModelService resourceService, string method,
+            object?[]? parameters)
         {
             return GetResourceServiceMethod(resourceService, method)
                 .Invoke(resourceService, parameters);
         }
 
         private static void InvokeResourceServiceAction(
-            IModelService resourceService, string method, 
-            Object[] parameters)
+            IModelService resourceService, string method,
+            object?[]? parameters)
         {
             GetResourceServiceMethod(resourceService, method)
                     .Invoke(resourceService, parameters);

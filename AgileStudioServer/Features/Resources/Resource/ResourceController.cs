@@ -1,5 +1,4 @@
 using AgileStudioServer.Core.APIs;
-using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Resources;
@@ -28,7 +27,9 @@ namespace AgileStudioServer.Features.Resources.Resource
         private readonly ServiceContext _ServiceContext = serviceContext;
         private readonly PermissionCheckerService _PermissionCheckerService = permissionCheckerService;
 
-        public IResult GetCollection(HttpContext httpContext, string type, [FromQuery] GetCollectionQueryParams queryParams)
+        public IResult GetCollection(
+            HttpContext httpContext, string type, 
+            [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
             {
@@ -98,12 +99,16 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
-        public IResult Post(HttpContext httpContext, string type, object data, IUrlHelper url)
+        public IResult Post(
+            HttpContext httpContext, string type, 
+            object data, IUrlHelper url)
         {
             try
             {
-                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, type);
+                IModelService resourceService = ResourceUtil.GetModelService(
+                    _ModelServices, resourceMap);
 
                 var createDto = ApiUtilities.GetDtoFromData(data,
                     resourceMap.GetResourceDtoCreateType());
@@ -122,7 +127,10 @@ namespace AgileStudioServer.Features.Resources.Resource
                 // todo get resource url working
                 string resourceUrl = "";
                 if (url != null && resourceDto != null){
-                    resourceUrl = url.Action($"GetResource/{type}", new { id = ((dynamic)resourceDto).ID }) ?? resourceUrl;
+                    resourceUrl = url.Action(
+                        $"GetResource/{type}", 
+                        new { id = ((dynamic)resourceDto).ID }
+                    ) ?? resourceUrl;
                 }
 
                 return Results.Created(resourceUrl, resourceDto);
@@ -137,12 +145,16 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
-        public IResult Patch(HttpContext httpContext, string type, object[] id, [FromBody] object data)
+        public IResult Patch(
+            HttpContext httpContext, string type, 
+            object[] id, [FromBody] object data)
         {
             try
             {
-                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, type);
+                IModelService resourceService = ResourceUtil.GetModelService(
+                    _ModelServices, resourceMap);
 
                 var identifier = InvokeResourceServiceMethod(
                     resourceService, "ToIdentifier", [id]);
@@ -209,8 +221,10 @@ namespace AgileStudioServer.Features.Resources.Resource
         {
             try
             {
-                IResourceMap resourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, type);
-                IModelService resourceService = ResourceUtil.GetModelService(_ModelServices, resourceMap);
+                IResourceMap resourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, type);
+                IModelService resourceService = ResourceUtil.GetModelService(
+                    _ModelServices, resourceMap);
 
                 var identifier = InvokeResourceServiceMethod(
                     resourceService, "ToIdentifier", [id]);
@@ -254,19 +268,21 @@ namespace AgileStudioServer.Features.Resources.Resource
         }
 
         public IResult GetSubCollection(
-            HttpContext httpContext,
-            string childType,
-            string parentType,
-            object[] parentId,
+            HttpContext httpContext, string childType,
+            string parentType, object[] parentId,
             [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
             {
-                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, parentType);
-                IModelService parentTypeResourceService = ResourceUtil.GetModelService(_ModelServices, parentTypeResourceMap);
+                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, parentType);
+                IModelService parentTypeResourceService = ResourceUtil.GetModelService(
+                    _ModelServices, parentTypeResourceMap);
 
-                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
-                IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
+                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, childType);
+                IModelService childTypeResourceService = ResourceUtil.GetModelService(
+                    _ModelServices, childTypeResourceMap);
 
                 var parentIdentifier = InvokeResourceServiceMethod(
                     parentTypeResourceService, "ToIdentifier", [parentId]);
@@ -284,7 +300,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                 object result = InvokeResourceServiceMethod(
                     childTypeResourceService, "GetSubCollection", [parentType, parentId]);
 
-                PaginationResults<object> paginationResults = ToGenericPaginatedResults(result, childTypeResourceMap);
+                PaginationResults<object> paginationResults = ToGenericPaginatedResults(
+                    result, childTypeResourceMap);
 
                 return Results.Ok(paginationResults);
             }
@@ -302,16 +319,22 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
-        public IResult PostSub(HttpContext httpContext, string childType,
-            object data, string parentType, object[] parentId, IUrlHelper url)
+        public IResult PostSub(
+            HttpContext httpContext, string childType,
+            object data, string parentType, 
+            object[] parentId, IUrlHelper url)
         {
             try
             {
-                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, parentType);
-                IModelService parentTypeResourceService = ResourceUtil.GetModelService(_ModelServices, parentTypeResourceMap);
+                IResourceMap parentTypeResourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, parentType);
+                IModelService parentTypeResourceService = ResourceUtil.GetModelService(
+                    _ModelServices, parentTypeResourceMap);
 
-                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(_ResourceMaps, childType);
-                IModelService childTypeResourceService = ResourceUtil.GetModelService(_ModelServices, childTypeResourceMap);
+                IResourceMap childTypeResourceMap = ResourceUtil.GetResourceMap(
+                    _ResourceMaps, childType);
+                IModelService childTypeResourceService = ResourceUtil.GetModelService(
+                    _ModelServices, childTypeResourceMap);
 
                 var parentIdentifier = InvokeResourceServiceMethod(
                     parentTypeResourceService, "ToIdentifier", [parentId]);
@@ -333,7 +356,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     childTypeResourceMap.GetResourceModelType(),
                     _ServiceContext.HydratorDepth);
 
-                ParentScope expectedParentScope = childTypeResourceMap.GetParentResourceScope(createModel);
+                ParentScope expectedParentScope = childTypeResourceMap.GetParentResourceScope(
+                    createModel);
                 if(parentScope != expectedParentScope.Scope ||
                     parentIdentifier.ToString() != expectedParentScope.ScopeId){
                     throw new ParentResourceIdentifierMismatchException(parentId);
@@ -349,7 +373,10 @@ namespace AgileStudioServer.Features.Resources.Resource
                 // todo get resource url working
                 string resourceUrl = "";
                 if (url != null && resourceDto != null){
-                    resourceUrl = url.Action($"GetResource/{childType}", new { id = ((dynamic)resourceDto).ID }) ?? resourceUrl;
+                    resourceUrl = url.Action(
+                        $"GetResource/{childType}", 
+                        new { id = ((dynamic)resourceDto).ID }
+                    ) ?? resourceUrl;
                 }
 
                 return Results.Created(resourceUrl, resourceDto);
@@ -376,7 +403,9 @@ namespace AgileStudioServer.Features.Resources.Resource
             }
         }
 
-        private static object InvokeResourceServiceMethod(IModelService resourceService, string method, Object[] parameters)
+        private static object InvokeResourceServiceMethod(
+            IModelService resourceService, string method, 
+            Object[] parameters)
         {
             return GetResourceServiceMethod(resourceService, method)
                     .Invoke(resourceService, parameters) ??
@@ -386,19 +415,24 @@ namespace AgileStudioServer.Features.Resources.Resource
                         );
         }
 
-        private static object? InvokeResourceServiceMethodNullable(IModelService resourceService, string method, Object[] parameters)
+        private static object? InvokeResourceServiceMethodNullable(
+            IModelService resourceService, string method, 
+            Object[] parameters)
         {
             return GetResourceServiceMethod(resourceService, method)
                 .Invoke(resourceService, parameters);
         }
 
-        private static void InvokeResourceServiceAction(IModelService resourceService, string method, Object[] parameters)
+        private static void InvokeResourceServiceAction(
+            IModelService resourceService, string method, 
+            Object[] parameters)
         {
             GetResourceServiceMethod(resourceService, method)
                     .Invoke(resourceService, parameters);
         }
 
-        private static MethodInfo GetResourceServiceMethod(IModelService resourceService, string method)
+        private static MethodInfo GetResourceServiceMethod(
+            IModelService resourceService, string method)
         {
             return resourceService.GetType().GetMethod(method) ??
                     throw new NotImplementedException(
@@ -407,7 +441,8 @@ namespace AgileStudioServer.Features.Resources.Resource
                     );
         }
 
-        private PaginationResults<object> ToGenericPaginatedResults(Object result, IResourceMap resourceMap)
+        private PaginationResults<object> ToGenericPaginatedResults(
+            Object result, IResourceMap resourceMap)
         {
             var resultType = result.GetType();
             var itemsProp = resultType.GetProperty("Items");

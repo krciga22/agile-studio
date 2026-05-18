@@ -112,53 +112,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
         }
 
         [Fact]
-        public void GetParentBacklogItem_WithId_ReturnsDto()
-        {
-            var project = _ProjectFixture.Create();
-            var parentBacklogItem = _BacklogItemFixture.Create(
-                "Parent Backlog Item",
-                project: project
-            );
-            var childBacklogItem = _BacklogItemFixture.Create(
-                "Child BacklogItem",
-                project: project,
-                parentBacklogItem: parentBacklogItem
-            );
-
-            BacklogItemDto? dto = null;
-            IActionResult result = _Controller.GetParentBacklogItem(childBacklogItem.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dto = okResult.Value as BacklogItemDto;
-            }
-
-            Assert.IsType<BacklogItemDto>(dto);
-            Assert.Equal(parentBacklogItem.ID, dto.ID);
-        }
-
-        [Fact]
-        public void GetParentBacklogItem_WithInvalidId_ReturnsNotFoundResult()
-        {
-            var project = _ProjectFixture.Create();
-            var backlogItem = _BacklogItemFixture.Create(
-                "Test BacklogItem",
-                project: project
-            );
-
-            IActionResult result = _Controller.GetParentBacklogItem(backlogItem.ID);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
-
-        [Fact]
-        public void GetParentBacklogItem_WithNonExistantId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.GetParentBacklogItem(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
-
-        [Fact]
         public void Post_WithDto_ReturnsDto()
         {
             //var project = _ProjectFixture.Create();

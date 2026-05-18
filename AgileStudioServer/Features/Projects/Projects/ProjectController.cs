@@ -27,6 +27,14 @@ namespace AgileStudioServer.Features.Projects.Projects
         ResourceTypes.ProjectsProject,
         ResourceTypes.ReleasesRelease,
         "Releases")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.ProjectsProject,
+        ResourceTypes.SprintsSprint,
+        "Sprints")]
+    [MapSubResourcePost(
+        ResourceTypes.ProjectsProject,
+        ResourceTypes.SprintsSprint,
+        "Sprints")]
     [Authorize]
     public class ProjectController : ControllerBase
     {
@@ -68,27 +76,6 @@ namespace AgileStudioServer.Features.Projects.Projects
                 return Ok(dtos);
             }
             catch(UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
-        }
-
-        [HttpGet("{id}/Sprints", Name = "GetProjectSprints")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(List<SprintSummaryDto>), StatusCodes.Status200OK)]
-        public IActionResult GetSprintsForProject(int id)
-        {
-            try
-            {
-                ValidateCanReadProject(id);
-
-                var models = _SprintService.GetByProjectId(id);
-
-                var dtos = _Hydrator.HydrateList<SprintSummaryDto>(models);
-                return Ok(dtos);
-            }
-            catch (UnauthorizedAccessException)
             {
                 return Forbid();
             }

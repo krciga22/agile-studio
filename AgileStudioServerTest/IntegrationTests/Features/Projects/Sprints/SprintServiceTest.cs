@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Core.Services.Exceptions;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Sprints;
@@ -61,9 +62,9 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Sprints
                 _SprintFixture.Create(nextSprintNumber + 2,project)
             };
 
-            List<SprintModel> returnedSprints = _sprintService.GetByProjectId(project.ID);
+            PaginationResults<SprintModel> returnedSprints = _sprintService.GetByProjectId(project.ID);
 
-            Assert.Equal(sprints.Count, returnedSprints.Count);
+            Assert.Equal(sprints.Count, returnedSprints.Items.Count);
         }
 
         [Fact]

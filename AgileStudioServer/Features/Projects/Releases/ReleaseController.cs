@@ -13,9 +13,6 @@ namespace AgileStudioServer.Features.Projects.Releases
     [Authorize]
     public class ReleaseController : ControllerBase
     {
-        public ReleaseController()
-        {
 
-        }
     }
 }

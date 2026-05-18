@@ -39,9 +39,6 @@ namespace AgileStudioServer.Features.Projects.Projects
     [Authorize]
     public class ProjectController : ControllerBase
     {
-        public ProjectController()
-        {
-            
-        }
+
     }
 }

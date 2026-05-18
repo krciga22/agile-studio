@@ -1,8 +1,10 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AgileStudioServer.Features.Projects.BacklogItems
 {
@@ -18,12 +20,22 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
             return model.ID;
         }
 
-        public virtual List<BacklogItemModel> GetByProjectId(int projectId)
+        public virtual PaginationResults<BacklogItemModel> GetByProjectId(int projectId, ServiceContext serviceContext)
         {
-            List<BacklogItem> entities = _DBContext.BacklogItem.Where(backlogItem =>
-                backlogItem.Project.ID == projectId).ToList();
+            var query =
+                (from project in _DBContext.Project
+                 join backlogItem in _DBContext.BacklogItem on project.ID equals backlogItem.ProjectID
+                 where project.ID == projectId
+                 select backlogItem)
+                .Distinct();
 
-            return HydrateModels(entities);
+            query = ApplySearchToQuery(query, serviceContext);
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query, serviceContext);
+
+            return GetPaginationResultsFromQuery(query, serviceContext, total);
         }
 
         public virtual List<BacklogItemModel> GetByProjectIdAndBacklogItemTypeId(int projectId, int backlogItemTypeId)
@@ -34,32 +46,22 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
             return HydrateModels(entities);
         }
 
-        public virtual PaginationResults<BacklogItemModel> GetChildBacklogItems(int parentBacklogItemId, PaginationDetails? paginationDetails = null)
+        public virtual PaginationResults<BacklogItemModel> GetChildBacklogItems(int parentBacklogItemId, ServiceContext serviceContext)
         {
-            if (paginationDetails is null)
-            {
-                paginationDetails = new PaginationDetails();
-            }
+            var query =
+                (from backlogItem in _DBContext.BacklogItem
+                 join childBacklogItem in _DBContext.BacklogItem on backlogItem.ID equals childBacklogItem.ID
+                 where childBacklogItem.ParentBacklogItemId == parentBacklogItemId
+                 select childBacklogItem)
+                .Distinct();
 
-            IQueryable<BacklogItem> query = _DBContext.BacklogItem
-                .Where(backlogItem => backlogItem.ParentBacklogItemId == parentBacklogItemId)
-                .OrderByDescending(backlogItem => backlogItem.CreatedOn)
-                .ThenByDescending(backlogItem => backlogItem.ID);
+            query = ApplySearchToQuery(query, serviceContext);
 
             int total = query.Count();
 
-            query = query.Skip(paginationDetails.ItemsPerPage * (paginationDetails.Page - 1)).Take(paginationDetails.ItemsPerPage);
+            query = ApplySortToQuery(query, serviceContext);
 
-            List<BacklogItem> entities = query.ToList();
-
-            PaginationResults<BacklogItemModel> results = new(
-                HydrateModels(entities),
-                total,
-                paginationDetails.Page,
-                paginationDetails.ItemsPerPage
-            );
-
-            return results;
+            return GetPaginationResultsFromQuery(query, serviceContext, total);
         }
 
         public virtual BacklogItemModel? GetParentBacklogItem(int id)
@@ -83,6 +85,87 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
         protected override DbSet<BacklogItem> GetDbSet()
         {
             return _DBContext.BacklogItem;
+        }
+
+        private static IQueryable<BacklogItem> ApplySearchToQuery(
+            IQueryable<BacklogItem> query, ServiceContext serviceContext)
+        {
+            if (!string.IsNullOrWhiteSpace(serviceContext.SearchQuery))
+            {
+                string searchLower = serviceContext.SearchQuery.ToLower();
+                query = query.Where(backlogItem => backlogItem.Title.ToLower().Contains(searchLower));
+            }
+
+            return query;
+        }
+
+        private static IOrderedQueryable<BacklogItem> ApplySortToQuery(
+            IQueryable<BacklogItem> query, ServiceContext serviceContext)
+        {
+            IOrderedQueryable<BacklogItem>? result = null;
+
+            int sortedFieldsCount = 0;
+            if (!string.IsNullOrWhiteSpace(serviceContext.Sort))
+            {
+                string[] sorts = serviceContext.Sort.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                foreach (string sort in sorts)
+                {
+                    sortedFieldsCount++;
+
+                    string[] sortParts = sort.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                    string sortField = sortParts[0];
+                    bool descending = sortParts.Length > 1 && sortParts[1].Equals("desc", StringComparison.OrdinalIgnoreCase);
+
+                    Expression<Func<BacklogItem, string>> sortKeySelector = item =>
+                        ((DateTimeOffset)item.CreatedOn).ToUnixTimeSeconds().ToString();
+                    switch (sortField)
+                    {
+                        case "title":
+                            sortKeySelector = item => item.Title;
+                            break;
+                        case "id":
+                            sortKeySelector = item => item.ID.ToString();
+                            break;
+                        default:
+                            sortedFieldsCount--;
+                            break;
+                    }
+
+                    if (result == null)
+                    {
+                        result = descending ?
+                            query.OrderByDescending(sortKeySelector) :
+                            query.OrderBy(sortKeySelector);
+                    }
+                    else
+                    {
+                        result = descending ?
+                            result.ThenByDescending(sortKeySelector) :
+                            result.ThenBy(sortKeySelector);
+                    }
+                }
+            }
+
+            if (result == null)
+            {
+                Expression<Func<BacklogItem, string>> sortKeySelector = item => item.ID.ToString();
+                result = query.OrderByDescending(sortKeySelector);
+            }
+
+            return result;
+        }
+
+        private PaginationResults<BacklogItemModel> GetPaginationResultsFromQuery(
+            IQueryable<BacklogItem> query, ServiceContext serviceContext, 
+            int total)
+        {
+            int page = serviceContext.Page;
+            int pageSize = serviceContext.ItemsPerPage;
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            List<BacklogItem> entities = query.ToList();
+            List<BacklogItemModel> models = HydrateModels(entities);
+            return new PaginationResults<BacklogItemModel>(models, total, page, pageSize);
         }
     }
 }

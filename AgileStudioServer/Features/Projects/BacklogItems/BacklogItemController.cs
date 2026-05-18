@@ -1,7 +1,5 @@
-using AgileStudioServer.Core.APIs.DTOs;
 using AgileStudioServer.Core.Hydrator;
-using AgileStudioServer.Core.Pagination;
-using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +8,13 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
     [ApiController]
     [Route("Projects/BacklogItems")]
     [ApiExplorerSettings(GroupName = "projects")]
+    [MapResourceGet(ResourceTypes.BacklogItemsBacklogItem)]
+    [MapResourcePatch(ResourceTypes.BacklogItemsBacklogItem)]
+    [MapResourceDelete(ResourceTypes.BacklogItemsBacklogItem)]
+    [MapSubResourceGetCollection(
+        ResourceTypes.BacklogItemsBacklogItem,
+        ResourceTypes.BacklogItemsBacklogItem,
+        "Children")]
     [Authorize]
     public class BacklogItemController : ControllerBase
     {
@@ -21,43 +26,6 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
         {
             _BacklogItemService = dataProvider;
             _Hydrator = hydrator;
-        }
-
-        [HttpGet("{id}/Children", Name = "GetChildBacklogItems")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(PaginatedResultsDto<BacklogItemDto, BacklogItemModel>), StatusCodes.Status200OK)]
-        public IActionResult GetChildBacklogItems(int id, [FromQuery] int? page = null)
-        {
-            var paginationDetails = new PaginationDetails();
-            if (page != null)
-            {
-                paginationDetails.Page = (int)page;
-            }
-
-            var paginationResults = _BacklogItemService.GetChildBacklogItems(id, paginationDetails);
-
-            PaginatedResultsDto<BacklogItemDto, BacklogItemModel> paginatedResultsDto = new(
-                _Hydrator.HydrateList<BacklogItemDto>(paginationResults.Items),
-                paginationResults
-            );
-
-            return Ok(paginatedResultsDto);
-        }
-
-        [HttpGet("{id}", Name = "GetBacklogItem")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status200OK)]
-        public IActionResult Get(int id)
-        {
-            var model = _BacklogItemService.Get(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
-            return Ok(dto);
         }
 
         [HttpGet("{id}/Parent", Name = "GetParentBacklogItem")]
@@ -74,79 +42,6 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
 
             var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
             return Ok(dto);
-        }
-
-        [HttpPost(Name = "CreateBacklogItem")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedResult Post(BacklogItemPostDto backlogItemPostDto)
-        {
-            BacklogItemModel model = _Hydrator.Hydrate<BacklogItemModel>(backlogItemPostDto);
-            model = _BacklogItemService.Create(model);
-
-            string backlogItemUrl = "";
-            if (Url != null)
-            {
-                backlogItemUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemUrl;
-            }
-
-            var dto = _Hydrator.Hydrate<BacklogItemDto>(model);
-
-            return Created(backlogItemUrl, dto);
-        }
-
-        [HttpPatch("{id}", Name = "UpdateBacklogItem")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(BacklogItemDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Patch(int id, BacklogItemPatchDto backlogItemPatchDto)
-        {
-            if (id != backlogItemPatchDto.ID)
-            {
-                return BadRequest();
-            }
-
-            BacklogItemDto dto;
-            try
-            {
-                BacklogItemModel model = _Hydrator.Hydrate<BacklogItemModel>(backlogItemPatchDto);
-                model = _BacklogItemService.Update(model);
-                dto = _Hydrator.Hydrate<BacklogItemDto>(model);
-            }
-            catch (ModelNotFoundException e)
-            {
-                if (e.ModelClassName.Equals(nameof(BacklogItemModel)))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new OkObjectResult(dto);
-        }
-
-        [HttpDelete("{id}", Name = "DeleteBacklogItem")]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Delete(int id)
-        {
-            BacklogItemModel? model = _BacklogItemService.Get(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            _BacklogItemService.Delete(model);
-
-            return new OkResult();
         }
     }
 }

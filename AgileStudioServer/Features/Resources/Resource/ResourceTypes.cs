@@ -7,5 +7,7 @@
         public const string ReleasesRelease = "releases.release";
 
         public const string SprintsSprint = "sprints.sprint";
+
+        public const string BacklogItemsBacklogItem = "backlogItems.backlogItem";
     }
 }

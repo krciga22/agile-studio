@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
@@ -101,10 +102,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
                 _BacklogItemFixture.Create("Test BacklogItem 2", project: project)
             };
 
-            List<BacklogItemModel> returnedBacklogItems = _backlogItemService
+            PaginationResults<BacklogItemModel> returnedBacklogItems = _backlogItemService
                 .GetByProjectId(project.ID);
 
-            Assert.Equal(backlogItems.Count, returnedBacklogItems.Count);
+            Assert.Equal(backlogItems.Count, returnedBacklogItems.Items.Count);
         }
 
         [Fact]
@@ -193,8 +194,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 
             _backlogItemService.Delete(backlogItem);
 
-            backlogItem = _backlogItemService.Get(backlogItem.ID);
-            Assert.Null(backlogItem);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _backlogItemService.Get(backlogItem.ID));
         }
     }
 }

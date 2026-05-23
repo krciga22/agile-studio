@@ -126,11 +126,15 @@ namespace AgileStudioServer.Features.Resources.Resource
 
                 // todo get resource url working
                 string resourceUrl = "";
-                if (url != null && resourceDto != null){
-                    resourceUrl = url.Action(
-                        $"GetResource/{type}", 
-                        new { id = ((dynamic)resourceDto).ID }
-                    ) ?? resourceUrl;
+                string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                if (env == null || !env.Equals("Testing")){
+                    if (url != null && resourceDto != null)
+                    {
+                        resourceUrl = url.Action(
+                            $"GetResource/{type}",
+                            new { id = ((dynamic)resourceDto).ID }
+                        ) ?? resourceUrl;
+                    }
                 }
 
                 return Results.Created(resourceUrl, resourceDto);

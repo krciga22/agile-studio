@@ -1,5 +1,13 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.APIs;
+using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.Data;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServer.Features.Projects.Releases;
+using AgileStudioServer.Features.Projects.Sprints;
+using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
@@ -7,12 +15,15 @@ using AgileStudioServerTest.Features.Projects.BacklogItems;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;
 using AgileStudioServerTest.Features.Projects.Sprints;
+using AgileStudioServerTest.Features.Users.Users;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 {
-    public class ProjectControllerTest : AbstractControllerTest
+    public class ProjectControllerTest : ResourceControllerTest
     {
-        private readonly ProjectController _Controller;
+        private readonly ResourceController _ResourceController;
 
         private readonly ProjectFixture _ProjectFixture;
 
@@ -28,18 +39,24 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 
         private readonly ReleaseFixture _ReleaseFixture;
 
+        private readonly UserFixture _UserFixture;
+
         public ProjectControllerTest(
             DBContext dbContext,
-            ProjectController controller,
+            ResourceController resourceController,
             ProjectFixture projectFixture,
             BacklogItemFixture backlogItemFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
             BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
             SprintFixture sprintFixture,
-            ReleaseFixture releaseFixture) : base(dbContext)
+            ReleaseFixture releaseFixture,
+            UserFixture userFixture,
+            ServiceContext serviceContext,
+            IUrlHelperFactory? iUrlHelperFactory = null) : 
+            base(dbContext, serviceContext, iUrlHelperFactory)
         {
-            _Controller = controller;
+            _ResourceController = resourceController;
             _ProjectFixture = projectFixture;
             _BacklogItemFixture = backlogItemFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
@@ -47,188 +64,302 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
             _SprintFixture = sprintFixture;
             _ReleaseFixture = releaseFixture;
+            _UserFixture = userFixture;
         }
 
         [Fact]
         public void Get_WithNoArguments_ReturnsDtos()
         {
-            //List<ProjectModel> projects = new() {
-            //    _ProjectFixture.Create("Test Project 1"),
-            //    _ProjectFixture.Create("Test Project 2")
-            //};
+            var user = _UserFixture.Create();
 
-            //PaginatedResultsDto<ProjectDto, ProjectModel>? projectDtos = null;
-            //IActionResult result = _Controller.Get(
-            //    new GetCollectionQueryParams());
-            //if (result is OkObjectResult okResult)
-            //{
-            //    projectDtos = okResult.Value as PaginatedResultsDto<ProjectDto, ProjectModel>;
-            //}
+            var project1 = _ProjectFixture.Create(
+                "Test Project 1", createdBy: user);
+            _ProjectFixture.GrantAccess(project1.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<PaginatedResultsDto<ProjectDto, ProjectModel>>(projectDtos);
-            //Assert.Equal(projects.Count, projectDtos.Items.Count);
+            var project2 = _ProjectFixture.Create(
+                "Test Project 2", createdBy: user);
+            _ProjectFixture.GrantAccess(project2.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var projects = new List<ProjectModel> { project1, project2 };
+
+            InitHttpAndServiceContextWithUser(user);
+            var result = _ResourceController.GetCollection(
+                _HttpContext, ResourceTypes.ProjectsProject, 
+                new GetCollectionQueryParams());
+
+            var objectResult =
+                Assert.IsType<Ok<PaginationResults<object>>>(result);
+
+            var paginationResult = 
+                Assert.IsType<PaginationResults<object>>(objectResult.Value);
+
+            Assert.Equal(projects.Count, paginationResult.Items.Count);
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            //var project = _ProjectFixture.Create();
+            var user = _UserFixture.Create();
 
-            //ProjectDto? projectDto = null;
-            //IActionResult result = _Controller.Get(project.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    projectDto = okResult.Value as ProjectDto;
-            //}
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
+            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<ProjectDto>(projectDto);
-            //Assert.Equal(project.ID, projectDto.ID);
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [project.ID];
+            var result = _ResourceController.Get(
+                _HttpContext, ResourceTypes.ProjectsProject, id);
+
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
+
+            var projectDtoResult =
+                Assert.IsType<ProjectDto>(objectResult.Value);
+
+            Assert.Equal(project.ID, projectDtoResult.ID);
         }
 
         [Fact]
         public void Get_WithInvalidId_ReturnsNotFoundResult()
         {
-            //IActionResult result = _Controller.Get(Constants.NonExistantId);
+            var user = _UserFixture.Create();
 
-            //Assert.IsType<NotFoundResult>(result as NotFoundResult);
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [Constants.NonExistantId];
+            var result = _ResourceController.Get(
+                _HttpContext, ResourceTypes.ProjectsProject, id);
+
+            Assert.IsType<NotFound>(result);
         }
 
         [Fact]
         public void GetBacklogItemsForProject_WithId_ReturnsDtos()
         {
-            //var project = _ProjectFixture.Create();
-            //var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
-            //    project.BacklogItemTypeSchemaID);
-            //var backlogItemType = _BacklogItemTypeFixture.Create(
-            //    backlogItemTypeSchema: backlogItemTypeSchema);
+            var user = _UserFixture.Create();
 
-            //List<BacklogItemModel> backlogItems = new() {
-            //    _BacklogItemFixture.Create(
-            //        title: "Test Backlog Item 1",
-            //        project: project,
-            //        backlogItemType: backlogItemType),
-            //    _BacklogItemFixture.Create(
-            //        title: "Test Backlog Item 2",
-            //        project: project,
-            //        backlogItemType: backlogItemType)
-            //};
+            var project = _ProjectFixture.Create(
+                "Test Project 1", createdBy: user);
 
-            //List<BacklogItemDto>? dtos = null;
-            //IActionResult result = _Controller.GetBacklogItemsForProject(project.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    dtos = okResult.Value as List<BacklogItemDto>;
-            //}
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<List<BacklogItemDto>>(dtos);
-            //Assert.Equal(backlogItems.Count, dtos.Count);
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                project.BacklogItemTypeSchemaID);
+
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema);
+
+            var backlogItem1 = _BacklogItemFixture.Create(
+                title: "Test Backlog Item 1",
+                project: project,
+                backlogItemType: backlogItemType);
+
+            var backlogItem2 = _BacklogItemFixture.Create(
+                title: "Test Backlog Item 2",
+                project: project,
+                backlogItemType: backlogItemType);
+
+            var backlogItems = new List<BacklogItemModel> { 
+                backlogItem1, backlogItem2 
+            };
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = [project.ID];
+            var result = _ResourceController.GetSubCollection(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, 
+                ResourceTypes.ProjectsProject, parentId,
+                new GetCollectionQueryParams());
+
+            var objectResult =
+                Assert.IsType<Ok<PaginationResults<object>>>(result);
+
+            var paginationResult =
+                Assert.IsType<PaginationResults<object>>(objectResult.Value);
+
+            Assert.Equal(backlogItems.Count, paginationResult.Items.Count);
+
+            foreach(BacklogItemModel backlogItem in backlogItems)
+            {
+                Assert.Contains(paginationResult.Items, item => 
+                    (item as BacklogItemDto)?.ID == backlogItem.ID);
+            }
         }
 
         [Fact]
         public void GetSprintsForProject_WithId_ReturnsDtos()
         {
-            //var project = _ProjectFixture.Create();
+            var user = _UserFixture.Create();
 
-            //List<SprintModel> sprints = new() {
-            //    _SprintFixture.Create(
-            //        sprintNumber: 1,
-            //        project: project),
-            //    _SprintFixture.Create(
-            //        sprintNumber: 2,
-            //        project: project)
-            //};
+            var project = _ProjectFixture.Create(
+                "Test Project 1", createdBy: user);
 
-            //List<SprintSummaryDto>? dtos = null;
-            //IActionResult result = _Controller.GetSprintsForProject(project.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    dtos = okResult.Value as List<SprintSummaryDto>;
-            //}
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<List<SprintSummaryDto>>(dtos);
-            //Assert.Equal(sprints.Count, dtos.Count);
+            var sprint1 = _SprintFixture.Create(project: project);
+
+            var sprint2 = _SprintFixture.Create(project: project);
+
+            var sprints = new List<SprintModel> {
+                sprint1, sprint2
+            };
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = [project.ID];
+            var result = _ResourceController.GetSubCollection(
+                _HttpContext, ResourceTypes.SprintsSprint,
+                ResourceTypes.ProjectsProject, parentId,
+                new GetCollectionQueryParams());
+
+            var objectResult =
+                Assert.IsType<Ok<PaginationResults<object>>>(result);
+
+            var paginationResult =
+                Assert.IsType<PaginationResults<object>>(objectResult.Value);
+
+            Assert.Equal(sprints.Count, paginationResult.Items.Count);
+
+            foreach (SprintModel sprint in sprints)
+            {
+                Assert.Contains(paginationResult.Items, item =>
+                    (item as SprintDto)?.ID == sprint.ID);
+            }
         }
 
         [Fact]
         public void GetReleasesForProject_WithId_ReturnsDtos()
         {
-            //var project = _ProjectFixture.Create();
+            var user = _UserFixture.Create();
 
-            //List<ReleaseModel> releases = new() {
-            //    _ReleaseFixture.Create(
-            //        title: "v1.0.0",
-            //        project: project),
-            //    _ReleaseFixture.Create(
-            //        title: "v1.0.1",
-            //        project: project)
-            //};
+            var project = _ProjectFixture.Create(
+                "Test Project 1", createdBy: user);
 
-            //List<ReleaseSummaryDto>? dtos = null;
-            //IActionResult result = _Controller.GetReleasesForProject(project.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    dtos = okResult.Value as List<ReleaseSummaryDto>;
-            //}
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<List<ReleaseSummaryDto>>(dtos);
-            //Assert.Equal(releases.Count, dtos.Count);
+            var release1 = _ReleaseFixture.Create(project: project);
+
+            var release2 = _ReleaseFixture.Create(project: project);
+
+            var releases = new List<ReleaseModel> {
+                release1, release2
+            };
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = [project.ID];
+            var result = _ResourceController.GetSubCollection(
+                _HttpContext, ResourceTypes.ReleasesRelease,
+                ResourceTypes.ProjectsProject, parentId,
+                new GetCollectionQueryParams());
+
+            var objectResult =
+                Assert.IsType<Ok<PaginationResults<object>>>(result);
+
+            var paginationResult =
+                Assert.IsType<PaginationResults<object>>(objectResult.Value);
+
+            Assert.Equal(releases.Count, paginationResult.Items.Count);
+
+            foreach (ReleaseModel release in releases)
+            {
+                Assert.Contains(paginationResult.Items, item =>
+                    (item as ReleaseDto)?.ID == release.ID);
+            }
         }
 
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            //var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-            //var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
-            //var projectPostDto = new ProjectPostDto(
-            //    "Test Project", 
-            //    backlogItemTypeSchema.ID, 
-            //    backlogItemLinkTypeSchema.ID);
+            var user = _UserFixture.Create();
 
-            //ProjectDto? projectDto = null;
-            //IActionResult result = _Controller.Post(projectPostDto);
-            //if (result is CreatedResult createdResult)
-            //{
-            //    projectDto = createdResult.Value as ProjectDto;
-            //}
+            var backlogItemTypeSchema = 
+                _BacklogItemTypeSchemaFixture.Create();
 
-            //Assert.IsType<ProjectDto>(projectDto);
-            //Assert.Equal(projectPostDto.Title, projectDto.Title);
+            var backlogItemLinkTypeSchema = 
+                _BacklogItemLinkTypeSchemaFixture.Create();
+
+            var projectPostDto = new ProjectPostDto("Test Project",
+                backlogItemTypeSchema.ID, backlogItemLinkTypeSchema.ID);
+
+            object data = IntegrationTestsUtil.ConvertDtoToObject(projectPostDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            var result = _ResourceController.Post(
+                _HttpContext, ResourceTypes.ProjectsProject, data, GetUrlHelper());
+
+            var objectResult =
+                Assert.IsType<Created<object>>(result);
+
+            var projectDtoResult =
+                Assert.IsType<ProjectDto>(objectResult.Value);
+
+            Assert.Equal(projectPostDto.Title, projectDtoResult.Title);
         }
 
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            //var project = _ProjectFixture.Create();
-            //var title = $"{project.Title} Updated";
-            //var projectPatchDto = new ProjectPatchDto(project.ID, title);
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Patch(project.ID, projectPatchDto);
-            //ProjectDto? projectDto = null;
-            //if (result is OkObjectResult okObjectResult)
-            //{
-            //    projectDto = okObjectResult.Value as ProjectDto;
-            //}
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
 
-            //Assert.IsType<ProjectDto>(projectDto);
-            //Assert.Equal(projectPatchDto.Title, projectDto.Title);
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var projectPatchDto = new ProjectPatchDto(project.ID, "Test Project Z");
+            object data = IntegrationTestsUtil.ConvertDtoToObject(projectPatchDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [project.ID];
+            var result = _ResourceController.Patch(
+                _HttpContext, ResourceTypes.ProjectsProject, id, data);
+
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
+
+            var projectDtoResult =
+                Assert.IsType<ProjectDto>(objectResult.Value);
+
+            Assert.Equal(projectPatchDto.Title, projectDtoResult.Title);
         }
 
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            //var project = _ProjectFixture.Create();
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Delete(project.ID);
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
 
-            //Assert.IsType<OkResult>(result as OkResult);
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [project.ID];
+            var result = _ResourceController.Delete(
+                _HttpContext, ResourceTypes.ProjectsProject, id);
+
+            Assert.IsType<Ok>(result);
         }
 
         [Fact]
         public void Delete_WithInvalidId_ReturnsNotFoundResult()
         {
-            //IActionResult result = _Controller.Delete(Constants.NonExistantId);
+            var user = _UserFixture.Create();
 
-            //Assert.IsType<NotFoundResult>(result as NotFoundResult);
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
+
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [Constants.NonExistantId];
+            var result = _ResourceController.Delete(
+                _HttpContext, ResourceTypes.ProjectsProject, id);
+
+            Assert.IsType<NotFound>(result);
         }
     }
 }

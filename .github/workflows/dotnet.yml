@@ -29,6 +29,7 @@ jobs:
         DB_PASS: ${{ secrets.DB_PASS }}
         DB_PORT: ${{ vars.DB_PORT }}
         TESTCONTAINERS_REUSE_ENABLE: ${{ vars.TESTCONTAINERS_REUSE_ENABLE }}
+        ASPNETCORE_ENVIRONMENT: "Testing"
       run: dotnet test --no-build --verbosity normal
     - name: Dump docker logs on failure
       if: failure()

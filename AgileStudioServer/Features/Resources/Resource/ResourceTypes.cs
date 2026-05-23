@@ -1,6 +1,6 @@
 ﻿namespace AgileStudioServer.Features.Resources.Resource
 {
-    internal class ResourceTypes
+    public class ResourceTypes
     {
         public const string ProjectsProject = "projects.project";
 

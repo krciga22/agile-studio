@@ -124,18 +124,7 @@ namespace AgileStudioServer.Features.Resources.Resource
                     resourceMap.GetResourceDtoType(),
                     _ServiceContext.HydratorDepth);
 
-                // todo get resource url working
-                string resourceUrl = "";
-                string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                if (env == null || !env.Equals("Testing")){
-                    if (url != null && resourceDto != null)
-                    {
-                        resourceUrl = url.Action(
-                            $"GetResource/{type}",
-                            new { id = ((dynamic)resourceDto).ID }
-                        ) ?? resourceUrl;
-                    }
-                }
+                string resourceUrl = GetResourceUrl(type, ((dynamic)resourceDto).ID, url);
 
                 return Results.Created(resourceUrl, resourceDto);
             }
@@ -374,14 +363,7 @@ namespace AgileStudioServer.Features.Resources.Resource
                     childTypeResourceMap.GetResourceDtoType(),
                     _ServiceContext.HydratorDepth);
 
-                // todo get resource url working
-                string resourceUrl = "";
-                if (url != null && resourceDto != null){
-                    resourceUrl = url.Action(
-                        $"GetResource/{childType}", 
-                        new { id = ((dynamic)resourceDto).ID }
-                    ) ?? resourceUrl;
-                }
+                string resourceUrl = GetResourceUrl(childType, ((dynamic)resourceDto).ID, url);
 
                 return Results.Created(resourceUrl, resourceDto);
             }
@@ -443,6 +425,26 @@ namespace AgileStudioServer.Features.Resources.Resource
                         $"Method {method} is not yet implemented for resource service" +
                         $"{nameof(resourceService)}."
                     );
+        }
+
+        /// <summary>
+        /// Get the resource url for a given resource type and id.
+        /// </summary>
+        private static string GetResourceUrl(string type, object id, IUrlHelper url)
+        {
+            string resourceUrl = "";
+            string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env == null || !env.Equals("Testing"))
+            {
+                if (url != null)
+                {
+                    resourceUrl = url.Action(
+                        $"GetResource/{type}",
+                        new { id = id }
+                    ) ?? resourceUrl;
+                }
+            }
+            return resourceUrl;
         }
 
         private PaginationResults<object> ToGenericPaginatedResults(

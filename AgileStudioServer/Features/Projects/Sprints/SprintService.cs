@@ -43,6 +43,10 @@ namespace AgileStudioServer.Features.Projects.Sprints
 
         public override SprintModel Create(SprintModel sprint)
         {
+            if(sprint.SprintNumber == 0) {
+                sprint.SprintNumber = GetNextSprintNumber();
+            }
+
             return _SprintRepository.Create(sprint);
         }
 

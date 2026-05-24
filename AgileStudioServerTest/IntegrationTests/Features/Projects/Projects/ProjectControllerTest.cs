@@ -11,6 +11,8 @@ using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.WorkflowStates;
 using AgileStudioServerTest.Features.Projects.BacklogItems;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;
@@ -41,6 +43,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 
         private readonly UserFixture _UserFixture;
 
+        private readonly WorkflowFixture _WorkflowFixture;
+
+        private readonly WorkflowStateFixture _WorkflowStateFixture;
+
         public ProjectControllerTest(
             DBContext dbContext,
             ResourceController resourceController,
@@ -52,6 +58,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             SprintFixture sprintFixture,
             ReleaseFixture releaseFixture,
             UserFixture userFixture,
+            WorkflowFixture workflowFixture,
+            WorkflowStateFixture workflowStateFixture,
             ServiceContext serviceContext,
             IUrlHelperFactory? iUrlHelperFactory = null) : 
             base(dbContext, serviceContext, iUrlHelperFactory)
@@ -65,6 +73,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             _SprintFixture = sprintFixture;
             _ReleaseFixture = releaseFixture;
             _UserFixture = userFixture;
+            _WorkflowFixture = workflowFixture;
+            _WorkflowStateFixture = workflowStateFixture;
         }
 
         [Fact]
@@ -186,6 +196,50 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         }
 
         [Fact]
+        public void PostBacklogItemForProject_WithDto_ReturnsDto()
+        {
+            var user = _UserFixture.Create();
+
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
+
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
+                project.BacklogItemTypeSchemaID);
+
+            var backlogItemType = _BacklogItemTypeFixture.Create(
+                backlogItemTypeSchema: backlogItemTypeSchema);
+
+            var workflow = _WorkflowFixture.Get(backlogItemType.WorkflowID);
+
+            var workflowState = _WorkflowStateFixture.Create(
+                "Test Workflow State", workflow: workflow);
+
+            var backlogItemPostDto = new BacklogItemPostDto(
+                "Test Backlog Item", project.ID, backlogItemType.ID, workflowState.ID);
+
+            object data = IntegrationTestsUtil.ConvertDtoToObject(backlogItemPostDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = new object[] { project.ID };
+            var result = _ResourceController.PostSub(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, data,
+                ResourceTypes.ProjectsProject, parentId, GetUrlHelper());
+
+            var objectResult =
+                Assert.IsType<Created<object>>(result);
+
+            var backlogItemDtoResult =
+                Assert.IsType<BacklogItemDto>(objectResult.Value);
+
+            Assert.Equal(project.ID, backlogItemDtoResult.Project.ID);
+            Assert.Equal(backlogItemPostDto.Title, backlogItemDtoResult.Title);
+            Assert.Equal(backlogItemType.ID, backlogItemDtoResult.BacklogItemType.ID);
+        }
+
+        [Fact]
         public void GetSprintsForProject_WithId_ReturnsDtos()
         {
             var user = _UserFixture.Create();
@@ -227,6 +281,41 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         }
 
         [Fact]
+        public void PostSprintForProject_WithDto_ReturnsDto()
+        {
+            var user = _UserFixture.Create();
+
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
+
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var sprintPostDto = new SprintPostDto(project.ID)
+            {
+                Description = "Test Sprint Description"
+            };
+
+            object data = IntegrationTestsUtil.ConvertDtoToObject(sprintPostDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = { project.ID };
+            var result = _ResourceController.PostSub(
+                _HttpContext, ResourceTypes.SprintsSprint, data,
+                ResourceTypes.ProjectsProject, parentId, GetUrlHelper());
+
+            var objectResult =
+                Assert.IsType<Created<object>>(result);
+
+            var sprintDtoResult =
+                Assert.IsType<SprintDto>(objectResult.Value);
+
+            Assert.Equal(1, sprintDtoResult.SprintNumber);
+            Assert.Equal(project.ID, sprintDtoResult.Project.ID);
+            Assert.Equal(sprintPostDto.Description, sprintDtoResult.Description);
+        }
+
+        [Fact]
         public void GetReleasesForProject_WithId_ReturnsDtos()
         {
             var user = _UserFixture.Create();
@@ -265,6 +354,37 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
                 Assert.Contains(paginationResult.Items, item =>
                     (item as ReleaseDto)?.ID == release.ID);
             }
+        }
+
+        [Fact]
+        public void PostReleaseForProject_WithDto_ReturnsDto()
+        {
+            var user = _UserFixture.Create();
+
+            var project = _ProjectFixture.Create(
+                "Test Project", createdBy: user);
+
+            _ProjectFixture.GrantAccess(
+                project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var releasePostDto = new ReleasePostDto("Test Release", project.ID);
+
+            object data = IntegrationTestsUtil.ConvertDtoToObject(releasePostDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] parentId = { project.ID };
+            var result = _ResourceController.PostSub(
+                _HttpContext, ResourceTypes.ReleasesRelease, data,
+                ResourceTypes.ProjectsProject, parentId, GetUrlHelper());
+
+            var objectResult =
+                Assert.IsType<Created<object>>(result);
+
+            var releaseDtoResult =
+                Assert.IsType<ReleaseDto>(objectResult.Value);
+
+            Assert.Equal(project.ID, releaseDtoResult.Project.ID);
+            Assert.Equal(releasePostDto.Title, releaseDtoResult.Title);
         }
 
         [Fact]

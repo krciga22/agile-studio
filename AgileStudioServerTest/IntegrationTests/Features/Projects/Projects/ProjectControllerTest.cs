@@ -25,8 +25,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 {
     public class ProjectControllerTest : ResourceControllerTest
     {
-        private readonly ResourceController _ResourceController;
-
         private readonly ProjectFixture _ProjectFixture;
 
         private readonly BacklogItemFixture _BacklogItemFixture;
@@ -62,9 +60,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             WorkflowStateFixture workflowStateFixture,
             ServiceContext serviceContext,
             IUrlHelperFactory? iUrlHelperFactory = null) : 
-            base(dbContext, serviceContext, iUrlHelperFactory)
+            base(dbContext, resourceController, serviceContext, iUrlHelperFactory)
         {
-            _ResourceController = resourceController;
             _ProjectFixture = projectFixture;
             _BacklogItemFixture = backlogItemFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;

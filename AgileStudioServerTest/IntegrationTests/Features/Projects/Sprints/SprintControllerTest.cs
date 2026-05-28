@@ -13,8 +13,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Sprints
 {
     public class SprintControllerTest : ResourceControllerTest
     {
-        private readonly ResourceController _ResourceController;
-
         private readonly SprintController _Controller;
 
         private readonly SprintFixture _SprintFixture;
@@ -25,16 +23,15 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Sprints
 
         public SprintControllerTest(
             DBContext dbContext,
-            ResourceController resourceController, // TODO move to controller test base class
+            ResourceController resourceController,
             SprintController controller,
             SprintFixture sprintFixture,
             ProjectFixture projectFixture,
             UserFixture userFixture,
             ServiceContext serviceContext,
             IUrlHelperFactory? iUrlHelperFactory = null) : 
-            base(dbContext, serviceContext, iUrlHelperFactory)
+            base(dbContext, resourceController, serviceContext, iUrlHelperFactory)
         {
-            _ResourceController = resourceController;
             _Controller = controller;
             _SprintFixture = sprintFixture;
             _ProjectFixture = projectFixture;

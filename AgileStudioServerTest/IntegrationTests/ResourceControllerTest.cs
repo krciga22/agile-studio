@@ -1,6 +1,7 @@
 ﻿
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServer.Features.Users.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,16 +15,20 @@ namespace AgileStudioServerTest.IntegrationTests
     {
         protected HttpContext _HttpContext = new DefaultHttpContext();
 
+        protected ResourceController _ResourceController;
+
         protected ServiceContext _ServiceContext;
 
         protected IUrlHelperFactory _IUrlHelperFactory;
 
         public ResourceControllerTest(
             DBContext dbContext,
+            ResourceController resourceController,
             ServiceContext serviceContext,
             IUrlHelperFactory? iUrlHelperFactory = null) : 
             base(dbContext)
         {
+            _ResourceController = resourceController;
             _ServiceContext = serviceContext;
             _IUrlHelperFactory = iUrlHelperFactory ?? new UrlHelperFactory();
         }

@@ -1,11 +1,17 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services;
+using AgileStudioServer.Data;
+using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Projects.Releases;
+using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;
+using AgileStudioServerTest.Features.Users.Users;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Releases
 {
-    public class ReleaseControllerTest : AbstractControllerTest
+    public class ReleaseControllerTest : ResourceControllerTest
     {
         private readonly ReleaseController _Controller;
 
@@ -13,91 +19,91 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Releases
 
         private readonly ProjectFixture _ProjectFixture;
 
+        private readonly UserFixture _UserFixture;
+
         public ReleaseControllerTest(
             DBContext dbContext,
+            ResourceController resourceController,
+            ServiceContext serviceContext,
             ReleaseController controller,
             ReleaseFixture releaseFixture,
-            ProjectFixture projectFixture) : base(dbContext)
+            ProjectFixture projectFixture,
+            UserFixture userFixture,
+            IUrlHelperFactory? iUrlHelperFactory = null) : 
+            base(dbContext, resourceController, serviceContext, iUrlHelperFactory)
         {
             _Controller = controller;
             _ReleaseFixture = releaseFixture;
             _ProjectFixture = projectFixture;
+            _UserFixture = userFixture;
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            //var release = _ReleaseFixture.Create();
+            var user = _UserFixture.Create();
 
-            //ReleaseDto? releaseDto = null;
-            //IActionResult result = _Controller.Get(release.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    releaseDto = okResult.Value as ReleaseDto;
-            //}
+            var release = _ReleaseFixture.Create("Test Release", createdBy: user);
+            _ProjectFixture.GrantAccess(release.ProjectID, 
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<ReleaseDto>(releaseDto);
-            //Assert.Equal(release.ID, releaseDto.ID);
-        }
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [release.ID];
+            var result = _ResourceController.Get(
+                _HttpContext, ResourceTypes.ReleasesRelease, id);
 
-        [Fact]
-        public void Get_WithInvalidId_ReturnsNotFoundResult()
-        {
-            //IActionResult result = _Controller.Get(Constants.NonExistantId);
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
 
-            //Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
+            var releaseDtoResult =
+                Assert.IsType<ReleaseDto>(objectResult.Value);
 
-        [Fact]
-        public void Post_WithDto_ReturnsDto()
-        {
-            //var project = _ProjectFixture.Create();
-            //var releasePostDto = new ReleasePostDto("v1.0.0", project.ID);
-
-            //ReleaseDto? releaseDto = null;
-            //IActionResult result = _Controller.Post(releasePostDto);
-            //if (result is CreatedResult createdResult)
-            //{
-            //    releaseDto = createdResult.Value as ReleaseDto;
-            //}
-
-            //Assert.IsType<ReleaseDto>(releaseDto);
-            //Assert.Equal(releasePostDto.Title, releaseDto.Title);
+            Assert.Equal(release.ID, releaseDtoResult.ID);
         }
 
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            //var release = _ReleaseFixture.Create("v1.0.0");
-            //var releasePatchDto = new ReleasePatchDto(release.ID, "v1.0.1");
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Patch(release.ID, releasePatchDto);
-            //ReleaseDto? releaseDto = null;
-            //if (result is OkObjectResult okObjectResult)
-            //{
-            //    releaseDto = okObjectResult.Value as ReleaseDto;
-            //}
+            var release = _ReleaseFixture.Create(createdBy: user);
 
-            //Assert.IsType<ReleaseDto>(releaseDto);
-            //Assert.Equal(releasePatchDto.Title, releaseDto.Title);
+            _ProjectFixture.GrantAccess(release.ProjectID, 
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            var releasePatchDto = new ReleasePatchDto(release.ID, "Updated Title");
+            object data = IntegrationTestsUtil.ConvertDtoToObject(releasePatchDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [release.ID];
+            var result = _ResourceController.Patch(
+                _HttpContext, ResourceTypes.ReleasesRelease, id, data);
+
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
+
+            var releaseDtoResult =
+                Assert.IsType<ReleaseDto>(objectResult.Value);
+
+            Assert.Equal(releasePatchDto.Title, releaseDtoResult.Title);
         }
 
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            //var release = _ReleaseFixture.Create();
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Delete(release.ID);
+            var release = _ReleaseFixture.Create(createdBy: user);
 
-            //Assert.IsType<OkResult>(result as OkResult);
-        }
+            _ProjectFixture.GrantAccess(release.ProjectID, 
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            //IActionResult result = _Controller.Delete(Constants.NonExistantId);
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [release.ID];
+            var result = _ResourceController.Delete(
+                _HttpContext, ResourceTypes.ReleasesRelease, id);
 
-            //Assert.IsType<NotFoundResult>(result as NotFoundResult);
+            Assert.IsType<Ok>(result);
         }
     }
 }

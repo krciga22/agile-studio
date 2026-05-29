@@ -1,172 +1,118 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Core.APIs.DTOs;
-using AgileStudioServer.Features.Projects.BacklogItems;
+﻿using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
-using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
-using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.Features.Accounts.WorkflowStates;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServer.Features.Resources.Resource;
 using AgileStudioServerTest.Features.Projects.BacklogItems;
 using AgileStudioServerTest.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Users.Users;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 {
-    public class BacklogItemControllerTest : AbstractControllerTest
+    public class BacklogItemControllerTest : ResourceControllerTest
     {
         private readonly BacklogItemController _Controller;
 
         private readonly BacklogItemFixture _BacklogItemFixture;
 
-        private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
-
-        private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
-
         private readonly ProjectFixture _ProjectFixture;
 
-        private readonly WorkflowStateFixture _WorkflowStateFixture;
+        private readonly UserFixture _UserFixture;
 
         public BacklogItemControllerTest(
             DBContext dbContext,
+            ResourceController resourceController,
+            ServiceContext serviceContext,
             BacklogItemController controller,
             BacklogItemFixture backlogItemFixture,
-            BacklogItemTypeFixture backlogItemTypeFixture,
-            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
             ProjectFixture projectFixture,
-            WorkflowStateFixture workflowStateFixture) : base(dbContext)
+            UserFixture userFixture,
+            IUrlHelperFactory? iUrlHelperFactory = null) : 
+            base(dbContext, resourceController, serviceContext, iUrlHelperFactory)
         {
             _Controller = controller;
             _BacklogItemFixture = backlogItemFixture;
-            _BacklogItemTypeFixture = backlogItemTypeFixture;
-            _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _ProjectFixture = projectFixture;
-            _WorkflowStateFixture = workflowStateFixture;
+            _UserFixture = userFixture;
         }
 
         [Fact]
         public void GetChildBacklogItems_WithId_ReturnsDtos()
         {
-            //var project = _ProjectFixture.Create();
-            //var parentBacklogItem = _BacklogItemFixture.Create(
-            //    "Parent Backlog Item",
-            //    project: project
-            //);
-            //var childBacklogItemType = _BacklogItemTypeFixture.Create();
-            //var childBacklogItem1 = _BacklogItemFixture.Create(
-            //    "Child BacklogItem 1",
-            //    project: project,
-            //    backlogItemType: childBacklogItemType,
-            //    parentBacklogItem: parentBacklogItem
-            //);
-            //var childBacklogItem2 = _BacklogItemFixture.Create(
-            //    "Child BacklogItem 2",
-            //    project: project,
-            //    backlogItemType: childBacklogItemType,
-            //    parentBacklogItem: parentBacklogItem
-            //);
-
-            //var childBacklogItems = new List<BacklogItemModel>
-            //{
-            //    childBacklogItem1,
-            //    childBacklogItem2
-            //};
-
-            //PaginatedResultsDto<BacklogItemDto, BacklogItemModel>? results = null;
-            //IActionResult result = _Controller.GetChildBacklogItems(parentBacklogItem.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    results = okResult.Value as PaginatedResultsDto<BacklogItemDto, BacklogItemModel>;
-            //}
-
-            //Assert.IsType<PaginatedResultsDto<BacklogItemDto, BacklogItemModel>>(results);
-            //Assert.Equal(childBacklogItems.Count, results.Items.Count);
-
-            //foreach (var dto in results.Items)
-            //{
-            //    bool isChildBacklogItem = false;
-            //    foreach (var childBacklogItem in childBacklogItems)
-            //    {
-            //        if (childBacklogItem.ID == dto.ID)
-            //        {
-            //            isChildBacklogItem = true;
-            //            break;
-            //        }
-            //    }
-
-            //    Assert.True(isChildBacklogItem);
-            //}
+            // todo
         }
 
         [Fact]
         public void Get_WithId_ReturnsDto()
         {
-            //var backlogItem = _BacklogItemFixture.Create();
+            var user = _UserFixture.Create();
 
-            //BacklogItemDto? dto = null;
-            //IActionResult result = _Controller.Get(backlogItem.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    dto = okResult.Value as BacklogItemDto;
-            //}
+            var backlogItem = _BacklogItemFixture.Create("Test BacklogItem", createdBy: user);
+            
+            _ProjectFixture.GrantAccess(backlogItem.ProjectID,
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<BacklogItemDto>(dto);
-            //Assert.Equal(backlogItem.ID, dto.ID);
-        }
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [backlogItem.ID];
+            var result = _ResourceController.Get(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, id);
 
-        [Fact]
-        public void Post_WithDto_ReturnsDto()
-        {
-            //var project = _ProjectFixture.Create();
-            //var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
-            //    project.BacklogItemTypeSchemaID);
-            //var backlogItemType = _BacklogItemTypeFixture.Create(
-            //        backlogItemTypeSchema: backlogItemTypeSchema);
-            //var workflowState = _WorkflowStateFixture.Create();
-            //var postDto = new BacklogItemPostDto("Test Backlog Item Type Schema", project.ID, backlogItemType.ID, workflowState.ID);
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
 
-            //BacklogItemDto? dto = null;
-            //IActionResult result = _Controller.Post(postDto);
-            //if (result is CreatedResult createdResult)
-            //{
-            //    dto = createdResult.Value as BacklogItemDto;
-            //}
+            var backlogItemDtoResult =
+                Assert.IsType<BacklogItemDto>(objectResult.Value);
 
-            //Assert.IsType<BacklogItemDto>(dto);
-            //Assert.Equal(postDto.Title, dto.Title);
+            Assert.Equal(backlogItem.ID, backlogItemDtoResult.ID);
         }
 
         [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
-            //var backlogItem = _BacklogItemFixture.Create();
-            //var title = $"{backlogItem.Title} Updated";
-            //var patchDto = new BacklogItemPatchDto(backlogItem.ID, title, backlogItem.WorkflowStateID);
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Patch(backlogItem.ID, patchDto);
-            //BacklogItemDto? dto = null;
-            //if (result is OkObjectResult okObjectResult)
-            //{
-            //    dto = okObjectResult.Value as BacklogItemDto;
-            //}
+            var backlogItem = _BacklogItemFixture.Create(createdBy: user);
+            
+            _ProjectFixture.GrantAccess(backlogItem.ProjectID,
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<BacklogItemDto>(dto);
-            //Assert.Equal(patchDto.Title, dto.Title);
+            var backlogItemPatchDto = new BacklogItemPatchDto(
+                backlogItem.ID, "Updated Title", backlogItem.WorkflowStateID);
+
+            object data = IntegrationTestsUtil.ConvertDtoToObject(backlogItemPatchDto);
+
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [backlogItem.ID];
+            var result = _ResourceController.Patch(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, id, data);
+
+            var objectResult =
+                Assert.IsType<Ok<object>>(result);
+
+            var backlogItemDtoResult =
+                Assert.IsType<BacklogItemDto>(objectResult.Value);
+
+            Assert.Equal(backlogItemPatchDto.Title, backlogItemDtoResult.Title);
         }
 
         [Fact]
         public void Delete_WithId_ReturnsOkResult()
         {
-            //var backlogItem = _BacklogItemFixture.Create();
+            var user = _UserFixture.Create();
 
-            //IActionResult result = _Controller.Delete(backlogItem.ID);
+            var backlogItem = _BacklogItemFixture.Create(createdBy: user);
+            
+            _ProjectFixture.GrantAccess(backlogItem.ProjectID,
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
-            //Assert.IsType<OkResult>(result as OkResult);
-        }
+            InitHttpAndServiceContextWithUser(user);
+            object[] id = [backlogItem.ID];
+            var result = _ResourceController.Delete(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, id);
 
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            //IActionResult result = _Controller.Delete(Constants.NonExistantId);
-
-            //Assert.IsType<NotFoundResult>(result as NotFoundResult);
+            Assert.IsType<Ok>(result);
         }
     }
 }

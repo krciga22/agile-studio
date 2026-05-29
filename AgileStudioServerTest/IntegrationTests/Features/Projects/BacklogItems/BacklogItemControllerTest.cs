@@ -1,4 +1,6 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.APIs;
+using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Projects.BacklogItems;
@@ -41,7 +43,38 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
         [Fact]
         public void GetChildBacklogItems_WithId_ReturnsDtos()
         {
-            // todo
+            var user = _UserFixture.Create();
+            var parentBacklogItem = _BacklogItemFixture.Create(createdBy: user);
+            var project = _ProjectFixture.Get(parentBacklogItem.ProjectID);
+            var child1 = _BacklogItemFixture.Create("Child 1", 
+                project: project, parentBacklogItem: parentBacklogItem, createdBy: user);
+            var child2 = _BacklogItemFixture.Create("Child 2", 
+                project: project, parentBacklogItem: parentBacklogItem, createdBy: user);
+            List<BacklogItemModel> children = new() { child1, child2 };
+
+            _ProjectFixture.GrantAccess(parentBacklogItem.ProjectID,
+                user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
+
+            InitHttpAndServiceContextWithUser(user);
+
+            object[] id = { parentBacklogItem.ID };
+            var result = _ResourceController.GetSubCollection(
+                _HttpContext, ResourceTypes.BacklogItemsBacklogItem, 
+                ResourceTypes.BacklogItemsBacklogItem, id, 
+                new GetCollectionQueryParams());
+
+            var objectResult =
+                Assert.IsType<Ok<PaginationResults<object>>>(result);
+            var paginationResult =
+                Assert.IsType<PaginationResults<object>>(objectResult.Value);
+            var resultChildBacklogItemDtos = paginationResult.Items
+                .Select(i => Assert.IsType<BacklogItemDto>(i))
+                .ToList();
+            var returnedIds = resultChildBacklogItemDtos.Select(i => i.ID).ToList();
+
+            Assert.Equal(children.Count, paginationResult.Items.Count);
+            Assert.Contains(child1.ID, returnedIds);
+            Assert.Contains(child2.ID, returnedIds);
         }
 
         [Fact]

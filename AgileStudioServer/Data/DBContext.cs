@@ -200,6 +200,9 @@ namespace AgileStudioServer.Data
                 .HasKey(r => r.PermissionKey);
 
             // todo move this to separate seeding class
+            SeedStandardTypes(modelBuilder);
+
+            // todo move this to separate seeding class
             SeedStandardRolesAndPermissions(modelBuilder);
         }
 
@@ -226,6 +229,32 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<BacklogItemLinkTypeSchema>().ToTable("backlog_item_link_type_schema", "accounts");
             modelBuilder.Entity<Workflow>().ToTable("workflow", "accounts");
             modelBuilder.Entity<WorkflowState>().ToTable("workflow_state", "accounts");
+        }
+
+        private void SeedStandardTypes(ModelBuilder modelBuilder)
+        {
+            SeedStandardAccountTypes(modelBuilder);
+        }
+
+        private void SeedStandardAccountTypes(ModelBuilder modelBuilder)
+        {
+                modelBuilder.Entity<AccountType>().HasData(
+                    new AccountType("Individual")
+                    {
+                        ID = AccountTypes.INDIVIDUAL,
+                        CreatedOn = new DateTime(2026, 5, 29, 0, 0, 0, DateTimeKind.Utc),
+                    },
+                    new AccountType("Organization")
+                    {
+                        ID = AccountTypes.ORGANIZATION,
+                        CreatedOn = new DateTime(2026, 5, 29, 0, 0, 0, DateTimeKind.Utc),
+                    },
+                    new AccountType("Business")
+                    {
+                        ID = AccountTypes.BUSINESS,
+                        CreatedOn = new DateTime(2026, 5, 29, 0, 0, 0, DateTimeKind.Utc),
+                    }
+                );
         }
 
         private void SeedStandardRolesAndPermissions(ModelBuilder modelBuilder)

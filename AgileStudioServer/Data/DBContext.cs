@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Accounts.AccountTypes;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.AccountTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
@@ -23,6 +24,8 @@ namespace AgileStudioServer.Data
 {
     public class DBContext : DbContext
     {
+        public DbSet<Account> Account { get; set; }
+
         public DbSet<AccountType> AccountType { get; set; }
 
         public DbSet<Project> Project { get; set; }
@@ -67,6 +70,12 @@ namespace AgileStudioServer.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigureTableNamesAndSchemas(modelBuilder);
+
+            modelBuilder.Entity<Account>()
+                .HasOne(e => e.AccountType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("fk_account_account_type_id");
 
             modelBuilder.Entity<Project>()
                 .HasOne(e => e.BacklogItemTypeSchema)
@@ -220,6 +229,7 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Sprint>().ToTable("sprint", "projects");
             modelBuilder.Entity<Release>().ToTable("release", "projects");
 
+            modelBuilder.Entity<Account>().ToTable("account", "accounts");
             modelBuilder.Entity<AccountType>().ToTable("account_type", "accounts");
             modelBuilder.Entity<BacklogItemType>().ToTable("backlog_item_type", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchema>().ToTable("backlog_item_type_schema", "accounts");

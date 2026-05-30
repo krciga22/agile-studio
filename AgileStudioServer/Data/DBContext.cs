@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AgileStudioServer.Features.Accounts.AccountTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
@@ -11,17 +11,20 @@ using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.RolePermissions;
 using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Features.Users.Users;
-using AgileStudioServer.Features.Auth.Scopes;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgileStudioServer.Data
 {
     public class DBContext : DbContext
     {
+        public DbSet<AccountType> AccountType { get; set; }
+
         public DbSet<Project> Project { get; set; }
 
         public DbSet<BacklogItem> BacklogItem { get; set; }
@@ -214,6 +217,7 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Sprint>().ToTable("sprint", "projects");
             modelBuilder.Entity<Release>().ToTable("release", "projects");
 
+            modelBuilder.Entity<AccountType>().ToTable("account_type", "accounts");
             modelBuilder.Entity<BacklogItemType>().ToTable("backlog_item_type", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchema>().ToTable("backlog_item_type_schema", "accounts");
             modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>().ToTable("backlog_item_link_type_schema_entry", "accounts");

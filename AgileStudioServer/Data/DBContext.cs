@@ -270,12 +270,47 @@ namespace AgileStudioServer.Data
         private void SeedStandardRolesAndPermissions(ModelBuilder modelBuilder)
         {
             SeedPermissions(modelBuilder);
+            SeedAccountRoles(modelBuilder);
+            SeedAccountOwnerRolePermissions(modelBuilder);
             SeedProjectRoles(modelBuilder);
             SeedProjectAdminRolePermissions(modelBuilder);
             SeedProjectManagerRolePermissions(modelBuilder);
             SeedProjectDeveloperRolePermissions(modelBuilder);
             SeedProjectTesterRolePermissions(modelBuilder);
             SeedProjectBusinessAnalystRolePermissions(modelBuilder);
+        }
+
+        private void SeedAccountRoles(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(
+                new Role(RoleKeys.ACCOUNTS_ACCOUNT_OWNER, "Account Owner", Scopes.ACCOUNT)
+                {
+                    CreatedOn = new DateTime(2025, 5, 30, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRole = true
+                }
+            );
+        }
+
+        private void SeedAccountOwnerRolePermissions(ModelBuilder modelBuilder)
+        {
+            var roleKey = RoleKeys.ACCOUNTS_ACCOUNT_OWNER;
+            modelBuilder.Entity<RolePermission>().HasData(
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.ACCOUNT)
+                {
+                    CreatedOn = new DateTime(2025, 5, 30, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.UPDATE, Scopes.ACCOUNT)
+                {
+                    CreatedOn = new DateTime(2025, 5, 30, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.DELETE, Scopes.ACCOUNT)
+                {
+                    CreatedOn = new DateTime(2025, 5, 30, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                }
+            );
         }
 
         private void SeedProjectRoles(ModelBuilder modelBuilder)

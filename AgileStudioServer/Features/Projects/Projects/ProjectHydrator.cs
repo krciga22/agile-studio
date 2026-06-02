@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Users.Users;
 
@@ -45,7 +46,8 @@ public class ProjectHydrator : AbstractEntityHydrator
             }
             else
             {
-                entity = new Project(model.Title, model.BacklogItemTypeSchemaID, model.BacklogItemLinkTypeSchemaID);
+                entity = new Project(model.AccountID, model.Title, 
+                    model.BacklogItemTypeSchemaID, model.BacklogItemLinkTypeSchemaID);
             }
 
             if (entity != null)
@@ -81,6 +83,7 @@ public class ProjectHydrator : AbstractEntityHydrator
             var model = (ProjectModel)from;
 
             entity.ID = model.ID;
+            entity.AccountID = model.AccountID;
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.CreatedOn = model.CreatedOn;
@@ -89,6 +92,10 @@ public class ProjectHydrator : AbstractEntityHydrator
 
             if (referenceHydrator != null && nextDepth <= maxDepth)
             {
+                entity.Account = (Account)referenceHydrator.Hydrate(
+                    model.AccountID, typeof(Account), maxDepth, nextDepth
+                );
+
                 entity.BacklogItemTypeSchema = (BacklogItemTypeSchema)referenceHydrator.Hydrate(
                     model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchema), maxDepth, nextDepth
                 );

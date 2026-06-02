@@ -8,6 +8,7 @@ using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Features.Resources.Resource;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
@@ -26,6 +27,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
     public class ProjectControllerTest : ResourceControllerTest
     {
         private readonly ProjectFixture _ProjectFixture;
+
+        private readonly AccountFixture _AccountFixture;
 
         private readonly BacklogItemFixture _BacklogItemFixture;
 
@@ -49,6 +52,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             DBContext dbContext,
             ResourceController resourceController,
             ProjectFixture projectFixture,
+            AccountFixture accountFixture,
             BacklogItemFixture backlogItemFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
@@ -63,6 +67,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             base(dbContext, resourceController, serviceContext, iUrlHelperFactory)
         {
             _ProjectFixture = projectFixture;
+            _AccountFixture = accountFixture;
             _BacklogItemFixture = backlogItemFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
@@ -79,12 +84,14 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project1 = _ProjectFixture.Create(
-                "Test Project 1", createdBy: user);
+                account, "Test Project 1", createdBy: user);
             _ProjectFixture.GrantAccess(project1.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
             var project2 = _ProjectFixture.Create(
-                "Test Project 2", createdBy: user);
+                account, "Test Project 2", createdBy: user);
             _ProjectFixture.GrantAccess(project2.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
             var projects = new List<ProjectModel> { project1, project2 };
@@ -108,8 +115,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
             _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
 
             InitHttpAndServiceContextWithUser(user);
@@ -144,8 +153,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project 1", createdBy: user);
+                account, "Test Project 1", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -197,8 +208,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -241,8 +254,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project 1", createdBy: user);
+                account, "Test Project 1", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -282,8 +297,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                 account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -317,8 +334,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project 1", createdBy: user);
+                account, "Test Project 1", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -358,8 +377,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -389,13 +410,15 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var backlogItemTypeSchema = 
                 _BacklogItemTypeSchemaFixture.Create();
 
             var backlogItemLinkTypeSchema = 
                 _BacklogItemLinkTypeSchemaFixture.Create();
 
-            var projectPostDto = new ProjectPostDto("Test Project",
+            var projectPostDto = new ProjectPostDto(account.ID, "Test Project",
                 backlogItemTypeSchema.ID, backlogItemLinkTypeSchema.ID);
 
             object data = IntegrationTestsUtil.ConvertDtoToObject(projectPostDto);
@@ -418,8 +441,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -446,8 +471,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
@@ -465,8 +492,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            var account = _AccountFixture.Create(createdBy: user);
+
             var project = _ProjectFixture.Create(
-                "Test Project", createdBy: user);
+                account, "Test Project", createdBy: user);
 
             _ProjectFixture.GrantAccess(
                 project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);

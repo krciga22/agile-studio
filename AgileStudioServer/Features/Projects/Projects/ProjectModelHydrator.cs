@@ -42,13 +42,13 @@ namespace AgileStudioServer.Features.Projects.Projects
             if (from is Project)
             {
                 var entity = (Project)from;
-                model = new ProjectModel(entity.Title, entity.BacklogItemTypeSchemaID, entity.BacklogItemLinkTypeSchemaID);
+                model = new ProjectModel(entity.AccountID, entity.Title, entity.BacklogItemTypeSchemaID, entity.BacklogItemLinkTypeSchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPostDto)
             {
                 var dto = (ProjectPostDto)from;
-                model = new ProjectModel(dto.Title, dto.BacklogItemTypeSchemaId, dto.BacklogItemLinkTypeSchemaId);
+                model = new ProjectModel(dto.AccountID, dto.Title, dto.BacklogItemTypeSchemaId, dto.BacklogItemLinkTypeSchemaId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is ProjectPatchDto)
@@ -84,6 +84,7 @@ namespace AgileStudioServer.Features.Projects.Projects
                 var entity = (Project)from;
 
                 model.ID = entity.ID;
+                model.AccountID = entity.AccountID;
                 model.Title = entity.Title;
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
@@ -93,6 +94,7 @@ namespace AgileStudioServer.Features.Projects.Projects
             else if (from is ProjectPostDto)
             {
                 var dto = (ProjectPostDto)from;
+                model.AccountID = dto.AccountID;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.BacklogItemTypeSchemaID = dto.BacklogItemTypeSchemaId;

@@ -2,10 +2,12 @@
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Projects.Projects;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Projects.Projects;
@@ -19,6 +21,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
 
         private readonly ProjectFixture _ProjectFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
 
         private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
@@ -31,6 +35,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             DBContext dbContext,
             ProjectService projectService,
             ProjectFixture projectFixture,
+            AccountFixture accountFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
             BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
             UserFixture userFixture,
@@ -38,6 +43,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             _projectService = projectService;
             _ProjectFixture = projectFixture;
+            _AccountFixture = accountFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
             _UserFixture = userFixture;
@@ -47,9 +53,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         [Fact]
         public void Create_ReturnsProject()
         {
+            AccountModel account = _AccountFixture.Create();
             BacklogItemTypeSchemaModel typeSchema = _BacklogItemTypeSchemaFixture.Create();
             BacklogItemLinkTypeSchemaModel linkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
-            ProjectModel project = new("Test Project", typeSchema.ID, linkTypeSchema.ID);
+            ProjectModel project = new(account.ID, "Test Project", typeSchema.ID, linkTypeSchema.ID);
 
             project = _projectService.Create(project);
 
@@ -73,9 +80,13 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
         {
             var user = _UserFixture.Create();
 
+            AccountModel account = _AccountFixture.Create();
+
             var readableProjects = new List<ProjectModel>{
-                _ProjectFixture.Create("Owned Project 1", createdBy: user),
-                _ProjectFixture.Create("Owned Project 2", createdBy: user)
+                _ProjectFixture.Create(
+                    account, "Owned Project 1", createdBy: user),
+                _ProjectFixture.Create(
+                    account, "Owned Project 2", createdBy: user)
             };
 
             readableProjects.ForEach(project =>
@@ -83,8 +94,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
                     project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN));
 
             var nonReadableProjects = new List<ProjectModel>{
-                _ProjectFixture.Create("Other Project 1"),
-                _ProjectFixture.Create("Other Project 2")
+                _ProjectFixture.Create(account, "Other Project 1"),
+                _ProjectFixture.Create(account, "Other Project 2")
             };
 
             var projects  = readableProjects.Concat(nonReadableProjects).ToList();

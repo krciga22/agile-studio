@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Users.Users;
 
@@ -7,6 +8,8 @@ namespace AgileStudioServer.Features.Projects.Projects
     public class ProjectDto
     {
         public int ID { get; set; }
+
+        public AccountSummaryDto Account { get; set; }
 
         public string Title { get; set; }
 
@@ -22,12 +25,14 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public ProjectDto(
             int id,
+            AccountSummaryDto account,
             string title,
             DateTime createdOn,
             BacklogItemTypeSchemaSummaryDto backlogItemTypeSchema,
             BacklogItemLinkTypeSchemaSummaryDto backlogItemLinkTypeSchema)
         {
             ID = id;
+            Account = account;
             Title = title;
             CreatedOn = createdOn;
             BacklogItemTypeSchema = backlogItemTypeSchema;

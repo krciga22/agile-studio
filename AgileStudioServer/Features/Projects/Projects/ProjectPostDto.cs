@@ -5,6 +5,9 @@ namespace AgileStudioServer.Features.Projects.Projects
     public class ProjectPostDto
     {
         [Required]
+        public int AccountID { get; set; }
+
+        [Required]
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
 
@@ -17,8 +20,9 @@ namespace AgileStudioServer.Features.Projects.Projects
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public ProjectPostDto(string title, int backlogItemTypeSchemaId, int backlogItemLinkTypeSchemaId)
+        public ProjectPostDto(int accountID, string title, int backlogItemTypeSchemaId, int backlogItemLinkTypeSchemaId)
         {
+            AccountID = accountID;
             Title = title;
             BacklogItemTypeSchemaId = backlogItemTypeSchemaId;
             BacklogItemLinkTypeSchemaId = backlogItemLinkTypeSchemaId;

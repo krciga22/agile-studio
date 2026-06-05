@@ -26,6 +26,7 @@ namespace AgileStudioCLI.Commands
 
         private async void RemoveAllFixtures()
         {
+            await _DBContext.Account.ForEachAsync(x => _DBContext.Account.Remove(x));
             await _DBContext.Project.ForEachAsync(x => _DBContext.Project.Remove(x));
             await _DBContext.Release.ForEachAsync(x => _DBContext.Release.Remove(x));
             await _DBContext.Sprint.ForEachAsync(x => _DBContext.Sprint.Remove(x));

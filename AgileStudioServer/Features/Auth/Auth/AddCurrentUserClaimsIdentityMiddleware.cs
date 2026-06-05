@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Middleware;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Users.Users;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
@@ -15,7 +16,11 @@ namespace AgileStudioServer.Features.Auth.Auth
     /// </summary>
     public class AddCurrentUserClaimsIdentityMiddleware(RequestDelegate next) : AbstractMiddleware
     {
-        public async Task InvokeAsync(HttpContext context, UserService userService, IConfiguration Config)
+        public async Task InvokeAsync(
+            HttpContext context, 
+            UserService userService, 
+            IConfiguration Config,
+            AccountService accountService)
         {
             IIdentity identity;
             if (context.User.Identity == null){
@@ -62,6 +67,8 @@ namespace AgileStudioServer.Features.Auth.Auth
                         AuthServerUserID = userInfo.UserId
                     }
                 );
+
+                accountService.CreateIndividualAccountForUser(user);
             }
 
             var currentUserClaimsIdentity = new CurrentUserClaimsIdentity(authenticationType);

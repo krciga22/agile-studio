@@ -1,6 +1,10 @@
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Roles;
+using AgileStudioServer.Features.Auth.Scopes;
+using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Accounts
 {
@@ -8,13 +12,16 @@ namespace AgileStudioServer.Features.Accounts.Accounts
     {
         private readonly AccountRepository _AccountRepository;
         private readonly ServiceContext _ServiceContext;
+        private readonly RoleGrantService _RoleGrantService;
 
         public AccountService(
             AccountRepository accountRepository,
-            ServiceContext serviceContext)
+            ServiceContext serviceContext,
+            RoleGrantService roleGrantService)
         {
             _AccountRepository = accountRepository;
             _ServiceContext = serviceContext;
+            _RoleGrantService = roleGrantService;
         }
 
         public override PaginationResults<AccountModel> GetCollection()
@@ -32,6 +39,30 @@ namespace AgileStudioServer.Features.Accounts.Accounts
         {
             var account = _AccountRepository.Get(id) ??
                 throw new ModelNotFoundException(nameof(AccountModel), id.ToString());
+
+            return account;
+        }
+
+        public AccountModel CreateIndividualAccountForUser(UserModel user)
+        {
+            AccountModel account = new (AccountTypes.AccountTypes.INDIVIDUAL)
+            {
+                CreatedByID = user.ID
+            };
+            account = _AccountRepository.Create(account);
+
+            var roleGrant = new RoleGrantModel(
+                    RoleKeys.ACCOUNTS_ACCOUNT_OWNER,
+                    RoleSubjectTypes.USER,
+                    user.ID.ToString(),
+                    Scopes.ACCOUNT
+                )
+            {
+                ScopeID = account.ID.ToString(),
+                CreatedByID = user.ID
+            };
+
+            _RoleGrantService.Create(roleGrant);
 
             return account;
         }

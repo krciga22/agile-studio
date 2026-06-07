@@ -309,6 +309,11 @@ namespace AgileStudioServer.Data
                 {
                     CreatedOn = new DateTime(2025, 5, 30, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT)
+                {
+                    CreatedOn = new DateTime(2025, 6, 7, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
                 }
             );
         }

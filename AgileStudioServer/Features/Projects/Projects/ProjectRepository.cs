@@ -38,6 +38,21 @@ namespace AgileStudioServer.Features.Projects.Projects
             return GetPaginationResultsFromQuery(query, serviceContext, total);
         }
 
+        public PaginationResults<ProjectModel> GetByAccountID(int accountId, ServiceContext serviceContext)
+        {
+            IQueryable<Project> query = _DBContext.Project.Where(p => p.AccountID == accountId);
+
+            query = ApplySearchToQuery(query, serviceContext);
+
+            // todo apply filters to query
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query, serviceContext);
+
+            return GetPaginationResultsFromQuery(query, serviceContext, total);
+        }
+
         /// <summary>
         /// Get projects readable by the current user.
         /// </summary>

@@ -4,6 +4,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
+using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Projects.Projects
 {
@@ -23,6 +24,11 @@ namespace AgileStudioServer.Features.Projects.Projects
             _RoleGrantService = roleGrantService;
         }
 
+        public virtual PaginationResults<ProjectModel> GetByAccountID(int accountId)
+        {
+            return _ProjectRepository.GetByAccountID(accountId, _ServiceContext);
+        }
+
         public override PaginationResults<ProjectModel> GetCollection()
         {
             return _ProjectRepository.GetProjectsForCurrentUser(_ServiceContext);
@@ -30,7 +36,13 @@ namespace AgileStudioServer.Features.Projects.Projects
 
         public override PaginationResults<ProjectModel> GetSubCollection(String parentResourceType, Object[] id)
         {
-            throw new NotImplementedException();
+            switch (parentResourceType)
+            {
+                case ResourceTypes.AccountsAccount:
+                    return GetByAccountID(int.Parse(id[0].ToString()!));
+                default:
+                    throw new ArgumentException($"Unsupported parent resource type: {parentResourceType}");
+            }
         }
 
         /// <exception cref="ModelNotFoundException"></exception>

@@ -19,7 +19,7 @@ namespace AgileStudioServer.Features.Projects.Projects
             string? parentScopeId = null;
             if(scopeId != null){
                 ProjectModel project = _ProjectService.Get(int.Parse(scopeId));
-                // todo set parentScopeId to project.AccountID once available
+                parentScopeId = project.AccountID.ToString();
             }
 
             return new ParentScope(Scopes.ACCOUNT, parentScopeId);

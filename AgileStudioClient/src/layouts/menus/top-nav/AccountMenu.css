@@ -1,0 +1,36 @@
+.account-menu-dropdown{
+    position: absolute;
+    margin-top: 6px;
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.account-menu-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+}
+
+.account-menu-accounts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.account-menu-dropdown button{
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+}
+
+.account-menu-dropdown button.selected{
+    background: #ccc;
+}

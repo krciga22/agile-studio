@@ -3,13 +3,15 @@ import TopNav from "../../layouts/menus/top-nav/TopNav.tsx";
 import UserMenu from "../../layouts/menus/top-nav/UserMenu.tsx";
 import Constants from "../../Constants.tsx";
 import SettingsMenu from "../../layouts/menus/top-nav/SettingsMenu.tsx";
+import AccountMenu from "../menus/top-nav/AccountMenu.tsx";
 
 function Header() {
   return (
     <header className={"p-2"}>
       <div className={"d-flex flex-wrap justify-content-between"}>
-        <div className={"d-flex"}>
+        <div className={"d-flex gap-2"}>
           <span className={"appName me-3"}>{Constants.PRODUCT_NAME}</span>
+          <AccountMenu></AccountMenu>
           <TopNav></TopNav>
         </div>
         <div className={"d-flex"}>

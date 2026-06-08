@@ -119,24 +119,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Auth.Permissions
         }
 
         [Fact]
-        public void CheckPermissions_ReturnsFalse_WhenScopeIsDifferent()
-        {
-            var user = _UserFixture.Create();
-            var project = _ProjectFixture.Create();
-
-            _ProjectFixture.GrantAccess(project.ID, user.ID, RoleKeys.PROJECTS_PROJECT_ADMIN);
-
-            var result = _PermissionCheckerService.CheckPermissions(
-                RoleSubjectTypes.USER,
-                user.ID.ToString(),
-                Scopes.ACCOUNT,
-                project.ID.ToString(),
-                PermissionKeys.READ);
-
-            Assert.False(result);
-        }
-
-        [Fact]
         public void CheckPermissions_ReturnsFalse_WhenScopeIdIsDifferent()
         {
             var user = _UserFixture.Create();

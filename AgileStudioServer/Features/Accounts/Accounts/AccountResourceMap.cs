@@ -45,5 +45,10 @@ namespace AgileStudioServer.Features.Accounts.Accounts
         {
             return new ParentScope(Scopes.GLOBAL, null);
         }
+
+        public bool IsPermissionedResource()
+        {
+            return true;
+        }
     }
 }

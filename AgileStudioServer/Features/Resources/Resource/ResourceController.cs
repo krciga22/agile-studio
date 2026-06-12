@@ -59,13 +59,16 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = InvokeResourceServiceMethod(
                     resourceService, "ToIdentifier", [id]);
 
-                _PermissionCheckerService.ValidatePermissions(
-                    RoleSubjectTypes.USER,
-                    _ServiceContext.GetCurrentUserIdStrict().ToString(), 
-                    resourceMap.GetResourcePermissionScope(),
-                    identifier.ToString(),
-                    PermissionKeys.READ
-                );
+                if (resourceMap.IsPermissionedResource())
+                {
+                    _PermissionCheckerService.ValidatePermissions(
+                        RoleSubjectTypes.USER,
+                        _ServiceContext.GetCurrentUserIdStrict().ToString(), 
+                        resourceMap.GetResourcePermissionScope(),
+                        identifier.ToString(),
+                        PermissionKeys.READ
+                    );
+                }
 
                 object resourceModel = InvokeResourceServiceMethodNullable(
                     resourceService, "Get", [identifier]) ??
@@ -152,13 +155,16 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = InvokeResourceServiceMethod(
                     resourceService, "ToIdentifier", [id]);
 
-                _PermissionCheckerService.ValidatePermissions(
-                    RoleSubjectTypes.USER,
-                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
-                    resourceMap.GetResourcePermissionScope(),
-                    identifier.ToString(),
-                    PermissionKeys.UPDATE
-                );
+                if (resourceMap.IsPermissionedResource())
+                {
+                    _PermissionCheckerService.ValidatePermissions(
+                        RoleSubjectTypes.USER,
+                        _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                        resourceMap.GetResourcePermissionScope(),
+                        identifier.ToString(),
+                        PermissionKeys.UPDATE
+                    );
+                }
 
                 object updateModel = InvokeResourceServiceMethodNullable(
                     resourceService, "Get", [identifier]) ??
@@ -222,13 +228,16 @@ namespace AgileStudioServer.Features.Resources.Resource
                 var identifier = InvokeResourceServiceMethod(
                     resourceService, "ToIdentifier", [id]);
 
-                _PermissionCheckerService.ValidatePermissions(
-                    RoleSubjectTypes.USER,
-                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
-                    resourceMap.GetResourcePermissionScope(),
-                    identifier.ToString(),
-                    PermissionKeys.DELETE
-                );
+                if (resourceMap.IsPermissionedResource())
+                {
+                    _PermissionCheckerService.ValidatePermissions(
+                        RoleSubjectTypes.USER,
+                        _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                        resourceMap.GetResourcePermissionScope(),
+                        identifier.ToString(),
+                        PermissionKeys.DELETE
+                    );
+                }
 
                 object model = InvokeResourceServiceMethodNullable(
                     resourceService, "Get", [identifier]) ??

@@ -46,5 +46,10 @@ namespace AgileStudioServer.Features.Projects.Projects
             ProjectModel projectModel = ((ProjectModel)model);
             return new ParentScope(Scopes.ACCOUNT, projectModel.AccountID.ToString());
         }
+
+        public bool IsPermissionedResource()
+        {
+            return true;
+        }
     }
 }

@@ -19,5 +19,7 @@ namespace AgileStudioServer.Core.Resources
         Type GetResourceModelServiceType();
 
         ParentScope GetParentResourceScope(Object model);
+
+        bool IsPermissionedResource();
     }
 }

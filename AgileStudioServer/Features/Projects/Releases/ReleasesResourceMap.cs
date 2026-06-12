@@ -47,5 +47,10 @@ namespace AgileStudioServer.Features.Projects.Releases
             ReleaseModel releaseModel = ((ReleaseModel)model);
             return new ParentScope(Scopes.PROJECT, releaseModel.ProjectID.ToString());
         }
+
+        public bool IsPermissionedResource()
+        {
+            return true;
+        }
     }
 }

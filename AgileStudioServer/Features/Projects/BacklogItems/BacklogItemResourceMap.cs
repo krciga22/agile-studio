@@ -46,5 +46,10 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
             BacklogItemModel backlogItemModel = ((BacklogItemModel)model);
             return new ParentScope(Scopes.PROJECT, backlogItemModel.ProjectID.ToString());
         }
+
+        public bool IsPermissionedResource()
+        {
+            return true;
+        }
     }
 }

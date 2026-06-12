@@ -46,5 +46,10 @@ namespace AgileStudioServer.Features.Projects.Sprints
             SprintModel sprintModel = ((SprintModel)model);
             return new ParentScope(Scopes.PROJECT, sprintModel.ProjectID.ToString());
         }
+
+        public bool IsPermissionedResource()
+        {
+            return true;
+        }
     }
 }

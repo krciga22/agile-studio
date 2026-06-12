@@ -7,6 +7,7 @@ export const getAccountsPagePath = () => `/accounts`;
 export const getAccountPagePath = (accountId: number) => `${getAccountsPagePath()}/${accountId}`;
 export const getAccountSettingsPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/settings`;
 export const getAccountBacklogItemTypesPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-types`;
+export const getAccountBacklogItemTypeSchemasPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-type-schemas`;
 export const getAccountHomePagePath = (accountId: number) => getAccountSettingsPagePath(accountId);
 
 export const getProjectsPagePath = () => `/projects`;

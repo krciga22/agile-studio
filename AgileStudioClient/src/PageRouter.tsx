@@ -17,6 +17,7 @@ import ErrorLayout from "./layouts/ErrorLayout.tsx";
 import BlankLayout from "./layouts/BlankLayout.tsx";
 import CurrentPageContext from "./services/CurrentPage.tsx";
 import BacklogItemTypesPage from "./pages/account/BacklogItemTypesPage.tsx";
+import BacklogItemTypeSchemasPage from "./pages/account/BacklogItemTypeSchemasPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -86,6 +87,9 @@ function PageRouter() {
       }
       else if(subPath === 'backlog-item-types'){
         page = <BacklogItemTypesPage accountId={accountId}></BacklogItemTypesPage>
+      }
+      else if(subPath === 'backlog-item-type-schemas'){
+        page = <BacklogItemTypeSchemasPage accountId={accountId}></BacklogItemTypeSchemasPage>
       }
     }
   }

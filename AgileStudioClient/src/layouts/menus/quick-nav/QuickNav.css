@@ -10,6 +10,8 @@
             background: #333;
             border-top: 2px solid #222;
             border-bottom: 2px solid #222;
+            max-height: 200px;
+            overflow-y: auto;
 
             li {
                 padding: 0;

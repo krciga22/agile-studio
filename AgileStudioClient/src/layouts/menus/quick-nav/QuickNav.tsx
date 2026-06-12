@@ -2,6 +2,7 @@ import './QuickNav.css'
 import type {ReactElement} from "react";
 import type {BacklogItem} from "../../../models/BacklogItem.tsx";
 import ProjectMenu from "./ProjectsMenu.tsx";
+import AccountsMenu from "./AccountsMenu.tsx";
 
 function QuickNav() {
 
@@ -31,6 +32,9 @@ function QuickNav() {
 
   return (
     <nav className={"QuickNav flex-shrink-1 overflow-scroll me-sm-4 p-3"}>
+      <div className={"mb-2"}>
+        <AccountsMenu></AccountsMenu>
+      </div>
       <div className={"mb-2"}>
         <ProjectMenu></ProjectMenu>
       </div>

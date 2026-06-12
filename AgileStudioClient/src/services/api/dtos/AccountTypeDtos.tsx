@@ -1,9 +1,9 @@
 import type {UserSummaryDto} from "./UserDtos.tsx";
-import type {AccountTypeDto} from "./AccountTypeDtos.tsx";
 
-export type AccountDto = {
+export type AccountTypeDto = {
   id: number,
-  accountType: AccountTypeDto,
+  title?: string,
+  description?: string,
   createdOn: string,
   createdBy: UserSummaryDto,
 };

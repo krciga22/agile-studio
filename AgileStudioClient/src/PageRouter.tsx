@@ -6,6 +6,7 @@ import InitPage from "./pages/InitPage.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {useEffect, useState} from "react";
 import LoginPage from "./pages/LoginPage.tsx";
+import AccountSettingsPage from "./pages/account/AccountSettingsPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import BacklogPage from "./pages/project/BacklogPage.tsx";
 import SprintsPage from "./pages/project/SprintsPage.tsx";
@@ -73,6 +74,16 @@ function PageRouter() {
   }
   else if(pathname === "/projects"){
     page = <ProjectsPage></ProjectsPage>
+  }
+  else if(pathname.match(/\/accounts\/\d+/)?.length === 1) {
+    const accountId = parseInt(pathSegments[1]);
+    if (!isNaN(accountId)) {
+      subPath = pathSegments.slice(2).join('/');
+
+      if(subPath === 'settings'){
+        page = <AccountSettingsPage accountId={accountId}></AccountSettingsPage>
+      }
+    }
   }
   else if(pathname.match(/\/projects\/\d+/)?.length === 1){
     const projectId = parseInt(pathSegments[1]);

@@ -17,6 +17,7 @@ import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import type {AccountTypeDto} from "../../services/api/dtos/AccountTypeDtos.tsx";
 import {getAccountTypes} from "../../services/api/endpoints/accounts/AccountTypes.tsx";
 import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
+import {getAccountTitle} from "../../services/util/account-utils.tsx";
 
 type SettingsPageProps = {
   accountId: number
@@ -48,10 +49,6 @@ function AccountSettingsPage(props: SettingsPageProps) {
       setAccountTypeId(account.accountType.id);
     }
   }, [account]);
-
-  const getAccountTitle = (account: AccountDto) => {
-    return `#${account.id} ${account.accountType.title}`;
-  }
 
   const refresh = async () => {
     if(isRefreshing){

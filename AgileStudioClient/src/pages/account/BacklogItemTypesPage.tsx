@@ -9,6 +9,7 @@ import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.tsx";
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";
+import {getAccountTitle} from "../../services/util/account-utils.tsx";
 
 type BacklogItemTypesPageProps = {
   accountId: number
@@ -19,10 +20,6 @@ function BacklogItemTypesPage(props: BacklogItemTypesPageProps) {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
   const [account, setAccount] = useState<AccountDto|null>(null);
   const currentUser = useContext(CurrentUserContext);
-
-  const getAccountTitle = (account: AccountDto) => {
-    return `#${account.id} ${account.accountType.title}`;
-  }
 
   useEffect(() => {
     if(account){

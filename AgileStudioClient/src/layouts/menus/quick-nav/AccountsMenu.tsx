@@ -14,6 +14,7 @@ import {
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
 import {getAccounts} from "../../../services/api/endpoints/accounts/Accounts.tsx";
+import {getAccountTitle} from "../../../services/util/account-utils.tsx";
 
 function AccountsMenu() {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);
@@ -38,10 +39,6 @@ function AccountsMenu() {
       .finally(() => {
         setIsRefreshing(false);
       });
-  }
-
-  const getAccountTitle = (account: AccountDto) => {
-    return `#${account.id} ${account.accountType.title}`;
   }
 
   const renderAccount = (account:AccountDto) => {

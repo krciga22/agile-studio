@@ -10,6 +10,7 @@ export const getAccountBacklogItemTypesPagePath = (accountId: number) => `${getA
 export const getAccountBacklogItemTypeSchemasPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-type-schemas`;
 export const getAccountBacklogItemLinkTypesPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-link-types`;
 export const getAccountBacklogItemLinkTypeSchemasPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-link-type-schemas`;
+export const getAccountWorkflowsPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/workflows`;
 export const getAccountHomePagePath = (accountId: number) => getAccountSettingsPagePath(accountId);
 
 export const getProjectsPagePath = () => `/projects`;

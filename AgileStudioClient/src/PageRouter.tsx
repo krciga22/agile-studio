@@ -19,6 +19,7 @@ import CurrentPageContext from "./services/CurrentPage.tsx";
 import BacklogItemTypesPage from "./pages/account/BacklogItemTypesPage.tsx";
 import BacklogItemTypeSchemasPage from "./pages/account/BacklogItemTypeSchemasPage.tsx";
 import BacklogItemLinkTypesPage from "./pages/account/BacklogItemLinkTypesPage.tsx";
+import BacklogItemLinkTypeSchemasPage from "./pages/account/BacklogItemLinkTypeSchemasPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -94,6 +95,9 @@ function PageRouter() {
       }
       else if(subPath === 'backlog-item-link-types'){
         page = <BacklogItemLinkTypesPage accountId={accountId}></BacklogItemLinkTypesPage>
+      }
+      else if(subPath === 'backlog-item-link-type-schemas'){
+        page = <BacklogItemLinkTypeSchemasPage accountId={accountId}></BacklogItemLinkTypeSchemasPage>
       }
     }
   }

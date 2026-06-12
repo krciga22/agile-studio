@@ -23,6 +23,9 @@ import {
 } from "../services/util/error.tsx";
 import {toast} from "react-toastify";
 import {createProject} from "../services/api/endpoints/projects/Projects.tsx";
+import type {AccountDto} from "../services/api/dtos/AccountDtos.tsx";
+import { getAccounts } from "../services/api/endpoints/accounts/Accounts.tsx";
+import {getAccountTitle} from "../services/util/account-utils.tsx";
 
 type Props = {
   isOpen: boolean;
@@ -38,8 +41,10 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
   const [shouldRefresh, setShouldRefresh] = useState<boolean>(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [accountId, setAccountId] = useState<string>(defaultValue);
   const [backlogItemTypeSchemaId, setBacklogItemTypeSchemaId] = useState<string>(defaultValue);
   const [backlogItemLinkTypeSchemaId, setBacklogItemLinkTypeSchemaId] = useState<string>(defaultValue);
+  const [accounts, setAccounts] = useState<AccountDto[]>([]);
   const [backlogItemTypeSchemas, setBacklogItemTypeSchemas] = useState<BacklogItemTypeSchemaDto[]>([]);
   const [backlogItemLinkTypeSchemas, setBacklogItemLinkTypeSchemas] = useState<BacklogItemLinkTypeSchemaDto[]>([]);
   const [formFieldErrors, setFormFieldErrors] = useState<ProblemDetailsErrorMap>({});
@@ -63,12 +68,19 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
 
     setIsRefreshing(true);
 
-    // todo do these in parallel
-    const backlogItemTypeSchemasResponse = await getBacklogItemTypeSchemas();
-    const backlogItemLinkTypeSchemasResponse = await getBacklogItemLinkTypeSchemas();
+    const [
+      backlogItemTypeSchemasResponse,
+      backlogItemLinkTypeSchemasResponse,
+      accountsResponse
+    ] = await Promise.all([
+      getBacklogItemTypeSchemas(),
+      getBacklogItemLinkTypeSchemas(),
+      getAccounts()
+    ]);
 
-    setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data);
-    setBacklogItemLinkTypeSchemas(backlogItemLinkTypeSchemasResponse.data);
+    setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data ?? []);
+    setBacklogItemLinkTypeSchemas(backlogItemLinkTypeSchemasResponse.data ?? []);
+    setAccounts(accountsResponse.data?.items ?? []);
 
     setTimeout(() => {
       setIsRefreshing(false);
@@ -98,6 +110,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
       const projectPostDto: ProjectPostDto = {
         title: title.trim(),
         description: description.trim(),
+        accountId: parseInt(accountId),
         backlogItemTypeSchemaId: parseInt(backlogItemTypeSchemaId),
         backlogItemLinkTypeSchemaId: parseInt(backlogItemLinkTypeSchemaId)
       };
@@ -108,8 +121,9 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
 
       onCreated(response.data);
 
-      setTitle('');
-      setDescription('');
+      setTitle(defaultValue);
+      setDescription(defaultValue);
+      setAccountId(defaultValue);
       setBacklogItemTypeSchemaId(defaultValue);
       setBacklogItemLinkTypeSchemaId(defaultValue);
 
@@ -145,7 +159,7 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
 
     refresh()
       .catch(error => {
-        console.error('Error refreshing backlog item type schemas:', error);
+        console.error('Error refreshing:', error);
       });
   }
 
@@ -170,6 +184,24 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
               required={enableRequiredFieldValidation}
             />
             <FormError error={formFieldErrors} id="title" />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: 12 }}>
+            <label htmlFor="project-account">Account *</label>
+            <select
+              id="project-account"
+              className="form-control"
+              value={accountId}
+              onChange={e => setAccountId(e.target.value)}
+              disabled={isWorking}
+              required
+            >
+              <option value={defaultValue}></option>
+              {accounts.map(account => (
+                <option key={account.id} value={account.id}>{getAccountTitle(account)}</option>
+              ))}
+            </select>
+            <FormError error={formFieldErrors} id="accountid" />
           </div>
 
           <div className="form-group" style={{ marginBottom: 12 }}>

@@ -15,6 +15,7 @@ export type ProjectDto = {
 export type ProjectPostDto = {
   title: string,
   description?: string,
+  accountId: number,
   backlogItemTypeSchemaId: number,
   backlogItemLinkTypeSchemaId: number,
 };

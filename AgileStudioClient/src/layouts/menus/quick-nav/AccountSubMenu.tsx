@@ -9,7 +9,7 @@ import {
   getAccountBacklogItemTypeSchemasPagePath,
   getAccountBacklogItemTypesPagePath,
   getAccountSettingsPagePath,
-  getAccountWorkflowsPagePath,
+  getAccountWorkflowsPagePath, getAccountWorkflowStatesPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
 
@@ -30,6 +30,7 @@ function AccountSubMenu(props:AccountSubMenuProps) {
   const backlogItemLinkTypesPagePath = getAccountBacklogItemLinkTypesPagePath(account.id);
   const backlogItemLinkTypeSchemasPagePath = getAccountBacklogItemLinkTypeSchemasPagePath(account.id);
   const workflowsPagePath = getAccountWorkflowsPagePath(account.id);
+  const workflowStatesPagePath = getAccountWorkflowStatesPagePath(account.id);
   const settingsPagePath = getAccountSettingsPagePath(account.id);
 
   return (
@@ -48,6 +49,9 @@ function AccountSubMenu(props:AccountSubMenuProps) {
       </li>
       <li className={activePageClassName(workflowsPagePath)}>
         <a href={workflowsPagePath} onClick={linkToPage}>Workflows</a>
+      </li>
+      <li className={activePageClassName(workflowStatesPagePath)}>
+        <a href={workflowStatesPagePath} onClick={linkToPage}>Workflow States</a>
       </li>
       <li className={activePageClassName(settingsPagePath)}>
         <a href={settingsPagePath} onClick={linkToPage}>Settings</a>

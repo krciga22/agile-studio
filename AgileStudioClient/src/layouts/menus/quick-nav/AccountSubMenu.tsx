@@ -4,6 +4,7 @@ import {linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {useContext} from "react";
 import {
+  getAccountBacklogItemTypesPagePath,
   getAccountSettingsPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
@@ -20,10 +21,14 @@ function AccountSubMenu(props:AccountSubMenuProps) {
     return isCurrentPageBasePath(pageContext, pagePath) ? "active" : "";
   }
 
+  const backlogItemTypesPagePath = getAccountBacklogItemTypesPagePath(account.id);
   const settingsPagePath = getAccountSettingsPagePath(account.id);
 
   return (
     <ul className={"AccountSubMenu QuickNavSubMenu"}>
+      <li className={activePageClassName(backlogItemTypesPagePath)}>
+        <a href={backlogItemTypesPagePath} onClick={linkToPage}>Backlog Item Types</a>
+      </li>
       <li className={activePageClassName(settingsPagePath)}>
         <a href={settingsPagePath} onClick={linkToPage}>Settings</a>
       </li>

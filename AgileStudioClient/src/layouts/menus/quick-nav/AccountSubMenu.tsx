@@ -4,6 +4,7 @@ import {linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {useContext} from "react";
 import {
+  getAccountBacklogItemLinkTypesPagePath,
   getAccountBacklogItemTypeSchemasPagePath,
   getAccountBacklogItemTypesPagePath,
   getAccountSettingsPagePath,
@@ -23,6 +24,7 @@ function AccountSubMenu(props:AccountSubMenuProps) {
   }
 
   const backlogItemTypesPagePath = getAccountBacklogItemTypesPagePath(account.id);
+  const backlogItemLinkTypesPagePath = getAccountBacklogItemLinkTypesPagePath(account.id);
   const backlogItemTypeSchemasPagePath = getAccountBacklogItemTypeSchemasPagePath(account.id);
   const settingsPagePath = getAccountSettingsPagePath(account.id);
 
@@ -33,6 +35,9 @@ function AccountSubMenu(props:AccountSubMenuProps) {
       </li>
       <li className={activePageClassName(backlogItemTypeSchemasPagePath)}>
         <a href={backlogItemTypeSchemasPagePath} onClick={linkToPage}>Backlog Item Type Schemas</a>
+      </li>
+      <li className={activePageClassName(backlogItemLinkTypesPagePath)}>
+        <a href={backlogItemLinkTypesPagePath} onClick={linkToPage}>Backlog Item Link Types</a>
       </li>
       <li className={activePageClassName(settingsPagePath)}>
         <a href={settingsPagePath} onClick={linkToPage}>Settings</a>

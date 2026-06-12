@@ -21,5 +21,12 @@ namespace AgileStudioServer.Features.Accounts.AccountTypes
         {
             return _DBContext.AccountType;
         }
+
+        public virtual List<AccountTypeModel> GetAll()
+        {
+            List<AccountType> entities = _DBContext.AccountType.ToList();
+
+            return HydrateModels(entities);
+        }
     }
 }

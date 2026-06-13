@@ -79,6 +79,7 @@ namespace AgileStudioServer.Features.Accounts.Accounts
                 entity.AccountTypeID = model.AccountTypeID;
                 entity.CreatedOn = model.CreatedOn;
                 entity.CreatedByID = model.CreatedByID;
+                entity.AccountTypeID = model.AccountTypeID;
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {

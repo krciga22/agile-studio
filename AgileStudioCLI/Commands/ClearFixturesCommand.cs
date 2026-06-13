@@ -42,7 +42,6 @@ namespace AgileStudioCLI.Commands
             await _DBContext.WorkflowState.ForEachAsync(x => _DBContext.WorkflowState.Remove(x));
             await _DBContext.Workflow.ForEachAsync(x => _DBContext.Workflow.Remove(x));
             await _DBContext.Account.ForEachAsync(x => _DBContext.Account.Remove(x));
-            await _DBContext.AccountType.ForEachAsync(x => _DBContext.AccountType.Remove(x));
 
             await _DBContext.RoleGrant.ForEachAsync(x => _DBContext.RoleGrant.Remove(x));
             await _DBContext.RolePermission.ForEachAsync(x => {

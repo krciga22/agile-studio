@@ -145,7 +145,8 @@ namespace AgileStudioCLI.FixtureSets
 
             var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create(
                 title: "Agile Studio Backlog Item Type Schema",
-                createdBy: user);
+                createdBy: user,
+                account: account);
 
             var backlogItemTypeStory = _BacklogItemTypeFixture.Create(
                 title: "Story",

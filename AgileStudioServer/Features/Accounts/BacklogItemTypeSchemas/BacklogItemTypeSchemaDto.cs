@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Users.Users;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
 {
@@ -14,14 +15,18 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
 
         public UserSummaryDto? CreatedBy { get; set; }
 
+        public AccountSummaryDto Account { get; set; }
+
         public BacklogItemTypeSchemaDto(
             int id,
             string title,
-            DateTime createdOn)
+            DateTime createdOn,
+            AccountSummaryDto accountSummaryDto)
         {
             ID = id;
             Title = title;
             CreatedOn = createdOn;
+            Account = accountSummaryDto;
         }
     }
 }

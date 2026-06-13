@@ -11,9 +11,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public BacklogItemTypeSchemaPostDto(string title)
+        [Required]
+        public int AccountID { get; set; }
+
+        public BacklogItemTypeSchemaPostDto(string title, int accountID)
         {
             Title = title;
+            AccountID = accountID;
         }
     }
 }

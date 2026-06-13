@@ -4,6 +4,7 @@ using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTypeSchemas
 {
@@ -14,16 +15,19 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
 
         private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
+        private readonly AccountFixture _AccountFixture;
 
         public BacklogItemTypeSchemaControllerTest(
             DBContext dbContext,
             BacklogItemTypeSchemaController controller,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            BacklogItemTypeFixture backlogItemTypeFixture) : base(dbContext)
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _Controller = controller;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
@@ -89,7 +93,9 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var postDto = new BacklogItemTypeSchemaPostDto("Test Backlog Item Type Schema");
+            var account = _AccountFixture.Create();
+            var postDto = new BacklogItemTypeSchemaPostDto(
+                "Test Backlog Item Type Schema", account.ID);
 
             BacklogItemTypeSchemaDto? dto = null;
             IActionResult result = _Controller.Post(postDto);

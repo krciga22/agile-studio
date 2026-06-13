@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTypeSchemas
@@ -10,19 +11,25 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
 
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemTypeSchemaServiceTest(
             DBContext dbContext,
             BacklogItemTypeSchemaService backlogItemTypeSchemaService,
-            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
+            BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _backlogItemTypeSchemaService = backlogItemTypeSchemaService;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
         public void Create_ReturnsBacklogItemTypeSchema()
         {
-            BacklogItemTypeSchemaModel backlogItemTypeSchema = new("Test BacklogItemTypeSchema");
+            var account = _AccountFixture.Create();
+            BacklogItemTypeSchemaModel backlogItemTypeSchema = 
+                new("Test BacklogItemTypeSchema", account.ID);
 
             backlogItemTypeSchema = _backlogItemTypeSchemaService.Create(backlogItemTypeSchema);
 

@@ -8,12 +8,16 @@ namespace AgileStudioServer.Features.Accounts.Workflows
         [StringLength(60, MinimumLength = 3)]
         public string Title { get; set; }
 
+        [Required]
+        public int AccountId { get; set; }
+
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public WorkflowPostDto(string title)
+        public WorkflowPostDto(string title, int accountId)
         {
             Title = title;
+            AccountId = accountId;
         }
     }
 }

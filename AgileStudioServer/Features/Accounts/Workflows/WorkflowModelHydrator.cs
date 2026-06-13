@@ -42,13 +42,13 @@ namespace AgileStudioServer.Features.Accounts.Workflows
             if (from is Workflow)
             {
                 var entity = (Workflow)from;
-                model = new WorkflowModel(entity.Title);
+                model = new WorkflowModel(entity.Title, entity.AccountID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is WorkflowPostDto)
             {
                 var dto = (WorkflowPostDto)from;
-                model = new WorkflowModel(dto.Title);
+                model = new WorkflowModel(dto.Title, dto.AccountId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is WorkflowPatchDto)
@@ -87,12 +87,14 @@ namespace AgileStudioServer.Features.Accounts.Workflows
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedById = entity.CreatedByID;
+                model.AccountID = entity.AccountID;
             }
             else if (from is WorkflowPostDto)
             {
                 var dto = (WorkflowPostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
+                model.AccountID = dto.AccountId;
             }
             else if (from is WorkflowPatchDto)
             {

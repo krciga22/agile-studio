@@ -1,6 +1,8 @@
-﻿using AgileStudioServer.Features.Accounts.Workflows;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Users.Users;
 
 namespace AgileStudioServerTest.Features.Accounts.Workflows
@@ -9,21 +11,27 @@ namespace AgileStudioServerTest.Features.Accounts.Workflows
     {
         private readonly UserFixture _userFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public WorkflowFixture(
             WorkflowRepository workflowRepository, 
-            UserFixture userFixture) : base(workflowRepository)
+            UserFixture userFixture,
+            AccountFixture accountFixture) : base(workflowRepository)
         {
             _userFixture = userFixture;
+            _AccountFixture = accountFixture;
         }
 
         public WorkflowModel Create(
             string? title = null,
-            UserModel? createdBy = null)
+            UserModel? createdBy = null,
+            AccountModel? account = null)
         {
             title ??= "Test Workflow";
             createdBy ??= _userFixture.Create();
+            account ??= _AccountFixture.Create(createdBy: createdBy);
 
-            var workflow = new WorkflowModel(title)
+            var workflow = new WorkflowModel(title, account.ID)
             {
                 CreatedById = createdBy.ID
             };

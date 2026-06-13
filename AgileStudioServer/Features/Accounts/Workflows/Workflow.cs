@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Users.Users;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
 {
@@ -16,10 +17,15 @@ namespace AgileStudioServer.Features.Accounts.Workflows
 
         public User? CreatedBy { get; set; } = null!;
 
-        public Workflow(string title)
+        public int AccountID { get; set; }
+
+        public Account Account { get; set; } = null!;
+
+        public Workflow(string title, int accountID)
         {
             Title = title;
             CreatedOn = DateTime.UtcNow;
+            AccountID = accountID;
         }
     }
 }

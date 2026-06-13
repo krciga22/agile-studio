@@ -12,10 +12,13 @@
 
         public int? CreatedById { get; set; } = null!;
 
-        public WorkflowModel(string title)
+        public int AccountID { get; set; }
+
+        public WorkflowModel(string title, int accountID)
         {
             Title = title;
             CreatedOn = DateTime.UtcNow;
+            AccountID = accountID;
         }
     }
 }

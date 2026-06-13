@@ -99,7 +99,8 @@ namespace AgileStudioCLI.FixtureSets
 
             var workflow = _WorkflowFixture.Create(
                 title: "Story & Defect Workflow",
-                createdBy: user);
+                createdBy: user,
+                account: account);
 
             var workflowStateInBacklog = _WorkflowStateFixture.Create(
                 title: "In Backlog", 
@@ -128,7 +129,8 @@ namespace AgileStudioCLI.FixtureSets
 
             var taskWorkflow = _WorkflowFixture.Create(
                 title: "Task Workflow",
-                createdBy: user);
+                createdBy: user,
+                account: account);
 
             var taskWorkflowStateNotStarted = _WorkflowStateFixture.Create(
                 title: "Not Started",

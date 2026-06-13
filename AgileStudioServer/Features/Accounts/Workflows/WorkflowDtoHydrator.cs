@@ -1,7 +1,8 @@
 ﻿
-using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.Core.Hydrators.Exceptions;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
@@ -41,9 +42,13 @@ namespace AgileStudioServer.Features.Accounts.Workflows
             }
 
             object? dto = null;
-            if (model != null)
+            if (model != null && referenceHydrator != null)
             {
-                dto = new WorkflowDto(model.ID, model.Title, model.CreatedOn);
+                var accountSummaryDto = (AccountSummaryDto)referenceHydrator.Hydrate(
+                    model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                );
+
+                dto = new WorkflowDto(model.ID, model.Title, model.CreatedOn, accountSummaryDto);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -75,6 +80,10 @@ namespace AgileStudioServer.Features.Accounts.Workflows
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {
+                    dto.Account = (AccountSummaryDto)referenceHydrator.Hydrate(
+                        model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                    );
+
                     if (model.CreatedById != null)
                     {
                         dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(

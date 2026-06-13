@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.Workflows;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
@@ -10,19 +11,24 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 
         private readonly WorkflowFixture _WorkflowFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public WorkflowServiceTest(
             DBContext dbContext,
             WorkflowService workflowService,
-            WorkflowFixture workflowFixture) : base(dbContext)
+            WorkflowFixture workflowFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _workflowService = workflowService;
             _WorkflowFixture = workflowFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
         public void Create_ReturnsWorkflow()
         {
-            WorkflowModel workflow = new("Test Workflow");
+            var account = _AccountFixture.Create();
+            WorkflowModel workflow = new("Test Workflow", account.ID);
 
             workflow = _workflowService.Create(workflow);
 

@@ -4,6 +4,7 @@ using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServerTest.Features.Accounts.Workflows;
 using AgileStudioServerTest.Features.Accounts.WorkflowStates;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 {
@@ -15,15 +16,19 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 
         private readonly WorkflowStateFixture _WorkflowStateFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public WorkflowControllerTest(
             DBContext dbContext,
             WorkflowController controller,
             WorkflowFixture workflowFixture,
-            WorkflowStateFixture workflowStateFixture) : base(dbContext)
+            WorkflowStateFixture workflowStateFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _Controller = controller;
             _WorkflowFixture = workflowFixture;
             _WorkflowStateFixture = workflowStateFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
@@ -97,7 +102,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var workflowPostDto = new WorkflowPostDto("Test Workflow");
+            var account = _AccountFixture.Create();
+            var workflowPostDto = new WorkflowPostDto("Test Workflow", account.ID);
 
             WorkflowDto? dto = null;
             IActionResult result = _Controller.Post(workflowPostDto);

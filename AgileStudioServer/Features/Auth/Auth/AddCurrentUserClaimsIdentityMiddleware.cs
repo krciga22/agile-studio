@@ -67,8 +67,11 @@ namespace AgileStudioServer.Features.Auth.Auth
                         AuthServerUserID = userInfo.UserId
                     }
                 );
+            }
 
-                accountService.CreateIndividualAccountForUser(user);
+            var account = accountService.GetIndividualAccountForUser(user.ID);
+            if(account == null){
+               accountService.CreateIndividualAccountForUser(user);
             }
 
             var currentUserClaimsIdentity = new CurrentUserClaimsIdentity(authenticationType);

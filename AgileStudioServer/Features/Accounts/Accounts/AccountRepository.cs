@@ -5,6 +5,7 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -48,6 +49,28 @@ namespace AgileStudioServer.Features.Accounts.Accounts
             query = query.Include(a => a.AccountType);
 
             return GetPaginationResultsFromQuery(query, serviceContext, total);
+        }
+
+        public AccountModel? GetIndividualAccountForUser(int userId)
+        {
+            var query =
+                (from account in _DBContext.Account
+                 join grant in _DBContext.RoleGrant on account.ID.ToString() equals grant.ScopeID
+                 where account.AccountTypeID == AccountTypes.AccountTypes.INDIVIDUAL
+                     && grant.SubjectType == RoleSubjectTypes.USER
+                     && grant.SubjectID == userId.ToString()
+                     && grant.Scope == Scopes.ACCOUNT
+                     && grant.RoleKey == RoleKeys.ACCOUNTS_ACCOUNT_OWNER
+                 select account)
+                .Distinct();
+
+            AccountModel? model = null;
+            List<Account> entities = [.. query];
+            if(entities.Count == 1){
+                model = HydrateModel(entities[0]);
+            }
+
+            return model;
         }
 
         protected override DbSet<Account> GetDbSet()

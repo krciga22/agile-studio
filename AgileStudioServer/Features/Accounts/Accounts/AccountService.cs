@@ -43,6 +43,11 @@ namespace AgileStudioServer.Features.Accounts.Accounts
             return account;
         }
 
+        public AccountModel? GetIndividualAccountForUser(int userId)
+        {
+            return _AccountRepository.GetIndividualAccountForUser(userId);
+        }
+
         public AccountModel CreateIndividualAccountForUser(UserModel user)
         {
             AccountModel account = new (AccountTypes.AccountTypes.INDIVIDUAL)

@@ -7,6 +7,7 @@ using AgileStudioServer.Features.Accounts.AccountTypes;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
+using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.AccountTypes;
 using AgileStudioServerTest.Features.Users.Users;
@@ -89,6 +90,36 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Accounts
         }
 
         [Fact]
+        public void GetIndividualAccountForUser_ReturnsAccount()
+        {
+            UserModel user = _UserFixture.Create();
+            int accountTypeId = AccountTypes.INDIVIDUAL;
+            AccountTypeModel accountType = GetAccountType(accountTypeId);
+            AccountModel account = _AccountFixture.Create(accountType);
+            _AccountFixture.GrantAccess(account.ID, user.ID, RoleKeys.ACCOUNTS_ACCOUNT_OWNER);
+
+            var returnedAccount = _accountService.GetIndividualAccountForUser(user.ID);
+
+            Assert.NotNull(returnedAccount);
+            Assert.Equal(account.ID, returnedAccount.ID);
+            Assert.Equal(account.AccountTypeID, returnedAccount.AccountTypeID);
+        }
+
+        [Fact]
+        public void GetIndividualAccountForUser_HavingOtherAccountType_ReturnsNull()
+        {
+            UserModel user = _UserFixture.Create();
+            int accountTypeId = AccountTypes.BUSINESS;
+            AccountTypeModel accountType = GetAccountType(accountTypeId);
+            AccountModel account = _AccountFixture.Create(accountType);
+            _AccountFixture.GrantAccess(account.ID, user.ID, RoleKeys.ACCOUNTS_ACCOUNT_OWNER);
+
+            var returnedAccount = _accountService.GetIndividualAccountForUser(user.ID);
+
+            Assert.Null(returnedAccount);
+        }
+
+        [Fact]
         public void GetCollection_ReturnsAccountsReadableByCurrentUser()
         {
             var user = _UserFixture.Create();
@@ -148,6 +179,12 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Accounts
 
             Assert.Throws<ModelNotFoundException>(() =>
                 _accountService.Get(account.ID));
+        }
+
+        private AccountTypeModel GetAccountType(int accountTypeId)
+        {
+            return _AccountTypeFixture.Get(accountTypeId) ??
+                throw new Exception($"AccountType with key {accountTypeId} not found");
         }
     }
 }

@@ -94,8 +94,7 @@ namespace AgileStudioCLI.FixtureSets
 
             var accountType = _AccountTypeFixture.Get(AccountTypes.INDIVIDUAL);
 
-            // todo specify createdBy user for the account
-            var account = _AccountFixture.Create(accountType);
+            var account = _AccountFixture.Create(accountType, createdBy: user);
             _AccountFixture.GrantAccess(account.ID, user.ID, RoleKeys.ACCOUNTS_ACCOUNT_OWNER);
 
             var workflow = _WorkflowFixture.Create(

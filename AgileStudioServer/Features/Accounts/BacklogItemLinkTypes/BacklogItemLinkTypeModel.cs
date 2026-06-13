@@ -14,10 +14,13 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public BacklogItemLinkTypeModel(string title, string titleOpposite)
+        public int AccountID { get; set; }
+
+        public BacklogItemLinkTypeModel(string title, string titleOpposite, int accountID)
         {
             Title = title;
             TitleOpposite = titleOpposite;
+            AccountID = accountID;
             CreatedOn = DateTime.UtcNow;
         }
     }

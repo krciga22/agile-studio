@@ -1,7 +1,8 @@
 ﻿
-using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
+using AgileStudioServer.Core.Hydrators.Exceptions;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
@@ -43,8 +44,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
             object? dto = null;
             if (model != null && referenceHydrator != null)
             {
+                var accountSummaryDto = (AccountSummaryDto)referenceHydrator.Hydrate(
+                    model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                );
+
                 dto = new BacklogItemLinkTypeDto(
-                    model.ID, model.Title, model.TitleOpposite, model.CreatedOn);
+                    model.ID, model.Title, model.TitleOpposite, 
+                    model.CreatedOn, accountSummaryDto);
 
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
@@ -78,6 +84,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {
+                    dto.Account = (AccountSummaryDto)referenceHydrator.Hydrate(
+                        model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                    );
+
                     if (model.CreatedByID != null)
                     {
                         dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(

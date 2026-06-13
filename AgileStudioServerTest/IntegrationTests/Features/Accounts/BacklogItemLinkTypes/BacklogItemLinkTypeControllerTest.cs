@@ -2,6 +2,7 @@
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Data;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypes
 {
@@ -11,13 +12,17 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
         private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemLinkTypeControllerTest(
             DBContext dbContext,
             BacklogItemLinkTypeController controller,
-            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture) : base(dbContext)
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _Controller = controller;
             _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
@@ -39,7 +44,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var postDto = new BacklogItemLinkTypePostDto("blocks", "blocked-by");
+            var account = _AccountFixture.Create();
+            var postDto = new BacklogItemLinkTypePostDto("blocks", "blocked-by", account.ID);
 
             BacklogItemLinkTypeDto? dto = null;
             IActionResult result = _Controller.Post(postDto);

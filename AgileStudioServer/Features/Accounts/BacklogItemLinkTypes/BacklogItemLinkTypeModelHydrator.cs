@@ -42,13 +42,15 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
             if (from is BacklogItemLinkType)
             {
                 var entity = (BacklogItemLinkType)from;
-                model = new BacklogItemLinkTypeModel(entity.Title, entity.TitleOpposite);
+                model = new BacklogItemLinkTypeModel(
+                    entity.Title, entity.TitleOpposite, entity.AccountID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemLinkTypePostDto)
             {
                 var dto = (BacklogItemLinkTypePostDto)from;
-                model = new BacklogItemLinkTypeModel(dto.Title, dto.TitleOpposite);
+                model = new BacklogItemLinkTypeModel(
+                    dto.Title, dto.TitleOpposite, dto.AccountId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemLinkTypePatchDto)
@@ -86,6 +88,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
                 model.ID = entity.ID;
                 model.Title = entity.Title;
                 model.TitleOpposite = entity.TitleOpposite;
+                model.AccountID = entity.AccountID;
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
@@ -95,6 +98,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
                 var dto = (BacklogItemLinkTypePostDto)from;
                 model.Title = dto.Title;
                 model.TitleOpposite = dto.TitleOpposite;
+                model.AccountID = dto.AccountId;
                 model.Description = dto.Description;
             }
             else if (from is BacklogItemLinkTypePatchDto)

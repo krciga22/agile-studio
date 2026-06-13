@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Users.Users;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
 {
@@ -18,10 +19,15 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
 
         public User? CreatedBy { get; set; } = null!;
 
-        public BacklogItemLinkType(string title, string titleOpposite)
+        public int AccountID { get; set; }
+
+        public Account Account { get; set; } = null!;
+
+        public BacklogItemLinkType(string title, string titleOpposite, int accountID)
         {
             Title = title;
             TitleOpposite = titleOpposite;
+            AccountID = accountID;
             CreatedOn = DateTime.UtcNow;
         }
     }

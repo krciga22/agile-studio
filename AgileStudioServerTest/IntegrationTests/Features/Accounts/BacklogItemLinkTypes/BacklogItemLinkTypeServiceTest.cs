@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypes
@@ -10,19 +11,24 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
         private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemLinkTypeServiceTest(
             DBContext dbContext,
             BacklogItemLinkTypeService backlogItemLinkTypeService,
-            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture) : base(dbContext)
+            BacklogItemLinkTypeFixture backlogItemLinkTypeFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _backlogItemLinkTypeService = backlogItemLinkTypeService;
             _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
         public void Create_ReturnsBacklogItemLinkType()
         {
-            BacklogItemLinkTypeModel backlogItemLinkType = new("blocks", "blocked-by");
+            var account = _AccountFixture.Create();
+            BacklogItemLinkTypeModel backlogItemLinkType = new("blocks", "blocked-by", account.ID);
 
             backlogItemLinkType = _backlogItemLinkTypeService.Create(backlogItemLinkType);
 

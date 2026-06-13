@@ -2,6 +2,7 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
@@ -44,7 +45,8 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
                 }
                 else
                 {
-                    entity = new BacklogItemLinkType(model.Title, model.TitleOpposite);
+                    entity = new BacklogItemLinkType(
+                        model.Title, model.TitleOpposite, model.AccountID);
                 }
 
                 if (entity != null)
@@ -82,12 +84,17 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
                 entity.ID = model.ID;
                 entity.Title = model.Title;
                 entity.TitleOpposite = model.TitleOpposite;
+                entity.AccountID = model.AccountID;
                 entity.Description = model.Description;
                 entity.CreatedOn = model.CreatedOn;
                 entity.CreatedByID = model.CreatedByID;
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {
+                    entity.Account = (Account)referenceHydrator.Hydrate(
+                        model.AccountID, typeof(Account), maxDepth, nextDepth
+                    );
+
                     if (model.CreatedByID != null)
                     {
                         entity.CreatedBy = (User)referenceHydrator.Hydrate(

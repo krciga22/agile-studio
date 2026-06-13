@@ -94,6 +94,7 @@ namespace AgileStudioCLI.FixtureSets
 
             var accountType = _AccountTypeFixture.Get(AccountTypes.INDIVIDUAL);
 
+            // todo specify createdBy user for the account
             var account = _AccountFixture.Create(accountType);
             _AccountFixture.GrantAccess(account.ID, user.ID, RoleKeys.ACCOUNTS_ACCOUNT_OWNER);
 
@@ -210,22 +211,22 @@ namespace AgileStudioCLI.FixtureSets
             );
 
             var blocksLinkType = _BacklogItemLinkTypeFixture.Create(
-                "blocks", "is blocked by", createdBy: user);
+                "blocks", "is blocked by", createdBy: user, account: account);
 
             var relatesToLinkType = _BacklogItemLinkTypeFixture.Create(
-                "relates to", "relates to", createdBy: user);
+                "relates to", "relates to", createdBy: user, account: account);
 
             var splitFromLinkType = _BacklogItemLinkTypeFixture.Create(
-                "split from", "split to", createdBy: user);
+                "split from", "split to", createdBy: user, account: account);
 
             var clonedFromLinkType = _BacklogItemLinkTypeFixture.Create(
-                "cloned from", "cloned to", createdBy: user);
+                "cloned from", "cloned to", createdBy: user, account: account);
 
             var duplicatesLinkType = _BacklogItemLinkTypeFixture.Create(
-                "duplicates", "is duplicated by", createdBy: user);
+                "duplicates", "is duplicated by", createdBy: user, account: account);
 
             var causesLinkType = _BacklogItemLinkTypeFixture.Create(
-                "causes", "is caused by", createdBy: user);
+                "causes", "is caused by", createdBy: user, account: account);
 
             _BacklogItemLinkTypeSchemaEntryFixture.Create(
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,

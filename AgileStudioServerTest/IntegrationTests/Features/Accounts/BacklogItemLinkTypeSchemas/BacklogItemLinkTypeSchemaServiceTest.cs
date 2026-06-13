@@ -1,5 +1,7 @@
 ﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLinkTypeSchemas
@@ -10,19 +12,24 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
         private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemLinkTypeSchemaServiceTest(
             DBContext dbContext,
             BacklogItemLinkTypeSchemaService backlogItemLinkTypeSchemaService,
-            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _backlogItemLinkTypeSchemaService = backlogItemLinkTypeSchemaService;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
         public void Create_ReturnsBacklogItemLinkTypeSchema()
         {
-            BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema = new("Test Schema");
+            AccountModel account = _AccountFixture.Create();
+            BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema = new("Test Schema", account.ID);
 
             backlogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Create(backlogItemLinkTypeSchema);
 

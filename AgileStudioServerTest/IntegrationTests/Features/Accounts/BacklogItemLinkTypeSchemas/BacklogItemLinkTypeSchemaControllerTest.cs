@@ -1,5 +1,6 @@
-﻿using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.Data;
+﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,17 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
         private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemLinkTypeSchemaControllerTest(
             DBContext dbContext,
             BacklogItemLinkTypeSchemaController controller,
-            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture) : base(dbContext)
+            BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _Controller = controller;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
+            _AccountFixture = accountFixture;
         }
 
         [Fact]
@@ -58,7 +63,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
-            var postDto = new BacklogItemLinkTypeSchemaPostDto("Test Schema");
+            var account = _AccountFixture.Create();
+            var postDto = new BacklogItemLinkTypeSchemaPostDto("Test Schema", account.ID);
 
             BacklogItemLinkTypeSchemaDto? dto = null;
             IActionResult result = _Controller.Post(postDto);

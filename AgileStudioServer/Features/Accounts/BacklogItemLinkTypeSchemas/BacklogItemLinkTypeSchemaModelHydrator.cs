@@ -42,13 +42,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
             if (from is BacklogItemLinkTypeSchema)
             {
                 var entity = (BacklogItemLinkTypeSchema)from;
-                model = new BacklogItemLinkTypeSchemaModel(entity.Title);
+                model = new BacklogItemLinkTypeSchemaModel(entity.Title, entity.AccountID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemLinkTypeSchemaPostDto)
             {
                 var dto = (BacklogItemLinkTypeSchemaPostDto)from;
-                model = new BacklogItemLinkTypeSchemaModel(dto.Title);
+                model = new BacklogItemLinkTypeSchemaModel(dto.Title, dto.AccountID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemLinkTypeSchemaPatchDto)
@@ -88,12 +88,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+                model.AccountID = entity.AccountID;
             }
             else if (from is BacklogItemLinkTypeSchemaPostDto)
             {
                 var dto = (BacklogItemLinkTypeSchemaPostDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
+                model.AccountID = dto.AccountID;
             }
             else if (from is BacklogItemLinkTypeSchemaPatchDto)
             {

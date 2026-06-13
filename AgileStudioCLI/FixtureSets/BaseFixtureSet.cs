@@ -206,7 +206,8 @@ namespace AgileStudioCLI.FixtureSets
 
             var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create(
                 "Agile Studio Backlog Item Link Type Schema",
-                createdBy: user
+                createdBy: user,
+                account: account
             );
 
             var blocksLinkType = _BacklogItemLinkTypeFixture.Create(

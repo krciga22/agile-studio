@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Features.Users.Users;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
 {
@@ -16,9 +17,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
 
         public User? CreatedBy { get; set; } = null!;
 
-        public BacklogItemLinkTypeSchema(string title)
+        public int AccountID { get; set; }
+
+        public Account Account { get; set; } = null!;
+
+        public BacklogItemLinkTypeSchema(string title, int accountID)
         {
             Title = title;
+            AccountID = accountID;
             CreatedOn = DateTime.UtcNow;
         }
     }

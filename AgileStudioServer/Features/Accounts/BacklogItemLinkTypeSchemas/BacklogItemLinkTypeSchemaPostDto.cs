@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AgileStudioServer.Features.Accounts.Accounts;
+using System.ComponentModel.DataAnnotations;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
 {
@@ -11,9 +12,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public BacklogItemLinkTypeSchemaPostDto(string title)
+        [Required]
+        public int AccountID { get; set; }
+
+        public BacklogItemLinkTypeSchemaPostDto(string title, int accountID)
         {
             Title = title;
+            AccountID = accountID;
         }
     }
 }

@@ -12,10 +12,13 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public BacklogItemLinkTypeSchemaModel(string title)
+        public int AccountID { get; set; }
+
+        public BacklogItemLinkTypeSchemaModel(string title, int accountID)
         {
             Title = title;
             CreatedOn = DateTime.UtcNow;
+            AccountID = accountID;
         }
     }
 }

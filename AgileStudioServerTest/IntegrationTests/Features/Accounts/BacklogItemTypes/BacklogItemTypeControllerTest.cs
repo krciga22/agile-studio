@@ -6,6 +6,7 @@ using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.ChildBacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.Workflows;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTypes
 {
@@ -23,15 +24,19 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
 
         private readonly BacklogItemTypeController _Controller;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemTypeControllerTest(
             DBContext dbContext,
             BacklogItemTypeController controller,
+            AccountFixture accountFixture,
             WorkflowFixture workflowFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
             ChildBacklogItemTypeFixture childBacklogItemTypeFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
         {
             _Controller = controller;
+            _AccountFixture = accountFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
             _ChildBacklogItemTypeFixture = childBacklogItemTypeFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
@@ -57,10 +62,11 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         [Fact]
         public void Post_WithDto_ReturnsDto()
         {
+            var account = _AccountFixture.Create();
             var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
             var workflow = _WorkflowFixture.Create();
             var postDto = new BacklogItemTypePostDto("Test Backlog Item Type Schema",
-                backlogItemTypeSchema.ID, workflow.ID);
+                account.ID, backlogItemTypeSchema.ID, workflow.ID);
 
             BacklogItemTypeDto? dto = null;
             IActionResult result = _Controller.Post(postDto);

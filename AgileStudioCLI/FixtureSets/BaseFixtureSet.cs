@@ -1,9 +1,12 @@
 ﻿using AgileStudioServer.Data;
+using AgileStudioServer.Features.Accounts.AccountTypes;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Users.Users;
+using AgileStudioServerTest.Features.Accounts.Accounts;
+using AgileStudioServerTest.Features.Accounts.AccountTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
@@ -24,6 +27,8 @@ namespace AgileStudioCLI.FixtureSets
 {
     public class BaseFixtureSet : IFixtureSet
     {
+        private readonly AccountFixture _AccountFixture;
+        private readonly AccountTypeFixture _AccountTypeFixture;
         private readonly BacklogItemLinkTypeFixture _BacklogItemLinkTypeFixture;
         private readonly BacklogItemLinkTypeSchemaEntryFixture _BacklogItemLinkTypeSchemaEntryFixture;
         private readonly BacklogItemLinkTypeSchemaFixture _BacklogItemLinkTypeSchemaFixture;
@@ -41,6 +46,8 @@ namespace AgileStudioCLI.FixtureSets
         private readonly WorkflowStateFixture _WorkflowStateFixture;
 
         public BaseFixtureSet(
+            AccountFixture accountFixture,
+            AccountTypeFixture accountTypeFixture,
             BacklogItemLinkTypeFixture backlogItemLinkTypeFixture, 
             BacklogItemLinkTypeSchemaEntryFixture backlogItemLinkTypeSchemaEntryFixture, 
             BacklogItemLinkTypeSchemaFixture backlogItemLinkTypeSchemaFixture, 
@@ -57,6 +64,8 @@ namespace AgileStudioCLI.FixtureSets
             WorkflowFixture workflowFixture, 
             WorkflowStateFixture workflowStateFixture)
         {
+            _AccountFixture = accountFixture;
+            _AccountTypeFixture = accountTypeFixture;
             _BacklogItemLinkTypeFixture = backlogItemLinkTypeFixture;
             _BacklogItemLinkTypeSchemaEntryFixture = backlogItemLinkTypeSchemaEntryFixture;
             _BacklogItemLinkTypeSchemaFixture = backlogItemLinkTypeSchemaFixture;
@@ -82,6 +91,11 @@ namespace AgileStudioCLI.FixtureSets
         private void LoadAgileStudioProject()
         {
             var user = _UserFixture.Create();
+
+            var accountType = _AccountTypeFixture.Get(AccountTypes.INDIVIDUAL);
+
+            var account = _AccountFixture.Create(accountType);
+            _AccountFixture.GrantAccess(account.ID, user.ID, RoleKeys.ACCOUNTS_ACCOUNT_OWNER);
 
             var workflow = _WorkflowFixture.Create(
                 title: "Story & Defect Workflow",
@@ -136,24 +150,28 @@ namespace AgileStudioCLI.FixtureSets
             var backlogItemTypeStory = _BacklogItemTypeFixture.Create(
                 title: "Story",
                 createdBy: user,
+                account: account,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeDefect = _BacklogItemTypeFixture.Create(
                 title: "Defect",
                 createdBy: user,
+                account: account,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeTask = _BacklogItemTypeFixture.Create(
                 title: "Task",
                 createdBy: user,
+                account: account,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeTest = _BacklogItemTypeFixture.Create(
                 title: "Test",
                 createdBy: user,
+                account: account,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
@@ -246,6 +264,7 @@ namespace AgileStudioCLI.FixtureSets
 
             var project = _ProjectFixture.Create(
                 title: "Agile Studio", 
+                account: account,
                 backlogItemTypeSchema: backlogItemTypeSchema,
                 backlogItemLinkTypeSchema: backlogItemLinkTypeSchema,
                 createdBy: user);

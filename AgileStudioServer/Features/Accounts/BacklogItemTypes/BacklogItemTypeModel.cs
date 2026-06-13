@@ -12,14 +12,17 @@
 
         public int? CreatedByID { get; set; } = null!;
 
+        public int AccountID { get; set; }
+
         public int BacklogItemTypeSchemaID { get; set; }
 
         public int WorkflowID { get; set; }
 
-        public BacklogItemTypeModel(string title, int backlogItemTypeSchemaId, int workflowId)
+        public BacklogItemTypeModel(string title, int accountId, int backlogItemTypeSchemaId, int workflowId)
         {
             Title = title;
             CreatedOn = DateTime.UtcNow;
+            AccountID = accountId;
             BacklogItemTypeSchemaID = backlogItemTypeSchemaId;
             WorkflowID = workflowId;
         }

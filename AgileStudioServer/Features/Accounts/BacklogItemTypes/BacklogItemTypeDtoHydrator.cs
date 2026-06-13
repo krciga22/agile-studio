@@ -5,6 +5,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Users.Users;
+using AgileStudioServer.Features.Accounts.Accounts;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 {
@@ -45,6 +46,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             object? dto = null;
             if (model != null && referenceHydrator != null)
             {
+                var accountSummaryDto = (AccountSummaryDto)referenceHydrator.Hydrate(
+                    model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                );
+
                 var backlogItemTypeSchemaSummaryDto = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
                     model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
                 );
@@ -55,7 +60,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 
                 dto = new BacklogItemTypeDto(
                     model.ID, model.Title, model.CreatedOn,
-                    backlogItemTypeSchemaSummaryDto, workflowSummaryDto);
+                    accountSummaryDto, backlogItemTypeSchemaSummaryDto, workflowSummaryDto);
 
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
@@ -88,6 +93,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)
                 {
+                    dto.Account = (AccountSummaryDto)referenceHydrator.Hydrate(
+                        model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                    );
+
                     dto.BacklogItemTypeSchema = (BacklogItemTypeSchemaSummaryDto)referenceHydrator.Hydrate(
                         model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchemaSummaryDto), maxDepth, depth
                     );

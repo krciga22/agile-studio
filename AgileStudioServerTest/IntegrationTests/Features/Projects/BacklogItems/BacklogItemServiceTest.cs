@@ -133,17 +133,17 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
                 "Parent Backlog Item",
                 project: project
             );
-            var childBacklogItemType = _BacklogItemTypeFixture.Create();
+            var backlogItemTypeSchemaEntry = _BacklogItemTypeFixture.Create();
             var childBacklogItem1 = _BacklogItemFixture.Create(
                 "Child BacklogItem 1",
                 project: project,
-                backlogItemType: childBacklogItemType,
+                backlogItemType: backlogItemTypeSchemaEntry,
                 parentBacklogItem: parentBacklogItem
             );
             var childBacklogItem2 = _BacklogItemFixture.Create(
                 "Child BacklogItem 2",
                 project: project,
-                backlogItemType: childBacklogItemType,
+                backlogItemType: backlogItemTypeSchemaEntry,
                 parentBacklogItem: parentBacklogItem
             );
 

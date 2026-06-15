@@ -2,11 +2,11 @@
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Data;
 
-namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
+namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
 {
-    public class ChildBacklogItemTypeModelHydrator : AbstractModelHydrator
+    public class BacklogItemTypeSchemaEntryModelHydrator : AbstractModelHydrator
     {
-        public ChildBacklogItemTypeModelHydrator(DBContext dbContext) : base(dbContext)
+        public BacklogItemTypeSchemaEntryModelHydrator(DBContext dbContext) : base(dbContext)
         {
 
         }
@@ -15,8 +15,8 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
         {
             return (
                 from == typeof(int) ||
-                from == typeof(ChildBacklogItemType)
-            ) && to == typeof(ChildBacklogItemTypeModel);
+                from == typeof(BacklogItemTypeSchemaEntry)
+            ) && to == typeof(BacklogItemTypeSchemaEntryModel);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -30,17 +30,17 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
 
             if (from is int)
             {
-                var childBacklogItemType = _DBContext.ChildBacklogItemType.Find(from);
-                if (childBacklogItemType != null)
+                var backlogItemTypeSchemaEntry = _DBContext.BacklogItemTypeSchemaEntry.Find(from);
+                if (backlogItemTypeSchemaEntry != null)
                 {
-                    from = childBacklogItemType;
+                    from = backlogItemTypeSchemaEntry;
                 }
             }
 
-            if (from is ChildBacklogItemType)
+            if (from is BacklogItemTypeSchemaEntry)
             {
-                var entity = (ChildBacklogItemType)from;
-                model = new ChildBacklogItemTypeModel(
+                var entity = (BacklogItemTypeSchemaEntry)from;
+                model = new BacklogItemTypeSchemaEntryModel(
                     entity.ChildTypeID, entity.ParentTypeID, entity.SchemaID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
@@ -60,11 +60,11 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var model = (ChildBacklogItemTypeModel)to;
+            var model = (BacklogItemTypeSchemaEntryModel)to;
 
-            if (from is ChildBacklogItemType)
+            if (from is BacklogItemTypeSchemaEntry)
             {
-                var entity = (ChildBacklogItemType)from;
+                var entity = (BacklogItemTypeSchemaEntry)from;
 
                 model.ID = entity.ID;
                 model.CreatedOn = entity.CreatedOn;

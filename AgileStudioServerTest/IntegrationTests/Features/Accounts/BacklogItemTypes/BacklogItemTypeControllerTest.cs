@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Accounts.ChildBacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.Features.Accounts.ChildBacklogItemTypes;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServerTest.Features.Accounts.Workflows;
 using AgileStudioServerTest.Features.Accounts.Accounts;
 
@@ -18,7 +18,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
 
         private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
 
-        private readonly ChildBacklogItemTypeFixture _ChildBacklogItemTypeFixture;
+        private readonly BacklogItemTypeSchemaEntryFixture _BacklogItemTypeSchemaEntryFixture;
 
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
 
@@ -32,13 +32,13 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             AccountFixture accountFixture,
             WorkflowFixture workflowFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
-            ChildBacklogItemTypeFixture childBacklogItemTypeFixture,
+            BacklogItemTypeSchemaEntryFixture backlogItemTypeSchemaEntryFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture) : base(dbContext)
         {
             _Controller = controller;
             _AccountFixture = accountFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
-            _ChildBacklogItemTypeFixture = childBacklogItemTypeFixture;
+            _BacklogItemTypeSchemaEntryFixture = backlogItemTypeSchemaEntryFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _WorkflowFixture = workflowFixture;
         }
@@ -50,12 +50,12 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             var childType1 = _BacklogItemTypeFixture.Create();
             var childType2 = _BacklogItemTypeFixture.Create();
 
-            var childBacklogItemTypes = new List<ChildBacklogItemTypeModel>() {
-                _ChildBacklogItemTypeFixture.Create(
+            var backlogItemTypeSchemaEntries = new List<BacklogItemTypeSchemaEntryModel>() {
+                _BacklogItemTypeSchemaEntryFixture.Create(
                     parentType: parentType,
                     childType: childType1
                 ),
-                _ChildBacklogItemTypeFixture.Create(
+                _BacklogItemTypeSchemaEntryFixture.Create(
                     parentType: parentType,
                     childType: childType2
                 )
@@ -69,7 +69,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             }
 
             Assert.IsType<List<BacklogItemTypeDto>>(dtos);
-            Assert.Equal(childBacklogItemTypes.Count, dtos.Count);
+            Assert.Equal(backlogItemTypeSchemaEntries.Count, dtos.Count);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
                 backlogItemTypeSchema: backlogItemTypeSchema
             );
 
-            _ChildBacklogItemTypeFixture.Create(
+            _BacklogItemTypeSchemaEntryFixture.Create(
                 parentType: parentType,
                 childType: childType
             );
@@ -185,7 +185,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
                 backlogItemTypeSchema: backlogItemTypeSchema
             );
 
-            _ChildBacklogItemTypeFixture.Create(
+            _BacklogItemTypeSchemaEntryFixture.Create(
                 parentType: parentType,
                 childType: childType
             );

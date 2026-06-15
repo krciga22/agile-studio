@@ -6,11 +6,11 @@ using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Users.Users;
 
-namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
+namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
 {
-    public class ChildBacklogItemTypeHydrator : AbstractEntityHydrator
+    public class BacklogItemTypeSchemaEntryHydrator : AbstractEntityHydrator
     {
-        public ChildBacklogItemTypeHydrator(DBContext _dbContext) : base(_dbContext)
+        public BacklogItemTypeSchemaEntryHydrator(DBContext _dbContext) : base(_dbContext)
         {
 
         }
@@ -19,8 +19,8 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
         {
             return (
                 from == typeof(int) ||
-                from == typeof(ChildBacklogItemTypeModel)
-            ) && to == typeof(ChildBacklogItemType);
+                from == typeof(BacklogItemTypeSchemaEntryModel)
+            ) && to == typeof(BacklogItemTypeSchemaEntry);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -32,21 +32,21 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
 
             object? entity = null;
 
-            if (from is ChildBacklogItemTypeModel)
+            if (from is BacklogItemTypeSchemaEntryModel)
             {
-                var model = (ChildBacklogItemTypeModel)from;
+                var model = (BacklogItemTypeSchemaEntryModel)from;
                 if (model.ID > 0)
                 {
-                    entity = _DBContext.ChildBacklogItemType.Find(model.ID);
+                    entity = _DBContext.BacklogItemTypeSchemaEntry.Find(model.ID);
                     if (entity == null)
                     {
                         throw new EntityNotFoundException(
-                            nameof(ChildBacklogItemType), model.ID.ToString());
+                            nameof(BacklogItemTypeSchemaEntry), model.ID.ToString());
                     }
                 }
                 else
                 {
-                    entity = new ChildBacklogItemType(
+                    entity = new BacklogItemTypeSchemaEntry(
                         model.ChildTypeID, model.ParentTypeID, model.SchemaID);
                 }
 
@@ -57,7 +57,7 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
             }
             else if (from is int)
             {
-                entity = _DBContext.ChildBacklogItemType.Find(from);
+                entity = _DBContext.BacklogItemTypeSchemaEntry.Find(from);
             }
 
             if (entity == null)
@@ -75,12 +75,12 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var entity = (ChildBacklogItemType)to;
+            var entity = (BacklogItemTypeSchemaEntry)to;
             int nextDepth = depth + 1;
 
-            if (from is ChildBacklogItemTypeModel)
+            if (from is BacklogItemTypeSchemaEntryModel)
             {
-                var model = (ChildBacklogItemTypeModel)from;
+                var model = (BacklogItemTypeSchemaEntryModel)from;
 
                 entity.ID = model.ID;
                 entity.CreatedOn = model.CreatedOn;

@@ -2,9 +2,9 @@
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Users.Users;
 
-namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
+namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
 {
-    public class ChildBacklogItemType
+    public class BacklogItemTypeSchemaEntry
     {
         public int ID { get; set; }
 
@@ -26,7 +26,7 @@ namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
 
         public User? CreatedBy { get; set; } = null!;
 
-        public ChildBacklogItemType(int childTypeID, int parentTypeID, int schemaID)
+        public BacklogItemTypeSchemaEntry(int childTypeID, int parentTypeID, int schemaID)
         {
             CreatedOn = DateTime.UtcNow;
             ChildTypeID = childTypeID;

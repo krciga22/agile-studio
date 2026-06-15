@@ -1,15 +1,15 @@
 ﻿using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServer.Features.Accounts.ChildBacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServer.Features.Users.Users;
 using AgileStudioServerTest.Core.Fixtures;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Users.Users;
 
-namespace AgileStudioServerTest.Features.Accounts.ChildBacklogItemTypes
+namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEntries
 {
-    public class ChildBacklogItemTypeFixture : AbstractEntityFixture<ChildBacklogItemTypeRepository>
+    public class BacklogItemTypeSchemaEntryFixture : AbstractEntityFixture<BacklogItemTypeSchemaEntryRepository>
     {
         private readonly UserFixture _userFixture;
 
@@ -17,18 +17,18 @@ namespace AgileStudioServerTest.Features.Accounts.ChildBacklogItemTypes
 
         private readonly BacklogItemTypeFixture _backlogItemTypeFixture;
 
-        public ChildBacklogItemTypeFixture(
-            ChildBacklogItemTypeRepository childBacklogItemTypeRepository, 
+        public BacklogItemTypeSchemaEntryFixture(
+            BacklogItemTypeSchemaEntryRepository backlogItemTypeSchemaEntryRepository, 
             UserFixture userFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            BacklogItemTypeFixture backlogItemTypeFixture) : base(childBacklogItemTypeRepository)
+            BacklogItemTypeFixture backlogItemTypeFixture) : base(backlogItemTypeSchemaEntryRepository)
         {
             _userFixture = userFixture;
             _backlogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _backlogItemTypeFixture = backlogItemTypeFixture;
         }
 
-        public ChildBacklogItemTypeModel Create(
+        public BacklogItemTypeSchemaEntryModel Create(
             BacklogItemTypeModel? parentType = null,
             BacklogItemTypeModel? childType = null,
             BacklogItemTypeSchemaModel? schema = null,
@@ -39,15 +39,15 @@ namespace AgileStudioServerTest.Features.Accounts.ChildBacklogItemTypes
             childType ??= _backlogItemTypeFixture.Create("Task", backlogItemTypeSchema: schema);
             createdBy ??= _userFixture.Create();
 
-            var childBacklogItemType = new ChildBacklogItemTypeModel(childType.ID, parentType.ID, schema.ID)
+            var backlogItemTypeSchemaEntry = new BacklogItemTypeSchemaEntryModel(childType.ID, parentType.ID, schema.ID)
             {
                 CreatedByID = createdBy.ID
             };
             
-            return _Repository.Create(childBacklogItemType);
+            return _Repository.Create(backlogItemTypeSchemaEntry);
         }
 
-        public ChildBacklogItemTypeModel? Get(int id)
+        public BacklogItemTypeSchemaEntryModel? Get(int id)
         {
             return _Repository.Get(id);
         }

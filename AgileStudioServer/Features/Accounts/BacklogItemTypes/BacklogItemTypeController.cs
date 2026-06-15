@@ -1,7 +1,7 @@
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServer.Features.Accounts.ChildBacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
     {
         private readonly BacklogItemTypeService _BacklogItemTypeService;
 
-        private readonly ChildBacklogItemTypeService _ChildBacklogItemTypeService;
+        private readonly BacklogItemTypeSchemaEntryService _BacklogItemTypeSchemaEntryService;
 
         private readonly BacklogItemTypeSchemaService _BacklogItemTypeSchemaService;
 
@@ -28,12 +28,12 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         public BacklogItemTypeController(
             BacklogItemTypeService dataProvider,
             Hydrator hydrator,
-            ChildBacklogItemTypeService childBacklogItemTypeService,
+            BacklogItemTypeSchemaEntryService backlogItemTypeSchemaEntryService,
             BacklogItemTypeSchemaService backlogItemTypeSchemaService)
         {
             _BacklogItemTypeService = dataProvider;
             _Hydrator = hydrator;
-            _ChildBacklogItemTypeService = childBacklogItemTypeService;
+            _BacklogItemTypeSchemaEntryService = backlogItemTypeSchemaEntryService;
             _BacklogItemTypeSchemaService = backlogItemTypeSchemaService;
         }
 
@@ -63,15 +63,15 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 
                 List<BacklogItemTypeModel> models = new();
 
-                var childBacklogItemTypes = _ChildBacklogItemTypeService.GetByParentTypeId(id);
-                childBacklogItemTypes.ForEach(childBacklogItemType =>
+                var backlogItemTypeSchemaEntries = _BacklogItemTypeSchemaEntryService.GetByParentTypeId(id);
+                backlogItemTypeSchemaEntries.ForEach(backlogItemTypeSchemaEntry =>
                 {
-                    var childType = _BacklogItemTypeService.Get(childBacklogItemType.ChildTypeID);
+                    var childType = _BacklogItemTypeService.Get(backlogItemTypeSchemaEntry.ChildTypeID);
                     if (childType == null)
                     {
                         throw new ModelNotFoundException(
                             nameof(BacklogItemTypeModel),
-                            childBacklogItemType.ChildTypeID.ToString()
+                            backlogItemTypeSchemaEntry.ChildTypeID.ToString()
                         );
                     }
                     models.Add(childType);
@@ -107,8 +107,8 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 }
 
                 var created = false;
-                var childBacklogItemType = _ChildBacklogItemTypeService.Get(id, childId);
-                if (childBacklogItemType == null)
+                var backlogItemTypeSchemaEntry = _BacklogItemTypeSchemaEntryService.Get(id, childId);
+                if (backlogItemTypeSchemaEntry == null)
                 {
                     var schema = _BacklogItemTypeSchemaService.Get(
                         parentType.BacklogItemTypeSchemaID
@@ -121,9 +121,9 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                         );
                     }
 
-                    childBacklogItemType = new ChildBacklogItemTypeModel(
+                    backlogItemTypeSchemaEntry = new BacklogItemTypeSchemaEntryModel(
                         childType.ID, parentType.ID, schema.ID);
-                    childBacklogItemType = _ChildBacklogItemTypeService.Create(childBacklogItemType);
+                    backlogItemTypeSchemaEntry = _BacklogItemTypeSchemaEntryService.Create(backlogItemTypeSchemaEntry);
                     created = true;
                 }
 
@@ -153,13 +153,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult DeleteChildType(int id, int childId)
         {
-            var childBacklogItemType = _ChildBacklogItemTypeService.Get(id, childId);
-            if (childBacklogItemType == null)
+            var backlogItemTypeSchemaEntry = _BacklogItemTypeSchemaEntryService.Get(id, childId);
+            if (backlogItemTypeSchemaEntry == null)
             {
                 return NotFound();
             }
 
-            _ChildBacklogItemTypeService.Delete(childBacklogItemType);
+            _BacklogItemTypeSchemaEntryService.Delete(backlogItemTypeSchemaEntry);
 
             return new NoContentResult();
         }

@@ -1,6 +1,6 @@
-﻿namespace AgileStudioServer.Features.Accounts.ChildBacklogItemTypes
+﻿namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
 {
-    public class ChildBacklogItemTypeModel
+    public class BacklogItemTypeSchemaEntryModel
     {
         public int ID { get; set; }
 
@@ -14,7 +14,7 @@
 
         public int? CreatedByID { get; set; } = null!;
 
-        public ChildBacklogItemTypeModel(int childTypeId, int parentTypeId, int schemaId)
+        public BacklogItemTypeSchemaEntryModel(int childTypeId, int parentTypeId, int schemaId)
         {
             CreatedOn = DateTime.UtcNow;
             ChildTypeID = childTypeId;

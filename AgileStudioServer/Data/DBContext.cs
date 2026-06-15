@@ -329,6 +329,21 @@ namespace AgileStudioServer.Data
                 {
                     CreatedOn = new DateTime(2025, 6, 13, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.ACCOUNT_BACKLOG_ITEM_TYPE)
+                {
+                    CreatedOn = new DateTime(2025, 6, 15, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.UPDATE, Scopes.ACCOUNT_BACKLOG_ITEM_TYPE)
+                {
+                    CreatedOn = new DateTime(2025, 6, 15, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.DELETE, Scopes.ACCOUNT_BACKLOG_ITEM_TYPE)
+                {
+                    CreatedOn = new DateTime(2025, 6, 15, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
                 }
             );
         }

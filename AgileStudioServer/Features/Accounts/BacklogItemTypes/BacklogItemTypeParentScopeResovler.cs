@@ -23,7 +23,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 parentScopeId = backlogItemType.AccountID.ToString();
             }
 
-            return new ParentScope(Scopes.PROJECT, parentScopeId);
+            return new ParentScope(Scopes.ACCOUNT, parentScopeId);
         }
     }
 }

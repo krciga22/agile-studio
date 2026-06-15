@@ -48,28 +48,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
             return Ok(dto);
         }
-
-        [HttpPost(Name = "CreateBacklogItemType")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(BacklogItemTypeDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedResult Post(BacklogItemTypePostDto backlogItemTypePostDto)
-        {
-            BacklogItemTypeModel model = _Hydrator.Hydrate<BacklogItemTypeModel>(backlogItemTypePostDto);
-            model = _BacklogItemTypeService.Create(model);
-
-            string backlogItemTypeUrl = "";
-            if (Url != null)
-            {
-                backlogItemTypeUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemTypeUrl;
-            }
-
-            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
-
-            return Created(backlogItemTypeUrl, dto);
-        }
-
+       
         [HttpPatch("{id}", Name = "UpdateBacklogItemType")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -111,15 +90,29 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            BacklogItemTypeModel? model = _BacklogItemTypeService.Get(id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                BacklogItemTypeModel? model = _BacklogItemTypeService.Get(id);
+
+                _BacklogItemTypeService.Delete(model);
+
+                return new OkResult();
             }
-
-            _BacklogItemTypeService.Delete(model);
-
-            return new OkResult();
+            catch (ModelNotFoundException e)
+            {
+                if (e.ModelClassName.Equals(nameof(BacklogItemTypeModel)))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Problem();
+                }
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         [HttpGet("{id}/ChildTypes", Name = "GetChildTypesForBacklogItemType")]
@@ -128,30 +121,47 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         [ProducesResponseType(typeof(List<BacklogItemTypeDto>), StatusCodes.Status200OK)]
         public IActionResult GetChildTypes(int id)
         {
-            var backlogItemType = _BacklogItemTypeService.Get(id);
-            if (backlogItemType == null)
+            try
             {
-                return NotFound();
-            }
-
-            List<BacklogItemTypeModel> models = new();
-
-            var childBacklogItemTypes = _ChildBacklogItemTypeService.GetByParentTypeId(id);
-            childBacklogItemTypes.ForEach(childBacklogItemType =>
-            {
-                var childType = _BacklogItemTypeService.Get(childBacklogItemType.ChildTypeID);
-                if (childType == null)
+                try
                 {
-                    throw new ModelNotFoundException(
-                        nameof(BacklogItemTypeModel),
-                        childBacklogItemType.ChildTypeID.ToString()
-                    );
+                    var backlogItemType = _BacklogItemTypeService.Get(id);
                 }
-                models.Add(childType);
-            });
+                catch (ModelNotFoundException e)
+                {
+                    if (e.ModelClassName.Equals(nameof(BacklogItemTypeModel)))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
 
-            var dtos = _Hydrator.HydrateList<BacklogItemTypeDto>(models);
-            return Ok(dtos);
+                List<BacklogItemTypeModel> models = new();
+
+                var childBacklogItemTypes = _ChildBacklogItemTypeService.GetByParentTypeId(id);
+                childBacklogItemTypes.ForEach(childBacklogItemType =>
+                {
+                    var childType = _BacklogItemTypeService.Get(childBacklogItemType.ChildTypeID);
+                    if (childType == null)
+                    {
+                        throw new ModelNotFoundException(
+                            nameof(BacklogItemTypeModel),
+                            childBacklogItemType.ChildTypeID.ToString()
+                        );
+                    }
+                    models.Add(childType);
+                });
+
+                var dtos = _Hydrator.HydrateList<BacklogItemTypeDto>(models);
+                return Ok(dtos);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         [HttpPut("{id}/ChildTypes/{childId}", Name = "PutChildTypeForBacklogItemType")]
@@ -161,44 +171,58 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public IActionResult PutChildType(int id, int childId)
         {
-            var parentType = _BacklogItemTypeService.Get(id);
-            var childType = _BacklogItemTypeService.Get(childId);
-            if (parentType == null || childType == null)
+            try
             {
-                return NotFound();
-            }
+                var parentType = _BacklogItemTypeService.Get(id);
+                var childType = _BacklogItemTypeService.Get(childId);
 
-            if (parentType.BacklogItemTypeSchemaID != childType.BacklogItemTypeSchemaID)
-            {
-                var problem = new ProblemDetails();
-                problem.Title = "Child belongs to a different schema";
-                problem.Status = 400;
-                return BadRequest(problem);
-            }
-
-            var created = false;
-            var childBacklogItemType = _ChildBacklogItemTypeService.Get(id, childId);
-            if (childBacklogItemType == null)
-            {
-                var schema = _BacklogItemTypeSchemaService.Get(
-                    parentType.BacklogItemTypeSchemaID
-                );
-                if (schema == null)
+                if (parentType.BacklogItemTypeSchemaID != childType.BacklogItemTypeSchemaID)
                 {
-                    throw new ModelNotFoundException(
-                        nameof(BacklogItemTypeSchemaModel),
-                        parentType.BacklogItemTypeSchemaID.ToString()
-                    );
+                    var problem = new ProblemDetails();
+                    problem.Title = "Child belongs to a different schema";
+                    problem.Status = 400;
+                    return BadRequest(problem);
                 }
 
-                childBacklogItemType = new ChildBacklogItemTypeModel(
-                    childType.ID, parentType.ID, schema.ID);
-                childBacklogItemType = _ChildBacklogItemTypeService.Create(childBacklogItemType);
-                created = true;
-            }
+                var created = false;
+                var childBacklogItemType = _ChildBacklogItemTypeService.Get(id, childId);
+                if (childBacklogItemType == null)
+                {
+                    var schema = _BacklogItemTypeSchemaService.Get(
+                        parentType.BacklogItemTypeSchemaID
+                    );
+                    if (schema == null)
+                    {
+                        throw new ModelNotFoundException(
+                            nameof(BacklogItemTypeSchemaModel),
+                            parentType.BacklogItemTypeSchemaID.ToString()
+                        );
+                    }
 
-            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(childType);
-            return created ? Created("", dto) : Ok(dto);
+                    childBacklogItemType = new ChildBacklogItemTypeModel(
+                        childType.ID, parentType.ID, schema.ID);
+                    childBacklogItemType = _ChildBacklogItemTypeService.Create(childBacklogItemType);
+                    created = true;
+                }
+
+                var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(childType);
+                return created ? Created("", dto) : Ok(dto);
+            }
+            catch (ModelNotFoundException e)
+            {
+                if (e.ModelClassName.Equals(nameof(BacklogItemTypeModel)))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Problem();
+                }
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
         [HttpDelete("{id}/ChildTypes/{childId}", Name = "DeleteChildTypeForBacklogItemType")]

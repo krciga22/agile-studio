@@ -17,6 +17,14 @@ namespace AgileStudioServer.Features.Accounts.Accounts
         ResourceTypes.AccountsAccount,
         ResourceTypes.ProjectsProject,
         "Projects")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsBacklogItemType,
+        "BacklogItemTypes")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsBacklogItemType,
+        "BacklogItemTypes")]
     [Authorize]
     public class AccountController : ControllerBase
     {

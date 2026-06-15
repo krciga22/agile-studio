@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
@@ -105,8 +106,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
 
             _backlogItemTypeService.Delete(backlogItemType);
 
-            backlogItemType = _backlogItemTypeService.Get(backlogItemType.ID);
-            Assert.Null(backlogItemType);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _backlogItemTypeService.Get(backlogItemType.ID));
         }
     }
 }

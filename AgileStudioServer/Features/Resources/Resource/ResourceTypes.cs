@@ -13,5 +13,7 @@
         public const string AccountsAccount = "accounts.account";
 
         public const string AccountsAccountType = "accounts.accountType";
+
+        public const string AccountsBacklogItemType = "accounts.backlogItemType";
     }
 }

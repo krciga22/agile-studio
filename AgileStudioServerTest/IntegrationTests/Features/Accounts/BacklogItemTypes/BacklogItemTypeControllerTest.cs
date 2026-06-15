@@ -60,26 +60,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         }
 
         [Fact]
-        public void Post_WithDto_ReturnsDto()
-        {
-            var account = _AccountFixture.Create();
-            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-            var workflow = _WorkflowFixture.Create();
-            var postDto = new BacklogItemTypePostDto("Test Backlog Item Type Schema",
-                account.ID, backlogItemTypeSchema.ID, workflow.ID);
-
-            BacklogItemTypeDto? dto = null;
-            IActionResult result = _Controller.Post(postDto);
-            if (result is CreatedResult createdResult)
-            {
-                dto = createdResult.Value as BacklogItemTypeDto;
-            }
-
-            Assert.IsType<BacklogItemTypeDto>(dto);
-            Assert.Equal(postDto.Title, dto.Title);
-        }
-
-        [Fact]
         public void Patch_WithIdAndDto_ReturnsDto()
         {
             var backlogItemType = _BacklogItemTypeFixture.Create();

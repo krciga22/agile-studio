@@ -44,58 +44,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         }
 
         [Fact]
-        public void Get_WithId_ReturnsDto()
-        {
-            var backlogItemType = _BacklogItemTypeFixture.Create();
-
-            BacklogItemTypeDto? dto = null;
-            IActionResult result = _Controller.Get(backlogItemType.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dto = okResult.Value as BacklogItemTypeDto;
-            }
-
-            Assert.IsType<BacklogItemTypeDto>(dto);
-            Assert.Equal(backlogItemType.ID, dto.ID);
-        }
-
-        [Fact]
-        public void Patch_WithIdAndDto_ReturnsDto()
-        {
-            var backlogItemType = _BacklogItemTypeFixture.Create();
-            var title = $"{backlogItemType.Title} Updated";
-            var patchDto = new BacklogItemTypePatchDto(backlogItemType.ID, title);
-
-            IActionResult result = _Controller.Patch(backlogItemType.ID, patchDto);
-            BacklogItemTypeDto? dto = null;
-            if (result is OkObjectResult okObjectResult)
-            {
-                dto = okObjectResult.Value as BacklogItemTypeDto;
-            }
-
-            Assert.IsType<BacklogItemTypeDto>(dto);
-            Assert.Equal(patchDto.Title, dto.Title);
-        }
-
-        [Fact]
-        public void Delete_WithId_ReturnsOkResult()
-        {
-            var backlogItemType = _BacklogItemTypeFixture.Create();
-
-            IActionResult result = _Controller.Delete(backlogItemType.ID);
-
-            Assert.IsType<OkResult>(result as OkResult);
-        }
-
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.Delete(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
-
-        [Fact]
         public void GetChildTypes_WithExistingId_ReturnsDtos()
         {
             var parentType = _BacklogItemTypeFixture.Create();

@@ -2,6 +2,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Accounts.ChildBacklogItemTypes;
+using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,9 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
     [ApiController]
     [Route("Accounts/BacklogItemTypes")]
     [ApiExplorerSettings(GroupName = "accounts")]
+    [MapResourceGet(ResourceTypes.AccountsBacklogItemType)]
+    [MapResourcePatch(ResourceTypes.AccountsBacklogItemType)]
+    [MapResourceDelete(ResourceTypes.AccountsBacklogItemType)]
     [Authorize]
     public class BacklogItemTypeController : ControllerBase
     {
@@ -31,88 +35,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             _Hydrator = hydrator;
             _ChildBacklogItemTypeService = childBacklogItemTypeService;
             _BacklogItemTypeSchemaService = backlogItemTypeSchemaService;
-        }
-
-        [HttpGet("{id}", Name = "GetBacklogItemType")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(BacklogItemTypeDto), StatusCodes.Status200OK)]
-        public IActionResult Get(int id)
-        {
-            var model = _BacklogItemTypeService.Get(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            var dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
-            return Ok(dto);
-        }
-       
-        [HttpPatch("{id}", Name = "UpdateBacklogItemType")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(BacklogItemTypeDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Patch(int id, BacklogItemTypePatchDto backlogItemTypePatchDto)
-        {
-            if (id != backlogItemTypePatchDto.ID)
-            {
-                return BadRequest();
-            }
-
-            BacklogItemTypeDto dto;
-            try
-            {
-                BacklogItemTypeModel model = _Hydrator.Hydrate<BacklogItemTypeModel>(backlogItemTypePatchDto);
-                model = _BacklogItemTypeService.Update(model);
-                dto = _Hydrator.Hydrate<BacklogItemTypeDto>(model);
-            }
-            catch (ModelNotFoundException e)
-            {
-                if (e.ModelClassName.Equals(nameof(BacklogItemTypeModel)))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return new OkObjectResult(dto);
-        }
-
-        [HttpDelete("{id}", Name = "DeleteBacklogItemType")]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                BacklogItemTypeModel? model = _BacklogItemTypeService.Get(id);
-
-                _BacklogItemTypeService.Delete(model);
-
-                return new OkResult();
-            }
-            catch (ModelNotFoundException e)
-            {
-                if (e.ModelClassName.Equals(nameof(BacklogItemTypeModel)))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Problem();
-                }
-            }
-            catch (Exception)
-            {
-                return Problem();
-            }
         }
 
         [HttpGet("{id}/ChildTypes", Name = "GetChildTypesForBacklogItemType")]

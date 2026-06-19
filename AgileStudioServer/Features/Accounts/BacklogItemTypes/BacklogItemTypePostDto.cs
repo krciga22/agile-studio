@@ -12,19 +12,15 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
         public int AccountId { get; set; }
 
         [Required]
-        public int BacklogItemTypeSchemaId { get; set; }
-
-        [Required]
         public int WorkflowId { get; set; }
 
         [StringLength(255)]
         public string? Description { get; set; }
 
-        public BacklogItemTypePostDto(string title, int accountId, int backlogItemTypeSchemaId, int workflowId)
+        public BacklogItemTypePostDto(string title, int accountId, int workflowId)
         {
             Title = title;
             AccountId = accountId;
-            BacklogItemTypeSchemaId = backlogItemTypeSchemaId;
             WorkflowId = workflowId;
         }
     }

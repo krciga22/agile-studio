@@ -20,19 +20,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             return model.ID;
         }
 
-        public virtual List<BacklogItemTypeModel> GetByBacklogItemTypeSchemaId(
-            int backlogItemTypeSchemaId)
-        {
-            List<BacklogItemType> entities = _DBContext.BacklogItemType.Where(backlogItemType =>
-                backlogItemType.BacklogItemTypeSchema.ID == backlogItemTypeSchemaId)
-                .Include(b => b.CreatedBy)
-                .Include(b => b.BacklogItemTypeSchema)
-                .Include(b => b.Workflow)
-                .ToList();
-
-            return HydrateModels(entities);
-        }
-
         public virtual PaginationResults<BacklogItemTypeModel> GetByAccountID(
             int accountId, ServiceContext serviceContext)
         {

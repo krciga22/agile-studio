@@ -59,9 +59,8 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
         [ProducesResponseType(typeof(List<BacklogItemTypeSummaryDto>), StatusCodes.Status200OK)]
         public IActionResult ListBacklogItemTypes(int id)
         {
-            var models = _BacklogItemTypeService.GetByBacklogItemTypeSchemaId(id);
-            var dtos = _Hydrator.HydrateList<BacklogItemTypeSummaryDto>(models);
-            return Ok(dtos);
+            // todo reimplement this
+            throw new NotImplementedException();
         }
 
         [HttpPost(Name = "CreateBacklogItemTypeSchema")]

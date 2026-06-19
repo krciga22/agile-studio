@@ -1,5 +1,4 @@
 ﻿using AgileStudioServer.Features.Accounts.Accounts;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Users.Users;
 
@@ -19,8 +18,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 
         public AccountSummaryDto Account { get; set; }
 
-        public BacklogItemTypeSchemaSummaryDto BacklogItemTypeSchema { get; set; }
-
         public WorkflowSummaryDto Workflow { get; set; }
 
         public BacklogItemTypeDto(
@@ -28,14 +25,12 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             string title,
             DateTime createdOn,
             AccountSummaryDto account,
-            BacklogItemTypeSchemaSummaryDto backlogItemTypeSchema,
             WorkflowSummaryDto workflow)
         {
             ID = id;
             Title = title;
             CreatedOn = createdOn;
             Account = account;
-            BacklogItemTypeSchema = backlogItemTypeSchema;
             Workflow = workflow;
         }
     }

@@ -56,8 +56,7 @@ namespace AgileStudioServerTest.Features.Projects.BacklogItems
             BacklogItemTypeSchemaModel? backlogItemTypeSchema = 
                 _backlogItemTypeSchemaRepository.Get(project.BacklogItemTypeSchemaID);
 
-            backlogItemType ??= _backlogItemTypeFixture.Create(
-                    backlogItemTypeSchema: backlogItemTypeSchema);
+            backlogItemType ??= _backlogItemTypeFixture.Create();
 
             workflowState ??= _workflowStateFixture.Create();
 

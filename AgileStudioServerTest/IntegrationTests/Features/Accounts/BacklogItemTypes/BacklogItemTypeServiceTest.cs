@@ -44,8 +44,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             AccountModel account = _AccountFixture.Create();
             BacklogItemTypeSchemaModel schema = _BacklogItemTypeSchemaFixture.Create();
             WorkflowModel workflow = _WorkflowFixture.Create(); ;
-            BacklogItemTypeModel backlogItemType = new("Test BacklogItemType", 
-                account.ID, schema.ID, workflow.ID);
+            BacklogItemTypeModel backlogItemType = new(
+                "Test BacklogItemType", account.ID, workflow.ID);
 
             backlogItemType = _backlogItemTypeService.Create(backlogItemType);
 
@@ -62,28 +62,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
 
             Assert.NotNull(returnedBacklogItemType);
             Assert.Equal(backlogItemType.ID, returnedBacklogItemType.ID);
-        }
-
-        [Fact]
-        public void GetByBacklogItemTypeSchemaId_ReturnsBacklogItemTypes()
-        {
-            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-            var backlogItemTypes = new List<BacklogItemTypeModel>
-            {
-                _BacklogItemTypeFixture.Create(
-                    "Test BacklogItemType 1",
-                    backlogItemTypeSchema: backlogItemTypeSchema
-                ),
-                _BacklogItemTypeFixture.Create(
-                    "Test BacklogItemType 2",
-                    backlogItemTypeSchema: backlogItemTypeSchema
-                )
-            };
-
-            List<BacklogItemTypeModel> returnedBacklogItemTypes = _backlogItemTypeService
-                .GetByBacklogItemTypeSchemaId(backlogItemTypeSchema.ID);
-
-            Assert.Equal(backlogItemTypes.Count, returnedBacklogItemTypes.Count);
         }
 
         [Fact]

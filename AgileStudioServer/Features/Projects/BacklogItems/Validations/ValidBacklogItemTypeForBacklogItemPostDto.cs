@@ -1,5 +1,6 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServer.Features.Projects.Projects;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,11 +20,17 @@ namespace AgileStudioServer.Features.Projects.BacklogItems.Validations
                 throw new ArgumentNullException(nameof(value));
             }
 
-            var projectService = (ProjectService?)validationContext.GetService(typeof(ProjectService)) ??
+            var projectService = (ProjectService?)validationContext.GetService(
+                typeof(ProjectService)) ??
                 throw new ServiceNotFoundException(nameof(ProjectService));
 
-            var backlogItemTypeService = (BacklogItemTypeService?)validationContext.GetService(typeof(BacklogItemTypeService)) ??
+            var backlogItemTypeService = (BacklogItemTypeService?)validationContext.GetService(
+                typeof(BacklogItemTypeService)) ??
                 throw new ServiceNotFoundException(nameof(BacklogItemTypeService));
+
+            var backlogItemTypeSchemaEntryService = (BacklogItemTypeSchemaEntryService?)validationContext.GetService(
+                typeof(BacklogItemTypeSchemaEntryService)) ??
+                throw new ServiceNotFoundException(nameof(BacklogItemTypeSchemaEntryService));
 
             var dto = (BacklogItemPostDto)value;
 
@@ -33,7 +40,13 @@ namespace AgileStudioServer.Features.Projects.BacklogItems.Validations
             var backlogItemType = backlogItemTypeService.Get(dto.BacklogItemTypeId) ??
                 throw new ModelNotFoundException(nameof(BacklogItemTypeModel), dto.BacklogItemTypeId.ToString());
 
-            if (backlogItemType.BacklogItemTypeSchemaID != project.BacklogItemTypeSchemaID)
+            try
+            {
+                // todo backlogItemType.ID might be a parent type
+                var backlogItemTypeSchemaEntry = backlogItemTypeSchemaEntryService.GetByChildTypeIdAndSchemaId(
+                    backlogItemType.ID, project.BacklogItemTypeSchemaID);
+            }
+            catch(ModelNotFoundException)
             {
                 return new ValidationResult(GetErrorMessage());
             }

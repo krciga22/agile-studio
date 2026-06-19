@@ -35,8 +35,8 @@ namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEntries
             UserModel? createdBy = null)
         {
             schema ??= _backlogItemTypeSchemaFixture.Create();
-            parentType ??= _backlogItemTypeFixture.Create("Story", backlogItemTypeSchema: schema);
-            childType ??= _backlogItemTypeFixture.Create("Task", backlogItemTypeSchema: schema);
+            parentType ??= _backlogItemTypeFixture.Create("Story");
+            childType ??= _backlogItemTypeFixture.Create("Task");
             createdBy ??= _userFixture.Create();
 
             var backlogItemTypeSchemaEntry = new BacklogItemTypeSchemaEntryModel(childType.ID, parentType.ID, schema.ID)

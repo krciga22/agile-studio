@@ -48,7 +48,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 else
                 {
                     entity = new BacklogItemType(
-                        model.Title, model.AccountID, model.BacklogItemTypeSchemaID, model.WorkflowID);
+                        model.Title, model.AccountID, model.WorkflowID);
                 }
 
                 if (entity != null)
@@ -88,7 +88,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 entity.Description = model.Description;
                 entity.CreatedOn = model.CreatedOn;
                 entity.AccountID = model.AccountID;
-                entity.BacklogItemTypeSchemaID = model.BacklogItemTypeSchemaID;
                 entity.WorkflowID = model.WorkflowID;
                 entity.CreatedByID = model.CreatedByID;
 
@@ -96,10 +95,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 {
                     entity.Account = (Account)referenceHydrator.Hydrate(
                         model.AccountID, typeof(Account), maxDepth, nextDepth
-                    );
-
-                    entity.BacklogItemTypeSchema = (BacklogItemTypeSchema)referenceHydrator.Hydrate(
-                        model.BacklogItemTypeSchemaID, typeof(BacklogItemTypeSchema), maxDepth, nextDepth
                     );
 
                     entity.Workflow = (Workflow)referenceHydrator.Hydrate(

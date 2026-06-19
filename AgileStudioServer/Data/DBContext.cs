@@ -144,11 +144,6 @@ namespace AgileStudioServer.Data
                 .HasConstraintName("fk_backlog_item_parent_backlog_item_id");
 
             modelBuilder.Entity<BacklogItemType>()
-                .HasOne(e => e.BacklogItemTypeSchema)
-                .WithMany()
-                .HasConstraintName("fk_backlog_item_type_backlog_item_type_schema_id");
-
-            modelBuilder.Entity<BacklogItemType>()
                 .HasOne(e => e.Workflow)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction)

@@ -19,11 +19,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             _ServiceContext = serviceContext;
         }
 
-        public virtual List<BacklogItemTypeModel> GetByBacklogItemTypeSchemaId(int backlogItemTypeSchemaId)
-        {
-            return _BacklogItemTypeRepository.GetByBacklogItemTypeSchemaId(backlogItemTypeSchemaId);
-        }
-
         public virtual PaginationResults<BacklogItemTypeModel> GetByAccountID(int accountID)
         {
             return _BacklogItemTypeRepository.GetByAccountID(accountID, _ServiceContext);

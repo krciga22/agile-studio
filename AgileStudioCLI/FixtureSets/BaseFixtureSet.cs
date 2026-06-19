@@ -154,28 +154,24 @@ namespace AgileStudioCLI.FixtureSets
                 title: "Story",
                 createdBy: user,
                 account: account,
-                backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeDefect = _BacklogItemTypeFixture.Create(
                 title: "Defect",
                 createdBy: user,
                 account: account,
-                backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeTask = _BacklogItemTypeFixture.Create(
                 title: "Task",
                 createdBy: user,
                 account: account,
-                backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             var backlogItemTypeTest = _BacklogItemTypeFixture.Create(
                 title: "Test",
                 createdBy: user,
                 account: account,
-                backlogItemTypeSchema: backlogItemTypeSchema,
                 workflow: workflow);
 
             _BacklogItemTypeSchemaEntryFixture.Create(

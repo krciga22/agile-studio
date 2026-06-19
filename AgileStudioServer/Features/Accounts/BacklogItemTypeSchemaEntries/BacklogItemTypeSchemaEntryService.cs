@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
 {
@@ -19,6 +20,17 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries
         public virtual List<BacklogItemTypeSchemaEntryModel> GetByChildTypeId(int childTypeId)
         {
             return _BacklogItemTypeSchemaEntryRepository.GetByChildTypeId(childTypeId);
+        }
+
+        /// <exception cref="ModelNotFoundException"></exception>
+        public virtual BacklogItemTypeSchemaEntryModel GetByChildTypeIdAndSchemaId(int childTypeId, int schemaId)
+        {
+            // todo refactor ModelNotFoundException to include multiple identifiers
+
+            var schema = _BacklogItemTypeSchemaEntryRepository.GetByChildTypeIdAndSchemaId(childTypeId, schemaId) ?? 
+                throw new ModelNotFoundException(nameof(BacklogItemTypeSchemaEntryModel), schemaId.ToString());
+
+            return schema;
         }
 
         public virtual BacklogItemTypeSchemaEntryModel? Get(int id)

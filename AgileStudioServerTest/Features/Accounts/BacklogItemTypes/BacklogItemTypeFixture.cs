@@ -38,17 +38,15 @@ namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypes
             string? title = null,
             UserModel? createdBy = null,
             AccountModel? account = null,
-            BacklogItemTypeSchemaModel? backlogItemTypeSchema = null,
             WorkflowModel? workflow = null)
         {
             title ??= "Test BacklogItemType";
             createdBy ??= _userFixture.Create();
             account ??= _accountFixture.Create(createdBy: createdBy);
-            backlogItemTypeSchema ??= _backlogItemTypeSchemaFixture.Create();
             workflow ??= _workflowFixture.Create();
 
             var backlogItemType = new BacklogItemTypeModel(
-                title, account.ID, backlogItemTypeSchema.ID, workflow.ID)
+                title, account.ID, workflow.ID)
             {
                 CreatedByID = createdBy.ID,
             };

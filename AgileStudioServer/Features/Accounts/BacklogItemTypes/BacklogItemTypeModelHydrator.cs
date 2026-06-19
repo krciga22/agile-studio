@@ -43,14 +43,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
             {
                 var entity = (BacklogItemType)from;
                 model = new BacklogItemTypeModel(
-                    entity.Title, entity.AccountID, entity.BacklogItemTypeSchemaID, entity.WorkflowID);
+                    entity.Title, entity.AccountID, entity.WorkflowID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemTypePostDto)
             {
                 var dto = (BacklogItemTypePostDto)from;
                 model = new BacklogItemTypeModel(
-                    dto.Title, dto.AccountId, dto.BacklogItemTypeSchemaId, dto.WorkflowId);
+                    dto.Title, dto.AccountId, dto.WorkflowId);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
             else if (from is BacklogItemTypePatchDto)
@@ -90,7 +90,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 model.Description = entity.Description;
                 model.CreatedOn = entity.CreatedOn;
                 model.AccountID = entity.AccountID;
-                model.BacklogItemTypeSchemaID = entity.BacklogItemTypeSchemaID;
                 model.WorkflowID = entity.WorkflowID;
                 model.CreatedByID = entity.CreatedByID;
             }
@@ -100,7 +99,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
                 model.Title = dto.Title;
                 model.Description = dto.Description;
                 model.AccountID = dto.AccountId;
-                model.BacklogItemTypeSchemaID = dto.BacklogItemTypeSchemaId;
                 model.WorkflowID = dto.WorkflowId;
             }
             else if (from is BacklogItemTypePatchDto)

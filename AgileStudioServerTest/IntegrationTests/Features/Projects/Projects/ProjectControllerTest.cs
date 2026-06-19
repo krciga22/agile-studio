@@ -164,8 +164,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
                 project.BacklogItemTypeSchemaID);
 
-            var backlogItemType = _BacklogItemTypeFixture.Create(
-                backlogItemTypeSchema: backlogItemTypeSchema);
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             var backlogItem1 = _BacklogItemFixture.Create(
                 title: "Test Backlog Item 1",
@@ -219,8 +218,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.Projects
             var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
                 project.BacklogItemTypeSchemaID);
 
-            var backlogItemType = _BacklogItemTypeFixture.Create(
-                backlogItemTypeSchema: backlogItemTypeSchema);
+            var backlogItemType = _BacklogItemTypeFixture.Create();
 
             var workflow = _WorkflowFixture.Get(backlogItemType.WorkflowID);
 

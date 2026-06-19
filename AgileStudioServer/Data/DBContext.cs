@@ -20,6 +20,7 @@ using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Features.Users.Users;
 using Microsoft.EntityFrameworkCore;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
 
 namespace AgileStudioServer.Data
 {
@@ -40,6 +41,8 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemTypeSchemaEntry> BacklogItemTypeSchemaEntry { get; set; }
 
         public DbSet<BacklogItemTypeSchemaNode> BacklogItemTypeSchemaNode { get; set; }
+
+        public DbSet<BacklogItemTypeSchemaEdge> BacklogItemTypeSchemaEdge { get; set; }
 
         public DbSet<BacklogItemLinkType> BacklogItemLinkType { get; set; }
 
@@ -139,6 +142,21 @@ namespace AgileStudioServer.Data
                 .HasOne(e => e.Schema)
                 .WithMany()
                 .HasConstraintName("fk_backlog_item_type_schema_node_schema");
+
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
+                .HasOne(e => e.FromType)
+                .WithMany()
+                .HasConstraintName("fk_backlog_item_type_schema_edge_from_type");
+
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
+                .HasOne(e => e.ToType)
+                .WithMany()
+                .HasConstraintName("fk_backlog_item_type_schema_edge_to_type");
+
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
+                .HasOne(e => e.Schema)
+                .WithMany()
+                .HasConstraintName("fk_backlog_item_type_schema_edge_schema");
 
             modelBuilder.Entity<BacklogItem>()
                 .HasOne(e => e.BacklogItemType)
@@ -245,6 +263,7 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<BacklogItemLinkType>().ToTable("backlog_item_link_type", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchemaEntry>().ToTable("backlog_item_type_schema_entry", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchemaNode>().ToTable("backlog_item_type_schema_node", "accounts");
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>().ToTable("backlog_item_type_schema_edge", "accounts");
             modelBuilder.Entity<BacklogItemLinkTypeSchema>().ToTable("backlog_item_link_type_schema", "accounts");
             modelBuilder.Entity<Workflow>().ToTable("workflow", "accounts");
             modelBuilder.Entity<WorkflowState>().ToTable("workflow_state", "accounts");

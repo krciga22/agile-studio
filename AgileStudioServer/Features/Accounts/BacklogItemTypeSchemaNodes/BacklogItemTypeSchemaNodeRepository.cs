@@ -17,6 +17,20 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
             return model.ID;
         }
 
+        public virtual BacklogItemTypeSchemaNodeModel? Get(int schemaId, int backlogItemTypeId)
+        {
+            List<BacklogItemTypeSchemaNode> entities =
+                _DBContext.BacklogItemTypeSchemaNode.Where(backlogItemTypeSchemaNode =>
+                    backlogItemTypeSchemaNode.Schema.ID == schemaId && 
+                    backlogItemTypeSchemaNode.BacklogItemTypeID == backlogItemTypeId
+                )
+                .Include(b => b.Schema)
+                .Include(b => b.CreatedBy)
+                .ToList();
+
+            return entities.Count() > 0 ? HydrateModel(entities[0]) : null;
+        }
+
         public virtual BacklogItemTypeSchemaNodeModel? GetBySchemaId(int schemaId)
         {
             List<BacklogItemTypeSchemaNode> entities =

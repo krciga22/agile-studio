@@ -5,7 +5,6 @@ using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Auth.Permissions;
@@ -37,8 +36,6 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemType> BacklogItemType { get; set; }
 
         public DbSet<BacklogItemTypeSchema> BacklogItemTypeSchema { get; set; }
-
-        public DbSet<BacklogItemTypeSchemaEntry> BacklogItemTypeSchemaEntry { get; set; }
 
         public DbSet<BacklogItemTypeSchemaNode> BacklogItemTypeSchemaNode { get; set; }
 
@@ -117,21 +114,6 @@ namespace AgileStudioServer.Data
                 .HasIndex(p => new { p.BacklogItemLinkTypeSchemaID, p.BacklogItemLinkTypeID })
                 .IsUnique()
                 .HasDatabaseName("ix_backlog_item_link_type_schema_entry_unique");
-
-            modelBuilder.Entity<BacklogItemTypeSchemaEntry>()
-                .HasOne(e => e.ChildType)
-                .WithMany()
-                .HasConstraintName("fk_backlog_item_type_schema_entry_child_type");
-
-            modelBuilder.Entity<BacklogItemTypeSchemaEntry>()
-                .HasOne(e => e.ParentType)
-                .WithMany()
-                .HasConstraintName("fk_backlog_item_type_schema_entry_parent_type");
-
-            modelBuilder.Entity<BacklogItemTypeSchemaEntry>()
-                .HasOne(e => e.Schema)
-                .WithMany()
-                .HasConstraintName("fk_backlog_item_type_schema_entry_schema");
 
             modelBuilder.Entity<BacklogItemTypeSchemaNode>()
                 .HasOne(e => e.BacklogItemType)
@@ -261,7 +243,6 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<BacklogItemTypeSchema>().ToTable("backlog_item_type_schema", "accounts");
             modelBuilder.Entity<BacklogItemLinkTypeSchemaEntry>().ToTable("backlog_item_link_type_schema_entry", "accounts");
             modelBuilder.Entity<BacklogItemLinkType>().ToTable("backlog_item_link_type", "accounts");
-            modelBuilder.Entity<BacklogItemTypeSchemaEntry>().ToTable("backlog_item_type_schema_entry", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchemaNode>().ToTable("backlog_item_type_schema_node", "accounts");
             modelBuilder.Entity<BacklogItemTypeSchemaEdge>().ToTable("backlog_item_type_schema_edge", "accounts");
             modelBuilder.Entity<BacklogItemLinkTypeSchema>().ToTable("backlog_item_link_type_schema", "accounts");

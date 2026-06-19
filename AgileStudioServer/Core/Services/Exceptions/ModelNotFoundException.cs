@@ -14,6 +14,11 @@ namespace AgileStudioServer.Core.Services.Exceptions
             this.primaryKey = primaryKey;
         }
 
+        public static ModelNotFoundException FromCompositeKey(string modelClassName, object[] primaryKey)
+        {
+            return new ModelNotFoundException(modelClassName, string.Join(", ", primaryKey));
+        }
+
         private string modelClassName;
 
         private string primaryKey;

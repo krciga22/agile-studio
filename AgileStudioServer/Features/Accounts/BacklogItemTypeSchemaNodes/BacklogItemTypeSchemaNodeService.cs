@@ -18,6 +18,15 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
         }
 
         /// <exception cref="ModelNotFoundException"></exception>
+        public virtual BacklogItemTypeSchemaNodeModel? Get(int schemaId, int backlogItemTypeId)
+        {
+            return _BacklogItemTypeSchemaNodeRepository.Get(schemaId, backlogItemTypeId) ??
+                throw ModelNotFoundException.FromCompositeKey(
+                        nameof(BacklogItemTypeSchemaNodeModel), 
+                        [schemaId, backlogItemTypeId]);
+        }
+
+        /// <exception cref="ModelNotFoundException"></exception>
         public virtual BacklogItemTypeSchemaNodeModel GetBySchemaId(int schemaId)
         {
             var node = _BacklogItemTypeSchemaNodeRepository.GetBySchemaId(schemaId) ?? 

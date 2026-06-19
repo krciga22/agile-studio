@@ -1,6 +1,6 @@
 ﻿using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEntries;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
 using AgileStudioServer.Features.Projects.Projects;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,9 +28,9 @@ namespace AgileStudioServer.Features.Projects.BacklogItems.Validations
                 typeof(BacklogItemTypeService)) ??
                 throw new ServiceNotFoundException(nameof(BacklogItemTypeService));
 
-            var backlogItemTypeSchemaEntryService = (BacklogItemTypeSchemaEntryService?)validationContext.GetService(
-                typeof(BacklogItemTypeSchemaEntryService)) ??
-                throw new ServiceNotFoundException(nameof(BacklogItemTypeSchemaEntryService));
+            var backlogItemTypeSchemaNodeService = (BacklogItemTypeSchemaNodeService?)validationContext.GetService(
+                typeof(BacklogItemTypeSchemaNodeService)) ??
+                throw new ServiceNotFoundException(nameof(BacklogItemTypeSchemaNodeService));
 
             var dto = (BacklogItemPostDto)value;
 
@@ -42,9 +42,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItems.Validations
 
             try
             {
-                // todo backlogItemType.ID might be a parent type
-                var backlogItemTypeSchemaEntry = backlogItemTypeSchemaEntryService.GetByChildTypeIdAndSchemaId(
-                    backlogItemType.ID, project.BacklogItemTypeSchemaID);
+                var backlogItemTypeSchemaEntry = backlogItemTypeSchemaNodeService.Get(
+                    project.BacklogItemTypeSchemaID, backlogItemType.ID);
             }
             catch(ModelNotFoundException)
             {

@@ -12,7 +12,6 @@ using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServerTest.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEntries;
 using AgileStudioServerTest.Features.Accounts.Workflows;
 using AgileStudioServerTest.Features.Accounts.WorkflowStates;
 using AgileStudioServerTest.Features.Auth.RoleGrants;
@@ -37,7 +36,6 @@ namespace AgileStudioCLI.FixtureSets
         private readonly BacklogItemFixture _BacklogItemFixture;
         private readonly BacklogItemTypeFixture _BacklogItemTypeFixture;
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
-        private readonly BacklogItemTypeSchemaEntryFixture _BacklogItemTypeSchemaEntryFixture;
         private readonly BacklogItemTypeSchemaNodeFixture _BacklogItemTypeSchemaNodeFixture;
         private readonly BacklogItemTypeSchemaEdgeFixture _BacklogItemTypeSchemaEdgeFixture;
         private readonly ProjectFixture _ProjectFixture;
@@ -58,7 +56,6 @@ namespace AgileStudioCLI.FixtureSets
             BacklogItemFixture backlogItemFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            BacklogItemTypeSchemaEntryFixture backlogItemTypeSchemaEntryFixture,
             BacklogItemTypeSchemaNodeFixture backlogItemTypeSchemaNodeFixture,
             BacklogItemTypeSchemaEdgeFixture backlogItemTypeSchemaEdgeFixture,
             ProjectFixture projectFixture,
@@ -78,7 +75,6 @@ namespace AgileStudioCLI.FixtureSets
             _BacklogItemFixture = backlogItemFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
-            _BacklogItemTypeSchemaEntryFixture = backlogItemTypeSchemaEntryFixture;
             _BacklogItemTypeSchemaNodeFixture = backlogItemTypeSchemaNodeFixture;
             _BacklogItemTypeSchemaEdgeFixture = backlogItemTypeSchemaEdgeFixture;
             _ProjectFixture = projectFixture;
@@ -181,34 +177,6 @@ namespace AgileStudioCLI.FixtureSets
                 createdBy: user,
                 account: account,
                 workflow: workflow);
-
-            _BacklogItemTypeSchemaEntryFixture.Create(
-                parentType: backlogItemTypeStory,
-                childType: backlogItemTypeTask,
-                schema: backlogItemTypeSchema,
-                createdBy: user
-            );
-
-            _BacklogItemTypeSchemaEntryFixture.Create(
-                parentType: backlogItemTypeStory,
-                childType: backlogItemTypeTest,
-                schema: backlogItemTypeSchema,
-                createdBy: user
-            );
-
-            _BacklogItemTypeSchemaEntryFixture.Create(
-                parentType: backlogItemTypeDefect,
-                childType: backlogItemTypeTask,
-                schema: backlogItemTypeSchema,
-                createdBy: user
-            );
-
-            _BacklogItemTypeSchemaEntryFixture.Create(
-                parentType: backlogItemTypeDefect,
-                childType: backlogItemTypeTest,
-                schema: backlogItemTypeSchema,
-                createdBy: user
-            );
 
             _BacklogItemTypeSchemaNodeFixture.Create(
                 backlogItemType: backlogItemTypeStory,

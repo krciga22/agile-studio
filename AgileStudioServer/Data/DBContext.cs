@@ -140,6 +140,16 @@ namespace AgileStudioServer.Data
                 .WithMany()
                 .HasConstraintName("fk_backlog_item_type_schema_edge_schema");
 
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
+                .ToTable(b => b.HasCheckConstraint(
+                    "ck_backlog_item_type_schema_edge_types_differ",
+                    "\"from_type_id\" <> \"to_type_id\""));
+
+            modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
+                .HasIndex(e => new { e.SchemaID, e.FromTypeID, e.ToTypeID })
+                .IsUnique()
+                .HasDatabaseName("ix_backlog_item_type_schema_edge_schema_from_to");
+
             modelBuilder.Entity<BacklogItem>()
                 .HasOne(e => e.BacklogItemType)
                 .WithMany()

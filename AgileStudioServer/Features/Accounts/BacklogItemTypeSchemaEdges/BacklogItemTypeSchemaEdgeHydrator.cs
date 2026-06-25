@@ -95,13 +95,16 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                         model.SchemaID, typeof(BacklogItemTypeSchema), maxDepth, nextDepth
                     );
 
-                    entity.FromType = (BacklogItemType)referenceHydrator.Hydrate(
-                        model.FromTypeID, typeof(BacklogItemType), maxDepth, nextDepth
-                    );
-
                     entity.ToType = (BacklogItemType)referenceHydrator.Hydrate(
                         model.ToTypeID, typeof(BacklogItemType), maxDepth, nextDepth
                     );
+
+                    if (model.FromTypeID != null)
+                    {
+                        entity.FromType = (BacklogItemType)referenceHydrator.Hydrate(
+                            model.FromTypeID, typeof(BacklogItemType), maxDepth, nextDepth
+                        );
+                    }
 
                     if (model.CreatedByID != null)
                     {

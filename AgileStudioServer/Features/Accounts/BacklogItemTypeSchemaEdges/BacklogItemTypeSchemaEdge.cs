@@ -12,9 +12,9 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
 
         public BacklogItemTypeSchema Schema { get; set; } = null!;
 
-        public int FromTypeID { get; set; }
+        public int? FromTypeID { get; set; } = null;
 
-        public BacklogItemType FromType { get; set; } = null!;
+        public BacklogItemType? FromType { get; set; } = null;
 
         public int ToTypeID { get; set; }
 
@@ -26,7 +26,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
 
         public User? CreatedBy { get; set; } = null!;
 
-        public BacklogItemTypeSchemaEdge(int schemaID, int fromTypeID, int toTypeID)
+        public BacklogItemTypeSchemaEdge(int schemaID, int? fromTypeID, int toTypeID)
         {
             SchemaID = schemaID;
             FromTypeID = fromTypeID;

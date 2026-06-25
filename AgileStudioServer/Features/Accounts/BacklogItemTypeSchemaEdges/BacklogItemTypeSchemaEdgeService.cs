@@ -11,7 +11,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             _BacklogItemTypeSchemaEdgeRepository = backlogItemTypeSchemaEdgeRepository;
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int fromTypeId)
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             return _BacklogItemTypeSchemaEdgeRepository.GetByFromTypeId(fromTypeId);
         }

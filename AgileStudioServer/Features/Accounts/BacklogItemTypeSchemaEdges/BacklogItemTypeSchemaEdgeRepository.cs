@@ -18,9 +18,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
         }
 
         public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int fromTypeId, int schemaId = 0)
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
-                backlogItemTypeSchemaEdge.FromType.ID == fromTypeId
+                backlogItemTypeSchemaEdge.FromTypeID == fromTypeId
             );
 
             if(schemaId > 0){
@@ -55,12 +56,12 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return HydrateModels(entities);
         }
 
-        public virtual BacklogItemTypeSchemaEdgeModel? Get(int fromTypeId, int toTypeId, int schemaId)
+        public virtual BacklogItemTypeSchemaEdgeModel? Get(int? fromTypeId, int toTypeId, int schemaId)
         {
             var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
-                backlogItemTypeSchemaEdge.FromType.ID == fromTypeId &&
-                backlogItemTypeSchemaEdge.ToType.ID == toTypeId && 
-                backlogItemTypeSchemaEdge.Schema.ID == schemaId
+                backlogItemTypeSchemaEdge.FromTypeID == fromTypeId &&
+                backlogItemTypeSchemaEdge.ToTypeID == toTypeId && 
+                backlogItemTypeSchemaEdge.SchemaID == schemaId
             );
 
             List<BacklogItemTypeSchemaEdge> entities = query.Include(b => b.FromType)

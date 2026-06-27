@@ -1,4 +1,7 @@
 ﻿using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
 {
@@ -6,9 +9,18 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
     {
         private readonly BacklogItemTypeSchemaEdgeRepository _BacklogItemTypeSchemaEdgeRepository;
 
-        public BacklogItemTypeSchemaEdgeService(BacklogItemTypeSchemaEdgeRepository backlogItemTypeSchemaEdgeRepository)
+        private readonly BacklogItemTypeSchemaEdgeValidator _BacklogItemTypeSchemaEdgeValidator;
+
+        private readonly DBContext _DBContext;
+
+        public BacklogItemTypeSchemaEdgeService(
+            BacklogItemTypeSchemaEdgeRepository backlogItemTypeSchemaEdgeRepository,
+            BacklogItemTypeSchemaEdgeValidator backlogItemTypeSchemaEdgeValidator,
+            DBContext dBContext)
         {
             _BacklogItemTypeSchemaEdgeRepository = backlogItemTypeSchemaEdgeRepository;
+            _BacklogItemTypeSchemaEdgeValidator = backlogItemTypeSchemaEdgeValidator;
+            _DBContext = dBContext;
         }
 
         public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
@@ -43,9 +55,52 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                     [fromTypeId ?? 0, toTypeId, schemaId]);
         }
 
-        public virtual BacklogItemTypeSchemaEdgeModel Create(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)
+        /// <exception cref="InvalidOperationException"></exception>
+        public virtual BacklogItemTypeSchemaEdgeModel Create(BacklogItemTypeSchemaEdgeModel edge) 
         {
-            return _BacklogItemTypeSchemaEdgeRepository.Create(backlogItemTypeSchemaEdge);
+            ArgumentNullException.ThrowIfNull(edge);
+
+            var currentTx = _DBContext.Database.CurrentTransaction;
+            IDbContextTransaction tx = currentTx ?? _DBContext.Database.BeginTransaction();
+            bool createdTransaction = (currentTx == null);
+
+            try
+            {
+                var existingEdge = _BacklogItemTypeSchemaEdgeRepository.Get(
+                    edge.FromTypeID, edge.ToTypeID, edge.SchemaID);
+                if (existingEdge != null) {
+                    throw new InvalidOperationException("Edge already exists.");
+                }
+
+                _BacklogItemTypeSchemaEdgeValidator.ValidateSameAccount(edge.FromTypeID, edge.ToTypeID, edge.SchemaID);
+
+                _BacklogItemTypeSchemaEdgeValidator.ValidateNoCycles(edge);
+
+                var newEdgeModel = _BacklogItemTypeSchemaEdgeRepository.Create(edge);
+
+                if (createdTransaction) {
+                    tx.Commit();
+                }
+
+                return newEdgeModel;
+            }
+            catch
+            {
+                if (createdTransaction) {
+                    try { tx.Rollback(); } 
+                    catch { 
+                        // todo log exception once a logger is setup
+                    }
+                }
+
+                throw;
+            }
+            finally
+            {
+                if (createdTransaction) {
+                    tx.Dispose();
+                }
+            }
         }
 
         public virtual BacklogItemTypeSchemaEdgeModel Update(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)

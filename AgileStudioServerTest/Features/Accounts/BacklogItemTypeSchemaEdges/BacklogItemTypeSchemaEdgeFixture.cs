@@ -6,6 +6,7 @@ using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Users.Users;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
+using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEdges
 {
@@ -17,15 +18,36 @@ namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEdges
 
         private readonly BacklogItemTypeFixture _backlogItemTypeFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         public BacklogItemTypeSchemaEdgeFixture(
-            BacklogItemTypeSchemaEdgeRepository backlogItemTypeSchemaEdgeRepository, 
+            BacklogItemTypeSchemaEdgeRepository backlogItemTypeSchemaEdgeRepository,
             UserFixture userFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
-            BacklogItemTypeFixture backlogItemTypeFixture) : base(backlogItemTypeSchemaEdgeRepository)
+            BacklogItemTypeFixture backlogItemTypeFixture,
+            AccountFixture accountFixture) : base(backlogItemTypeSchemaEdgeRepository)
         {
             _userFixture = userFixture;
             _backlogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _backlogItemTypeFixture = backlogItemTypeFixture;
+            _AccountFixture = accountFixture;
+        }
+
+        public BacklogItemTypeSchemaEdgeModel Create()
+        {
+            var schema = _backlogItemTypeSchemaFixture.Create();
+            var account = _AccountFixture.Get(schema.AccountID);
+            var fromType = _backlogItemTypeFixture.Create("Story", account: account);
+            var toType = _backlogItemTypeFixture.Create("Task", account: account);
+            var createdBy = _userFixture.Create();
+
+            var backlogItemTypeSchemaEdge = new BacklogItemTypeSchemaEdgeModel(
+                schema.ID, fromType?.ID, toType.ID)
+            {
+                CreatedByID = createdBy.ID
+            };
+            
+            return _Repository.Create(backlogItemTypeSchemaEdge);
         }
 
         public BacklogItemTypeSchemaEdgeModel Create(
@@ -35,15 +57,16 @@ namespace AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEdges
             UserModel? createdBy = null)
         {
             schema ??= _backlogItemTypeSchemaFixture.Create();
-            fromType ??= _backlogItemTypeFixture.Create("Story");
-            toType ??= _backlogItemTypeFixture.Create("Task");
+            var account = _AccountFixture.Get(schema.AccountID);
+            toType ??= _backlogItemTypeFixture.Create("Task", account: account);
             createdBy ??= _userFixture.Create();
 
-            var backlogItemTypeSchemaEdge = new BacklogItemTypeSchemaEdgeModel(schema.ID, fromType.ID, toType.ID)
+            var backlogItemTypeSchemaEdge = new BacklogItemTypeSchemaEdgeModel(
+                schema.ID, fromType?.ID, toType.ID)
             {
                 CreatedByID = createdBy.ID
             };
-            
+
             return _Repository.Create(backlogItemTypeSchemaEdge);
         }
 

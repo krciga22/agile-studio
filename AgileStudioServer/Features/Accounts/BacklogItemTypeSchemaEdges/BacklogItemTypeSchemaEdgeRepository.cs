@@ -25,7 +25,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return model.ID;
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int fromTypeId, int schemaId = 0)
         public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>

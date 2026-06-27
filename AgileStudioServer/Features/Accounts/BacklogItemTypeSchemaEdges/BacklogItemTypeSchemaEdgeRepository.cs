@@ -64,6 +64,16 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
 
             return HydrateModels([.. query]);
         }
+
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetBySchemaId(int schemaId)
+        {
+            List<BacklogItemTypeSchemaEdge> entities = _DBContext.BacklogItemTypeSchemaEdge
+                .Where(backlogItemTypeSchemaEdge =>
+                    backlogItemTypeSchemaEdge.SchemaID == schemaId
+                )
+                .Include(b => b.FromType)
+                .Include(b => b.ToType)
+                .Include(b => b.Schema)
                 .Include(b => b.CreatedBy)
                 .ToList();
 

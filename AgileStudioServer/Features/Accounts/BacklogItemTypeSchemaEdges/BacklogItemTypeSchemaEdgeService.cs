@@ -26,14 +26,21 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return _BacklogItemTypeSchemaEdgeRepository.GetBySchemaId(schemaId);
         }
 
-        public virtual BacklogItemTypeSchemaEdgeModel? Get(int id)
+        /// <exception cref="ModelNotFoundException"></exception>
+        public virtual BacklogItemTypeSchemaEdgeModel Get(int id)
         {
-            return _BacklogItemTypeSchemaEdgeRepository.Get(id);
+            return _BacklogItemTypeSchemaEdgeRepository.Get(id) ??
+                throw new ModelNotFoundException(
+                    nameof(BacklogItemTypeSchemaEdgeModel), id.ToString());
         }
 
-        public virtual BacklogItemTypeSchemaEdgeModel? Get(int fromTypeId, int toTypeId, int schemaId)
+        /// <exception cref="ModelNotFoundException"></exception>
+        public virtual BacklogItemTypeSchemaEdgeModel Get(int? fromTypeId, int toTypeId, int schemaId)
         {
-            return _BacklogItemTypeSchemaEdgeRepository.Get(fromTypeId, toTypeId, schemaId);
+            return _BacklogItemTypeSchemaEdgeRepository.Get(fromTypeId, toTypeId, schemaId) ??
+                throw ModelNotFoundException.FromCompositeKey(
+                    nameof(BacklogItemTypeSchemaEdgeModel),
+                    [fromTypeId ?? 0, toTypeId, schemaId]);
         }
 
         public virtual BacklogItemTypeSchemaEdgeModel Create(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)

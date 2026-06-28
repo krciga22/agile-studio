@@ -75,7 +75,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         }
 
         [Fact]
-        public void GetStartingBacklogItemTypesForSchema_ReturnsBacklogItemTypesForSchema()
+        public void GetForSchemaAndFromBacklogItemType_WithNullFromBacklogItemType_ReturnsBacklogItemTypesForSchema()
         {
             var account = _AccountFixture.Create();
             var schema = _BacklogItemTypeSchemaFixture.Create(account: account);
@@ -94,14 +94,41 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             var defectTestEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, defectType, testType);
 
             _ServiceContext.Sort = "id:asc";
-            var returnedBacklogItemTypes = _backlogItemTypeService.GetStartingBacklogItemTypesForSchema(schema.ID);
+            var returnedBacklogItemTypes = _backlogItemTypeService.GetForSchemaAndFromBacklogItemType(schema.ID);
 
             Assert.Collection(returnedBacklogItemTypes,
                 backlogItemType => Assert.Equal(epicType.ID, backlogItemType.ID),
                 backlogItemType => Assert.Equal(storyType.ID, backlogItemType.ID),
                 backlogItemType => Assert.Equal(defectType.ID, backlogItemType.ID));
         }
-        
+
+        [Fact]
+        public void GetForSchemaAndFromBacklogItemType_WithFromBacklogItemType_ReturnsBacklogItemTypesForSchema()
+        {
+            var account = _AccountFixture.Create();
+            var schema = _BacklogItemTypeSchemaFixture.Create(account: account);
+            var epicType = _BacklogItemTypeFixture.Create("Epic", account: account);
+            var storyType = _BacklogItemTypeFixture.Create("Story", account: account);
+            var defectType = _BacklogItemTypeFixture.Create("Defect", account: account);
+            var taskType = _BacklogItemTypeFixture.Create("Task", account: account);
+            var testType = _BacklogItemTypeFixture.Create("Test", account: account);
+
+            var epicEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, null, epicType);
+            var storyEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, null, storyType);
+            var defectEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, null, defectType);
+            var storyTaskEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, storyType, taskType);
+            var storyTestEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, storyType, testType);
+            var defectTaskEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, defectType, taskType);
+            var defectTestEdge = _BacklogItemTypeSchemaEdgeFixture.Create(schema, defectType, testType);
+
+            _ServiceContext.Sort = "id:asc";
+            var returnedBacklogItemTypes = _backlogItemTypeService.GetForSchemaAndFromBacklogItemType(
+                schema.ID, storyType.ID);
+
+            Assert.Collection(returnedBacklogItemTypes,
+                backlogItemType => Assert.Equal(taskType.ID, backlogItemType.ID),
+                backlogItemType => Assert.Equal(testType.ID, backlogItemType.ID));
+        }
 
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemType()

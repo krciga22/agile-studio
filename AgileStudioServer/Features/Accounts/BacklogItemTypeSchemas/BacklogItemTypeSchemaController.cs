@@ -118,15 +118,27 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public IActionResult Delete(int id)
         {
-            BacklogItemTypeSchemaModel? model = _BacklogItemTypeSchemaService.Get(id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                BacklogItemTypeSchemaModel? model = _BacklogItemTypeSchemaService.Get(id);
+                _BacklogItemTypeSchemaService.Delete(model);
+                return new OkResult();
             }
-
-            _BacklogItemTypeSchemaService.Delete(model);
-
-            return new OkResult();
+            catch (ModelNotFoundException e)
+            {
+                if (e.ModelClassName.Equals(nameof(BacklogItemTypeSchemaModel)))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Problem();
+                }
+            }
+            catch(Exception)
+            {
+                return Problem();
+            }
         }
     }
 }

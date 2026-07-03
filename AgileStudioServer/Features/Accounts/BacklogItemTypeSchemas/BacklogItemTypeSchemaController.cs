@@ -44,16 +44,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
             return Ok(dto);
         }
 
-        [HttpGet("{id}/BacklogItemTypes", Name = "ListBacklogItemTypeSchema_BacklogItemTypes")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(List<BacklogItemTypeSummaryDto>), StatusCodes.Status200OK)]
-        public IActionResult ListBacklogItemTypes(int id)
-        {
-            // todo reimplement this
-            throw new NotImplementedException();
-        }
-
         [HttpPatch("{id}", Name = "UpdateBacklogItemTypeSchema")]
         [Consumes("application/json")]
         [Produces("application/json")]

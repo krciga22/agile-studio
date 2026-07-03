@@ -30,31 +30,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             _AccountFixture = accountFixture;
         }
 
-        [Fact(Skip = "Temporarily skipped - Need to rework how backlog item type schemas work")]
-        public void ListBacklogItemTypes_WithId_ReturnsDtos()
-        {
-            //var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-
-            //List<BacklogItemTypeModel> backlogItemTypes = new() {
-            //    _BacklogItemTypeFixture.Create(
-            //        title: "Test Backlog Item Type Schema 1",
-            //        backlogItemTypeSchema: backlogItemTypeSchema),
-            //    _BacklogItemTypeFixture.Create(
-            //        title: "Test Backlog Item Type Schema 2",
-            //        backlogItemTypeSchema: backlogItemTypeSchema)
-            //};
-
-            //List<BacklogItemTypeSummaryDto>? dtos = null;
-            //IActionResult result = _Controller.ListBacklogItemTypes(backlogItemTypeSchema.ID);
-            //if (result is OkObjectResult okResult)
-            //{
-            //    dtos = okResult.Value as List<BacklogItemTypeSummaryDto>;
-            //}
-
-            //Assert.IsType<List<BacklogItemTypeSummaryDto>>(dtos);
-            //Assert.Equal(backlogItemTypes.Count, dtos.Count);
-        }
-
         [Fact]
         public void Get_WithId_ReturnsDto()
         {

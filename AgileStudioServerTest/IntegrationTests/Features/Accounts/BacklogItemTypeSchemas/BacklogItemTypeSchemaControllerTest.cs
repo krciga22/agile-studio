@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
+﻿using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Data;
-using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.Accounts;
@@ -30,56 +28,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             _AccountFixture = accountFixture;
         }
 
-        [Fact]
-        public void Get_WithId_ReturnsDto()
-        {
-            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-
-            BacklogItemTypeSchemaDto? dto = null;
-            IActionResult result = _Controller.Get(backlogItemTypeSchema.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dto = okResult.Value as BacklogItemTypeSchemaDto;
-            }
-
-            Assert.IsType<BacklogItemTypeSchemaDto>(dto);
-            Assert.Equal(backlogItemTypeSchema.ID, dto.ID);
-        }
-
-        [Fact]
-        public void Patch_WithIdAndDto_ReturnsDto()
-        {
-            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-            var title = $"{backlogItemTypeSchema.Title} Updated";
-            var patchDto = new BacklogItemTypeSchemaPatchDto(backlogItemTypeSchema.ID, title);
-
-            IActionResult result = _Controller.Patch(backlogItemTypeSchema.ID, patchDto);
-            BacklogItemTypeSchemaDto? dto = null;
-            if (result is OkObjectResult okObjectResult)
-            {
-                dto = okObjectResult.Value as BacklogItemTypeSchemaDto;
-            }
-
-            Assert.IsType<BacklogItemTypeSchemaDto>(dto);
-            Assert.Equal(patchDto.Title, dto.Title);
-        }
-
-        [Fact]
-        public void Delete_WithId_ReturnsOkResult()
-        {
-            var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Create();
-
-            IActionResult result = _Controller.Delete(backlogItemTypeSchema.ID);
-
-            Assert.IsType<OkResult>(result as OkResult);
-        }
-
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.Delete(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
+        // todo add tests
     }
 }

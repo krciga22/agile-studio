@@ -21,14 +21,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
             return model.ID;
         }
 
-        // todo remove
-        public virtual List<BacklogItemTypeSchemaModel> GetAll()
-        {
-            List<BacklogItemTypeSchema> entities = _DBContext.BacklogItemTypeSchema.ToList();
-
-            return HydrateModels(entities);
-        }
-
         public virtual PaginationResults<BacklogItemTypeSchemaModel> GetByAccountID(
             int accountId, ServiceContext serviceContext)
         {

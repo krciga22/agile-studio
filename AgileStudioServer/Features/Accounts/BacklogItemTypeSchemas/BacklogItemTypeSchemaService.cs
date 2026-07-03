@@ -20,12 +20,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
             _ServiceContext = serviceContext;
         }
 
-        // todo remove
-        public virtual List<BacklogItemTypeSchemaModel> GetAll()
-        {
-            return _BacklogItemTypeSchemaRepository.GetAll();
-        }
-
         public virtual PaginationResults<BacklogItemTypeSchemaModel> GetByAccountID(int accountID)
         {
             return _BacklogItemTypeSchemaRepository.GetByAccountID(accountID, _ServiceContext);

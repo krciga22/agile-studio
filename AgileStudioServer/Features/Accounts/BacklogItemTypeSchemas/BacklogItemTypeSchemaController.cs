@@ -28,15 +28,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
             _Hydrator = hydrator;
         }
 
-        [HttpGet(Name = "GetBacklogItemTypeSchemas")]
-        [ProducesResponseType(typeof(List<BacklogItemTypeSchemaDto>), StatusCodes.Status200OK)]
-        public IActionResult List()
-        {
-            var models = _BacklogItemTypeSchemaService.GetAll();
-            var dtos = _Hydrator.HydrateList<BacklogItemTypeSchemaDto>(models);
-            return Ok(dtos);
-        }
-
         [HttpGet("{id}", Name = "GetBacklogItemTypeSchema")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

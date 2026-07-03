@@ -48,6 +48,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             Assert.Equal(backlogItemTypeSchema.ID, returnedBacklogItemTypeSchema.ID);
         }
 
+        // todo remove
         [Fact]
         public void GetAll_ReturnsAllBacklogItemTypeSchemas()
         {

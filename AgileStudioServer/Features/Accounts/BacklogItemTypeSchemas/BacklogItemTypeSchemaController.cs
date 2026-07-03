@@ -54,29 +54,6 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
             throw new NotImplementedException();
         }
 
-        [HttpPost(Name = "CreateBacklogItemTypeSchema")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(BacklogItemTypeSchemaDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        public CreatedResult Post(BacklogItemTypeSchemaPostDto backlogItemTypeSchemaPostDto)
-        {
-            BacklogItemTypeSchemaModel model = _Hydrator.Hydrate<BacklogItemTypeSchemaModel>(
-                backlogItemTypeSchemaPostDto
-            );
-            model = _BacklogItemTypeSchemaService.Create(model);
-
-            string backlogItemTypeSchemaUrl = "";
-            if (Url != null)
-            {
-                backlogItemTypeSchemaUrl = Url.Action(nameof(Get), new { id = model.ID }) ?? backlogItemTypeSchemaUrl;
-            }
-
-            var dto = _Hydrator.Hydrate<BacklogItemTypeSchemaDto>(model);
-
-            return Created(backlogItemTypeSchemaUrl, dto);
-        }
-
         [HttpPatch("{id}", Name = "UpdateBacklogItemTypeSchema")]
         [Consumes("application/json")]
         [Produces("application/json")]

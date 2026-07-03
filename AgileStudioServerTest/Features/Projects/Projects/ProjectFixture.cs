@@ -50,8 +50,10 @@ namespace AgileStudioServerTest.Features.Projects.Projects
         {
             account ??= _AccountFixture.Create();
             title ??= "Test Project";
-            backlogItemTypeSchema ??= _backlogItemTypeSchemaFixture.Create();
-            backlogItemLinkTypeSchema ??= _backlogItemLinkTypeSchemaFixture.Create();
+            backlogItemTypeSchema ??= _backlogItemTypeSchemaFixture.Create(
+                account: account);
+            backlogItemLinkTypeSchema ??= _backlogItemLinkTypeSchemaFixture.Create(
+                account: account);
             createdBy ??= _userFixture.Create();
 
             var project = new ProjectModel(account.ID, title, backlogItemTypeSchema.ID, backlogItemLinkTypeSchema.ID)

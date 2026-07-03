@@ -10,6 +10,8 @@ using AgileStudioServerTest.Features.Projects.Projects;
 using AgileStudioServerTest.Features.Projects.Releases;
 using AgileStudioServerTest.Features.Projects.Sprints;
 using System.ComponentModel.DataAnnotations;
+using AgileStudioServerTest.Features.Accounts.Accounts;
+using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaNodes;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 {
@@ -21,6 +23,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
 
+        private readonly BacklogItemTypeSchemaNodeFixture _BacklogItemTypeSchemaNodeFixture;
+
         private readonly WorkflowFixture _WorkflowFixture;
 
         private readonly WorkflowStateFixture _WorkflowStateFixture;
@@ -31,6 +35,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
 
         private readonly ProjectFixture _ProjectFixture;
 
+        private readonly AccountFixture _AccountFixture;
+
         private readonly IServiceProvider? _ServiceProvider;
 
         public BacklogItemValidationTest(
@@ -39,30 +45,37 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Projects.BacklogItems
             BacklogItemFixture backlogItemFixture,
             BacklogItemTypeFixture backlogItemTypeFixture,
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
+            BacklogItemTypeSchemaNodeFixture backlogItemTypeSchemaNodeFixture,
             WorkflowFixture workflowFixture,
             WorkflowStateFixture workflowStateFixture,
             SprintFixture sprintFixture,
             ReleaseFixture releaseFixture,
-            ProjectFixture projectFixture) : base(dbContext)
+            ProjectFixture projectFixture,
+            AccountFixture accountFixture) : base(dbContext)
         {
             _ServiceProvider = serviceProvider;
             _BacklogItemFixture = backlogItemFixture;
             _BacklogItemTypeFixture = backlogItemTypeFixture;
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
+            _BacklogItemTypeSchemaNodeFixture = backlogItemTypeSchemaNodeFixture;
             _WorkflowFixture = workflowFixture;
             _WorkflowStateFixture = workflowStateFixture;
             _SprintFixture = sprintFixture;
             _ReleaseFixture = releaseFixture;
             _ProjectFixture = projectFixture;
+            _AccountFixture = accountFixture;
         }
 
-        [Fact(Skip = "Temporarily skipped - Need to rework how backlog item type schemas work")]
+        [Fact]
         public void PostBacklogItem_WithBacklogItemTypeFromSameProjectsSchema_IsValid()
         {
             var project = _ProjectFixture.Create();
+            var account = _AccountFixture.Get(project.AccountID);
             var backlogItemTypeSchema = _BacklogItemTypeSchemaFixture.Get(
                         project.BacklogItemTypeSchemaID);
-            var backlogItemType = _BacklogItemTypeFixture.Create();
+            var backlogItemType = _BacklogItemTypeFixture.Create(account: account);
+            var backlogItemTypeSchemaNode = _BacklogItemTypeSchemaNodeFixture.Create(
+                schema: backlogItemTypeSchema, backlogItemType: backlogItemType);
             var workflowState = _WorkflowStateFixture.Create();
             var attribute = new ValidBacklogItemTypeForBacklogItemPostDto();
             var backlogItem = new BacklogItemPostDto("Valid Backlog Item", project.ID, backlogItemType.ID, workflowState.ID);

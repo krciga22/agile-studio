@@ -125,6 +125,11 @@ namespace AgileStudioServer.Data
                 .WithMany()
                 .HasConstraintName("fk_backlog_item_type_schema_node_schema");
 
+            modelBuilder.Entity<BacklogItemTypeSchemaNode>()
+                .HasIndex(e => new { e.SchemaID, e.BacklogItemTypeID })
+                .IsUnique()
+                .HasDatabaseName("ix_backlog_item_type_schema_node_schema_type");
+
             modelBuilder.Entity<BacklogItemTypeSchemaEdge>()
                 .HasOne(e => e.FromType)
                 .WithMany()

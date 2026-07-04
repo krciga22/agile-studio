@@ -2,6 +2,7 @@
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
 {
+    // todo validate node doesn't already exist
     public class BacklogItemTypeSchemaNodePostDto
     {
         [Required]

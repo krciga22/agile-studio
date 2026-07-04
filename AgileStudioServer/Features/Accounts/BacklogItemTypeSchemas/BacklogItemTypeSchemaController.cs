@@ -14,6 +14,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
         ResourceTypes.AccountsBacklogItemTypeSchema,
         ResourceTypes.AccountsBacklogItemTypeSchemaNode,
         "Nodes")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsBacklogItemTypeSchema,
+        ResourceTypes.AccountsBacklogItemTypeSchemaNode,
+        "Nodes")]
     [Authorize]
     public class BacklogItemTypeSchemaController : ControllerBase
     {

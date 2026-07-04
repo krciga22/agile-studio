@@ -15,7 +15,8 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemTypeSchemaNode)
+                from == typeof(BacklogItemTypeSchemaNode) || 
+                from == typeof(BacklogItemTypeSchemaNodePostDto)
             ) && to == typeof(BacklogItemTypeSchemaNodeModel);
         }
 
@@ -42,6 +43,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
                 var entity = (BacklogItemTypeSchemaNode)from;
                 model = new BacklogItemTypeSchemaNodeModel(
                     entity.SchemaID, entity.BacklogItemTypeID);
+                Hydrate(from, model, maxDepth, depth, referenceHydrator);
+            }
+            else if (from is BacklogItemTypeSchemaNodePostDto)
+            {
+                var dto = (BacklogItemTypeSchemaNodePostDto)from;
+                model = new BacklogItemTypeSchemaNodeModel(
+                    dto.BacklogItemTypeSchemaID, dto.BacklogItemTypeID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
@@ -71,6 +79,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
                 model.BacklogItemTypeID = entity.BacklogItemTypeID;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+            }
+            else if (from is BacklogItemTypeSchemaNodePostDto)
+            {
+                var dto = (BacklogItemTypeSchemaNodePostDto)from;
+
+                model.SchemaID = dto.BacklogItemTypeSchemaID;
+                model.BacklogItemTypeID = dto.BacklogItemTypeID;
             }
         }
     }

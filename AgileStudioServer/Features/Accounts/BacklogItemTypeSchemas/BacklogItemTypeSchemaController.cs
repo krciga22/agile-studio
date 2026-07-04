@@ -10,6 +10,10 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
     [MapResourceGet(ResourceTypes.AccountsBacklogItemTypeSchema)]
     [MapResourcePatch(ResourceTypes.AccountsBacklogItemTypeSchema)]
     [MapResourceDelete(ResourceTypes.AccountsBacklogItemTypeSchema)]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsBacklogItemTypeSchema,
+        ResourceTypes.AccountsBacklogItemTypeSchemaNode,
+        "Nodes")]
     [Authorize]
     public class BacklogItemTypeSchemaController : ControllerBase
     {

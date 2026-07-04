@@ -42,7 +42,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItems.Validations
 
             try
             {
-                var backlogItemTypeSchemaEntry = backlogItemTypeSchemaNodeService.Get(
+                var backlogItemTypeSchemaEntry = backlogItemTypeSchemaNodeService.GetBySchemaAndBacklogItemType(
                     project.BacklogItemTypeSchemaID, backlogItemType.ID);
             }
             catch(ModelNotFoundException)

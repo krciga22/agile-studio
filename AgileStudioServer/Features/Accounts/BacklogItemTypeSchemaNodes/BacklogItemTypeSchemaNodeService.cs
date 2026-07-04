@@ -39,7 +39,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes
         }
 
         /// <exception cref="ModelNotFoundException"></exception>
-        public virtual BacklogItemTypeSchemaNodeModel Get(int schemaId, int backlogItemTypeId)
+        public virtual BacklogItemTypeSchemaNodeModel GetBySchemaAndBacklogItemType(int schemaId, int backlogItemTypeId)
         {
             return _BacklogItemTypeSchemaNodeRepository.Get(schemaId, backlogItemTypeId) ??
                 throw ModelNotFoundException.FromCompositeKey(

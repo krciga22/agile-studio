@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Core.Hydrator;
+using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Repositories;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Data;
@@ -65,7 +66,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return HydrateModels([.. query]);
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetBySchemaId(int schemaId)
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetAllBySchemaId(int schemaId)
         {
             List<BacklogItemTypeSchemaEdge> entities = _DBContext.BacklogItemTypeSchemaEdge
                 .Where(backlogItemTypeSchemaEdge =>
@@ -78,6 +79,19 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                 .ToList();
 
             return HydrateModels(entities);
+        }
+
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetBySchemaId(int schemaId)
+        {
+            var query = _DBContext.BacklogItemTypeSchemaEdge.Where(edge => edge.SchemaID == schemaId);
+
+            query = ApplySearchToQuery(query);
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query);
+
+            return GetPaginationResultsFromQuery(query, total);
         }
 
         public virtual BacklogItemTypeSchemaEdgeModel? Get(int? fromTypeId, int toTypeId, int schemaId)
@@ -100,6 +114,28 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
         protected override DbSet<BacklogItemTypeSchemaEdge> GetDbSet()
         {
             return _DBContext.BacklogItemTypeSchemaEdge;
+        }
+
+        private IQueryable<BacklogItemTypeSchemaEdge> ApplySearchToQuery(
+            IQueryable<BacklogItemTypeSchemaEdge> query)
+        {
+            if (!string.IsNullOrWhiteSpace(_ServiceContext.SearchQuery))
+            {
+                string searchLower = _ServiceContext.SearchQuery.ToLower();
+
+                query = query.Where(backlogItemTypeSchemaEdge =>
+                    backlogItemTypeSchemaEdge.Schema.Title.ToLower().Contains(searchLower));
+
+                query = query.Where(backlogItemTypeSchemaEdge =>
+                    backlogItemTypeSchemaEdge.FromType != null && 
+                    backlogItemTypeSchemaEdge.FromType.Title.ToLower().Contains(searchLower));
+
+                query = query.Where(backlogItemTypeSchemaEdge =>
+                    backlogItemTypeSchemaEdge.ToType != null &&
+                    backlogItemTypeSchemaEdge.ToType.Title.ToLower().Contains(searchLower));
+            }
+
+            return query;
         }
 
         private IOrderedQueryable<BacklogItemTypeSchemaEdge> ApplySortToQuery(
@@ -128,7 +164,9 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                             sortKeySelector = item => item.ID.ToString();
                             break;
                         case "fromTypeID":
-                            sortKeySelector = item => item.FromTypeID.ToString();
+                            sortKeySelector = item => 
+                                item.FromTypeID != null ? 
+                                    ((int)item.FromTypeID).ToString() : string.Empty;
                             break;
                         case "toTypeID":
                             sortKeySelector = item => item.ToTypeID.ToString();
@@ -160,6 +198,18 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             }
 
             return result;
+        }
+
+        private PaginationResults<BacklogItemTypeSchemaEdgeModel> GetPaginationResultsFromQuery(
+            IQueryable<BacklogItemTypeSchemaEdge> query, int total)
+        {
+            int page = _ServiceContext.Page;
+            int pageSize = _ServiceContext.ItemsPerPage;
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            List<BacklogItemTypeSchemaEdge> entities = query.ToList();
+            List<BacklogItemTypeSchemaEdgeModel> models = HydrateModels(entities);
+            return new PaginationResults<BacklogItemTypeSchemaEdgeModel>(models, total, page, pageSize);
         }
     }
 }

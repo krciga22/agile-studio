@@ -56,7 +56,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
         {
             var edge = _BacklogItemTypeSchemaEdgeFixture.Create();
 
-            var returnedEdge = _backlogItemTypeSchemaEdgeService.Get(
+            var returnedEdge = _backlogItemTypeSchemaEdgeService.GetByFromTypeToTypeAndSchema(
                 edge.FromTypeID, edge.ToTypeID, edge.SchemaID);
 
             Assert.NotNull(returnedEdge);

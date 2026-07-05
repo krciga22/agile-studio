@@ -70,7 +70,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             }
 
             // Load all edges for the schema in one DB call to avoid N+1 queries
-            var dbEdges = _BacklogItemTypeSchemaEdgeRepository.GetBySchemaId(edge.SchemaID)
+            var dbEdges = _BacklogItemTypeSchemaEdgeRepository.GetAllBySchemaId(edge.SchemaID)
                 .Select(e => new { e.FromTypeID, e.ToTypeID })
                 .ToList();
 

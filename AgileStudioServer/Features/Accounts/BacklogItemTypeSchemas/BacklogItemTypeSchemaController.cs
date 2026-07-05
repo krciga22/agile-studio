@@ -18,6 +18,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas
         ResourceTypes.AccountsBacklogItemTypeSchema,
         ResourceTypes.AccountsBacklogItemTypeSchemaNode,
         "Nodes")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsBacklogItemTypeSchema,
+        ResourceTypes.AccountsBacklogItemTypeSchemaEdge,
+        "Edges")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsBacklogItemTypeSchema,
+        ResourceTypes.AccountsBacklogItemTypeSchemaEdge,
+        "Edges")]
     [Authorize]
     public class BacklogItemTypeSchemaController : ControllerBase
     {

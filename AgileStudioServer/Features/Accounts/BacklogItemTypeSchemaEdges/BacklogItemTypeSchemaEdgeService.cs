@@ -1,11 +1,13 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Data;
+using AgileStudioServer.Features.Resources.Resource;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
 {
-    public class BacklogItemTypeSchemaEdgeService : AbstractService
+    public class BacklogItemTypeSchemaEdgeService : AbstractModelService<BacklogItemTypeSchemaEdgeModel, int>
     {
         private readonly BacklogItemTypeSchemaEdgeRepository _BacklogItemTypeSchemaEdgeRepository;
 
@@ -23,6 +25,22 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             _DBContext = dBContext;
         }
 
+        public override PaginationResults<BacklogItemTypeSchemaEdgeModel> GetCollection()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override PaginationResults<BacklogItemTypeSchemaEdgeModel> GetSubCollection(string parentResourceType, object[] id)
+        {
+            switch (parentResourceType)
+            {
+                case ResourceTypes.AccountsBacklogItemTypeSchema:
+                    return GetBySchemaId(int.Parse(id[0].ToString()!));
+                default:
+                    throw new ArgumentException($"Unsupported parent resource type: {parentResourceType}");
+            }
+        }
+
         public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             return _BacklogItemTypeSchemaEdgeRepository.GetByFromTypeId(fromTypeId, schemaId);
@@ -33,13 +51,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return _BacklogItemTypeSchemaEdgeRepository.GetByToTypeId(toTypeId, schemaId);
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetBySchemaId(int schemaId)
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetBySchemaId(int schemaId)
         {
             return _BacklogItemTypeSchemaEdgeRepository.GetBySchemaId(schemaId);
         }
 
         /// <exception cref="ModelNotFoundException"></exception>
-        public virtual BacklogItemTypeSchemaEdgeModel Get(int id)
+        public override BacklogItemTypeSchemaEdgeModel Get(int id)
         {
             return _BacklogItemTypeSchemaEdgeRepository.Get(id) ??
                 throw new ModelNotFoundException(
@@ -47,7 +65,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
         }
 
         /// <exception cref="ModelNotFoundException"></exception>
-        public virtual BacklogItemTypeSchemaEdgeModel Get(int? fromTypeId, int toTypeId, int schemaId)
+        public virtual BacklogItemTypeSchemaEdgeModel GetByFromTypeToTypeAndSchema(int? fromTypeId, int toTypeId, int schemaId)
         {
             return _BacklogItemTypeSchemaEdgeRepository.Get(fromTypeId, toTypeId, schemaId) ??
                 throw ModelNotFoundException.FromCompositeKey(
@@ -55,8 +73,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                     [fromTypeId ?? 0, toTypeId, schemaId]);
         }
 
+        public override int GetIdentifier(BacklogItemTypeSchemaEdgeModel model)
+        {
+            return model.ID;
+        }
+
         /// <exception cref="InvalidOperationException"></exception>
-        public virtual BacklogItemTypeSchemaEdgeModel Create(BacklogItemTypeSchemaEdgeModel edge) 
+        public override BacklogItemTypeSchemaEdgeModel Create(BacklogItemTypeSchemaEdgeModel edge) 
         {
             ArgumentNullException.ThrowIfNull(edge);
 
@@ -103,12 +126,12 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             }
         }
 
-        public virtual BacklogItemTypeSchemaEdgeModel Update(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)
+        public override BacklogItemTypeSchemaEdgeModel Update(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)
         {
             return _BacklogItemTypeSchemaEdgeRepository.Update(backlogItemTypeSchemaEdge);
         }
 
-        public virtual void Delete(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)
+        public override void Delete(BacklogItemTypeSchemaEdgeModel backlogItemTypeSchemaEdge)
         {
             _BacklogItemTypeSchemaEdgeRepository.Delete(backlogItemTypeSchemaEdge);
         }

@@ -15,7 +15,8 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemTypeSchemaEdge)
+                from == typeof(BacklogItemTypeSchemaEdge) ||
+                from == typeof(BacklogItemTypeSchemaEdgePostDto)
             ) && to == typeof(BacklogItemTypeSchemaEdgeModel);
         }
 
@@ -42,6 +43,13 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                 var entity = (BacklogItemTypeSchemaEdge)from;
                 model = new BacklogItemTypeSchemaEdgeModel(
                     entity.SchemaID, entity.FromTypeID, entity.ToTypeID);
+                Hydrate(from, model, maxDepth, depth, referenceHydrator);
+            }
+            else if (from is BacklogItemTypeSchemaEdgePostDto)
+            {
+                var dto = (BacklogItemTypeSchemaEdgePostDto)from;
+                model = new BacklogItemTypeSchemaEdgeModel(
+                    dto.BacklogItemTypeSchemaID, dto.FromTypeID, dto.ToTypeID);
                 Hydrate(from, model, maxDepth, depth, referenceHydrator);
             }
 
@@ -72,6 +80,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
                 model.ToTypeID = entity.ToTypeID;
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedByID = entity.CreatedByID;
+            }
+            else if (from is BacklogItemTypeSchemaEdgePostDto)
+            {
+                var dto = (BacklogItemTypeSchemaEdgePostDto)from;
+
+                model.SchemaID = dto.BacklogItemTypeSchemaID;
+                model.FromTypeID = dto.FromTypeID;
+                model.ToTypeID = dto.ToTypeID;
             }
         }
     }

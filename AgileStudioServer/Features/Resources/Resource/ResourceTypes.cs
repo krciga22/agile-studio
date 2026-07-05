@@ -19,5 +19,7 @@
         public const string AccountsBacklogItemTypeSchema = "accounts.backlogItemTypeSchema";
 
         public const string AccountsBacklogItemTypeSchemaNode = "accounts.backlogItemTypeSchemaNode";
+
+        public const string AccountsBacklogItemTypeSchemaEdge = "accounts.backlogItemTypeSchemaEdge";
     }
 }

@@ -5,6 +5,8 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
 using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
 {
     [ApiController]
-    [Route("Projects/Projects/{id}/BacklogItemTypeSchema/")]
+    [Route("Projects/Projects/{projectId}/BacklogItemTypeSchema/")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemTypeSchemaNodeController : ControllerBase
@@ -45,18 +47,25 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaNodeForProjectDto>), StatusCodes.Status200OK)]
-        public IActionResult Get(int id, [FromQuery] GetCollectionQueryParams queryParams)
+        public IActionResult Get(int projectId, [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
             {
                 _ServiceContext.WithGetCollectionQueryParams(queryParams);
 
-                ProjectModel project = _ProjectService.Get(id);
+                ProjectModel project = _ProjectService.Get(projectId);
+
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    PermissionKeys.LIST,
+                    Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE,
+                    Scopes.PROJECT,
+                    projectId.ToString());
 
                 PaginationResults<BacklogItemTypeSchemaNodeModel> models = _BacklogItemTypeSchemaNodeService.GetBySchemaId(
                     project.BacklogItemTypeSchemaID);
 
-                // todo check permissions
                 PaginationResults<BacklogItemTypeSchemaNodeForProjectDto> dtos = new PaginationResults<BacklogItemTypeSchemaNodeForProjectDto>(
                     _Hydrator.HydrateList<BacklogItemTypeSchemaNodeForProjectDto>(models.Items), 
                     models.Total, models.Page, models.ItemsPerPage);

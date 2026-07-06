@@ -3,6 +3,8 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
 {
     [ApiController]
-    [Route("Projects/Projects/{id}/")]
+    [Route("Projects/Projects/{projectId}/")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemTypeSchemaController : ControllerBase
@@ -43,16 +45,22 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BacklogItemTypeSchemaForProjectDto), StatusCodes.Status200OK)]
-        public IActionResult Get(int id)
+        public IActionResult Get(int projectId)
         {
             try
             {
-                ProjectModel project = _ProjectService.Get(id);
+                ProjectModel project = _ProjectService.Get(projectId);
+
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    PermissionKeys.READ,
+                    Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA,
+                    Scopes.PROJECT,
+                    projectId.ToString());
 
                 BacklogItemTypeSchemaModel backlogItemTypeSchema = _BacklogItemTypeSchemaService.Get(
                     project.BacklogItemTypeSchemaID);
-
-                // todo check permissions
 
                 var dto = _Hydrator.Hydrate<BacklogItemTypeSchemaForProjectDto>(backlogItemTypeSchema);
                 return Ok(dto);

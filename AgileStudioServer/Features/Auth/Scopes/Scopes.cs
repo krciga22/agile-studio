@@ -10,6 +10,9 @@
         public const string ACCOUNT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE = "account.backlogItemTypeSchemaEdge";
         public const string PROJECT = "project";
         public const string PROJECT_BACKLOG_ITEM = "project.backlogItem";
+        public const string PROJECT_BACKLOG_ITEM_TYPE_SCHEMA = "project.backlogItemTypeSchema";
+        public const string PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE = "project.backlogItemTypeSchemaNode";
+        public const string PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE = "project.backlogItemTypeSchemaEdge";
         public const string PROJECT_MEMBER = "project.member";
         public const string PROJECT_MEMBER_ROLE = "project.memberRole";
         public const string PROJECT_RELEASE = "project.release";

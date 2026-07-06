@@ -5,6 +5,8 @@ using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
 using AgileStudioServer.Features.Auth.Permissions;
+using AgileStudioServer.Features.Auth.RoleGrants;
+using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,10 +55,17 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 
                 ProjectModel project = _ProjectService.Get(projectId);
 
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER, 
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    PermissionKeys.LIST,
+                    Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE,
+                    Scopes.PROJECT,
+                    projectId.ToString());
+
                 PaginationResults<BacklogItemTypeSchemaEdgeModel> models = _BacklogItemTypeSchemaEdgeService.GetByFromTypeId(
                     null, project.BacklogItemTypeSchemaID);
 
-                // todo check permissions
                 PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto>(
                     _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeForProjectDto>(models.Items), 
                     models.Total, models.Page, models.ItemsPerPage);

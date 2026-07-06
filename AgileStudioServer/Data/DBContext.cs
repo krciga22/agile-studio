@@ -593,6 +593,36 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
@@ -715,6 +745,36 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
@@ -810,6 +870,36 @@ namespace AgileStudioServer.Data
                 new RolePermission(roleKey, PermissionKeys.DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
                 new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_RELEASE)
@@ -909,6 +999,36 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_RELEASE)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
@@ -1004,6 +1124,36 @@ namespace AgileStudioServer.Data
                 new RolePermission(roleKey, PermissionKeys.DELETE, Scopes.PROJECT_BACKLOG_ITEM)
                 {
                     CreatedOn = new DateTime(2024, 4, 3, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE)
+                {
+                    CreatedOn = new DateTime(2026, 7, 6, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
                 new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_RELEASE)

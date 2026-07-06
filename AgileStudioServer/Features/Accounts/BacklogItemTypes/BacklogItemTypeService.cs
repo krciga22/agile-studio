@@ -58,7 +58,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypes
 
         public List<BacklogItemTypeModel> GetForSchemaAndFromBacklogItemType(int schemaId, int? fromBacklogItemTypeId = null)
         {
-            var edges = _BacklogItemTypeSchemaEdgeRepository.GetByFromTypeId(fromBacklogItemTypeId, schemaId);
+            var edges = _BacklogItemTypeSchemaEdgeRepository.GetAllByFromTypeId(fromBacklogItemTypeId, schemaId);
 
             List<BacklogItemTypeModel> backlogItemTypes = [];
             Dictionary<int, bool> backlogItemTypeIds = [];

@@ -81,7 +81,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             var returnedEdges = _backlogItemTypeSchemaEdgeService.GetByFromTypeId(
                 storyType.ID, schema.ID);
 
-            Assert.Collection(returnedEdges,
+            Assert.Collection(returnedEdges.Items,
                 edge => Assert.Equal(storyTaskEdge.ID, edge.ID),
                 edge => Assert.Equal(storyTestEdge.ID, edge.ID));
         }
@@ -107,7 +107,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             var returnedEdges = _backlogItemTypeSchemaEdgeService.GetByFromTypeId(
                 null, schema.ID);
 
-            Assert.Collection(returnedEdges,
+            Assert.Collection(returnedEdges.Items,
                 edge => Assert.Equal(storyEdge.ID, edge.ID),
                 edge => Assert.Equal(defectEdge.ID, edge.ID));
         }
@@ -130,7 +130,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemTy
             var returnedEdges = _backlogItemTypeSchemaEdgeService.GetByToTypeId(
                 taskType.ID, schema.ID);
 
-            Assert.Collection(returnedEdges,
+            Assert.Collection(returnedEdges.Items,
                 edge => Assert.Equal(storyTaskEdge.ID, edge.ID),
                 edge => Assert.Equal(defectTaskEdge.ID, edge.ID));
         }

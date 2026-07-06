@@ -26,7 +26,7 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return model.ID;
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetAllByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
                 backlogItemTypeSchemaEdge.FromTypeID == fromTypeId
@@ -46,7 +46,31 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return HydrateModels([.. query]);
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByToTypeId(int toTypeId, int schemaId = 0)
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
+        {
+            var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
+                backlogItemTypeSchemaEdge.FromTypeID == fromTypeId
+            );
+
+            if (schemaId > 0) {
+                query.Where(backlogItemTypeSchemaEdge => backlogItemTypeSchemaEdge.SchemaID == schemaId);
+            }
+
+            query = query.Include(b => b.FromType)
+                .Include(b => b.ToType)
+                .Include(b => b.Schema)
+                .Include(b => b.CreatedBy);
+
+            query = ApplySearchToQuery(query);
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query);
+
+            return GetPaginationResultsFromQuery(query, total);
+        }
+
+        public virtual List<BacklogItemTypeSchemaEdgeModel> GetAllByToTypeId(int toTypeId, int schemaId = 0)
         {
             var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
                 backlogItemTypeSchemaEdge.ToType.ID == toTypeId
@@ -64,6 +88,30 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             query = ApplySortToQuery(query);
 
             return HydrateModels([.. query]);
+        }
+
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetByToTypeId(int toTypeId, int schemaId = 0)
+        {
+            var query = _DBContext.BacklogItemTypeSchemaEdge.Where(backlogItemTypeSchemaEdge =>
+                backlogItemTypeSchemaEdge.ToType.ID == toTypeId
+            );
+
+            if (schemaId > 0) {
+                query.Where(backlogItemTypeSchemaEdge => backlogItemTypeSchemaEdge.SchemaID == schemaId);
+            }
+
+            query = query.Include(b => b.FromType)
+                .Include(b => b.ToType)
+                .Include(b => b.Schema)
+                .Include(b => b.CreatedBy);
+
+            query = ApplySearchToQuery(query);
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query);
+
+            return GetPaginationResultsFromQuery(query, total);
         }
 
         public virtual List<BacklogItemTypeSchemaEdgeModel> GetAllBySchemaId(int schemaId)
@@ -123,16 +171,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             {
                 string searchLower = _ServiceContext.SearchQuery.ToLower();
 
-                query = query.Where(backlogItemTypeSchemaEdge =>
-                    backlogItemTypeSchemaEdge.Schema.Title.ToLower().Contains(searchLower));
-
-                query = query.Where(backlogItemTypeSchemaEdge =>
-                    backlogItemTypeSchemaEdge.FromType != null && 
-                    backlogItemTypeSchemaEdge.FromType.Title.ToLower().Contains(searchLower));
-
-                query = query.Where(backlogItemTypeSchemaEdge =>
-                    backlogItemTypeSchemaEdge.ToType != null &&
-                    backlogItemTypeSchemaEdge.ToType.Title.ToLower().Contains(searchLower));
+                query = query.Where(backlogItemTypeSchemaEdge => (
+                    backlogItemTypeSchemaEdge.Schema.Title.ToLower().Contains(searchLower)
+                ) || (
+                    backlogItemTypeSchemaEdge.FromType != null &&
+                    backlogItemTypeSchemaEdge.FromType.Title.ToLower().Contains(searchLower)
+                ) || (
+                    backlogItemTypeSchemaEdge.ToType.Title.ToLower().Contains(searchLower)
+                ));
             }
 
             return query;

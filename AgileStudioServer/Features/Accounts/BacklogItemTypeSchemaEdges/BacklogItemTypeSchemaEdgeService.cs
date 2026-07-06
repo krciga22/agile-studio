@@ -41,12 +41,12 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             }
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetByFromTypeId(int? fromTypeId, int schemaId = 0)
         {
             return _BacklogItemTypeSchemaEdgeRepository.GetByFromTypeId(fromTypeId, schemaId);
         }
 
-        public virtual List<BacklogItemTypeSchemaEdgeModel> GetByToTypeId(int toTypeId, int schemaId = 0)
+        public virtual PaginationResults<BacklogItemTypeSchemaEdgeModel> GetByToTypeId(int toTypeId, int schemaId = 0)
         {
             return _BacklogItemTypeSchemaEdgeRepository.GetByToTypeId(toTypeId, schemaId);
         }

@@ -10,6 +10,7 @@ import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getAccountTitle} from "../../services/util/account-utils.tsx";
+import BacklogItemTypeSchemasDataTable from "../../data-tables/BacklogItemTypeSchemasDataTable.tsx";
 
 type BacklogItemTypeSchemasPageProps = {
   accountId: number
@@ -63,7 +64,8 @@ function BacklogItemTypeSchemasPage(props: BacklogItemTypeSchemasPageProps) {
               </Breadcrumbs>
 
               <h1>Backlog Item Type Schemas</h1>
-              <p>{getAccountTitle(account)}</p>
+
+              <BacklogItemTypeSchemasDataTable accountId={accountId}></BacklogItemTypeSchemasDataTable>
           </div>
       }
     </div>

@@ -31,14 +31,13 @@ function ProjectsDataTable() {
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const _fetchData = useCallback(async (pageToFetch: number = 1) => {
-    const fetchedData = await fetcher.fetchData(searchQuery, filters, sort, pageToFetch);
-    setData(fetchedData);
+    const fetchedData = await fetcher.fetchPaginatedData(searchQuery, filters, sort, pageToFetch);
+    setData(fetchedData.items);
 
-    // TODO: this should come from the API, but for now we can just set it to a fixed value
     setPaginationDetails({
-      pageSize: 10,
-      currentPage: pageToFetch,
-      totalPages: 5
+      pageSize: fetchedData.items.length,
+      currentPage: fetchedData.page,
+      totalPages: fetchedData.totalPages
     });
   }, [fetcher, searchQuery, filters, sort]);
 

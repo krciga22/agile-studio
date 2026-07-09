@@ -22,6 +22,7 @@ import BacklogItemLinkTypesPage from "./pages/account/BacklogItemLinkTypesPage.t
 import BacklogItemLinkTypeSchemasPage from "./pages/account/BacklogItemLinkTypeSchemasPage.tsx";
 import WorkflowsPage from "./pages/account/WorkflowsPage.tsx";
 import WorkflowStatesPage from "./pages/account/WorkflowStatesPage.tsx";
+import AccountsPage from "./pages/AccountsPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -80,6 +81,9 @@ function PageRouter() {
   }
   else if(pathname === "/projects"){
     page = <ProjectsPage></ProjectsPage>
+  }
+  else if(pathname === "/accounts"){
+    page = <AccountsPage></AccountsPage>
   }
   else if(pathname.match(/\/accounts\/\d+/)?.length === 1) {
     const accountId = parseInt(pathSegments[1]);

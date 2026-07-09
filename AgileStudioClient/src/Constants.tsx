@@ -14,6 +14,8 @@ const Constants = {
   DEFAULT_TOAST_PROPS: {
     position: "bottom-left"
   } as ToastOptions,
+  DATE_FORMAT: 'yyyy-MM-dd',
+  DATE_TIME_FORMAT: 'yyyy-MM-dd HH:mm:ss',
 };
 
 export default Constants;

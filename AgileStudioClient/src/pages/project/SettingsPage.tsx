@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
 import type {BacklogItemLinkTypeSchemaDto} from "../../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
-import {getBacklogItemTypeSchemas} from "../../services/api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
+import {getBacklogItemTypeSchemas} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import {getBacklogItemLinkTypeSchemas} from "../../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../../Constants.tsx";
 import axios, {type AxiosResponse} from "axios";
@@ -22,6 +22,7 @@ import ConfirmModal from '../../modals/ConfirmModal';
 import { goToPage } from '../../PageRouterUtils.tsx';
 import {toast} from 'react-toastify';
 import {deleteProject, getProject, updateProject} from "../../services/api/endpoints/projects/Projects.tsx";
+import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
 
 type SettingsPageProps = {
   projectId: number
@@ -77,25 +78,26 @@ function SettingsPage(props: SettingsPageProps) {
 
   const _refresh = async () => {
     try{
+
+      const projectResponse = await getProject(projectId);
+
+      const project:ProjectDto = projectResponse.data;
+
       const promises = [
-        getProject(projectId),
-        getBacklogItemTypeSchemas(),
+        getBacklogItemTypeSchemas(project.account.id),
         getBacklogItemLinkTypeSchemas()
       ];
 
       const responses = await Promise.all(promises);
 
-      const projectResponse =
-        responses[0] as AxiosResponse<ProjectDto>;
-
       const backlogItemTypeSchemasResponse =
-        responses[1] as AxiosResponse<BacklogItemTypeSchemaDto[]>;
+        responses[0] as AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaDto>>;
 
       const backlogItemLinkTypeSchemasResponse =
-        responses[2] as AxiosResponse<BacklogItemLinkTypeSchemaDto[]>;
+        responses[1] as AxiosResponse<BacklogItemLinkTypeSchemaDto[]>;
 
       setProject(projectResponse.data);
-      setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data);
+      setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data.items);
       setBacklogItemLinkTypeSchemas(backlogItemLinkTypeSchemasResponse.data);
     }
     catch(e){

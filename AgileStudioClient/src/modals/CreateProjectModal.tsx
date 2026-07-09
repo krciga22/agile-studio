@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/ProjectDtos.tsx';
 import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
-import {getBacklogItemTypeSchemas} from "../services/api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
+import {getBacklogItemTypeSchemas} from "../services/api/endpoints/accounts/Accounts.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
@@ -73,12 +73,12 @@ export default function CreateProjectModal({ isOpen, onClose, onCreated }: Props
       backlogItemLinkTypeSchemasResponse,
       accountsResponse
     ] = await Promise.all([
-      getBacklogItemTypeSchemas(),
+      getBacklogItemTypeSchemas(parseInt(accountId)),
       getBacklogItemLinkTypeSchemas(),
       getAccounts()
     ]);
 
-    setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data ?? []);
+    setBacklogItemTypeSchemas(backlogItemTypeSchemasResponse.data.items ?? []);
     setBacklogItemLinkTypeSchemas(backlogItemLinkTypeSchemasResponse.data ?? []);
     setAccounts(accountsResponse.data?.items ?? []);
 

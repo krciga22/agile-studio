@@ -12,6 +12,8 @@ import Sort from "../components/data-table/Sort";
 import {baseUrl as accountsEndpoint} from "../services/api/endpoints/accounts/Accounts.tsx";
 import {getAccountTitle} from "../services/util/account-utils.tsx";
 import DateTimeText from "../components/date/DateTimeText.tsx";
+import {getAccountHomePagePath} from "../PageRoutes.tsx";
+import {linkToPage} from "../PageRouterUtils.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -90,7 +92,14 @@ function AccountsDataTable() {
       key: 'accountType',
       header: 'Account',
       width: '60%',
-      render: (account: AccountDto) => getAccountTitle(account)
+      render: (account: AccountDto) => {
+        const accountHomePath = getAccountHomePagePath(account.id);
+        return (
+          <a href={accountHomePath} onClick={linkToPage}>
+            {getAccountTitle(account)}
+          </a>
+        );
+      }
     },
     {
       key: 'createdOn',

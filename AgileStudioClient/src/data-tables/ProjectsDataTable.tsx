@@ -12,6 +12,8 @@ import Sort from "../components/data-table/Sort";
 import Filters, {type FilterValue} from "../components/data-table/filters/Filters";
 import MultiSelectFilter from "../components/data-table/filters/MultiSelectFilter.tsx";
 import {baseUrl as projectsEndpoint} from "../services/api/endpoints/projects/Projects.tsx";
+import {getProjectHomePagePath} from "../PageRoutes.tsx";
+import {linkToPage} from "../PageRouterUtils.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -112,10 +114,17 @@ function ProjectsDataTable() {
     },
     {
       key: 'title',
-      field: 'title',
       header: 'Title',
       width: '90%',
-      sortable: true
+      sortable: true,
+      render: (project: ProjectDto) => {
+        const projectHomePath = getProjectHomePagePath(project.id);
+        return (
+          <a href={projectHomePath} onClick={linkToPage}>
+            {project.title}
+          </a>
+        );
+      }
     }
   ];
 

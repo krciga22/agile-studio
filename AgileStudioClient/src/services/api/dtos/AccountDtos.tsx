@@ -7,3 +7,7 @@ export type AccountDto = {
   createdOn: string,
   createdBy: UserSummaryDto,
 };
+
+export type AccountSummaryDto = {
+  id: number,
+};

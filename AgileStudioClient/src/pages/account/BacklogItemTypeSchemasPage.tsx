@@ -10,7 +10,7 @@ import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getAccountTitle} from "../../services/util/account-utils.tsx";
-import BacklogItemTypeSchemasDataTable from "../../data-tables/BacklogItemTypeSchemasDataTable.tsx";
+import BacklogItemTypeSchemasDataTable from "../../data-tables/account/BacklogItemTypeSchemasDataTable.tsx";
 
 type BacklogItemTypeSchemasPageProps = {
   accountId: number

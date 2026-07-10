@@ -1,41 +1,37 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
-import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
-import DataTable, {type DataTableColumn} from "../components/data-table/DataTable";
-import {DataTableContext} from "../components/data-table/DataTableContext.tsx";
-import {DataTableFetcher} from "../components/data-table/DataTableFetcher.tsx";
-import CurrentUserContext from "../services/CurrentUser.tsx";
-import {debounce} from "../Utils.tsx";
-import Constants from "../Constants.tsx";
-import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
-import Search from "../components/data-table/Search";
-import Sort from "../components/data-table/Sort";
-import DateTimeText from "../components/date/DateTimeText.tsx";
-import {baseUrl as accountsEndpoint} from "../services/api/endpoints/accounts/Accounts.tsx";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import CreateBacklogItemTypeSchemaModal from "../modals/account/CreateBacklogItemTypeSchemaModal.tsx";
+import type {BacklogItemTypeDto} from "../../services/api/dtos/BacklogItemTypeDtos.tsx";
+import DataTable, {type DataTableColumn} from "../../components/data-table/DataTable.tsx";
+import {DataTableContext} from "../../components/data-table/DataTableContext.tsx";
+import {DataTableFetcher} from "../../components/data-table/DataTableFetcher.tsx";
+import CurrentUserContext from "../../services/CurrentUser.tsx";
+import {debounce} from "../../Utils.tsx";
+import Constants from "../../Constants.tsx";
+import Pagination, {type PaginationDetails} from "../../components/data-table/Pagination.tsx";
+import Search from "../../components/data-table/Search.tsx";
+import Sort from "../../components/data-table/Sort.tsx";
+import DateTimeText from "../../components/date/DateTimeText.tsx";
+import {baseUrl as accountsEndpoint} from "../../services/api/endpoints/accounts/Accounts.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
 
-type BacklogItemTypeSchemasDataTableProps = {
+type BacklogItemTypesDataTableProps = {
   accountId: number;
 }
 
-function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableProps) {
+function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
   const {accountId} = props;
   const [initializationStatus, setInitializationStatus] = useState(INIT_STATUS_NOT_INITIALIZED);
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
-  const [data, setData] = useState<BacklogItemTypeSchemaDto[]>([]);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [data, setData] = useState<BacklogItemTypeDto[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
   const [paginationDetails, setPaginationDetails] = useState<PaginationDetails|null>(null);
   const endpoint = useMemo(() => {
-    return `${accountsEndpoint}/${accountId}/BacklogItemTypeSchemas`;
+    return `${accountsEndpoint}/${accountId}/BacklogItemTypes`;
   }, [accountId]);
-  const fetcher = useMemo(() => new DataTableFetcher<BacklogItemTypeSchemaDto>(endpoint), [endpoint]);
+  const fetcher = useMemo(() => new DataTableFetcher<BacklogItemTypeDto>(endpoint), [endpoint]);
   const currentUser = useContext(CurrentUserContext);
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -93,28 +89,40 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
     setPage(1);
   }, [accountId]);
 
-  const columns: DataTableColumn<BacklogItemTypeSchemaDto>[] = [
+  const columns: DataTableColumn<BacklogItemTypeDto>[] = [
     {
       key: 'id',
       field: 'id',
       header: 'ID',
-      width: '10%',
+      width: '8%',
       sortable: true
     },
     {
       key: 'title',
       field: 'title',
       header: 'Title',
-      width: '65%',
+      width: '28%',
       sortable: true
+    },
+    {
+      key: 'account',
+      header: 'Account',
+      width: '10%',
+      render: (item: BacklogItemTypeDto) => item.account.id
+    },
+    {
+      key: 'workflow',
+      header: 'Workflow',
+      width: '24%',
+      render: (item: BacklogItemTypeDto) => item.workflow.title
     },
     {
       key: 'createdOn',
       field: 'createdOn',
       header: 'Created On',
-      width: '25%',
+      width: '20%',
       sortable: true,
-      render: (item: BacklogItemTypeSchemaDto) => {
+      render: (item: BacklogItemTypeDto) => {
         return <DateTimeText date={item.createdOn} />
       }
     }
@@ -132,7 +140,7 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
   }
 
   return (
-    <div className={"DataTable BacklogItemTypeSchemasDataTable"}>
+    <div className={"DataTable BacklogItemTypesDataTable"}>
       <DataTableContext.Provider value={{
         data: data,
         searchQuery: searchQuery,
@@ -140,34 +148,13 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
         sort: sort,
         paginationDetails: paginationDetails
       }}>
-        <div className={"mb-3 d-flex justify-content-between align-items-center"}>
-          <div className={"d-flex align-items-start gap-2"}>
-            <Search setSearchQuery={doSearch}></Search>
-            <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
-          </div>
-          <div className={"d-flex align-items-start gap-2"}>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setIsCreateModalOpen(true)}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
+        <div className={"mb-3 d-flex align-items-start gap-2"}>
+          <Search setSearchQuery={doSearch}></Search>
+          <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
         </div>
 
-        <CreateBacklogItemTypeSchemaModal
-          isOpen={isCreateModalOpen}
-          accountID={accountId}
-          onClose={() => setIsCreateModalOpen(false)}
-          onCreated={() => {
-            setIsCreateModalOpen(false);
-            fetchData(page);
-          }}
-        />
-
         <div className={"mb-3"}>
-          <DataTable<BacklogItemTypeSchemaDto>
+          <DataTable<BacklogItemTypeDto>
             columns={columns}
             isLoading={isLoading}>
           </DataTable>
@@ -181,4 +168,4 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
   )
 }
 
-export default BacklogItemTypeSchemasDataTable
+export default BacklogItemTypesDataTable

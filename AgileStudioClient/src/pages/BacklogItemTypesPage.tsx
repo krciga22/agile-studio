@@ -1,7 +1,7 @@
 import './BacklogItemTypesPage.css'
 import {useEffect} from "react";
 import Utils from "../Utils.tsx";
-import BacklogItemTypesDataTable from "../data-tables/BacklogItemTypesDataTable.tsx";
+import BacklogItemTypesDataTable from "../data-tables/account/BacklogItemTypesDataTable.tsx";
 
 function BacklogItemTypesPage() {
   useEffect(() => {

@@ -13,7 +13,7 @@ import DateTimeText from "../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../services/api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import CreateBacklogItemTypeSchemaModal from "../modals/CreateBacklogItemTypeSchemaModal.tsx";
+import CreateBacklogItemTypeSchemaModal from "../modals/account/CreateBacklogItemTypeSchemaModal.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';

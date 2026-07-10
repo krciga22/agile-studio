@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from '../services/api/dtos/BacklogItemTypeSchemaDtos.tsx';
-import {createBacklogItemTypeSchema} from '../services/api/endpoints/accounts/Accounts.tsx';
+import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from '../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx';
+import {createBacklogItemTypeSchema} from '../../services/api/endpoints/accounts/Accounts.tsx';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import Constants from '../Constants.tsx';
-import type {ProblemDetailsErrorMap} from '../services/api/dtos/ProblemDetailsDtos.tsx';
+import Constants from '../../Constants.tsx';
+import type {ProblemDetailsErrorMap} from '../../services/api/dtos/ProblemDetailsDtos.tsx';
 import axios from 'axios';
-import {getProblemDetailsErrorMapFromResponse} from '../services/api/Api.tsx';
-import FormError from '../components/form/FormError.tsx';
-import {debounce} from '../Utils.tsx';
-import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../services/util/error.tsx';
+import {getProblemDetailsErrorMapFromResponse} from '../../services/api/Api.tsx';
+import FormError from '../../components/form/FormError.tsx';
+import {debounce} from '../../Utils.tsx';
+import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../../services/util/error.tsx';
 import {toast} from 'react-toastify';
 
 type Props = {

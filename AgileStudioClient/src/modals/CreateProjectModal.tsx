@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/projects/ProjectDtos.tsx';
-import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
-import {getBacklogItemTypeSchemas} from "../services/api/endpoints/accounts/Accounts.tsx";
+import type {ProjectDto, ProjectPostDto} from '../api/dtos/projects/ProjectDtos.tsx';
+import type {BacklogItemTypeSchemaDto} from "../api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
+import {getBacklogItemTypeSchemas} from "../api/endpoints/accounts/Accounts.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
-import {getBacklogItemLinkTypeSchemas} from "../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
+import type {BacklogItemLinkTypeSchemaDto} from "../api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
+import {getBacklogItemLinkTypeSchemas} from "../api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../Constants.tsx";
 import type {
   ProblemDetailsErrorMap
-} from "../services/api/dtos/ProblemDetailsDtos.tsx";
+} from "../api/dtos/ProblemDetailsDtos.tsx";
 import axios from "axios";
 import {
   getProblemDetailsErrorMapFromResponse
-} from "../services/api/Api.tsx";
+} from "../api/Api.tsx";
 import FormError from "../components/form/FormError.tsx";
 import {debounce} from "../Utils.tsx";
 import {
@@ -22,9 +22,9 @@ import {
   getErrorMessageForAxiosError
 } from "../util/error.tsx";
 import {toast} from "react-toastify";
-import {createProject} from "../services/api/endpoints/projects/Projects.tsx";
-import type {AccountDto} from "../services/api/dtos/accounts/AccountDtos.tsx";
-import { getAccounts } from "../services/api/endpoints/accounts/Accounts.tsx";
+import {createProject} from "../api/endpoints/projects/Projects.tsx";
+import type {AccountDto} from "../api/dtos/accounts/AccountDtos.tsx";
+import { getAccounts } from "../api/endpoints/accounts/Accounts.tsx";
 import {getAccountTitle} from "../util/account-utils.tsx";
 
 type Props = {

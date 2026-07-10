@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState, useCallback} from "react";
-import type {ProjectDto} from "../services/api/dtos/projects/ProjectDtos.tsx";
+import type {ProjectDto} from "../api/dtos/projects/ProjectDtos.tsx";
 import DataTable, {type DataTableColumn} from "../components/data-table/DataTable";
 import {DataTableContext} from "../components/data-table/DataTableContext.tsx";
 import {DataTableFetcher} from "../components/data-table/DataTableFetcher.tsx";
@@ -11,7 +11,7 @@ import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
 import Filters, {type FilterValue} from "../components/data-table/filters/Filters";
 import MultiSelectFilter from "../components/data-table/filters/MultiSelectFilter.tsx";
-import {baseUrl as projectsEndpoint} from "../services/api/endpoints/projects/Projects.tsx";
+import {baseUrl as projectsEndpoint} from "../api/endpoints/projects/Projects.tsx";
 import {getProjectHomePagePath} from "../PageRoutes.tsx";
 import {linkToPage} from "../PageRouterUtils.tsx";
 

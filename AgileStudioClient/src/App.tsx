@@ -1,11 +1,11 @@
 import './App.css'
 import PageRouter from "./PageRouter.tsx";
-import type {CurrentUserDto} from "./services/api/dtos/auth/CurrentUserDto.tsx";
+import type {CurrentUserDto} from "./api/dtos/auth/CurrentUserDto.tsx";
 import {useState} from "react";
 import type {AxiosError} from "axios";
 import {useAuth0} from "@auth0/auth0-react";
-import {getCurrentUser} from "./services/api/endpoints/auth.tsx";
-import {initApiAuthBearerToken} from "./services/api/Api.tsx";
+import {getCurrentUser} from "./api/endpoints/auth.tsx";
+import {initApiAuthBearerToken} from "./api/Api.tsx";
 import CurrentUserContext from "./services/CurrentUser.tsx";
 
 function App() {

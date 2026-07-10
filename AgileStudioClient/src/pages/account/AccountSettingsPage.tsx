@@ -1,22 +1,22 @@
 import './AccountSettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
-import type {AccountDto} from "../../services/api/dtos/accounts/AccountDtos.tsx";
+import type {AccountDto} from "../../api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import Constants from "../../Constants.tsx";
 import {type AxiosResponse} from "axios";
-import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
+import type {ProblemDetailsErrorMap} from "../../api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
-import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
-import type {AccountTypeDto} from "../../services/api/dtos/accounts/AccountTypeDtos.tsx";
-import {getAccountTypes} from "../../services/api/endpoints/accounts/AccountTypes.tsx";
-import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
+import {getAccount} from "../../api/endpoints/accounts/Accounts.tsx";
+import type {AccountTypeDto} from "../../api/dtos/accounts/AccountTypeDtos.tsx";
+import {getAccountTypes} from "../../api/endpoints/accounts/AccountTypes.tsx";
+import type {PaginatedResultsDto} from "../../api/dtos/PaginatedResultsDto.tsx";
 import {getAccountTitle} from "../../util/account-utils.tsx";
 
 type SettingsPageProps = {

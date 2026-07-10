@@ -1,19 +1,19 @@
 import './SettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
-import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/projects/ProjectDtos.tsx";
+import type {ProjectDto, ProjectPatchDto} from "../../api/dtos/projects/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
-import type {BacklogItemLinkTypeSchemaDto} from "../../services/api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
-import {getBacklogItemTypeSchemas} from "../../services/api/endpoints/accounts/Accounts.tsx";
-import {getBacklogItemLinkTypeSchemas} from "../../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
+import type {BacklogItemTypeSchemaDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemLinkTypeSchemaDto} from "../../api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
+import {getBacklogItemTypeSchemas} from "../../api/endpoints/accounts/Accounts.tsx";
+import {getBacklogItemLinkTypeSchemas} from "../../api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../../Constants.tsx";
 import axios, {type AxiosResponse} from "axios";
 import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from "../../util/error.tsx";
-import {getProblemDetailsErrorMapFromResponse} from "../../services/api/Api.tsx";
-import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
+import {getProblemDetailsErrorMapFromResponse} from "../../api/Api.tsx";
+import type {ProblemDetailsErrorMap} from "../../api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
 import {linkToPage} from "../../PageRouterUtils.tsx";
@@ -21,8 +21,8 @@ import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
 import { goToPage } from '../../PageRouterUtils.tsx';
 import {toast} from 'react-toastify';
-import {deleteProject, getProject, updateProject} from "../../services/api/endpoints/projects/Projects.tsx";
-import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
+import {deleteProject, getProject, updateProject} from "../../api/endpoints/projects/Projects.tsx";
+import type {PaginatedResultsDto} from "../../api/dtos/PaginatedResultsDto.tsx";
 
 type SettingsPageProps = {
   projectId: number

@@ -1,7 +1,7 @@
 import ENV from "../config/ENV.tsx";
 import {type Auth0ContextInterface} from "@auth0/auth0-react/src/auth0-context.tsx";
 import {User} from "@auth0/auth0-spa-js/src/global.ts";
-import {setApiAuthBearerToken} from "./api/Api.tsx";
+import {setApiAuthBearerToken} from "../api/Api.tsx";
 
 const AuthService = {
   loginWithPopup: async (auth0: Auth0ContextInterface<User>): Promise<string|null> => {

@@ -1,5 +1,5 @@
 import './ProjectSubMenu.css'
-import type {ProjectDto} from "../../../services/api/dtos/projects/ProjectDtos.tsx";
+import type {ProjectDto} from "../../../api/dtos/projects/ProjectDtos.tsx";
 import {linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {useContext} from "react";

@@ -1,7 +1,7 @@
 import './DataTable.css'
-import api from "../../services/api/Api.tsx";
+import api from "../../api/Api.tsx";
 import type {FilterValue} from "./filters/Filters.tsx";
-import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
+import type {PaginatedResultsDto} from "../../api/dtos/PaginatedResultsDto.tsx";
 
 export interface IDataTableFetcher<T> {
   fetchData (searchQuery: string, filters: Record<string, unknown>, sort: string[], page: number): Promise<T[]>;

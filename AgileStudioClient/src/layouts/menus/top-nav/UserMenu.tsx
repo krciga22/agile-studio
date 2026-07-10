@@ -4,7 +4,7 @@ import { faUser, faWarning, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import {useContext} from "react";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import {useAuth0} from "@auth0/auth0-react";
-import {setApiAuthBearerToken} from "../../../services/api/Api.tsx";
+import {setApiAuthBearerToken} from "../../../api/Api.tsx";
 import {goToPage} from "../../../PageRouterUtils.tsx";
 import AuthService from "../../../services/AuthService.tsx";
 

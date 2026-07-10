@@ -1,11 +1,11 @@
 import './BacklogItemTypesPage.css'
 import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
-import type {AccountDto} from "../../services/api/dtos/accounts/AccountDtos.tsx";
+import type {AccountDto} from "../../api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
+import {getAccount} from "../../api/endpoints/accounts/Accounts.tsx";
 import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.tsx";
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";

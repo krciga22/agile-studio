@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
-import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemTypeSchemaDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
 import DataTable, {type DataTableColumn} from "../../components/data-table/DataTable.tsx";
 import {DataTableContext} from "../../components/data-table/DataTableContext.tsx";
 import {DataTableFetcher} from "../../components/data-table/DataTableFetcher.tsx";
@@ -10,7 +10,7 @@ import Pagination, {type PaginationDetails} from "../../components/data-table/Pa
 import Search from "../../components/data-table/Search.tsx";
 import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
-import {baseUrl as accountsEndpoint} from "../../services/api/endpoints/accounts/Accounts.tsx";
+import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaModal from "../../modals/account/CreateBacklogItemTypeSchemaModal.tsx";

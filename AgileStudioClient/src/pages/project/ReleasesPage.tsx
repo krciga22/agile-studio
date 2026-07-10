@@ -1,11 +1,11 @@
 import './ReleasesPage.css'
 import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
-import type {ProjectDto} from "../../services/api/dtos/projects/ProjectDtos.tsx";
+import type {ProjectDto} from "../../api/dtos/projects/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {getProject} from "../../services/api/endpoints/projects/Projects.tsx";
+import {getProject} from "../../api/endpoints/projects/Projects.tsx";
 
 type ReleasesPageProps = {
   projectId: number

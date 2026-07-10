@@ -4,7 +4,7 @@ import {
   isProblemDetailsErrorMap,
   type ProblemDetailsError,
   type ProblemDetailsErrorMap
-} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
+} from "../../api/dtos/ProblemDetailsDtos.tsx";
 
 type FormErrorProps = {
   error: ProblemDetailsErrorMap|ProblemDetailsError|string|null;

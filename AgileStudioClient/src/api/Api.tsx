@@ -1,5 +1,5 @@
 import axios, {type AxiosResponse} from "axios";
-import ENV from "../../config/ENV.tsx";
+import ENV from "../config/ENV.tsx";
 import type {Auth0ContextInterface} from "@auth0/auth0-react";
 import {
   isProblemDetailsDto,

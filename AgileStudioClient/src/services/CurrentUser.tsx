@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import type {CurrentUserDto} from "./api/dtos/auth/CurrentUserDto.tsx";
+import type {CurrentUserDto} from "../api/dtos/auth/CurrentUserDto.tsx";
 import type {AxiosError} from "axios";
 
 export type CurrentUserContextValue = {

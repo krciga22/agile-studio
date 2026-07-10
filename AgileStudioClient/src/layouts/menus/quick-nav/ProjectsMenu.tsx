@@ -1,6 +1,6 @@
 import './ProjectsMenu.css'
 import {type ReactElement, useContext, useState} from "react";
-import type {ProjectDto} from "../../../services/api/dtos/projects/ProjectDtos.tsx";
+import type {ProjectDto} from "../../../api/dtos/projects/ProjectDtos.tsx";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import ProjectSubMenu from "./ProjectSubMenu.tsx";
 import {faSpinner, faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ import {
   getProjectPagePath, getProjectsPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
-import {getProjects} from "../../../services/api/endpoints/projects/Projects.tsx";
+import {getProjects} from "../../../api/endpoints/projects/Projects.tsx";
 
 function ProjectsMenu() {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);

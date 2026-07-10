@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import api from "../../../services/api/Api.tsx";
+import api from "../../../api/Api.tsx";
 import './Filters.css';
 import type {FilterValue} from "./Filters.tsx";
 

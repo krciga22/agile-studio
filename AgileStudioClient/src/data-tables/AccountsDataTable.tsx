@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import type {AccountDto} from "../services/api/dtos/accounts/AccountDtos.tsx";
+import type {AccountDto} from "../api/dtos/accounts/AccountDtos.tsx";
 import DataTable, {type DataTableColumn} from "../components/data-table/DataTable";
 import {DataTableContext} from "../components/data-table/DataTableContext.tsx";
 import {DataTableFetcher} from "../components/data-table/DataTableFetcher.tsx";
@@ -9,7 +9,7 @@ import Constants from "../Constants.tsx";
 import Pagination, {type PaginationDetails} from "../components/data-table/Pagination";
 import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
-import {baseUrl as accountsEndpoint} from "../services/api/endpoints/accounts/Accounts.tsx";
+import {baseUrl as accountsEndpoint} from "../api/endpoints/accounts/Accounts.tsx";
 import {getAccountTitle} from "../util/account-utils.tsx";
 import DateTimeText from "../components/date/DateTimeText.tsx";
 import {getAccountHomePagePath} from "../PageRoutes.tsx";

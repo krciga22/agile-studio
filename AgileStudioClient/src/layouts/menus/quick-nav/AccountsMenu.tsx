@@ -1,6 +1,6 @@
 import './AccountsMenu.css'
 import {type ReactElement, useContext, useState} from "react";
-import type {AccountDto} from "../../../services/api/dtos/accounts/AccountDtos.tsx";
+import type {AccountDto} from "../../../api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import AccountSubMenu from "./AccountSubMenu.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ import {
   getAccountsPagePath,
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
-import {getAccounts} from "../../../services/api/endpoints/accounts/Accounts.tsx";
+import {getAccounts} from "../../../api/endpoints/accounts/Accounts.tsx";
 import {getAccountTitle} from "../../../util/account-utils.tsx";
 
 function AccountsMenu() {

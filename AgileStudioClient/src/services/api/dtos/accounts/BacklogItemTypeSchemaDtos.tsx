@@ -1,4 +1,4 @@
-import type {UserSummaryDto} from "./UserDtos.tsx";
+import type {UserSummaryDto} from "../UserDtos.tsx";
 
 export type BacklogItemTypeSchemaDto = {
   id: number,

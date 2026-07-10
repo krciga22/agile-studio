@@ -1,4 +1,4 @@
-import type {UserSummaryDto} from "./UserDtos.tsx";
+import type {UserSummaryDto} from "../UserDtos.tsx";
 import type {AccountSummaryDto} from "./AccountDtos.tsx";
 import type {WorkflowSummaryDto} from "./WorkflowDtos.tsx";
 

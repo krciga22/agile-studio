@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState, useCallback} from "react";
-import type {ProjectDto} from "../services/api/dtos/ProjectDtos.tsx";
+import type {ProjectDto} from "../services/api/dtos/projects/ProjectDtos.tsx";
 import DataTable, {type DataTableColumn} from "../components/data-table/DataTable";
 import {DataTableContext} from "../components/data-table/DataTableContext.tsx";
 import {DataTableFetcher} from "../components/data-table/DataTableFetcher.tsx";

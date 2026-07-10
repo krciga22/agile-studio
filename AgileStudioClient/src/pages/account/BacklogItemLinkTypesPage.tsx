@@ -1,7 +1,7 @@
 import './BacklogItemLinkTypesPage.css'
 import {useContext, useEffect, useState} from "react";
 import Utils from "../../Utils.tsx";
-import type {AccountDto} from "../../services/api/dtos/AccountDtos.tsx";
+import type {AccountDto} from "../../services/api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";

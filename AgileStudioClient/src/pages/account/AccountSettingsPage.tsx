@@ -1,7 +1,7 @@
 import './AccountSettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
-import type {AccountDto} from "../../services/api/dtos/AccountDtos.tsx";
+import type {AccountDto} from "../../services/api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import ConfirmModal from '../../modals/ConfirmModal';
 import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
-import type {AccountTypeDto} from "../../services/api/dtos/AccountTypeDtos.tsx";
+import type {AccountTypeDto} from "../../services/api/dtos/accounts/AccountTypeDtos.tsx";
 import {getAccountTypes} from "../../services/api/endpoints/accounts/AccountTypes.tsx";
 import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
 import {getAccountTitle} from "../../services/util/account-utils.tsx";

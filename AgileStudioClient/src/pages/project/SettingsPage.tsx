@@ -1,12 +1,12 @@
 import './SettingsPage.css'
 import React, {useContext, useEffect, useState} from "react";
 import Utils, {debounce, numberToString, stringToNumber} from "../../Utils.tsx";
-import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/ProjectDtos.tsx";
+import type {ProjectDto, ProjectPatchDto} from "../../services/api/dtos/projects/ProjectDtos.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
-import type {BacklogItemLinkTypeSchemaDto} from "../../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
+import type {BacklogItemTypeSchemaDto} from "../../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemLinkTypeSchemaDto} from "../../services/api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
 import {getBacklogItemTypeSchemas} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import {getBacklogItemLinkTypeSchemas} from "../../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../../Constants.tsx";

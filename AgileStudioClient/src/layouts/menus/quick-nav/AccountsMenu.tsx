@@ -1,6 +1,6 @@
 import './AccountsMenu.css'
 import {type ReactElement, useContext, useState} from "react";
-import type {AccountDto} from "../../../services/api/dtos/AccountDtos.tsx";
+import type {AccountDto} from "../../../services/api/dtos/accounts/AccountDtos.tsx";
 import CurrentUserContext from "../../../services/CurrentUser.tsx";
 import AccountSubMenu from "./AccountSubMenu.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";

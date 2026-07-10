@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/ProjectDtos.tsx';
-import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/BacklogItemTypeSchemaDtos.tsx";
+import type {ProjectDto, ProjectPostDto} from '../services/api/dtos/projects/ProjectDtos.tsx';
+import type {BacklogItemTypeSchemaDto} from "../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
 import {getBacklogItemTypeSchemas} from "../services/api/endpoints/accounts/Accounts.tsx";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/BacklogItemLinkTypeSchemaDtos.tsx";
+import type {BacklogItemLinkTypeSchemaDto} from "../services/api/dtos/accounts/BacklogItemLinkTypeSchemaDtos.tsx";
 import {getBacklogItemLinkTypeSchemas} from "../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../Constants.tsx";
 import type {
@@ -23,7 +23,7 @@ import {
 } from "../services/util/error.tsx";
 import {toast} from "react-toastify";
 import {createProject} from "../services/api/endpoints/projects/Projects.tsx";
-import type {AccountDto} from "../services/api/dtos/AccountDtos.tsx";
+import type {AccountDto} from "../services/api/dtos/accounts/AccountDtos.tsx";
 import { getAccounts } from "../services/api/endpoints/accounts/Accounts.tsx";
 import {getAccountTitle} from "../services/util/account-utils.tsx";
 

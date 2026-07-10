@@ -4,7 +4,7 @@ import type {
   ProjectDto,
   ProjectPatchDto,
   ProjectPostDto
-} from "../../dtos/ProjectDtos.tsx";
+} from "../../dtos/projects/ProjectDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
 
 export const baseUrl = '/Projects/Projects';

@@ -1,6 +1,6 @@
 import Api from "../../Api.tsx";
 import type {AxiosResponse} from "axios";
-import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPatchDto} from "../../dtos/BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPatchDto} from "../../dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
 
 export const baseUrl = '/Accounts/BacklogItemTypeSchemas';
 

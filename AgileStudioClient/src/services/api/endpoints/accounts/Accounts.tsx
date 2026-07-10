@@ -1,9 +1,9 @@
 import Api from "../../Api.tsx";
 import type {AxiosResponse} from "axios";
-import type {AccountDto} from "../../dtos/AccountDtos.tsx";
+import type {AccountDto} from "../../dtos/accounts/AccountDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
-import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from "../../dtos/BacklogItemTypeSchemaDtos.tsx";
-import type {BacklogItemTypeDto, BacklogItemTypePostDto} from "../../dtos/BacklogItemTypeDtos.tsx";
+import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from "../../dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
+import type {BacklogItemTypeDto, BacklogItemTypePostDto} from "../../dtos/accounts/BacklogItemTypeDtos.tsx";
 
 export const baseUrl = '/Accounts/Accounts';
 

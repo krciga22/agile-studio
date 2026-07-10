@@ -1,6 +1,6 @@
 import './App.css'
 import PageRouter from "./PageRouter.tsx";
-import type {CurrentUserDto} from "./services/api/dtos/CurrentUserDto.tsx";
+import type {CurrentUserDto} from "./services/api/dtos/auth/CurrentUserDto.tsx";
 import {useState} from "react";
 import type {AxiosError} from "axios";
 import {useAuth0} from "@auth0/auth0-react";

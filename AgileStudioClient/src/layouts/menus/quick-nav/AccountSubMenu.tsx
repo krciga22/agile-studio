@@ -1,5 +1,5 @@
 import './AccountSubMenu.css'
-import type {AccountDto} from "../../../services/api/dtos/AccountDtos.tsx";
+import type {AccountDto} from "../../../services/api/dtos/accounts/AccountDtos.tsx";
 import {linkToPage} from "../../../PageRouterUtils.tsx";
 import CurrentPageContext from "../../../services/CurrentPage.tsx";
 import {useContext} from "react";

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from '../../services/api/dtos/BacklogItemTypeSchemaDtos.tsx';
+import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from '../../services/api/dtos/accounts/BacklogItemTypeSchemaDtos.tsx';
 import {createBacklogItemTypeSchema} from '../../services/api/endpoints/accounts/Accounts.tsx';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
-import type {BacklogItemTypeDto} from "../../services/api/dtos/BacklogItemTypeDtos.tsx";
+import type {BacklogItemTypeDto} from "../../services/api/dtos/accounts/BacklogItemTypeDtos.tsx";
 import DataTable, {type DataTableColumn} from "../../components/data-table/DataTable.tsx";
 import {DataTableContext} from "../../components/data-table/DataTableContext.tsx";
 import {DataTableFetcher} from "../../components/data-table/DataTableFetcher.tsx";

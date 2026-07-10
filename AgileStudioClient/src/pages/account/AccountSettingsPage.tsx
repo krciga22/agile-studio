@@ -17,7 +17,7 @@ import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import type {AccountTypeDto} from "../../services/api/dtos/accounts/AccountTypeDtos.tsx";
 import {getAccountTypes} from "../../services/api/endpoints/accounts/AccountTypes.tsx";
 import type {PaginatedResultsDto} from "../../services/api/dtos/PaginatedResultsDto.tsx";
-import {getAccountTitle} from "../../services/util/account-utils.tsx";
+import {getAccountTitle} from "../../util/account-utils.tsx";
 
 type SettingsPageProps = {
   accountId: number

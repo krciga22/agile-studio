@@ -11,7 +11,7 @@ import {getBacklogItemTypeSchemas} from "../../services/api/endpoints/accounts/A
 import {getBacklogItemLinkTypeSchemas} from "../../services/api/endpoints/accounts/BacklogItemLinkTypeSchemas.tsx";
 import Constants from "../../Constants.tsx";
 import axios, {type AxiosResponse} from "axios";
-import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from "../../services/util/error.tsx";
+import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from "../../util/error.tsx";
 import {getProblemDetailsErrorMapFromResponse} from "../../services/api/Api.tsx";
 import type {ProblemDetailsErrorMap} from "../../services/api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";

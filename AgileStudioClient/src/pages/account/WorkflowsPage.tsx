@@ -9,7 +9,7 @@ import {getAccount} from "../../services/api/endpoints/accounts/Accounts.tsx";
 import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.tsx";
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";
-import {getAccountTitle} from "../../services/util/account-utils.tsx";
+import {getAccountTitle} from "../../util/account-utils.tsx";
 
 type WorkflowsPageProps = {
   accountId: number

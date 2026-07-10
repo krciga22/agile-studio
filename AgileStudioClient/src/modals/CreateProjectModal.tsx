@@ -20,12 +20,12 @@ import {
   ERROR_CONTEXT,
   ERROR_MESSAGE_DEFAULT,
   getErrorMessageForAxiosError
-} from "../services/util/error.tsx";
+} from "../util/error.tsx";
 import {toast} from "react-toastify";
 import {createProject} from "../services/api/endpoints/projects/Projects.tsx";
 import type {AccountDto} from "../services/api/dtos/accounts/AccountDtos.tsx";
 import { getAccounts } from "../services/api/endpoints/accounts/Accounts.tsx";
-import {getAccountTitle} from "../services/util/account-utils.tsx";
+import {getAccountTitle} from "../util/account-utils.tsx";
 
 type Props = {
   isOpen: boolean;

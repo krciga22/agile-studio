@@ -8,7 +8,7 @@ import {
   ERROR_CONTEXT,
   ERROR_MESSAGE_DEFAULT,
   getErrorMessageForAxiosError,
-} from "../services/util/error.tsx";
+} from "../util/error.tsx";
 import axios from "axios";
 import Modal from '../components/modal/Modal';
 import {toast} from "react-toastify";

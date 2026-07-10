@@ -14,7 +14,7 @@ import {
   isCurrentPageBasePath,
 } from "../../../PageRoutes.tsx";
 import {getAccounts} from "../../../services/api/endpoints/accounts/Accounts.tsx";
-import {getAccountTitle} from "../../../services/util/account-utils.tsx";
+import {getAccountTitle} from "../../../util/account-utils.tsx";
 
 function AccountsMenu() {
   const [isRefreshing, setIsRefreshing] = useState<boolean|null>(null);

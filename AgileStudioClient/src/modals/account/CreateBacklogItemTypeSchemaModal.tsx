@@ -9,7 +9,7 @@ import axios from 'axios';
 import {getProblemDetailsErrorMapFromResponse} from '../../services/api/Api.tsx';
 import FormError from '../../components/form/FormError.tsx';
 import {debounce} from '../../Utils.tsx';
-import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../../services/util/error.tsx';
+import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../../util/error.tsx';
 import {toast} from 'react-toastify';
 
 type Props = {

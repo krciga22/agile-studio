@@ -10,7 +10,7 @@ import Pagination, {type PaginationDetails} from "../components/data-table/Pagin
 import Search from "../components/data-table/Search";
 import Sort from "../components/data-table/Sort";
 import {baseUrl as accountsEndpoint} from "../services/api/endpoints/accounts/Accounts.tsx";
-import {getAccountTitle} from "../services/util/account-utils.tsx";
+import {getAccountTitle} from "../util/account-utils.tsx";
 import DateTimeText from "../components/date/DateTimeText.tsx";
 import {getAccountHomePagePath} from "../PageRoutes.tsx";
 import {linkToPage} from "../PageRouterUtils.tsx";

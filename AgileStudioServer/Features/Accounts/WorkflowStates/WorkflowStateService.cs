@@ -1,37 +1,68 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Accounts.WorkflowStates
 {
-    public class WorkflowStateService : AbstractService
+    public class WorkflowStateService : AbstractModelService<WorkflowStateModel, int>
     {
         private WorkflowStateRepository _WorkflowStateRepository;
 
-        public WorkflowStateService(WorkflowStateRepository workflowStateRepository)
+        private ServiceContext _ServiceContext;
+
+        public WorkflowStateService(
+            WorkflowStateRepository workflowStateRepository, 
+            ServiceContext serviceContext)
         {
             _WorkflowStateRepository = workflowStateRepository;
+            _ServiceContext = serviceContext;
         }
 
-        public virtual List<WorkflowStateModel> GetByWorkflowId(int workflowId)
+        public virtual PaginationResults<WorkflowStateModel> GetByWorkflowId(int workflowId)
         {
-            return _WorkflowStateRepository.GetByWorkflowId(workflowId);
+            return _WorkflowStateRepository.GetByWorkflowId(workflowId, _ServiceContext);
         }
 
-        public virtual WorkflowStateModel? Get(int id)
+        public override PaginationResults<WorkflowStateModel> GetCollection()
         {
-            return _WorkflowStateRepository.Get(id);
+            throw new NotImplementedException();
         }
 
-        public virtual WorkflowStateModel Create(WorkflowStateModel workflowState)
+        public override PaginationResults<WorkflowStateModel> GetSubCollection(string parentResourceType, object[] id)
+        {
+            switch (parentResourceType)
+            {
+                case ResourceTypes.AccountsWorkflow:
+                    return GetByWorkflowId(int.Parse(id[0].ToString()!));
+                default:
+                    throw new ArgumentException($"Unsupported parent resource type: {parentResourceType}");
+            }
+        }
+
+        /// <exception cref="ModelNotFoundException"></exception>
+        public override WorkflowStateModel Get(int id)
+        {
+            return _WorkflowStateRepository.Get(id) ??
+                throw new ModelNotFoundException(nameof(WorkflowStateModel), id.ToString());
+        }
+
+        public override int GetIdentifier(WorkflowStateModel model)
+        {
+            return model.ID;
+        }
+
+        public override WorkflowStateModel Create(WorkflowStateModel workflowState)
         {
             return _WorkflowStateRepository.Create(workflowState);
         }
 
-        public virtual WorkflowStateModel Update(WorkflowStateModel workflowState)
+        public override WorkflowStateModel Update(WorkflowStateModel workflowState)
         {
             return _WorkflowStateRepository.Update(workflowState);
         }
 
-        public virtual void Delete(WorkflowStateModel workflowState)
+        public override void Delete(WorkflowStateModel workflowState)
         {
             _WorkflowStateRepository.Delete(workflowState);
         }

@@ -1,4 +1,6 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServerTest.Features.Accounts.Workflows;
@@ -58,10 +60,10 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.WorkflowState
                 _WorkflowStateFixture.Create("Test WorkflowState 2", workflow: workflow)
             };
 
-            List<WorkflowStateModel> returnedWorkflowStates = _workflowStateService
+            PaginationResults<WorkflowStateModel> returnedWorkflowStates = _workflowStateService
                 .GetByWorkflowId(workflow.ID);
 
-            Assert.Equal(workflowStates.Count, returnedWorkflowStates.Count);
+            Assert.Equal(workflowStates.Count, returnedWorkflowStates.Total);
         }
 
         [Fact]
@@ -84,8 +86,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.WorkflowState
 
             _workflowStateService.Delete(workflowState);
 
-            workflowState = _workflowStateService.Get(workflowState.ID);
-            Assert.Null(workflowState);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _workflowStateService.Get(workflowState.ID));
         }
     }
 }

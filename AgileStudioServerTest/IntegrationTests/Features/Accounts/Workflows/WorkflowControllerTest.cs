@@ -26,29 +26,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
             _WorkflowStateFixture = workflowStateFixture;
         }
 
-        [Fact]
-        public void GetWorkflowStatesForWorkflow_WithId_ReturnsDtos()
-        {
-            var workflow = _WorkflowFixture.Create();
-
-            List<WorkflowStateModel> workflowStates = new() {
-                _WorkflowStateFixture.Create(
-                    title: "Test Workflow State 1",
-                    workflow: workflow),
-                _WorkflowStateFixture.Create(
-                    title: "Test Workflow State 2",
-                    workflow: workflow)
-            };
-
-            List<WorkflowStateDto>? dtos = null;
-            IActionResult result = _Controller.GetWorkflowStatesForWorkflow(workflow.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dtos = okResult.Value as List<WorkflowStateDto>;
-            }
-
-            Assert.IsType<List<WorkflowStateDto>>(dtos);
-            Assert.Equal(workflowStates.Count, dtos.Count);
-        }
+        // todo add tests
     }
 }

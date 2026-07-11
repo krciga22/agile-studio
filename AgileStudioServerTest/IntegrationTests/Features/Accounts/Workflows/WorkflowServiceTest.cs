@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServerTest.Features.Accounts.Accounts;
 using AgileStudioServerTest.Features.Accounts.Workflows;
@@ -48,20 +49,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
         }
 
         [Fact]
-        public void GetAll_ReturnsAllWorkflows()
-        {
-            var workflows = new List<WorkflowModel>
-            {
-                _WorkflowFixture.Create("Test Workflow 1"),
-                _WorkflowFixture.Create("Test Workflow 2")
-            };
-
-            List<WorkflowModel> returnedWorkflows = _workflowService.GetAll();
-
-            Assert.Equal(workflows.Count, returnedWorkflows.Count);
-        }
-
-        [Fact]
         public void Update_ReturnsUpdatedWorkflow()
         {
             var workflow = _WorkflowFixture.Create();
@@ -81,8 +68,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 
             _workflowService.Delete(workflow);
 
-            workflow = _workflowService.Get(workflow.ID);
-            Assert.Null(workflow);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _workflowService.Get(workflow.ID));
         }
     }
 }

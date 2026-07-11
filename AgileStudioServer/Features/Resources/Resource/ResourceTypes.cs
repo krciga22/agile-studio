@@ -21,5 +21,7 @@
         public const string AccountsBacklogItemTypeSchemaNode = "accounts.backlogItemTypeSchemaNode";
 
         public const string AccountsBacklogItemTypeSchemaEdge = "accounts.backlogItemTypeSchemaEdge";
+
+        public const string AccountsWorkflow = "accounts.workflow";
     }
 }

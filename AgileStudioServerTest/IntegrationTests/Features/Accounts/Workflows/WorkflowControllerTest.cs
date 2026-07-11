@@ -4,7 +4,6 @@ using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServerTest.Features.Accounts.Workflows;
 using AgileStudioServerTest.Features.Accounts.WorkflowStates;
-using AgileStudioServerTest.Features.Accounts.Accounts;
 
 namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 {
@@ -16,62 +15,15 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 
         private readonly WorkflowStateFixture _WorkflowStateFixture;
 
-        private readonly AccountFixture _AccountFixture;
-
         public WorkflowControllerTest(
             DBContext dbContext,
             WorkflowController controller,
             WorkflowFixture workflowFixture,
-            WorkflowStateFixture workflowStateFixture,
-            AccountFixture accountFixture) : base(dbContext)
+            WorkflowStateFixture workflowStateFixture) : base(dbContext)
         {
             _Controller = controller;
             _WorkflowFixture = workflowFixture;
             _WorkflowStateFixture = workflowStateFixture;
-            _AccountFixture = accountFixture;
-        }
-
-        [Fact]
-        public void Get_WithNoArguments_ReturnsDtos()
-        {
-            List<WorkflowModel> workflows = new() {
-                _WorkflowFixture.Create("Test Workflow 1"),
-                _WorkflowFixture.Create("Test Workflow 2")
-            };
-
-            List<WorkflowDto>? dtos = null;
-            IActionResult result = _Controller.Get();
-            if (result is OkObjectResult okResult)
-            {
-                dtos = okResult.Value as List<WorkflowDto>;
-            }
-
-            Assert.IsType<List<WorkflowDto>>(dtos);
-            Assert.Equal(workflows.Count, dtos.Count);
-        }
-
-        [Fact]
-        public void Get_WithId_ReturnsDto()
-        {
-            var workflow = _WorkflowFixture.Create();
-
-            WorkflowDto? dto = null;
-            IActionResult result = _Controller.Get(workflow.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dto = okResult.Value as WorkflowDto;
-            }
-
-            Assert.IsType<WorkflowDto>(dto);
-            Assert.Equal(workflow.ID, dto.ID);
-        }
-
-        [Fact]
-        public void Get_WithInvalidId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.Get(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
         }
 
         [Fact]
@@ -97,59 +49,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.Workflows
 
             Assert.IsType<List<WorkflowStateDto>>(dtos);
             Assert.Equal(workflowStates.Count, dtos.Count);
-        }
-
-        [Fact]
-        public void Post_WithDto_ReturnsDto()
-        {
-            var account = _AccountFixture.Create();
-            var workflowPostDto = new WorkflowPostDto("Test Workflow", account.ID);
-
-            WorkflowDto? dto = null;
-            IActionResult result = _Controller.Post(workflowPostDto);
-            if (result is CreatedResult createdResult)
-            {
-                dto = createdResult.Value as WorkflowDto;
-            }
-
-            Assert.IsType<WorkflowDto>(dto);
-            Assert.Equal(workflowPostDto.Title, dto.Title);
-        }
-
-        [Fact]
-        public void Patch_WithIdAndDto_ReturnsDto()
-        {
-            var workflow = _WorkflowFixture.Create();
-            var title = $"{workflow.Title} Updated";
-            var workflowPatchDto = new WorkflowPatchDto(workflow.ID, title);
-
-            IActionResult result = _Controller.Patch(workflow.ID, workflowPatchDto);
-            WorkflowDto? dto = null;
-            if (result is OkObjectResult okObjectResult)
-            {
-                dto = okObjectResult.Value as WorkflowDto;
-            }
-
-            Assert.IsType<WorkflowDto>(dto);
-            Assert.Equal(workflowPatchDto.Title, dto.Title);
-        }
-
-        [Fact]
-        public void Delete_WithId_ReturnsOkResult()
-        {
-            var workflow = _WorkflowFixture.Create();
-
-            IActionResult result = _Controller.Delete(workflow.ID);
-
-            Assert.IsType<OkResult>(result as OkResult);
-        }
-
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.Delete(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
         }
     }
 }

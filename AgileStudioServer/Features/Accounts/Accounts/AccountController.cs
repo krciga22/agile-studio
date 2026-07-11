@@ -33,6 +33,14 @@ namespace AgileStudioServer.Features.Accounts.Accounts
         ResourceTypes.AccountsAccount,
         ResourceTypes.AccountsBacklogItemTypeSchema,
         "BacklogItemTypeSchemas")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsWorkflow,
+        "Workflows")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsWorkflow,
+        "Workflows")]
     [Authorize]
     public class AccountController : ControllerBase
     {

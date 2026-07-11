@@ -4,6 +4,7 @@ import type {AccountDto} from "../../dtos/accounts/AccountDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
 import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from "../../dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
 import type {BacklogItemTypeDto, BacklogItemTypePostDto} from "../../dtos/accounts/BacklogItemTypeDtos.tsx";
+import type {WorkflowDto, WorkflowPostDto} from "../../dtos/accounts/WorkflowDtos.tsx";
 
 export const baseUrl = '/Accounts/Accounts';
 
@@ -33,4 +34,14 @@ export const getBacklogItemTypeSchemas = async (accountId:number):
 export const createBacklogItemTypeSchema = async (dto:BacklogItemTypeSchemaPostDto):
   Promise<AxiosResponse<BacklogItemTypeSchemaDto>> => {
   return await Api.post(`${baseUrl}/${dto.accountID}/BacklogItemTypeSchemas`, dto);
+};
+
+export const getWorkflows = async (accountId:number):
+  Promise<AxiosResponse<PaginatedResultsDto<WorkflowDto>>> => {
+  return await Api.get(`${baseUrl}/${accountId}/Workflows`);
+};
+
+export const createWorkflow = async (dto:WorkflowPostDto):
+  Promise<AxiosResponse<BacklogItemTypeSchemaDto>> => {
+  return await Api.post(`${baseUrl}/${dto.accountId}/Workflows`, dto);
 };

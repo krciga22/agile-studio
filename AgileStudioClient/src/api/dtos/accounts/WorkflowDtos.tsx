@@ -14,3 +14,15 @@ export type WorkflowSummaryDto = {
   id: number,
   title?: string
 };
+
+export type WorkflowPostDto = {
+  title: string,
+  description?: string,
+  accountId: number
+};
+
+export type WorkflowPatchDto = {
+  id: number,
+  title: string,
+  description?: string
+};

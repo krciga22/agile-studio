@@ -10,6 +10,7 @@ import Breadcrumbs, {Breadcrumb} from "../../components/breadcrumbs/Breadcrumbs.
 import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getAccountTitle} from "../../util/account-utils.tsx";
+import WorkflowsDataTable from "../../data-tables/account/WorkflowsDataTable.tsx";
 
 type WorkflowsPageProps = {
   accountId: number
@@ -63,7 +64,7 @@ function WorkflowsPage(props: WorkflowsPageProps) {
               </Breadcrumbs>
 
               <h1>Workflows</h1>
-              <p>{getAccountTitle(account)}</p>
+              <WorkflowsDataTable accountId={accountId}></WorkflowsDataTable>
           </div>
       }
     </div>

@@ -42,6 +42,6 @@ export const getWorkflows = async (accountId:number):
 };
 
 export const createWorkflow = async (dto:WorkflowPostDto):
-  Promise<AxiosResponse<BacklogItemTypeSchemaDto>> => {
+  Promise<AxiosResponse<WorkflowDto>> => {
   return await Api.post(`${baseUrl}/${dto.accountId}/Workflows`, dto);
 };

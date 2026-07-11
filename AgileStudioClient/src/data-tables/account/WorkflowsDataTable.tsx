@@ -11,6 +11,9 @@ import Search from "../../components/data-table/Search.tsx";
 import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import CreateWorkflowModal from "../../modals/account/CreateWorkflowModal.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -24,6 +27,7 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
   const [initializationStatus, setInitializationStatus] = useState(INIT_STATUS_NOT_INITIALIZED);
   const [isLoading, setIsLoading] = useState<boolean | undefined>();
   const [data, setData] = useState<WorkflowDto[]>([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -136,10 +140,31 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
         sort: sort,
         paginationDetails: paginationDetails
       }}>
-        <div className={"mb-3 d-flex align-items-start gap-2"}>
-          <Search setSearchQuery={doSearch}></Search>
-          <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
+        <div className={"mb-3 d-flex justify-content-between align-items-center"}>
+          <div className={"d-flex align-items-start gap-2"}>
+            <Search setSearchQuery={doSearch}></Search>
+            <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
+          </div>
+          <div className={"d-flex align-items-start gap-2"}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <FontAwesomeIcon icon={faPlus}/>
+            </button>
+          </div>
         </div>
+
+        <CreateWorkflowModal
+          isOpen={isCreateModalOpen}
+          accountID={accountId}
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreated={() => {
+            setIsCreateModalOpen(false);
+            fetchData(page);
+          }}
+        />
 
         <div className={"mb-3"}>
           <DataTable<WorkflowDto>

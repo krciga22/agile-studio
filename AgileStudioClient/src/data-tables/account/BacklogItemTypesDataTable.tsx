@@ -12,7 +12,7 @@ import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import BacklogItemTypeModal from "../../modals/account/BacklogItemTypeModal.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
@@ -29,6 +29,7 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
   const [data, setData] = useState<BacklogItemTypeDto[]>([]);
   const [isBacklogItemTypeModalOpen, setIsBacklogItemTypeModalOpen] = useState(false);
   const [editingBacklogItemTypeId, setEditingBacklogItemTypeId] = useState<number|undefined>();
+  const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -94,6 +95,18 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
     setPage(1);
   }, [accountId]);
 
+  useEffect(() => {
+    const closeActionsMenu = () => {
+      setOpenActionsMenuId(undefined);
+    };
+
+    window.addEventListener('mousedown', closeActionsMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', closeActionsMenu);
+    };
+  }, []);
+
   const columns: DataTableColumn<BacklogItemTypeDto>[] = [
     {
       key: 'id',
@@ -105,7 +118,6 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
     {
       key: 'title',
       header: 'Title',
-      width: '28%',
       sortable: true,
       render: (item: BacklogItemTypeDto) => {
         return (
@@ -142,6 +154,60 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
       sortable: true,
       render: (item: BacklogItemTypeDto) => {
         return <DateTimeText date={item.createdOn} />
+      }
+    },
+    {
+      key: 'actions',
+      header: '',
+      width: '54px',
+      render: (item: BacklogItemTypeDto) => {
+        const isOpen = openActionsMenuId === item.id;
+        return (
+          <div className="dropstart">
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
+              data-bs-toggle="dropdown"
+              aria-label="Backlog item type actions"
+              aria-expanded={isOpen}
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenActionsMenuId(isOpen ? undefined : item.id);
+              }}
+            >
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+            </button>
+            <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+              <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+                <li>
+                  <button
+                    type="button"
+                    className="dropdown-item"
+                    onClick={() => {
+                      setOpenActionsMenuId(undefined);
+                      setEditingBacklogItemTypeId(item.id);
+                      setIsBacklogItemTypeModalOpen(true);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    className="dropdown-item"
+                    onClick={() => {
+                      // TODO: add delete behavior
+                      setOpenActionsMenuId(undefined);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        );
       }
     }
   ];

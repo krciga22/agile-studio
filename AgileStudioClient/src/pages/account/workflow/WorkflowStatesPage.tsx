@@ -10,6 +10,7 @@ import WorkflowNav from "./WorkflowNav.tsx";
 import {getWorkflow} from "../../../api/endpoints/accounts/Workflows.tsx";
 import type {WorkflowDto} from "../../../api/dtos/accounts/WorkflowDtos.tsx";
 import WorkflowBreadcrumbs from "./WorkflowBreadcrumbs.tsx";
+import WorkflowStatesDataTable from "../../../data-tables/account/WorkflowStatesDataTable.tsx";
 
 type WorkflowStatesPageProps = {
   workflowId: number
@@ -65,7 +66,7 @@ function WorkflowStatesPage(props: WorkflowStatesPageProps) {
 
               <WorkflowNav account={account} workflow={workflow}></WorkflowNav>
 
-              <p>Show workflow states...</p>
+              <WorkflowStatesDataTable workflowId={workflowId}></WorkflowStatesDataTable>
           </div>
       }
     </div>

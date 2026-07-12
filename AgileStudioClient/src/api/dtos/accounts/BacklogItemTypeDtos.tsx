@@ -21,7 +21,7 @@ export type BacklogItemTypeSummaryDto = {
 
 export type BacklogItemTypePostDto = {
   title: string,
-  accountID?: string,
+  accountID: number,
   workflowID: number,
   description?: string
 };

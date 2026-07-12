@@ -22,7 +22,7 @@ export const getBacklogItemTypes = async (accountId:number):
 };
 
 export const createBacklogItemType = async (dto:BacklogItemTypePostDto):
-  Promise<AxiosResponse<BacklogItemTypeSchemaDto>> => {
+  Promise<AxiosResponse<BacklogItemTypeDto>> => {
   return await Api.post(`${baseUrl}/${dto.accountID}/BacklogItemTypes`, dto);
 };
 
@@ -36,9 +36,15 @@ export const createBacklogItemTypeSchema = async (dto:BacklogItemTypeSchemaPostD
   return await Api.post(`${baseUrl}/${dto.accountID}/BacklogItemTypeSchemas`, dto);
 };
 
-export const getWorkflows = async (accountId:number):
+export const getWorkflows = async (accountId:number, sort: string[] = []):
   Promise<AxiosResponse<PaginatedResultsDto<WorkflowDto>>> => {
-  return await Api.get(`${baseUrl}/${accountId}/Workflows`);
+  const params: Record<string, string> = {};
+
+  if(sort.length > 0){
+    params.sort = sort.join(',');
+  }
+
+  return await Api.get(`${baseUrl}/${accountId}/Workflows`, {params});
 };
 
 export const createWorkflow = async (dto:WorkflowPostDto):

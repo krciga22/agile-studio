@@ -107,6 +107,56 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
     };
   }, []);
 
+  const renderActionsMenu = (item: BacklogItemTypeDto) => {
+    const isOpen = openActionsMenuId === item.id;
+    return (
+      <div className="dropstart">
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          data-bs-toggle="dropdown"
+          aria-label="Backlog item type actions"
+          aria-expanded={isOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenActionsMenuId(isOpen ? undefined : item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </button>
+        <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+          <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setEditingBacklogItemTypeId(item.id);
+                  setIsBacklogItemTypeModalOpen(true);
+                }}
+              >
+                Edit
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  // TODO: add delete behavior
+                  setOpenActionsMenuId(undefined);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   const columns: DataTableColumn<BacklogItemTypeDto>[] = [
     {
       key: 'id',
@@ -160,55 +210,7 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
       key: 'actions',
       header: '',
       width: '54px',
-      render: (item: BacklogItemTypeDto) => {
-        const isOpen = openActionsMenuId === item.id;
-        return (
-          <div className="dropstart">
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-secondary"
-              data-bs-toggle="dropdown"
-              aria-label="Backlog item type actions"
-              aria-expanded={isOpen}
-              onClick={(e) => {
-                e.stopPropagation();
-                setOpenActionsMenuId(isOpen ? undefined : item.id);
-              }}
-            >
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </button>
-            <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
-              <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
-                <li>
-                  <button
-                    type="button"
-                    className="dropdown-item"
-                    onClick={() => {
-                      setOpenActionsMenuId(undefined);
-                      setEditingBacklogItemTypeId(item.id);
-                      setIsBacklogItemTypeModalOpen(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="dropdown-item"
-                    onClick={() => {
-                      // TODO: add delete behavior
-                      setOpenActionsMenuId(undefined);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-      }
+      render: renderActionsMenu
     }
   ];
 

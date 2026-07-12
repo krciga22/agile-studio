@@ -14,6 +14,9 @@ import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import BacklogItemTypeModal from "../../modals/account/BacklogItemTypeModal.tsx";
+import ConfirmModal from "../../modals/ConfirmModal.tsx";
+import {deleteBacklogItemType} from "../../api/endpoints/accounts/BacklogItemTypes.tsx";
+import {toast} from "react-toastify";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -29,6 +32,7 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
   const [data, setData] = useState<BacklogItemTypeDto[]>([]);
   const [isBacklogItemTypeModalOpen, setIsBacklogItemTypeModalOpen] = useState(false);
   const [editingBacklogItemTypeId, setEditingBacklogItemTypeId] = useState<number|undefined>();
+  const [deletingBacklogItemType, setDeletingBacklogItemType] = useState<BacklogItemTypeDto|undefined>();
   const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
@@ -107,6 +111,30 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
     };
   }, []);
 
+  const doDeleteBacklogItemType = async () => {
+    if(!deletingBacklogItemType){
+      return;
+    }
+
+    let isDeleted = false;
+
+    try{
+      await deleteBacklogItemType(deletingBacklogItemType.id);
+      isDeleted = true;
+    }
+    catch(error){
+      toast.error('Error Deleting Backlog Item Type', Constants.DEFAULT_TOAST_PROPS);
+      console.error(error);
+    }
+    finally {
+      if(isDeleted){
+        setDeletingBacklogItemType(undefined);
+        toast.success('Backlog Item Type Deleted', Constants.DEFAULT_TOAST_PROPS);
+        await fetchData(page);
+      }
+    }
+  };
+
   const renderActionsMenu = (item: BacklogItemTypeDto) => {
     const isOpen = openActionsMenuId === item.id;
     return (
@@ -144,8 +172,8 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
                 type="button"
                 className="dropdown-item"
                 onClick={() => {
-                  // TODO: add delete behavior
                   setOpenActionsMenuId(undefined);
+                  setDeletingBacklogItemType(item);
                 }}
               >
                 Delete
@@ -266,6 +294,21 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
             setEditingBacklogItemTypeId(undefined);
             fetchData(page);
           }}
+        />
+
+        <ConfirmModal
+          isOpen={!!deletingBacklogItemType}
+          title={"Delete Backlog Item Type"}
+          message={
+            deletingBacklogItemType ? (
+              <span>
+                Are you sure you want to delete the backlog item type <strong>{deletingBacklogItemType.title}</strong>?
+              </span>
+            ) : null
+          }
+          confirmText={"Delete"}
+          onCancel={() => setDeletingBacklogItemType(undefined)}
+          onConfirm={doDeleteBacklogItemType}
         />
 
         <div className={"mb-3"}>

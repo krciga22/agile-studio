@@ -11,7 +11,8 @@ export const getAccountBacklogItemTypeSchemasPagePath = (accountId: number) => `
 export const getAccountBacklogItemLinkTypesPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-link-types`;
 export const getAccountBacklogItemLinkTypeSchemasPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/backlog-item-link-type-schemas`;
 export const getAccountWorkflowsPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/workflows`;
-export const getAccountWorkflowStatesPagePath = (accountId: number) => `${getAccountPagePath(accountId)}/workflow-states`;
+export const getAccountWorkflowPagePath = (accountId: number, workflowId: number) => `${getAccountPagePath(accountId)}/workflows/${workflowId}`;
+export const getAccountWorkflowStatesPagePath = (accountId: number, workflowId: number) => `${getAccountWorkflowPagePath(accountId, workflowId)}/workflow-states`;
 export const getAccountHomePagePath = (accountId: number) => getAccountBacklogItemTypesPagePath(accountId);
 
 export const getProjectsPagePath = () => `/projects`;

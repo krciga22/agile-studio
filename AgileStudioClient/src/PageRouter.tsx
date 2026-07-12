@@ -21,8 +21,9 @@ import BacklogItemTypeSchemasPage from "./pages/account/BacklogItemTypeSchemasPa
 import BacklogItemLinkTypesPage from "./pages/account/BacklogItemLinkTypesPage.tsx";
 import BacklogItemLinkTypeSchemasPage from "./pages/account/BacklogItemLinkTypeSchemasPage.tsx";
 import WorkflowsPage from "./pages/account/WorkflowsPage.tsx";
-import WorkflowStatesPage from "./pages/account/WorkflowStatesPage.tsx";
+import WorkflowStatesPage from "./pages/account/workflow/WorkflowStatesPage.tsx";
 import AccountsPage from "./pages/AccountsPage.tsx";
+import WorkflowPage from "./pages/account/workflow/WorkflowPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -61,6 +62,7 @@ function PageRouter() {
   let layoutProps = {};
   const pathSegments: string[] = pathname.split('/').slice(1);
   let subPath: string;
+  let subPathSegments: string[] = [];
 
   const auth0 = useAuth0();
   if(auth0.isLoading){
@@ -89,6 +91,7 @@ function PageRouter() {
     const accountId = parseInt(pathSegments[1]);
     if (!isNaN(accountId)) {
       subPath = pathSegments.slice(2).join('/');
+      subPathSegments = subPath.split('/');
 
       if(subPath === 'settings'){
         page = <AccountSettingsPage accountId={accountId}></AccountSettingsPage>
@@ -108,8 +111,19 @@ function PageRouter() {
       else if(subPath === 'workflows'){
         page = <WorkflowsPage accountId={accountId}></WorkflowsPage>
       }
-      else if(subPath === 'workflow-states'){
-        page = <WorkflowStatesPage accountId={accountId}></WorkflowStatesPage>
+      else if(subPath.match(/workflows\/\d+/)?.length === 1){
+        const workflowId = parseInt(subPathSegments[1]);
+        if (!isNaN(workflowId)) {
+          subPath = subPathSegments.slice(2).join('/');
+          subPathSegments = subPath.split('/');
+
+          if(subPath === 'workflow-states'){
+            page = <WorkflowStatesPage workflowId={workflowId}></WorkflowStatesPage>
+          }
+          else{
+            page = <WorkflowPage workflowId={workflowId}></WorkflowPage>
+          }
+        }
       }
     }
   }

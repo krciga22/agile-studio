@@ -1,0 +1,25 @@
+.pill-nav{
+
+}
+
+.pill-nav-item{
+    background:#333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pill-nav-item.selected{
+    background:#666;
+}
+
+.pill-nav-item.disabled{
+    cursor: default;
+}
+
+.pill-nav-item:first-child{
+    border-radius: 10px 0 0 10px;
+}
+
+.pill-nav-item:last-child{
+    border-radius: 0 10px 10px 0;
+}

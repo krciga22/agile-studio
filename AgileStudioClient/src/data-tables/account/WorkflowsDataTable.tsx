@@ -14,6 +14,8 @@ import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateWorkflowModal from "../../modals/account/CreateWorkflowModal.tsx";
+import {getAccountWorkflowPagePath} from "../../PageRoutes.tsx";
+import {linkToPage} from "../../PageRouterUtils.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -106,7 +108,15 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
       field: 'title',
       header: 'Title',
       width: '65%',
-      sortable: true
+      sortable: true,
+      render: (workflow: WorkflowDto) => {
+        const accountWorkflowPath = getAccountWorkflowPagePath(workflow.account.id, workflow.id);
+        return (
+          <a href={accountWorkflowPath} onClick={linkToPage}>
+            {workflow.title}
+          </a>
+        );
+      }
     },
     {
       key: 'createdOn',

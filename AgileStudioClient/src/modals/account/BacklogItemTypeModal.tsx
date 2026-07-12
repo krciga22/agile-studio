@@ -1,6 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import type {BacklogItemTypeDto, BacklogItemTypePostDto} from '../../api/dtos/accounts/BacklogItemTypeDtos.tsx';
+import React, {useEffect, useMemo, useState} from 'react';
+import type {
+  BacklogItemTypeDto,
+  BacklogItemTypePatchDto,
+  BacklogItemTypePostDto
+} from '../../api/dtos/accounts/BacklogItemTypeDtos.tsx';
 import {createBacklogItemType, getWorkflows} from '../../api/endpoints/accounts/Accounts.tsx';
+import {getBacklogItemType, updateBacklogItemType} from '../../api/endpoints/accounts/BacklogItemTypes.tsx';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Constants from '../../Constants.tsx';
@@ -16,12 +21,20 @@ import type {WorkflowDto} from '../../api/dtos/accounts/WorkflowDtos.tsx';
 type Props = {
   isOpen: boolean;
   accountId: number;
+  backlogItemTypeId?: number;
   onClose: () => void;
-  onCreated: (backlogItemType: BacklogItemTypeDto) => void;
+  onSaved: (backlogItemType: BacklogItemTypeDto) => void;
 };
 
-export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, onCreated}: Props) {
+export default function BacklogItemTypeModal({
+  isOpen,
+  accountId,
+  backlogItemTypeId,
+  onClose,
+  onSaved
+}: Props) {
   const defaultValue = '';
+  const isEditMode = useMemo(() => typeof backlogItemTypeId === 'number', [backlogItemTypeId]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [workflows, setWorkflows] = useState<WorkflowDto[]>([]);
@@ -38,18 +51,34 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
     }
 
     setIsRefreshing(true);
+    setFormFieldErrors({});
+    setFormSubmissionError(null);
 
-    getWorkflows(accountId, ['title:asc'])
-      .then(response => {
-        setWorkflows(response.data.items);
-      })
-      .catch(error => {
-        console.error("Failed to refresh workflows", error);
-      })
-      .finally(() => {
+    const refresh = async () => {
+      try {
+        const workflowsResponse = await getWorkflows(accountId, ['title:asc']);
+        setWorkflows(workflowsResponse.data.items);
+
+        if (isEditMode && backlogItemTypeId) {
+          const backlogItemTypeResponse = await getBacklogItemType(backlogItemTypeId);
+          const backlogItemType = backlogItemTypeResponse.data;
+          setTitle(backlogItemType.title ?? defaultValue);
+          setDescription(backlogItemType.description ?? defaultValue);
+          setWorkflowId(backlogItemType.workflow.id);
+        } else {
+          setTitle(defaultValue);
+          setDescription(defaultValue);
+          setWorkflowId(Constants.DEFAULT_VALUE_NUMBER);
+        }
+      } catch (error) {
+        console.error("Failed to refresh backlog item type modal", error);
+      } finally {
         setIsRefreshing(false);
-      });
-  }, [accountId, isOpen]);
+      }
+    };
+
+    refresh();
+  }, [accountId, backlogItemTypeId, isEditMode, isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,23 +98,29 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
 
   const _handleSubmit = async () => {
     try {
-      const postDto: BacklogItemTypePostDto = {
-        title: title.trim(),
-        description: description.trim() || undefined,
-        accountID: accountId,
-        workflowID: workflowId
-      };
+      let response;
+      if (isEditMode && backlogItemTypeId) {
+        const patchDto: BacklogItemTypePatchDto = {
+          id: backlogItemTypeId,
+          title: title.trim(),
+          description: description.trim() || undefined
+        };
 
-      const response = await createBacklogItemType(postDto);
+        response = await updateBacklogItemType(patchDto);
+        toast.success('Backlog Item Type Updated', Constants.DEFAULT_TOAST_PROPS);
+      } else {
+        const postDto: BacklogItemTypePostDto = {
+          title: title.trim(),
+          description: description.trim() || undefined,
+          accountID: accountId,
+          workflowID: workflowId
+        };
 
-      toast.success('Backlog Item Type Created', Constants.DEFAULT_TOAST_PROPS);
+        response = await createBacklogItemType(postDto);
+        toast.success('Backlog Item Type Created', Constants.DEFAULT_TOAST_PROPS);
+      }
 
-      onCreated(response.data);
-
-      setTitle(defaultValue);
-      setDescription(defaultValue);
-      setWorkflowId(Constants.DEFAULT_VALUE_NUMBER);
-
+      onSaved(response.data);
       onClose();
     } catch (err) {
       let newFormSubmissionError = ERROR_MESSAGE_DEFAULT;
@@ -117,7 +152,9 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
       <div className="create-modal" onMouseDown={e => e.stopPropagation()} style={{
         background: '#fff', padding: 20, borderRadius: 6, width: 480, maxWidth: '90%'
       }}>
-        <h3 style={{marginTop: 0}}>Create Backlog Item Type</h3>
+        <h3 style={{marginTop: 0}}>
+          {isEditMode ? 'Edit Backlog Item Type' : 'Create Backlog Item Type'}
+        </h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group" style={{marginBottom: 12}}>
             <label htmlFor="backlog-item-type-title">Title *</label>
@@ -126,7 +163,7 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
               className="form-control"
               value={title}
               onChange={e => setTitle(e.target.value)}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isRefreshing}
               required
             />
             <FormError error={formFieldErrors} id="title"/>
@@ -139,7 +176,7 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
               className="form-control"
               value={numberToString(workflowId)}
               onChange={e => setWorkflowId(stringToNumber(e.target.value))}
-              disabled={isSubmitting || isRefreshing}
+              disabled={isSubmitting || isRefreshing || isEditMode}
               required
             >
               <option value={Constants.DEFAULT_VALUE_STRING}></option>
@@ -160,24 +197,33 @@ export default function CreateBacklogItemTypeModal({isOpen, accountId, onClose, 
               value={description}
               onChange={e => setDescription(e.target.value)}
               rows={3}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isRefreshing}
             />
             <FormError error={formFieldErrors} id="description"/>
           </div>
 
           <div style={{display: 'flex', gap: 8, justifyContent: 'flex-end'}}>
             <FormError error={formSubmissionError}/>
-            <button type="button" className="btn btn-secondary" onClick={onClose} disabled={isSubmitting}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+              disabled={isSubmitting || isRefreshing}
+            >
               Cancel
             </button>
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={isSubmitting || isRefreshing || workflowId === Constants.DEFAULT_VALUE_NUMBER}
+              disabled={
+                isSubmitting ||
+                isRefreshing ||
+                (!isEditMode && workflowId === Constants.DEFAULT_VALUE_NUMBER)
+              }
             >
               {(isSubmitting || isRefreshing)
                 ? <FontAwesomeIcon icon={faSpinner} size={'lg'} spin={true}/>
-                : 'Create'
+                : (isEditMode ? 'Save' : 'Create')
               }
             </button>
           </div>

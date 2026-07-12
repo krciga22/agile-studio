@@ -13,7 +13,7 @@ import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import CreateBacklogItemTypeModal from "../../modals/account/CreateBacklogItemTypeModal.tsx";
+import BacklogItemTypeModal from "../../modals/account/BacklogItemTypeModal.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -27,7 +27,8 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
   const [initializationStatus, setInitializationStatus] = useState(INIT_STATUS_NOT_INITIALIZED);
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<BacklogItemTypeDto[]>([]);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isBacklogItemTypeModalOpen, setIsBacklogItemTypeModalOpen] = useState(false);
+  const [editingBacklogItemTypeId, setEditingBacklogItemTypeId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -103,10 +104,23 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
     },
     {
       key: 'title',
-      field: 'title',
       header: 'Title',
       width: '28%',
-      sortable: true
+      sortable: true,
+      render: (item: BacklogItemTypeDto) => {
+        return (
+          <button
+            type="button"
+            className="btn btn-link p-0 text-start align-baseline"
+            onClick={() => {
+              setEditingBacklogItemTypeId(item.id);
+              setIsBacklogItemTypeModalOpen(true);
+            }}
+          >
+            {item.title}
+          </button>
+        );
+      }
     },
     {
       key: 'account',
@@ -161,19 +175,27 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => setIsCreateModalOpen(true)}
+              onClick={() => {
+                setEditingBacklogItemTypeId(undefined);
+                setIsBacklogItemTypeModalOpen(true);
+              }}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
         </div>
 
-        <CreateBacklogItemTypeModal
-          isOpen={isCreateModalOpen}
+        <BacklogItemTypeModal
+          isOpen={isBacklogItemTypeModalOpen}
           accountId={accountId}
-          onClose={() => setIsCreateModalOpen(false)}
-          onCreated={() => {
-            setIsCreateModalOpen(false);
+          backlogItemTypeId={editingBacklogItemTypeId}
+          onClose={() => {
+            setIsBacklogItemTypeModalOpen(false);
+            setEditingBacklogItemTypeId(undefined);
+          }}
+          onSaved={() => {
+            setIsBacklogItemTypeModalOpen(false);
+            setEditingBacklogItemTypeId(undefined);
             fetchData(page);
           }}
         />

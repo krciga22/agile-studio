@@ -12,8 +12,11 @@ import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as workflowsEndpoint} from "../../api/endpoints/accounts/Workflows.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import WorkflowStateModal from "../../modals/account/WorkflowStateModal.tsx";
+import ConfirmModal from "../../modals/ConfirmModal.tsx";
+import {deleteWorkflowState} from "../../api/endpoints/accounts/WorkflowStates.tsx";
+import {toast} from "react-toastify";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -29,6 +32,8 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
   const [data, setData] = useState<WorkflowStateDto[]>([]);
   const [isWorkflowStateModalOpen, setIsWorkflowStateModalOpen] = useState(false);
   const [editingWorkflowStateId, setEditingWorkflowStateId] = useState<number | undefined>();
+  const [deletingWorkflowState, setDeletingWorkflowState] = useState<WorkflowStateDto | undefined>();
+  const [openActionsMenuId, setOpenActionsMenuId] = useState<number | undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -94,6 +99,92 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
     setPage(1);
   }, [workflowId]);
 
+  useEffect(() => {
+    const closeActionsMenu = () => {
+      setOpenActionsMenuId(undefined);
+    };
+
+    window.addEventListener('mousedown', closeActionsMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', closeActionsMenu);
+    };
+  }, []);
+
+  const doDeleteWorkflowState = async () => {
+    if (!deletingWorkflowState) {
+      return;
+    }
+
+    let isDeleted = false;
+
+    try {
+      await deleteWorkflowState(deletingWorkflowState.id);
+      isDeleted = true;
+    }
+    catch (error) {
+      toast.error('Error Deleting Workflow State', Constants.DEFAULT_TOAST_PROPS);
+      console.error(error);
+    }
+    finally {
+      if (isDeleted) {
+        setDeletingWorkflowState(undefined);
+        toast.success('Workflow State Deleted', Constants.DEFAULT_TOAST_PROPS);
+        await fetchData(page);
+      }
+    }
+  };
+
+  const renderActionsMenu = (item: WorkflowStateDto) => {
+    const isOpen = openActionsMenuId === item.id;
+    return (
+      <div className="dropstart">
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          data-bs-toggle="dropdown"
+          aria-label="Workflow state actions"
+          aria-expanded={isOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenActionsMenuId(isOpen ? undefined : item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faEllipsisVertical}/>
+        </button>
+        <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+          <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setEditingWorkflowStateId(item.id);
+                  setIsWorkflowStateModalOpen(true);
+                }}
+              >
+                Edit
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setDeletingWorkflowState(item);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   const columns: DataTableColumn<WorkflowStateDto>[] = [
     {
       key: 'id',
@@ -131,6 +222,12 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
       render: (item: WorkflowStateDto) => {
         return <DateTimeText date={item.createdOn}/>;
       }
+    },
+    {
+      key: 'actions',
+      header: '',
+      width: '54px',
+      render: renderActionsMenu
     }
   ];
 
@@ -186,6 +283,21 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
             setEditingWorkflowStateId(undefined);
             fetchData(page);
           }}
+        />
+
+        <ConfirmModal
+          isOpen={!!deletingWorkflowState}
+          title={"Delete Workflow State"}
+          message={
+            deletingWorkflowState ? (
+              <span>
+                Are you sure you want to delete the workflow state <strong>{deletingWorkflowState.title}</strong>?
+              </span>
+            ) : null
+          }
+          confirmText={"Delete"}
+          onCancel={() => setDeletingWorkflowState(undefined)}
+          onConfirm={doDeleteWorkflowState}
         />
 
         <div className={"mb-3"}>

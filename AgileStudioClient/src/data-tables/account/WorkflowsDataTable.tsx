@@ -12,10 +12,13 @@ import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateWorkflowModal from "../../modals/account/CreateWorkflowModal.tsx";
 import {getAccountWorkflowPagePath} from "../../PageRoutes.tsx";
-import {linkToPage} from "../../PageRouterUtils.tsx";
+import {goToPage, linkToPage} from "../../PageRouterUtils.tsx";
+import ConfirmModal from "../../modals/ConfirmModal.tsx";
+import {deleteWorkflow} from "../../api/endpoints/accounts/Workflows.tsx";
+import {toast} from "react-toastify";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -30,6 +33,8 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
   const [isLoading, setIsLoading] = useState<boolean | undefined>();
   const [data, setData] = useState<WorkflowDto[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [deletingWorkflow, setDeletingWorkflow] = useState<WorkflowDto | undefined>();
+  const [openActionsMenuId, setOpenActionsMenuId] = useState<number | undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -95,6 +100,91 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
     setPage(1);
   }, [accountId]);
 
+  useEffect(() => {
+    const closeActionsMenu = () => {
+      setOpenActionsMenuId(undefined);
+    };
+
+    window.addEventListener('mousedown', closeActionsMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', closeActionsMenu);
+    };
+  }, []);
+
+  const doDeleteWorkflow = async () => {
+    if (!deletingWorkflow) {
+      return;
+    }
+
+    let isDeleted = false;
+
+    try {
+      await deleteWorkflow(deletingWorkflow.id);
+      isDeleted = true;
+    }
+    catch (error) {
+      toast.error('Error Deleting Workflow', Constants.DEFAULT_TOAST_PROPS);
+      console.error(error);
+    }
+    finally {
+      if (isDeleted) {
+        setDeletingWorkflow(undefined);
+        toast.success('Workflow Deleted', Constants.DEFAULT_TOAST_PROPS);
+        await fetchData(page);
+      }
+    }
+  };
+
+  const renderActionsMenu = (item: WorkflowDto) => {
+    const isOpen = openActionsMenuId === item.id;
+    return (
+      <div className="dropstart">
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          data-bs-toggle="dropdown"
+          aria-label="Workflow actions"
+          aria-expanded={isOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenActionsMenuId(isOpen ? undefined : item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faEllipsisVertical}/>
+        </button>
+        <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+          <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  goToPage(getAccountWorkflowPagePath(item.account.id, item.id));
+                }}
+              >
+                Edit
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setDeletingWorkflow(item);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   const columns: DataTableColumn<WorkflowDto>[] = [
     {
       key: 'id',
@@ -127,6 +217,12 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
       render: (item: WorkflowDto) => {
         return <DateTimeText date={item.createdOn}/>;
       }
+    },
+    {
+      key: 'actions',
+      header: '',
+      width: '54px',
+      render: renderActionsMenu
     }
   ];
 
@@ -174,6 +270,21 @@ function WorkflowsDataTable(props: WorkflowsDataTableProps) {
             setIsCreateModalOpen(false);
             fetchData(page);
           }}
+        />
+
+        <ConfirmModal
+          isOpen={!!deletingWorkflow}
+          title={"Delete Workflow"}
+          message={
+            deletingWorkflow ? (
+              <span>
+                Are you sure you want to delete the workflow <strong>{deletingWorkflow.title}</strong>?
+              </span>
+            ) : null
+          }
+          confirmText={"Delete"}
+          onCancel={() => setDeletingWorkflow(undefined)}
+          onConfirm={doDeleteWorkflow}
         />
 
         <div className={"mb-3"}>

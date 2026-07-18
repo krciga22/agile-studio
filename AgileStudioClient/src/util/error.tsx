@@ -30,6 +30,12 @@ export const getErrorMessageForAxiosError = (err: AxiosError, errorContext: stri
       message = ERROR_MESSAGE_UNAUTHORIZED;
     }
   }
+  else if(err.code === 'ERR_NETWORK'){
+    message = "A network error has occurred.";
+  }
+  else if(err.code === 'ECONNABORTED'){
+    message = "The request timed out. Please try again later.";
+  }
 
   return message;
 }

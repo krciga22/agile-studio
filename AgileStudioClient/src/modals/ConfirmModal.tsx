@@ -51,7 +51,7 @@ export default function ConfirmModal({
       catch (err: unknown) {
         let errorMessage = ERROR_MESSAGE_DEFAULT;
 
-        if (axios.isAxiosError(err) && err.response) {
+        if (axios.isAxiosError(err)) {
           errorMessage = getErrorMessageForAxiosError(
             err, ERROR_CONTEXT.FORM_SUBMISSION);
         }

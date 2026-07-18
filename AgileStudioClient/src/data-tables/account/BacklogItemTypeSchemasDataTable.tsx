@@ -12,8 +12,10 @@ import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaModal from "../../modals/account/CreateBacklogItemTypeSchemaModal.tsx";
+import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
+import {deleteBacklogItemTypeSchema} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -28,6 +30,8 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<BacklogItemTypeSchemaDto[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [deletingSchema, setDeletingSchema] = useState<BacklogItemTypeSchemaDto|undefined>();
+  const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -93,6 +97,55 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
     setPage(1);
   }, [accountId]);
 
+  useEffect(() => {
+    const closeActionsMenu = () => {
+      setOpenActionsMenuId(undefined);
+    };
+
+    window.addEventListener('mousedown', closeActionsMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', closeActionsMenu);
+    };
+  }, []);
+
+  const renderActionsMenu = (item: BacklogItemTypeSchemaDto) => {
+    const isOpen = openActionsMenuId === item.id;
+    return (
+      <div className="dropstart">
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          data-bs-toggle="dropdown"
+          aria-label="Backlog item type schema actions"
+          aria-expanded={isOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenActionsMenuId(isOpen ? undefined : item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </button>
+        <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+          <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setDeletingSchema(item);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   const columns: DataTableColumn<BacklogItemTypeSchemaDto>[] = [
     {
       key: 'id',
@@ -117,6 +170,12 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
       render: (item: BacklogItemTypeSchemaDto) => {
         return <DateTimeText date={item.createdOn} />
       }
+    },
+    {
+      key: 'actions',
+      header: '',
+      width: '54px',
+      render: renderActionsMenu
     }
   ];
 
@@ -163,6 +222,20 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
           onCreated={() => {
             setIsCreateModalOpen(false);
             fetchData(page);
+          }}
+        />
+
+        <ConfirmDeleteModal
+          resourceType={"Backlog Item Type Schema"}
+          resourceTitle={deletingSchema?.title}
+          resourceID={deletingSchema?.id}
+          deleteEndpoint={deleteBacklogItemTypeSchema}
+          onCancel={() => {
+            setDeletingSchema(undefined);
+          }}
+          onDeleteSuccess={async () => {
+            setDeletingSchema(undefined);
+            await fetchData(page);
           }}
         />
 

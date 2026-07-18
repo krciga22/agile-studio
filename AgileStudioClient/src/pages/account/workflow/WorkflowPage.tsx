@@ -16,10 +16,9 @@ import axios from "axios";
 import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from "../../../util/error.tsx";
 import {getProblemDetailsErrorMapFromResponse} from "../../../api/Api.tsx";
 import FormError from "../../../components/form/FormError.tsx";
-import ConfirmModal from "../../../modals/ConfirmModal.tsx";
+import ConfirmDeleteModal from "../../../modals/ConfirmDeleteModal.tsx";
 import {goToPage} from "../../../PageRouterUtils.tsx";
 import {getAccountWorkflowsPagePath} from "../../../PageRoutes.tsx";
-import {toast} from "react-toastify";
 import {deleteWorkflow} from "../../../api/endpoints/accounts/Workflows.tsx";
 
 type WorkflowPageProps = {
@@ -240,17 +239,18 @@ function WorkflowPage(props: WorkflowPageProps) {
                 </div>
               </div>
 
-              <ConfirmModal
-                isOpen={isConfirmingDelete}
-                title={`Delete Workflow`}
-                message={<span>Are you sure you want to delete the workflow <strong>{workflow.title}</strong>? This action cannot be undone.</span>}
-                confirmText={'Delete Workflow'}
-                onCancel={() => setIsConfirmingDelete(false)}
-                onConfirm={async () => {
-                  await deleteWorkflow(workflow.id);
-                  toast.success('Workflow Deleted', Constants.DEFAULT_TOAST_PROPS);
-                  goToPage(getAccountWorkflowsPagePath(workflow.account.id));
-                }}
+              <ConfirmDeleteModal
+                  resourceType={"Workflow"}
+                  resourceTitle={workflow?.title}
+                  resourceID={isConfirmingDelete ? workflow.id : null}
+                  deleteEndpoint={deleteWorkflow}
+                  onCancel={() => {
+                    setIsConfirmingDelete(false);
+                  }}
+                  onDeleteSuccess={async () => {
+                    setIsConfirmingDelete(false);
+                    goToPage(getAccountWorkflowsPagePath(workflow.account.id));
+                  }}
               />
           </div>
       }

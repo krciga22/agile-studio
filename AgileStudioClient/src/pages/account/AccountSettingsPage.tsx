@@ -10,9 +10,9 @@ import {type AxiosResponse} from "axios";
 import type {ProblemDetailsErrorMap} from "../../api/dtos/ProblemDetailsDtos.tsx";
 import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
-import {linkToPage} from "../../PageRouterUtils.tsx";
-import {getAccountPagePath, getAccountsPagePath} from "../../PageRoutes.tsx";
-import ConfirmModal from '../../modals/ConfirmModal';
+import {goToPage, linkToPage} from "../../PageRouterUtils.tsx";
+import {getAccountPagePath, getAccountsPagePath, getHomePagePath} from "../../PageRoutes.tsx";
+import ConfirmDeleteModal from '../../modals/ConfirmDeleteModal';
 import {getAccount} from "../../api/endpoints/accounts/Accounts.tsx";
 import type {AccountTypeDto} from "../../api/dtos/accounts/AccountTypeDtos.tsx";
 import {getAccountTypes} from "../../api/endpoints/accounts/AccountTypes.tsx";
@@ -238,15 +238,20 @@ function AccountSettingsPage(props: SettingsPageProps) {
                   </div>
               </div>
 
-              <ConfirmModal
-                isOpen={isConfirmingDelete}
-                title={`Delete Account`}
-                message={<span>Are you sure you want to delete the account <strong>{getAccountTitle(account)}</strong>? This action cannot be undone.</span>}
-                confirmText={'Delete Account'}
-                onCancel={() => setIsConfirmingDelete(false)}
-                onConfirm={async () => {
-                  throw new Error("Not implemented");
-                }}
+              <ConfirmDeleteModal
+                  resourceType={"Account"}
+                  resourceTitle={getAccountTitle(account)}
+                  resourceID={isConfirmingDelete ? account.id : null}
+                  deleteEndpoint={() => {
+                    throw new Error("Not implemented");
+                  }}
+                  onCancel={() => {
+                    setIsConfirmingDelete(false);
+                  }}
+                  onDeleteSuccess={async () => {
+                    setIsConfirmingDelete(false);
+                    goToPage(getHomePagePath());
+                  }}
               />
           </div>
       }

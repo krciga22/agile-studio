@@ -18,9 +18,8 @@ import FormError from "../../components/form/FormError.tsx";
 import Breadcrumbs, { Breadcrumb } from "../../components/breadcrumbs/Breadcrumbs";
 import {linkToPage} from "../../PageRouterUtils.tsx";
 import {getProjectPagePath, getProjectsPagePath} from "../../PageRoutes.tsx";
-import ConfirmModal from '../../modals/ConfirmModal';
+import ConfirmDeleteModal from '../../modals/ConfirmDeleteModal';
 import { goToPage } from '../../PageRouterUtils.tsx';
-import {toast} from 'react-toastify';
 import {deleteProject, getProject, updateProject} from "../../api/endpoints/projects/Projects.tsx";
 import type {PaginatedResultsDto} from "../../api/dtos/PaginatedResultsDto.tsx";
 
@@ -306,17 +305,18 @@ function SettingsPage(props: SettingsPageProps) {
                   </div>
               </div>
 
-              <ConfirmModal
-                isOpen={isConfirmingDelete}
-                title={`Delete Project`}
-                message={<span>Are you sure you want to delete the project <strong>{project?.title}</strong>? This action cannot be undone.</span>}
-                confirmText={'Delete Project'}
-                onCancel={() => setIsConfirmingDelete(false)}
-                onConfirm={async () => {
-                  await deleteProject(project.id);
-                  toast.success('Project Deleted', Constants.DEFAULT_TOAST_PROPS);
-                  goToPage(getProjectsPagePath());
-                }}
+              <ConfirmDeleteModal
+                  resourceType={"Project"}
+                  resourceTitle={project?.title}
+                  resourceID={isConfirmingDelete ? project.id : null}
+                  deleteEndpoint={deleteProject}
+                  onCancel={() => {
+                    setIsConfirmingDelete(false);
+                  }}
+                  onDeleteSuccess={async () => {
+                    setIsConfirmingDelete(false);
+                    goToPage(getProjectsPagePath());
+                  }}
               />
           </div>
       }

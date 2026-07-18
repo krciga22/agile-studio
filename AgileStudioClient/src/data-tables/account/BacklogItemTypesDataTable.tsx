@@ -14,9 +14,8 @@ import {baseUrl as accountsEndpoint} from "../../api/endpoints/accounts/Accounts
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import BacklogItemTypeModal from "../../modals/account/BacklogItemTypeModal.tsx";
-import ConfirmModal from "../../modals/ConfirmModal.tsx";
+import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import {deleteBacklogItemType} from "../../api/endpoints/accounts/BacklogItemTypes.tsx";
-import {toast} from "react-toastify";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -110,30 +109,6 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
       window.removeEventListener('mousedown', closeActionsMenu);
     };
   }, []);
-
-  const doDeleteBacklogItemType = async () => {
-    if(!deletingBacklogItemType){
-      return;
-    }
-
-    let isDeleted = false;
-
-    try{
-      await deleteBacklogItemType(deletingBacklogItemType.id);
-      isDeleted = true;
-    }
-    catch(error){
-      toast.error('Error Deleting Backlog Item Type', Constants.DEFAULT_TOAST_PROPS);
-      console.error(error);
-    }
-    finally {
-      if(isDeleted){
-        setDeletingBacklogItemType(undefined);
-        toast.success('Backlog Item Type Deleted', Constants.DEFAULT_TOAST_PROPS);
-        await fetchData(page);
-      }
-    }
-  };
 
   const renderActionsMenu = (item: BacklogItemTypeDto) => {
     const isOpen = openActionsMenuId === item.id;
@@ -296,19 +271,18 @@ function BacklogItemTypesDataTable(props: BacklogItemTypesDataTableProps) {
           }}
         />
 
-        <ConfirmModal
-          isOpen={!!deletingBacklogItemType}
-          title={"Delete Backlog Item Type"}
-          message={
-            deletingBacklogItemType ? (
-              <span>
-                Are you sure you want to delete the backlog item type <strong>{deletingBacklogItemType.title}</strong>?
-              </span>
-            ) : null
-          }
-          confirmText={"Delete"}
-          onCancel={() => setDeletingBacklogItemType(undefined)}
-          onConfirm={doDeleteBacklogItemType}
+        <ConfirmDeleteModal
+          resourceType={"Backlog Item Type"}
+          resourceTitle={deletingBacklogItemType?.title}
+          resourceID={deletingBacklogItemType?.id}
+          deleteEndpoint={deleteBacklogItemType}
+          onCancel={() => {
+            setDeletingBacklogItemType(undefined);
+          }}
+          onDeleteSuccess={async () => {
+            setDeletingBacklogItemType(undefined);
+            await fetchData(page);
+          }}
         />
 
         <div className={"mb-3"}>

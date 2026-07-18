@@ -14,9 +14,8 @@ import {baseUrl as workflowsEndpoint} from "../../api/endpoints/accounts/Workflo
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import WorkflowStateModal from "../../modals/account/WorkflowStateModal.tsx";
-import ConfirmModal from "../../modals/ConfirmModal.tsx";
+import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import {deleteWorkflowState} from "../../api/endpoints/accounts/WorkflowStates.tsx";
-import {toast} from "react-toastify";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -110,30 +109,6 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
       window.removeEventListener('mousedown', closeActionsMenu);
     };
   }, []);
-
-  const doDeleteWorkflowState = async () => {
-    if (!deletingWorkflowState) {
-      return;
-    }
-
-    let isDeleted = false;
-
-    try {
-      await deleteWorkflowState(deletingWorkflowState.id);
-      isDeleted = true;
-    }
-    catch (error) {
-      toast.error('Error Deleting Workflow State', Constants.DEFAULT_TOAST_PROPS);
-      console.error(error);
-    }
-    finally {
-      if (isDeleted) {
-        setDeletingWorkflowState(undefined);
-        toast.success('Workflow State Deleted', Constants.DEFAULT_TOAST_PROPS);
-        await fetchData(page);
-      }
-    }
-  };
 
   const renderActionsMenu = (item: WorkflowStateDto) => {
     const isOpen = openActionsMenuId === item.id;
@@ -285,19 +260,18 @@ function WorkflowStatesDataTable(props: WorkflowStatesDataTableProps) {
           }}
         />
 
-        <ConfirmModal
-          isOpen={!!deletingWorkflowState}
-          title={"Delete Workflow State"}
-          message={
-            deletingWorkflowState ? (
-              <span>
-                Are you sure you want to delete the workflow state <strong>{deletingWorkflowState.title}</strong>?
-              </span>
-            ) : null
-          }
-          confirmText={"Delete"}
-          onCancel={() => setDeletingWorkflowState(undefined)}
-          onConfirm={doDeleteWorkflowState}
+        <ConfirmDeleteModal
+          resourceType={"Workflow State"}
+          resourceTitle={deletingWorkflowState?.title}
+          resourceID={deletingWorkflowState?.id}
+          deleteEndpoint={deleteWorkflowState}
+          onCancel={() => {
+            setDeletingWorkflowState(undefined);
+          }}
+          onDeleteSuccess={async () => {
+            setDeletingWorkflowState(undefined);
+            await fetchData(page);
+          }}
         />
 
         <div className={"mb-3"}>

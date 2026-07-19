@@ -16,6 +16,8 @@ import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaModal from "../../modals/account/CreateBacklogItemTypeSchemaModal.tsx";
 import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import {deleteBacklogItemTypeSchema} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
+import {getAccountBacklogItemTypeSchemaPagePath} from "../../PageRoutes.tsx";
+import {goToPage, linkToPage} from "../../PageRouterUtils.tsx";
 
 const INIT_STATUS_NOT_INITIALIZED = 'not_initialized';
 const INIT_STATUS_INITIALIZED = 'initialized';
@@ -134,6 +136,18 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
                 className="dropdown-item"
                 onClick={() => {
                   setOpenActionsMenuId(undefined);
+                  goToPage(getAccountBacklogItemTypeSchemaPagePath(accountId, item.id));
+                }}
+              >
+                Edit
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
                   setDeletingSchema(item);
                 }}
               >
@@ -159,7 +173,15 @@ function BacklogItemTypeSchemasDataTable(props: BacklogItemTypeSchemasDataTableP
       field: 'title',
       header: 'Title',
       width: '65%',
-      sortable: true
+      sortable: true,
+      render: (schema: BacklogItemTypeSchemaDto) => {
+        const pagePath = getAccountBacklogItemTypeSchemaPagePath(accountId, schema.id);
+        return (
+          <a href={pagePath} onClick={linkToPage}>
+            {schema.title}
+          </a>
+        );
+      }
     },
     {
       key: 'createdOn',

@@ -24,6 +24,7 @@ import WorkflowsPage from "./pages/account/WorkflowsPage.tsx";
 import WorkflowStatesPage from "./pages/account/workflow/WorkflowStatesPage.tsx";
 import AccountsPage from "./pages/AccountsPage.tsx";
 import WorkflowPage from "./pages/account/workflow/WorkflowPage.tsx";
+import BacklogItemTypeSchemaPage from "./pages/account/backlogItemTypeSchema/BacklogItemTypeSchemaPage.tsx";
 
 type CurrentPathAndState = {
   pathname: string,
@@ -101,6 +102,15 @@ function PageRouter() {
       }
       else if(subPath === 'backlog-item-type-schemas'){
         page = <BacklogItemTypeSchemasPage accountId={accountId}></BacklogItemTypeSchemasPage>
+      }
+      else if(subPath.match(/backlog-item-type-schemas\/\d+/)?.length === 1){
+        const schemaId = parseInt(subPathSegments[1]);
+        if (!isNaN(schemaId)) {
+          subPath = subPathSegments.slice(2).join('/');
+          subPathSegments = subPath.split('/');
+
+          page = <BacklogItemTypeSchemaPage accountID={accountId} backlogItemTypeSchemaID={schemaId}></BacklogItemTypeSchemaPage>
+        }
       }
       else if(subPath === 'backlog-item-link-types'){
         page = <BacklogItemLinkTypesPage accountId={accountId}></BacklogItemLinkTypesPage>

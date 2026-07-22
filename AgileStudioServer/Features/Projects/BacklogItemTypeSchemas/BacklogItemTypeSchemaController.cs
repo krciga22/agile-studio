@@ -8,11 +8,12 @@ using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
 {
     [ApiController]
-    [Route("Projects/Projects/{projectId}/")]
+    [Route("Projects/Projects/{id}")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemTypeSchemaController : ControllerBase
@@ -45,11 +46,12 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BacklogItemTypeSchemaForProjectDto), StatusCodes.Status200OK)]
-        public IActionResult Get(int projectId)
+        [SwaggerOperation(Tags = new[] { "Project" })]
+        public IActionResult Get(int id)
         {
             try
             {
-                ProjectModel project = _ProjectService.Get(projectId);
+                ProjectModel project = _ProjectService.Get(id);
 
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
@@ -57,7 +59,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
                     PermissionKeys.READ,
                     Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA,
                     Scopes.PROJECT,
-                    projectId.ToString());
+                    id.ToString());
 
                 BacklogItemTypeSchemaModel backlogItemTypeSchema = _BacklogItemTypeSchemaService.Get(
                     project.BacklogItemTypeSchemaID);

@@ -38,6 +38,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     Description = "Enter your JWT Access Token (without the 'Bearer' prefix)."
                 });
 
+                options.EnableAnnotations();
+
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {

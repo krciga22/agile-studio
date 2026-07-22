@@ -10,11 +10,12 @@ using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
 {
     [ApiController]
-    [Route("Projects/Projects/{projectId}/BacklogItemTypeSchema/")]
+    [Route("Projects/Projects/{id}/BacklogItemTypeSchema/")]
     [ApiExplorerSettings(GroupName = "projects")]
     [Authorize]
     public class BacklogItemTypeSchemaNodeController : ControllerBase
@@ -47,13 +48,14 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaNodeForProjectDto>), StatusCodes.Status200OK)]
-        public IActionResult Get(int projectId, [FromQuery] GetCollectionQueryParams queryParams)
+        [SwaggerOperation(Tags = new[] { "Project" })]
+        public IActionResult Get(int id, [FromQuery] GetCollectionQueryParams queryParams)
         {
             try
             {
                 _ServiceContext.WithGetCollectionQueryParams(queryParams);
 
-                ProjectModel project = _ProjectService.Get(projectId);
+                ProjectModel project = _ProjectService.Get(id);
 
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
@@ -61,7 +63,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
                     PermissionKeys.LIST,
                     Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_NODE,
                     Scopes.PROJECT,
-                    projectId.ToString());
+                    id.ToString());
 
                 PaginationResults<BacklogItemTypeSchemaNodeModel> models = _BacklogItemTypeSchemaNodeService.GetBySchemaId(
                     project.BacklogItemTypeSchemaID);

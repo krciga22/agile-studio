@@ -142,123 +142,125 @@ function BacklogItemTypeSchemaPage(props: BacklogItemTypeSchemaPageProps) {
 
       {
         isRefreshing === false && account && schema &&
-          <div style={{maxWidth: '700px'}}>
-              <BacklogItemTypeSchemaBreadcrumbs account={account} backlogItemTypeSchema={schema} />
-              <BacklogItemTypeSchemaNav account={account} backlogItemTypeSchema={schema} />
+          <div>
+            <BacklogItemTypeSchemaBreadcrumbs account={account} backlogItemTypeSchema={schema} />
+            <BacklogItemTypeSchemaNav account={account} backlogItemTypeSchema={schema} />
 
-              <h2>Details</h2>
-              <form className={"py-4"} onSubmit={handleSubmit}>
+            <div style={{maxWidth: '700px'}}>
+                <h2>Details</h2>
+                  <form className={"py-4"} onSubmit={handleSubmit}>
+                  <div className={"row py-2"}>
+                    <div className={"col col-12 col-md-5 text-start"}>
+                      <label>Schema ID *</label>
+                    </div>
+                    <div className={"col col-12 col-md-7"}>
+                      <input
+                        className={"form-control"}
+                        type={"text"}
+                        value={schema.id}
+                        disabled={true}
+                        required={enableRequiredFieldValidation}
+                      />
+                      <FormError error={formFieldErrors} id="id" />
+                    </div>
+                  </div>
+
+                  <div className={"row py-2"}>
+                    <div className={"col col-12 col-md-5 text-start"}>
+                      <label>Account ID *</label>
+                    </div>
+                    <div className={"col col-12 col-md-7"}>
+                      <input
+                        className={"form-control"}
+                        type={"text"}
+                        value={account.id}
+                        disabled={true}
+                        required={enableRequiredFieldValidation}
+                      />
+                      <FormError error={formFieldErrors} id="accountid" />
+                    </div>
+                  </div>
+
+                  <div className={"row py-2"}>
+                    <div className={"col col-12 col-md-5 text-start"}>
+                      <label>Title *</label>
+                    </div>
+                    <div className={"col col-12 col-md-7"}>
+                      <input
+                        className={"form-control"}
+                        type={"text"}
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        disabled={isSubmitting}
+                        required={enableRequiredFieldValidation}
+                      />
+                      <FormError error={formFieldErrors} id="title" />
+                    </div>
+                  </div>
+
+                  <div className={"row py-2"}>
+                    <div className={"col col-12 col-md-5 text-start"}>
+                      <label>Description</label>
+                    </div>
+                    <div className={"col col-12 col-md-7"}>
+                      <textarea
+                        className={"form-control"}
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        disabled={isSubmitting}
+                      />
+                      <FormError error={formFieldErrors} id="description" />
+                    </div>
+                  </div>
+
+                  <div className={"row py-2"}>
+                    <div className={"col col-12 col-md-5 text-start text-md-end"}></div>
+                    <div className={"col col-12 col-md-7 d-flex justify-content-end gap-8"}>
+                      <FormError error={formSubmissionError} />
+                      <button type="submit" className={"btn btn-primary"} disabled={isSubmitting}>
+                        {
+                          isSubmitting ?
+                            <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> :
+                            'Save'
+                        }
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <hr />
+
+                <h3>Danger Zone</h3>
                 <div className={"row py-2"}>
                   <div className={"col col-12 col-md-5 text-start"}>
-                    <label>Schema ID *</label>
+                    <label>Delete Schema</label>
                   </div>
                   <div className={"col col-12 col-md-7"}>
-                    <input
-                      className={"form-control"}
-                      type={"text"}
-                      value={schema.id}
-                      disabled={true}
-                      required={enableRequiredFieldValidation}
-                    />
-                    <FormError error={formFieldErrors} id="id" />
-                  </div>
-                </div>
-
-                <div className={"row py-2"}>
-                  <div className={"col col-12 col-md-5 text-start"}>
-                    <label>Account ID *</label>
-                  </div>
-                  <div className={"col col-12 col-md-7"}>
-                    <input
-                      className={"form-control"}
-                      type={"text"}
-                      value={account.id}
-                      disabled={true}
-                      required={enableRequiredFieldValidation}
-                    />
-                    <FormError error={formFieldErrors} id="accountid" />
-                  </div>
-                </div>
-
-                <div className={"row py-2"}>
-                  <div className={"col col-12 col-md-5 text-start"}>
-                    <label>Title *</label>
-                  </div>
-                  <div className={"col col-12 col-md-7"}>
-                    <input
-                      className={"form-control"}
-                      type={"text"}
-                      value={title}
-                      onChange={e => setTitle(e.target.value)}
+                    <button
+                      type="button"
+                      className={"btn btn-danger"}
                       disabled={isSubmitting}
-                      required={enableRequiredFieldValidation}
-                    />
-                    <FormError error={formFieldErrors} id="title" />
-                  </div>
-                </div>
-
-                <div className={"row py-2"}>
-                  <div className={"col col-12 col-md-5 text-start"}>
-                    <label>Description</label>
-                  </div>
-                  <div className={"col col-12 col-md-7"}>
-                    <textarea
-                      className={"form-control"}
-                      value={description}
-                      onChange={e => setDescription(e.target.value)}
-                      disabled={isSubmitting}
-                    />
-                    <FormError error={formFieldErrors} id="description" />
-                  </div>
-                </div>
-
-                <div className={"row py-2"}>
-                  <div className={"col col-12 col-md-5 text-start text-md-end"}></div>
-                  <div className={"col col-12 col-md-7 d-flex justify-content-end gap-8"}>
-                    <FormError error={formSubmissionError} />
-                    <button type="submit" className={"btn btn-primary"} disabled={isSubmitting}>
-                      {
-                        isSubmitting ?
-                          <FontAwesomeIcon icon={faSpinner} size={"lg"} spin={true}></FontAwesomeIcon> :
-                          'Save'
-                      }
+                      onClick={() => setIsConfirmingDelete(true)}
+                    >
+                      Delete Schema
                     </button>
                   </div>
                 </div>
-              </form>
 
-              <hr />
-
-              <h3>Danger Zone</h3>
-              <div className={"row py-2"}>
-                <div className={"col col-12 col-md-5 text-start"}>
-                  <label>Delete Schema</label>
-                </div>
-                <div className={"col col-12 col-md-7"}>
-                  <button
-                    type="button"
-                    className={"btn btn-danger"}
-                    disabled={isSubmitting}
-                    onClick={() => setIsConfirmingDelete(true)}
-                  >
-                    Delete Schema
-                  </button>
-                </div>
-              </div>
-
-              <ConfirmDeleteModal
-                  resourceType={"Backlog Item Type Schema"}
-                  resourceTitle={schema?.title}
-                  resourceID={isConfirmingDelete ? schema.id : null}
-                  deleteEndpoint={deleteBacklogItemTypeSchema}
-                  onCancel={() => {
-                    setIsConfirmingDelete(false);
-                  }}
-                  onDeleteSuccess={async () => {
-                    setIsConfirmingDelete(false);
-                    goToPage(getAccountBacklogItemTypeSchemasPagePath(accountID));
-                  }}
-              />
+                <ConfirmDeleteModal
+                    resourceType={"Backlog Item Type Schema"}
+                    resourceTitle={schema?.title}
+                    resourceID={isConfirmingDelete ? schema.id : null}
+                    deleteEndpoint={deleteBacklogItemTypeSchema}
+                    onCancel={() => {
+                      setIsConfirmingDelete(false);
+                    }}
+                    onDeleteSuccess={async () => {
+                      setIsConfirmingDelete(false);
+                      goToPage(getAccountBacklogItemTypeSchemasPagePath(accountID));
+                    }}
+                />
+            </div>
           </div>
       }
     </div>

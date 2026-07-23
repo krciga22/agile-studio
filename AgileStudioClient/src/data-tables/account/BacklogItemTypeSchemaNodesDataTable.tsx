@@ -11,9 +11,11 @@ import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {getBacklogItemTypeSchemaNodes} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaNodeModal from "../../modals/account/CreateBacklogItemTypeSchemaNodeModal.tsx";
+import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import type {UserSummaryDto} from "../../api/dtos/UserDtos.tsx";
+import {deleteBacklogItemTypeSchemaNode} from "../../api/endpoints/accounts/BacklogItemTypeSchemaNodes.tsx";
 
 type BacklogItemTypeSchemaNodesDataTableProps = {
   backlogItemTypeSchemaId: number;
@@ -25,6 +27,8 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<BacklogItemTypeSchemaNodeDto[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [deletingNode, setDeletingNode] = useState<BacklogItemTypeSchemaNodeDto|undefined>();
+  const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -86,8 +90,57 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     setPage(1);
   }, [backlogItemTypeSchemaId]);
 
+  useEffect(() => {
+    const closeActionsMenu = () => {
+      setOpenActionsMenuId(undefined);
+    };
+
+    window.addEventListener('mousedown', closeActionsMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', closeActionsMenu);
+    };
+  }, []);
+
   const renderUser = (createdBy: UserSummaryDto) => {
     return createdBy ? `${createdBy.firstName ?? ''} ${createdBy.lastName ?? ''}`.trim() : '--';
+  };
+
+  const renderActionsMenu = (item: BacklogItemTypeSchemaNodeDto) => {
+    const isOpen = openActionsMenuId === item.id;
+    return (
+      <div className="dropstart">
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          data-bs-toggle="dropdown"
+          aria-label="Backlog item type schema node actions"
+          aria-expanded={isOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenActionsMenuId(isOpen ? undefined : item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </button>
+        <div className="dropdown" onMouseDown={e => e.stopPropagation()}>
+          <ul className={`dropdown-menu dropdown-menu-end ${isOpen ? 'show' : ''}`}>
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => {
+                  setOpenActionsMenuId(undefined);
+                  setDeletingNode(item);
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
   };
 
   const columns: DataTableColumn<BacklogItemTypeSchemaNodeDto>[] = [
@@ -101,7 +154,6 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     {
       key: 'backlogItemType',
       header: 'Type',
-      width: '42%',
       render: (item: BacklogItemTypeSchemaNodeDto) => item.backlogItemType.title ?? `#${item.backlogItemType.id}`
     },
     {
@@ -117,6 +169,12 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
       width: '20%',
       sortable: true,
       render: (item: BacklogItemTypeSchemaNodeDto) => <DateTimeText date={item.createdOn} />
+    },
+    {
+      key: 'actions',
+      header: '',
+      width: '54px',
+      render: renderActionsMenu
     }
   ];
 
@@ -163,6 +221,24 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
           onCreated={() => {
             setIsCreateModalOpen(false);
             fetchData(page);
+          }}
+        />
+
+        <ConfirmDeleteModal
+          resourceType={"Type"}
+          resourceTitle={
+            deletingNode
+              ? deletingNode.backlogItemType.title ?? `#${deletingNode.backlogItemType.id}`
+              : undefined
+          }
+          resourceID={deletingNode?.id}
+          deleteEndpoint={deleteBacklogItemTypeSchemaNode}
+          onCancel={() => {
+            setDeletingNode(undefined);
+          }}
+          onDeleteSuccess={async () => {
+            setDeletingNode(undefined);
+            await fetchData(page);
           }}
         />
 

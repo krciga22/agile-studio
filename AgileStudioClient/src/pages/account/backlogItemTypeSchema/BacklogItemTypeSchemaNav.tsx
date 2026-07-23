@@ -1,6 +1,7 @@
 import './BacklogItemTypeSchemaPage.css'
 import {
   getAccountBacklogItemTypeSchemaPagePath,
+  getAccountBacklogItemTypeSchemaNodesPagePath,
   isCurrentPagePath
 } from "../../../PageRoutes.tsx";
 import {goToPage} from "../../../PageRouterUtils.tsx";
@@ -21,7 +22,7 @@ function BacklogItemTypeSchemaNav(props: BacklogItemTypeSchemaNavProps) {
 
   const isInitialized = (account && backlogItemTypeSchema);
   const schemaPagePath = isInitialized ? getAccountBacklogItemTypeSchemaPagePath(account.id, backlogItemTypeSchema.id) : "";
-  const typesPagePath = "not-yet-implemented";
+  const typesPagePath = isInitialized ? getAccountBacklogItemTypeSchemaNodesPagePath(account.id, backlogItemTypeSchema.id) : "";
 
   const pillNavItems: PillNavItem[] = [
     {

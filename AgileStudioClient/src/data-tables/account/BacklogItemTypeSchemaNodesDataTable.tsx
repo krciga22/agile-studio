@@ -10,6 +10,10 @@ import Search from "../../components/data-table/Search.tsx";
 import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
 import {getBacklogItemTypeSchemaNodes} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import CreateBacklogItemTypeSchemaNodeModal from "../../modals/account/CreateBacklogItemTypeSchemaNodeModal.tsx";
+import type {UserSummaryDto} from "../../api/dtos/UserDtos.tsx";
 
 type BacklogItemTypeSchemaNodesDataTableProps = {
   backlogItemTypeSchemaId: number;
@@ -20,6 +24,7 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const [initializationStatus, setInitializationStatus] = useState('not_initialized');
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<BacklogItemTypeSchemaNodeDto[]>([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -81,9 +86,8 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     setPage(1);
   }, [backlogItemTypeSchemaId]);
 
-  const renderUser = (createdBy: BacklogItemTypeSchemaNodeDto["createdBy"]) => {
-    const name = `${createdBy.firstName ?? ''} ${createdBy.lastName ?? ''}`.trim();
-    return name.length > 0 ? name : `#${createdBy.id}`;
+  const renderUser = (createdBy: UserSummaryDto) => {
+    return createdBy ? `${createdBy.firstName ?? ''} ${createdBy.lastName ?? ''}`.trim() : '--';
   };
 
   const columns: DataTableColumn<BacklogItemTypeSchemaNodeDto>[] = [
@@ -141,7 +145,26 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
             <Search setSearchQuery={doSearch}></Search>
             <Sort sortableFields={sortableFields} setSort={doSort}></Sort>
           </div>
+          <div className={"d-flex align-items-start gap-2"}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
         </div>
+
+        <CreateBacklogItemTypeSchemaNodeModal
+          isOpen={isCreateModalOpen}
+          backlogItemTypeSchemaID={backlogItemTypeSchemaId}
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreated={() => {
+            setIsCreateModalOpen(false);
+            fetchData(page);
+          }}
+        />
 
         <div className={"mb-3"}>
           <DataTable<BacklogItemTypeSchemaNodeDto>

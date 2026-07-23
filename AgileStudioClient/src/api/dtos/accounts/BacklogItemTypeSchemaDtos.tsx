@@ -1,11 +1,13 @@
 import type {UserSummaryDto} from "../UserDtos.tsx";
+import type {AccountSummaryDto} from "./AccountDtos.tsx";
 
 export type BacklogItemTypeSchemaDto = {
   id: number,
   title?: string,
   description?: string,
   createdOn: string,
-  createdBy: UserSummaryDto
+  createdBy: UserSummaryDto,
+  account: AccountSummaryDto
 };
 
 export type BacklogItemTypeSchemaSummaryDto = {

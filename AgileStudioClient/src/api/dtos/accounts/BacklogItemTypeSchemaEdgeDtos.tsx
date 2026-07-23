@@ -5,7 +5,7 @@ import type {BacklogItemTypeDto} from "./BacklogItemTypeDtos.tsx";
 export type BacklogItemTypeSchemaEdgeDto = {
   id: number,
   backlogItemTypeSchema: BacklogItemTypeSchemaDto,
-  fromType: BacklogItemTypeDto,
+  fromType: BacklogItemTypeDto | null,
   toType: BacklogItemTypeDto,
   createdOn: string,
   createdBy: UserSummaryDto,

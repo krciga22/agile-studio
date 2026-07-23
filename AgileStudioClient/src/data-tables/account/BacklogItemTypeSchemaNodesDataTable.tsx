@@ -1,5 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import type {BacklogItemTypeSchemaNodeDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaNodeDtos.tsx";
+import type {BacklogItemTypeSchemaEdgeDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaEdgeDtos.tsx";
+import type {BacklogItemTypeDto} from "../../api/dtos/accounts/BacklogItemTypeDtos.tsx";
 import DataTable, {type DataTableColumn} from "../../components/data-table/DataTable.tsx";
 import {DataTableContext} from "../../components/data-table/DataTableContext.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
@@ -9,7 +11,7 @@ import Pagination, {type PaginationDetails} from "../../components/data-table/Pa
 import Search from "../../components/data-table/Search.tsx";
 import Sort from "../../components/data-table/Sort.tsx";
 import DateTimeText from "../../components/date/DateTimeText.tsx";
-import {getBacklogItemTypeSchemaNodes} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
+import {getBacklogItemTypeSchemaEdges, getBacklogItemTypeSchemaNodes} from "../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaNodeModal from "../../modals/account/CreateBacklogItemTypeSchemaNodeModal.tsx";
@@ -26,6 +28,7 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const [initializationStatus, setInitializationStatus] = useState('not_initialized');
   const [isLoading, setIsLoading] = useState<boolean|undefined>();
   const [data, setData] = useState<BacklogItemTypeSchemaNodeDto[]>([]);
+  const [edges, setEdges] = useState<BacklogItemTypeSchemaEdgeDto[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [deletingNode, setDeletingNode] = useState<BacklogItemTypeSchemaNodeDto|undefined>();
   const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
@@ -37,8 +40,13 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const _fetchData = useCallback(async (pageToFetch: number = 1) => {
-    const fetchedData = await getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaId, pageToFetch, searchQuery, sort);
+    const [fetchedData, fetchedEdges] = await Promise.all([
+      getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaId, pageToFetch, searchQuery, sort),
+      getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaId)
+    ]);
+
     setData(fetchedData.data.items);
+    setEdges(fetchedEdges.data.items);
 
     setPaginationDetails({
       pageSize: fetchedData.data.items.length,
@@ -106,6 +114,36 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     return createdBy ? `${createdBy.firstName ?? ''} ${createdBy.lastName ?? ''}`.trim() : '--';
   };
 
+  const renderTypeList = (types: Array<BacklogItemTypeDto | null>) => {
+    const hasStart = types.some(type => type === null);
+    const uniqueTypes = Array.from(
+      new Map(types.filter((type): type is BacklogItemTypeDto => type !== null).map(type => [type.id, type])).values()
+    );
+
+    const labels = [
+      ...(hasStart ? ['[start]'] : []),
+      ...uniqueTypes.map(type => type.title ?? `#${type.id}`)
+    ];
+
+    return labels.length > 0 ? labels.join(', ') : '--';
+  };
+
+  const renderFromTypes = (item: BacklogItemTypeSchemaNodeDto) => {
+    const fromTypes = edges
+      .filter(edge => edge.toType.id === item.backlogItemType.id)
+      .map(edge => edge.fromType);
+
+    return renderTypeList(fromTypes);
+  };
+
+  const renderToTypes = (item: BacklogItemTypeSchemaNodeDto) => {
+    const toTypes = edges
+      .filter(edge => edge.fromType !== null && edge.fromType.id === item.backlogItemType.id)
+      .map(edge => edge.toType);
+
+    return renderTypeList(toTypes);
+  };
+
   const renderActionsMenu = (item: BacklogItemTypeSchemaNodeDto) => {
     const isOpen = openActionsMenuId === item.id;
     return (
@@ -155,6 +193,16 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
       key: 'backlogItemType',
       header: 'Type',
       render: (item: BacklogItemTypeSchemaNodeDto) => item.backlogItemType.title ?? `#${item.backlogItemType.id}`
+    },
+    {
+      key: 'fromTypes',
+      header: 'From Types',
+      render: renderFromTypes
+    },
+    {
+      key: 'toTypes',
+      header: 'To Types',
+      render: renderToTypes
     },
     {
       key: 'createdBy',

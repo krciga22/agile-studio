@@ -155,36 +155,6 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     );
   };
 
-  const renderToTypes = (item: BacklogItemTypeSchemaNodeDto) => {
-    const toEdges = edges.filter(edge => edge.fromType !== null && edge.fromType.id === item.backlogItemType.id);
-
-    return (
-      <div>
-        {toEdges.map(edge => (
-          <span key={edge.id} className="badge bg-light text-dark me-1">
-            {edge.toType.title ?? `#${edge.toType.id}`}
-            <button
-              type="button"
-              className="btn btn-sm text-dark p-0 ms-2"
-              aria-label="Remove to type"
-              onClick={(ev) => { ev.stopPropagation(); setDeletingEdge(edge); }}
-            >
-              ×
-            </button>
-          </span>
-        ))}
-        <button
-          type="button"
-          className="btn btn-sm btn-outline-secondary"
-          aria-label="Add to type"
-          onClick={() => { addEdge('to', item.backlogItemType.id); }}
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-      </div>
-    );
-  };
-
   const renderActionsMenu = (item: BacklogItemTypeSchemaNodeDto) => {
     const isOpen = openActionsMenuId === item.id;
     return (
@@ -239,11 +209,6 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
       key: 'fromTypes',
       header: 'From Types',
       render: renderFromTypes
-    },
-    {
-      key: 'toTypes',
-      header: 'To Types',
-      render: renderToTypes
     },
     {
       key: 'createdBy',

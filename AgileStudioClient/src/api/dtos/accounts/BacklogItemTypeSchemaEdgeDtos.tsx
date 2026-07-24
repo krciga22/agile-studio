@@ -13,6 +13,6 @@ export type BacklogItemTypeSchemaEdgeDto = {
 
 export type BacklogItemTypeSchemaEdgePostDto = {
   backlogItemTypeSchemaID: number,
-  fromTypeID: number,
+  fromTypeID: number | null,
   toTypeID: number,
 };

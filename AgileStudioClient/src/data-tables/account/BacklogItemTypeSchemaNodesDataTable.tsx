@@ -1,7 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import type {BacklogItemTypeSchemaNodeDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaNodeDtos.tsx";
 import type {BacklogItemTypeSchemaEdgeDto} from "../../api/dtos/accounts/BacklogItemTypeSchemaEdgeDtos.tsx";
-import type {BacklogItemTypeDto} from "../../api/dtos/accounts/BacklogItemTypeDtos.tsx";
 import DataTable, {type DataTableColumn} from "../../components/data-table/DataTable.tsx";
 import {DataTableContext} from "../../components/data-table/DataTableContext.tsx";
 import CurrentUserContext from "../../services/CurrentUser.tsx";
@@ -15,9 +14,11 @@ import {getBacklogItemTypeSchemaEdges, getBacklogItemTypeSchemaNodes} from "../.
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPlus} from "@fortawesome/free-solid-svg-icons";
 import CreateBacklogItemTypeSchemaNodeModal from "../../modals/account/CreateBacklogItemTypeSchemaNodeModal.tsx";
+import CreateBacklogItemTypeSchemaEdgeModal from "../../modals/account/CreateBacklogItemTypeSchemaEdgeModal.tsx";
 import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import type {UserSummaryDto} from "../../api/dtos/UserDtos.tsx";
 import {deleteBacklogItemTypeSchemaNode} from "../../api/endpoints/accounts/BacklogItemTypeSchemaNodes.tsx";
+import {deleteBacklogItemTypeSchemaEdge} from "../../api/endpoints/accounts/BacklogItemTypeSchemaEdges.tsx";
 
 type BacklogItemTypeSchemaNodesDataTableProps = {
   backlogItemTypeSchemaId: number;
@@ -30,7 +31,11 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const [data, setData] = useState<BacklogItemTypeSchemaNodeDto[]>([]);
   const [edges, setEdges] = useState<BacklogItemTypeSchemaEdgeDto[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEdgeModalOpen, setIsEdgeModalOpen] = useState(false);
+  const [edgeModalMode, setEdgeModalMode] = useState<'from'|'to'>('from');
+  const [edgeModalTargetTypeID, setEdgeModalTargetTypeID] = useState<number|undefined>();
   const [deletingNode, setDeletingNode] = useState<BacklogItemTypeSchemaNodeDto|undefined>();
+  const [deletingEdge, setDeletingEdge] = useState<BacklogItemTypeSchemaEdgeDto|undefined>();
   const [openActionsMenuId, setOpenActionsMenuId] = useState<number|undefined>();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sort, setSort] = useState<string[]>([]);
@@ -110,38 +115,74 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
     };
   }, []);
 
+  const addEdge = (edgeType:React.SetStateAction<"from"|"to">, targetTypeID:number) => {
+    setEdgeModalMode(edgeType);
+    setEdgeModalTargetTypeID(targetTypeID);
+    setIsEdgeModalOpen(true);
+  };
+
   const renderUser = (createdBy: UserSummaryDto) => {
     return createdBy ? `${createdBy.firstName ?? ''} ${createdBy.lastName ?? ''}`.trim() : '--';
   };
 
-  const renderTypeList = (types: Array<BacklogItemTypeDto | null>) => {
-    const hasStart = types.some(type => type === null);
-    const uniqueTypes = Array.from(
-      new Map(types.filter((type): type is BacklogItemTypeDto => type !== null).map(type => [type.id, type])).values()
-    );
-
-    const labels = [
-      ...(hasStart ? ['[start]'] : []),
-      ...uniqueTypes.map(type => type.title ?? `#${type.id}`)
-    ];
-
-    return labels.length > 0 ? labels.join(', ') : '--';
-  };
-
   const renderFromTypes = (item: BacklogItemTypeSchemaNodeDto) => {
-    const fromTypes = edges
-      .filter(edge => edge.toType.id === item.backlogItemType.id)
-      .map(edge => edge.fromType);
+    const fromEdges = edges.filter(edge => edge.toType.id === item.backlogItemType.id);
 
-    return renderTypeList(fromTypes);
+    return (
+      <div>
+        {fromEdges.map(edge => (
+          <span key={edge.id} className="badge bg-light text-dark me-1">
+            {(edge.fromType ? (edge.fromType.title ?? `#${edge.fromType.id}`) : '[start]')}
+            <button
+              type="button"
+              className="btn btn-sm text-dark p-0 ms-2"
+              aria-label="Remove from type"
+              onClick={(ev) => { ev.stopPropagation(); setDeletingEdge(edge); }}
+            >
+              ×
+            </button>
+          </span>
+        ))}
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          aria-label="Add from type"
+          onClick={() => { addEdge('from', item.backlogItemType.id); }}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </div>
+    );
   };
 
   const renderToTypes = (item: BacklogItemTypeSchemaNodeDto) => {
-    const toTypes = edges
-      .filter(edge => edge.fromType !== null && edge.fromType.id === item.backlogItemType.id)
-      .map(edge => edge.toType);
+    const toEdges = edges.filter(edge => edge.fromType !== null && edge.fromType.id === item.backlogItemType.id);
 
-    return renderTypeList(toTypes);
+    return (
+      <div>
+        {toEdges.map(edge => (
+          <span key={edge.id} className="badge bg-light text-dark me-1">
+            {edge.toType.title ?? `#${edge.toType.id}`}
+            <button
+              type="button"
+              className="btn btn-sm text-dark p-0 ms-2"
+              aria-label="Remove to type"
+              onClick={(ev) => { ev.stopPropagation(); setDeletingEdge(edge); }}
+            >
+              ×
+            </button>
+          </span>
+        ))}
+        <button
+          type="button"
+          className="btn btn-sm btn-outline-secondary"
+          aria-label="Add to type"
+          onClick={() => { addEdge('to', item.backlogItemType.id); }}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </div>
+    );
   };
 
   const renderActionsMenu = (item: BacklogItemTypeSchemaNodeDto) => {
@@ -272,6 +313,18 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
           }}
         />
 
+        <CreateBacklogItemTypeSchemaEdgeModal
+          isOpen={isEdgeModalOpen}
+          mode={edgeModalMode}
+          backlogItemTypeSchemaID={backlogItemTypeSchemaId}
+          targetBacklogItemTypeID={edgeModalTargetTypeID}
+          onClose={() => setIsEdgeModalOpen(false)}
+          onCreated={() => {
+            setIsEdgeModalOpen(false);
+            fetchData(page);
+          }}
+        />
+
         <ConfirmDeleteModal
           resourceType={"Type"}
           resourceTitle={
@@ -286,6 +339,24 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
           }}
           onDeleteSuccess={async () => {
             setDeletingNode(undefined);
+            await fetchData(page);
+          }}
+        />
+
+        <ConfirmDeleteModal
+          resourceType={"Type Edge"}
+          resourceTitle={
+            deletingEdge
+              ? `${deletingEdge.fromType ? (deletingEdge.fromType.title ?? `#${deletingEdge.fromType.id}`) : '[start]'} → ${deletingEdge.toType.title ?? `#${deletingEdge.toType.id}`}`
+              : undefined
+          }
+          resourceID={deletingEdge?.id}
+          deleteEndpoint={deleteBacklogItemTypeSchemaEdge}
+          onCancel={() => {
+            setDeletingEdge(undefined);
+          }}
+          onDeleteSuccess={async () => {
+            setDeletingEdge(undefined);
             await fetchData(page);
           }}
         />

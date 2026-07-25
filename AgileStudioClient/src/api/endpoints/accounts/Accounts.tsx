@@ -16,9 +16,23 @@ export const getAccount = async (id:number): Promise<AxiosResponse<AccountDto>> 
   return await Api.get(`${baseUrl}/${id}`);
 };
 
-export const getBacklogItemTypes = async (accountId:number):
+export const getBacklogItemTypes = async (
+  accountId:number,
+  page: number = 1,
+  searchQuery: string = '',
+  sort: string[] = []):
   Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeDto>>> => {
-  return await Api.get(`${baseUrl}/${accountId}/BacklogItemTypes`);
+  const params: Record<string, string | number> = {page};
+
+  if(searchQuery.length > 0){
+    params.searchQuery = searchQuery;
+  }
+
+  if(sort.length > 0){
+    params.sort = sort.join(',');
+  }
+
+  return await Api.get(`${baseUrl}/${accountId}/BacklogItemTypes`, {params});
 };
 
 export const createBacklogItemType = async (dto:BacklogItemTypePostDto):

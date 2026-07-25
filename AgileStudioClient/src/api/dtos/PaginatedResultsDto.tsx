@@ -4,6 +4,6 @@ export type PaginatedResultsDto<T> = {
   total: number,
   page: number,
   totalPages: number,
-  prefPage: number,
+  prevPage: number,
   nextPage: number,
 };

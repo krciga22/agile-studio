@@ -17,6 +17,7 @@ import {debounce, numberToString, stringToNumber} from '../../Utils.tsx';
 import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../../util/error.tsx';
 import {toast} from 'react-toastify';
 import type {WorkflowDto} from '../../api/dtos/accounts/WorkflowDtos.tsx';
+import {toSortString} from "../../api/api-utils.tsx";
 
 type Props = {
   isOpen: boolean;
@@ -56,7 +57,8 @@ export default function BacklogItemTypeModal({
 
     const refresh = async () => {
       try {
-        const workflowsResponse = await getWorkflows(accountId, ['title:asc']);
+        const workflowsResponse = await getWorkflows(accountId,
+          {sort: toSortString(['title:asc'])});
         setWorkflows(workflowsResponse.data.items);
 
         if (isEditMode && backlogItemTypeId) {

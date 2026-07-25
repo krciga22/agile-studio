@@ -6,11 +6,12 @@ import type {
   ProjectPostDto
 } from "../../dtos/projects/ProjectDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
+import type {GetCollectionQueryParams} from "../../api-utils.tsx";
 
 export const baseUrl = '/Projects/Projects';
 
-export const getProjects = async (): Promise<AxiosResponse<PaginatedResultsDto<ProjectDto>>> => {
-  return await Api.get(baseUrl);
+export const getProjects = async (params?: GetCollectionQueryParams): Promise<AxiosResponse<PaginatedResultsDto<ProjectDto>>> => {
+  return await Api.get(baseUrl, {params});
 };
 
 export const createProject = async (project:ProjectPostDto): Promise<AxiosResponse<ProjectDto>> => {

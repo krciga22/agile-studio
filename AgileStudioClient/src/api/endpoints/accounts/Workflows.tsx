@@ -3,6 +3,7 @@ import type {AxiosResponse} from "axios";
 import type {WorkflowDto, WorkflowPatchDto} from "../../dtos/accounts/WorkflowDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
 import type {WorkflowStateDto, WorkflowStatePostDto} from "../../dtos/accounts/WorkflowStateDtos.tsx";
+import type {GetCollectionQueryParams} from "../../api-utils.tsx";
 
 export const baseUrl = '/Accounts/Workflows';
 
@@ -18,9 +19,9 @@ export const deleteWorkflow = async (id:number): Promise<AxiosResponse> => {
   return await Api.delete(`${baseUrl}/${id}`);
 };
 
-export const getWorkflowStates = async (workflowId:number):
+export const getWorkflowStates = async (workflowId:number, params?: GetCollectionQueryParams):
   Promise<AxiosResponse<PaginatedResultsDto<WorkflowStateDto>>> => {
-  return await Api.get(`${baseUrl}/${workflowId}/WorkflowStates`);
+  return await Api.get(`${baseUrl}/${workflowId}/WorkflowStates`, {params});
 };
 
 export const createWorkflowState = async (dto:WorkflowStatePostDto):

@@ -5,6 +5,7 @@ import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
 import type {BacklogItemTypeSchemaDto, BacklogItemTypeSchemaPostDto} from "../../dtos/accounts/BacklogItemTypeSchemaDtos.tsx";
 import type {BacklogItemTypeDto, BacklogItemTypePostDto} from "../../dtos/accounts/BacklogItemTypeDtos.tsx";
 import type {WorkflowDto, WorkflowPostDto} from "../../dtos/accounts/WorkflowDtos.tsx";
+import type {GetCollectionQueryParams} from "../../api-utils.tsx";
 
 export const baseUrl = '/Accounts/Accounts';
 
@@ -16,22 +17,8 @@ export const getAccount = async (id:number): Promise<AxiosResponse<AccountDto>> 
   return await Api.get(`${baseUrl}/${id}`);
 };
 
-export const getBacklogItemTypes = async (
-  accountId:number,
-  page: number = 1,
-  searchQuery: string = '',
-  sort: string[] = []):
+export const getBacklogItemTypes = async (accountId:number, params:GetCollectionQueryParams):
   Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeDto>>> => {
-  const params: Record<string, string | number> = {page};
-
-  if(searchQuery.length > 0){
-    params.searchQuery = searchQuery;
-  }
-
-  if(sort.length > 0){
-    params.sort = sort.join(',');
-  }
-
   return await Api.get(`${baseUrl}/${accountId}/BacklogItemTypes`, {params});
 };
 
@@ -50,14 +37,8 @@ export const createBacklogItemTypeSchema = async (dto:BacklogItemTypeSchemaPostD
   return await Api.post(`${baseUrl}/${dto.accountID}/BacklogItemTypeSchemas`, dto);
 };
 
-export const getWorkflows = async (accountId:number, sort: string[] = []):
+export const getWorkflows = async (accountId:number, params?:GetCollectionQueryParams):
   Promise<AxiosResponse<PaginatedResultsDto<WorkflowDto>>> => {
-  const params: Record<string, string> = {};
-
-  if(sort.length > 0){
-    params.sort = sort.join(',');
-  }
-
   return await Api.get(`${baseUrl}/${accountId}/Workflows`, {params});
 };
 

@@ -72,7 +72,7 @@ export default function CreateBacklogItemTypeSchemaEdgeModal({
         const backlogItemTypeSchemaEdges = responses[1];
 
         const backlogItemTypes = await paginatedResultsToArray(page =>
-          getBacklogItemTypes(accountId, page));
+          getBacklogItemTypes(accountId, {page}));
 
         const filteredBacklogItemTypes = backlogItemTypes.filter(backlogItemType =>
           !backlogItemTypeSchemaEdges.some(edge => edge.toType.id == targetBacklogItemTypeID && edge?.fromType?.id === backlogItemType.id));

@@ -64,7 +64,7 @@ export default function CreateBacklogItemTypeSchemaNodeModal({
         const schemaNodes = responses[1];
 
         const backlogItemTypes = await paginatedResultsToArray(page =>
-          getBacklogItemTypes(accountId, page));
+          getBacklogItemTypes(accountId, {page}));
 
         const filteredBacklogItemTypes = backlogItemTypes.filter(itemType =>
           !schemaNodes.some(node => node.backlogItemType.id === itemType.id));

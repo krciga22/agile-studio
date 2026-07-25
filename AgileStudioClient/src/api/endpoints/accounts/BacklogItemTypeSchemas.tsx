@@ -10,6 +10,7 @@ import type {
   BacklogItemTypeSchemaEdgePostDto
 } from "../../dtos/accounts/BacklogItemTypeSchemaEdgeDtos.tsx";
 import type {PaginatedResultsDto} from "../../dtos/PaginatedResultsDto.tsx";
+import type {GetCollectionQueryParams} from "../../api-utils.tsx";
 
 export const baseUrl = '/Accounts/BacklogItemTypeSchemas';
 
@@ -25,22 +26,8 @@ export const deleteBacklogItemTypeSchema = async (id:number): Promise<AxiosRespo
   return await Api.delete(`${baseUrl}/${id}`);
 };
 
-export const getBacklogItemTypeSchemaNodes = async (
-  id:number,
-  page: number = 1,
-  searchQuery: string = '',
-  sort: string[] = []
-): Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaNodeDto>>> => {
-  const params: Record<string, string | number> = {page};
-
-  if(searchQuery.length > 0){
-    params.searchQuery = searchQuery;
-  }
-
-  if(sort.length > 0){
-    params.sort = sort.join(',');
-  }
-
+export const getBacklogItemTypeSchemaNodes = async (id:number, params?: GetCollectionQueryParams):
+  Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaNodeDto>>> => {
   return await Api.get(`${baseUrl}/${id}/Nodes`, {params});
 };
 
@@ -49,21 +36,8 @@ export const createBacklogItemTypeSchemaNode = async (dto:BacklogItemTypeSchemaN
   return await Api.post(`${baseUrl}/${dto.backlogItemTypeSchemaID}/Nodes`, dto);
 };
 
-export const getBacklogItemTypeSchemaEdges = async (
-  id:number,
-  page: number = 1,
-  searchQuery: string = '',
-  sort: string[] = []): Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaEdgeDto>>> => {
-  const params: Record<string, string | number> = {page};
-
-  if(searchQuery.length > 0){
-    params.searchQuery = searchQuery;
-  }
-
-  if(sort.length > 0){
-    params.sort = sort.join(',');
-  }
-
+export const getBacklogItemTypeSchemaEdges = async (id:number, params?: GetCollectionQueryParams):
+  Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaEdgeDto>>> => {
   return await Api.get(`${baseUrl}/${id}/Edges`, {params});
 };
 

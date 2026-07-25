@@ -63,7 +63,7 @@ export default function CreateBacklogItemTypeSchemaEdgeModal({
         const responses = await Promise.all([
           getBacklogItemTypeSchema(backlogItemTypeSchemaID),
           paginatedResultsToArray(page =>
-            getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaID, page))
+            getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaID, {page}))
         ]);
 
         const schemaResponse = responses[0];

@@ -55,7 +55,7 @@ export default function CreateBacklogItemTypeSchemaNodeModal({
         const responses = await Promise.all([
           getBacklogItemTypeSchema(backlogItemTypeSchemaID),
           paginatedResultsToArray(page =>
-            getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaID, page))
+            getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaID, {page}))
         ]);
 
         const schemaResponse = responses[0];

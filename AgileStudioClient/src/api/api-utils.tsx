@@ -22,3 +22,14 @@ export const paginatedResultsToArray = async <T,> (fetchPage: (page: number) => 
 
   return items;
 };
+
+export type GetCollectionQueryParams = {
+  page?: number;
+  itemsPerPage?: number;
+  sort?: string;
+  searchQuery?: string;
+};
+
+export const toSortString = (sort:string[]) => {
+  return sort.join(",");
+};

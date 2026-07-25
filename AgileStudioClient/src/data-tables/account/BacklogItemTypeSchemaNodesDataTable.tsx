@@ -19,6 +19,7 @@ import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal.tsx";
 import type {UserSummaryDto} from "../../api/dtos/UserDtos.tsx";
 import {deleteBacklogItemTypeSchemaNode} from "../../api/endpoints/accounts/BacklogItemTypeSchemaNodes.tsx";
 import {deleteBacklogItemTypeSchemaEdge} from "../../api/endpoints/accounts/BacklogItemTypeSchemaEdges.tsx";
+import {paginatedResultsToArray, toSortString} from "../../api/api-utils.tsx";
 
 type BacklogItemTypeSchemaNodesDataTableProps = {
   backlogItemTypeSchemaId: number;
@@ -45,18 +46,20 @@ function BacklogItemTypeSchemaNodesDataTable(props: BacklogItemTypeSchemaNodesDa
   const fetchDataTimeoutIdRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const _fetchData = useCallback(async (pageToFetch: number = 1) => {
-    const [fetchedData, fetchedEdges] = await Promise.all([
-      getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaId, pageToFetch, searchQuery, sort),
-      getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaId)
+    const [nodesResponse, allEdges] = await Promise.all([
+      getBacklogItemTypeSchemaNodes(backlogItemTypeSchemaId,
+        {page: pageToFetch, searchQuery, sort: toSortString(sort)}),
+      paginatedResultsToArray(page =>
+        getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaId, {page}))
     ]);
 
-    setData(fetchedData.data.items);
-    setEdges(fetchedEdges.data.items);
+    setData(nodesResponse.data.items);
+    setEdges(allEdges);
 
     setPaginationDetails({
-      pageSize: fetchedData.data.items.length,
-      currentPage: fetchedData.data.page,
-      totalPages: fetchedData.data.totalPages
+      pageSize: nodesResponse.data.items.length,
+      currentPage: nodesResponse.data.page,
+      totalPages: nodesResponse.data.totalPages
     });
   }, [backlogItemTypeSchemaId, searchQuery, sort]);
 

@@ -49,8 +49,22 @@ export const createBacklogItemTypeSchemaNode = async (dto:BacklogItemTypeSchemaN
   return await Api.post(`${baseUrl}/${dto.backlogItemTypeSchemaID}/Nodes`, dto);
 };
 
-export const getBacklogItemTypeSchemaEdges = async (id:number): Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaEdgeDto>>> => {
-  return await Api.get(`${baseUrl}/${id}/Edges`);
+export const getBacklogItemTypeSchemaEdges = async (
+  id:number,
+  page: number = 1,
+  searchQuery: string = '',
+  sort: string[] = []): Promise<AxiosResponse<PaginatedResultsDto<BacklogItemTypeSchemaEdgeDto>>> => {
+  const params: Record<string, string | number> = {page};
+
+  if(searchQuery.length > 0){
+    params.searchQuery = searchQuery;
+  }
+
+  if(sort.length > 0){
+    params.sort = sort.join(',');
+  }
+
+  return await Api.get(`${baseUrl}/${id}/Edges`, {params});
 };
 
 export const createBacklogItemTypeSchemaEdge = async (dto:BacklogItemTypeSchemaEdgePostDto):

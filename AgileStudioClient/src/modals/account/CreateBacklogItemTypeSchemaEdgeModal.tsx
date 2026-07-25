@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import type {BacklogItemTypeDto} from '../../api/dtos/accounts/BacklogItemTypeDtos.tsx';
 import type {BacklogItemTypeSchemaEdgeDto, BacklogItemTypeSchemaEdgePostDto} from '../../api/dtos/accounts/BacklogItemTypeSchemaEdgeDtos.tsx';
-import {createBacklogItemTypeSchemaEdge, getBacklogItemTypeSchema} from '../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx';
+import {
+  createBacklogItemTypeSchemaEdge,
+  getBacklogItemTypeSchema,
+  getBacklogItemTypeSchemaEdges
+} from '../../api/endpoints/accounts/BacklogItemTypeSchemas.tsx';
 import {getBacklogItemTypes} from '../../api/endpoints/accounts/Accounts.tsx';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -13,6 +17,7 @@ import FormError from '../../components/form/FormError.tsx';
 import {debounce, numberToString, stringToNumber} from '../../Utils.tsx';
 import {ERROR_CONTEXT, ERROR_MESSAGE_DEFAULT, getErrorMessageForAxiosError} from '../../util/error.tsx';
 import {toast} from 'react-toastify';
+import {paginatedResultsToArray} from "../../api/api-utils.tsx";
 
 type Mode = 'from' | 'to';
 
@@ -55,10 +60,23 @@ export default function CreateBacklogItemTypeSchemaEdgeModal({
 
     const refresh = async () => {
       try {
-        const schemaResponse = await getBacklogItemTypeSchema(backlogItemTypeSchemaID);
+        const responses = await Promise.all([
+          getBacklogItemTypeSchema(backlogItemTypeSchemaID),
+          paginatedResultsToArray(page =>
+            getBacklogItemTypeSchemaEdges(backlogItemTypeSchemaID, page))
+        ]);
+
+        const schemaResponse = responses[0];
         const accountId = schemaResponse.data.account.id;
-        const backlogItemTypesResponse = await getBacklogItemTypes(accountId);
-        setBacklogItemTypes(backlogItemTypesResponse.data.items);
+
+        const backlogItemTypeSchemaEdges = responses[1];
+
+        const backlogItemTypes = await paginatedResultsToArray(page =>
+          getBacklogItemTypes(accountId, page));
+
+        const filteredBacklogItemTypes = backlogItemTypes.filter(backlogItemType =>
+          !backlogItemTypeSchemaEdges.some(edge => edge.toType.id == targetBacklogItemTypeID && edge?.fromType?.id === backlogItemType.id));
+        setBacklogItemTypes(filteredBacklogItemTypes);
       }
       catch(error){
         console.error("Failed to refresh backlog item type schema edge modal", error);

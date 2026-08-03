@@ -1,14 +1,25 @@
 # Agile Studio Server
-Agile Studio Server is the backend for Agile Studio. It provides essential agile project management services and exposes public apis for Agile Studio Client or other clients to consume. 
-It is currently a single tenant solution.
+Agile Studio Server is a multi-tenant backend for Agile Studio. It provides essential agile project management services and exposes public apis for Agile Studio Client to consume.
 
 ## Services Provided
+
+### Accounts
+Accounts are used to manage resources that are shared across multiple projects.
+
+### Account Types
+There are currently two account types: Personal and Organization. 
+Each individual user has their own personal account for which they are the Account Owner. 
+Organization accounts are intended for organizations and can have multiple users with 
+different levels of account access.
+
+### Account Teams
+Accounts are managed by a team of users, each of which has a specific level of access (e.g. Account Owner, Account Viewer, etc.).
 
 ### Projects
 Projects allow development teams to manage separate codebases or areas of development. Each project has it's own team, backlog, settings, etc.
 
 ### Project Teams
-Projects are managed by a team of users, each of which has a specific level of access (e.g. Owner, Developer, QA, Viewer) to the project.
+Projects are managed by a team of users, each of which has a specific level of access (e.g. Owner, Developer, QA, Viewer).
 
 ### Backlog Items
 Backlog items represent tasks/work to be done within a project.
@@ -18,10 +29,6 @@ Child backlog items are backlog items that have a parent backlog item specified.
 
 ### Backlog Item Types
 Backlog Item Types are used to categorize Backlog Items. Common types include Epics, Stories, Defects, Tasks, etc. 
-
-### Child Backlog Item Types
-Child Backlog Item Types define which types are available when creating child backlog items.
-For example, a Story can have a Task as a child, but a Task cannot have a Story as a child.
 
 ### Backlog Item Type Schemas
 Backlog Item Type Schemas are used to group backlog item types, so that they can be reused accross different projects.
@@ -34,10 +41,6 @@ Backlog Item Link Types define the type of linkage between two backlog (eg. bloc
 
 ### Backlog Item Link Type Schemas
 Backlog Item Link Type Schemas are used to group backlog item link types, so that they can be reused accross different projects.
-
-### Backlog Item Link Type Schema Entries
-Backlog Item Link Type Schema Entries associate Backlog Item Link Types with Backlog Item Link Type Schemas--allowing them 
-to be reused accross different schemas.
 
 ### Workflows
 Workflows are used to define sets of states and transitions, and can be assigned to specific backlog item types.
@@ -113,5 +116,5 @@ New users are able to create and start managing their own projects. They can als
 join existing projects.
 
 ### Authentication
-Agilestudio uses JWT authentication. After authenticating, clients need to store the JWT token received and 
-provide it when requesting other services.
+Agile Studio Server uses JWT authentication. Clients first need to authenticate with Auth0 to get a JWT Token,
+which can then be used to consume Agile Studio Server services.

@@ -46,7 +46,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemas
             Name = "GetBacklogItemLinkTypeSchemaForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(BacklogItemLinkTypeSchemaForProjectDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BacklogItemLinkTypeSchemaDto), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult GetBacklogItemLinkTypeSchemaForProject(int id, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -69,8 +69,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemas
                         nameof(BacklogItemLinkTypeSchemaModel),
                         projectModel.BacklogItemLinkTypeSchemaID.ToString());
 
-                BacklogItemLinkTypeSchemaForProjectDto dto = 
-                    _Hydrator.Hydrate<BacklogItemLinkTypeSchemaForProjectDto>(model);
+                BacklogItemLinkTypeSchemaDto dto = 
+                    _Hydrator.Hydrate<BacklogItemLinkTypeSchemaDto>(model);
 
                 return Ok(dto);
             }

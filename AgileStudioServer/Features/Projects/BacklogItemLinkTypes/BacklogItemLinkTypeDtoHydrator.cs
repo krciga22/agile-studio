@@ -3,19 +3,18 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Features.Accounts.Accounts;
-using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
-using AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemas;
+using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 
-namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemaSchemas
+namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypes
 {
-    public class BacklogItemLinkTypeSchemaForProjectDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemLinkTypeDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemLinkTypeSchemaModel)
-            ) && to == typeof(BacklogItemLinkTypeSchemaForProjectDto);
+                from == typeof(BacklogItemLinkTypeModel)
+            ) && to == typeof(BacklogItemLinkTypeDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -30,16 +29,16 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemaSchemas
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            BacklogItemLinkTypeSchemaModel? model = null;
+            BacklogItemLinkTypeModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (BacklogItemLinkTypeSchemaModel)referenceHydrator.Hydrate(
-                    from, typeof(BacklogItemLinkTypeSchemaModel), maxDepth, depth, referenceHydrator
+                model = (BacklogItemLinkTypeModel)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemLinkTypeModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is BacklogItemLinkTypeSchemaModel)
+            else if (from is BacklogItemLinkTypeModel)
             {
-                model = (BacklogItemLinkTypeSchemaModel)from;
+                model = (BacklogItemLinkTypeModel)from;
             }
 
             object? dto = null;
@@ -48,8 +47,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemaSchemas
                 AccountSummaryDto accountSummaryDto = (AccountSummaryDto) referenceHydrator.Hydrate(
                     model.AccountID, typeof(AccountSummaryDto));
 
-                dto = new BacklogItemLinkTypeSchemaForProjectDto(
-                    model.ID, model.Title, accountSummaryDto);
+                dto = new BacklogItemLinkTypeDto(
+                    model.ID, model.Title, model.TitleOpposite, accountSummaryDto);
 
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
@@ -69,14 +68,15 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemaSchemas
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (BacklogItemLinkTypeSchemaForProjectDto)to;
+            var dto = (BacklogItemLinkTypeDto)to;
             int nextDepth = depth + 1;
 
-            if (from is BacklogItemLinkTypeSchemaModel)
+            if (from is BacklogItemLinkTypeModel)
             {
-                var model = (BacklogItemLinkTypeSchemaModel)from;
+                var model = (BacklogItemLinkTypeModel)from;
                 dto.ID = model.ID;
                 dto.Title = model.Title;
+                dto.TitleOpposite = model.TitleOpposite;
                 dto.Description = model.Description;
 
                 if (referenceHydrator != null && nextDepth <= maxDepth)

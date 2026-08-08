@@ -47,7 +47,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypes
             Name = "GetBacklogItemLinkTypesForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(PaginationResults<BacklogItemLinkTypeForProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginationResults<BacklogItemLinkTypeDto>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult GetBacklogItemLinkTypesForProject(int id, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -68,8 +68,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypes
                 PaginationResults<BacklogItemLinkTypeModel> models = _BacklogItemLinkTypeService.GetByProjectID(
                     projectModel.ID);
 
-                PaginationResults<BacklogItemLinkTypeForProjectDto> dtos = new PaginationResults<BacklogItemLinkTypeForProjectDto>(
-                    _Hydrator.HydrateList<BacklogItemLinkTypeForProjectDto>(models.Items), 
+                PaginationResults<BacklogItemLinkTypeDto> dtos = new PaginationResults<BacklogItemLinkTypeDto>(
+                    _Hydrator.HydrateList<BacklogItemLinkTypeDto>(models.Items), 
                     models.Total, models.Page, models.ItemsPerPage);
 
                 return Ok(dtos);

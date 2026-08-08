@@ -1,6 +1,6 @@
-﻿namespace AgileStudioServer.Features.Projects.BacklogItemTypes
+﻿namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
 {
-    public class BacklogItemTypeForProjectDto
+    public class BacklogItemTypeSchemaDto
     {
         public int ID { get; set; }
 
@@ -8,7 +8,7 @@
 
         public string? Description { get; set; }
 
-        public BacklogItemTypeForProjectDto(
+        public BacklogItemTypeSchemaDto(
             int id,
             string title)
         {

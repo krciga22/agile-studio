@@ -47,7 +47,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
         [HttpGet("Edges", Name = "GetBacklogItemTypeSchemaEdgesForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaEdgeDto>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult Get(int id, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -68,8 +68,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
                 PaginationResults<BacklogItemTypeSchemaEdgeModel> models = _BacklogItemTypeSchemaEdgeService.GetByFromTypeId(
                     null, project.BacklogItemTypeSchemaID);
 
-                PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto>(
-                    _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeForProjectDto>(models.Items), 
+                PaginationResults<BacklogItemTypeSchemaEdgeDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeDto>(
+                    _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeDto>(models.Items), 
                     models.Total, models.Page, models.ItemsPerPage);
 
                 return Ok(dtos);
@@ -98,7 +98,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
         [HttpGet("Edges/{fromTypeID}", Name = "GetBacklogItemTypeSchemaEdgesByProjectAndFromType")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaEdgeDto>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult GetEdgesByProjectAndFromTypeID(
             int id, int fromTypeID, [FromQuery] GetCollectionQueryParams queryParams)
@@ -113,8 +113,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
                     fromTypeID, project.BacklogItemTypeSchemaID);
 
                 // todo check permissions
-                PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeForProjectDto>(
-                    _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeForProjectDto>(models.Items),
+                PaginationResults<BacklogItemTypeSchemaEdgeDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeDto>(
+                    _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeDto>(models.Items),
                     models.Total, models.Page, models.ItemsPerPage);
 
                 return Ok(dtos);

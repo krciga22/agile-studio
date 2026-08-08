@@ -47,7 +47,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
         [HttpGet("Nodes", Name = "GetBacklogItemTypeSchemaNodesForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaNodeForProjectDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginationResults<BacklogItemTypeSchemaNodeDto>), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult Get(int id, [FromQuery] GetCollectionQueryParams queryParams)
         {
@@ -68,8 +68,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
                 PaginationResults<BacklogItemTypeSchemaNodeModel> models = _BacklogItemTypeSchemaNodeService.GetBySchemaId(
                     project.BacklogItemTypeSchemaID);
 
-                PaginationResults<BacklogItemTypeSchemaNodeForProjectDto> dtos = new PaginationResults<BacklogItemTypeSchemaNodeForProjectDto>(
-                    _Hydrator.HydrateList<BacklogItemTypeSchemaNodeForProjectDto>(models.Items), 
+                PaginationResults<BacklogItemTypeSchemaNodeDto> dtos = new PaginationResults<BacklogItemTypeSchemaNodeDto>(
+                    _Hydrator.HydrateList<BacklogItemTypeSchemaNodeDto>(models.Items), 
                     models.Total, models.Page, models.ItemsPerPage);
 
                 return Ok(dtos);

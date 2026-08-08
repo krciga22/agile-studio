@@ -6,14 +6,14 @@ using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
 
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 {
-    public class BacklogItemTypeSchemaEdgeForProjectDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemTypeSchemaEdgeDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
                 from == typeof(BacklogItemTypeSchemaEdgeModel)
-            ) && to == typeof(BacklogItemTypeSchemaEdgeForProjectDto);
+            ) && to == typeof(BacklogItemTypeSchemaEdgeDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -54,7 +54,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
                     );
                 }
 
-                dto = new BacklogItemTypeSchemaEdgeForProjectDto(
+                dto = new BacklogItemTypeSchemaEdgeDto(
                     model.ID, fromTypeSummaryDto, toTypeSummaryDto);
 
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
@@ -75,7 +75,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (BacklogItemTypeSchemaEdgeForProjectDto)to;
+            var dto = (BacklogItemTypeSchemaEdgeDto)to;
             int nextDepth = depth + 1;
 
             if (from is BacklogItemTypeSchemaEdgeModel)

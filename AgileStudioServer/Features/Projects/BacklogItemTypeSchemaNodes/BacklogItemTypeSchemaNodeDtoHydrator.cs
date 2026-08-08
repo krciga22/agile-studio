@@ -1,20 +1,19 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Hydrators.Exceptions;
-using AgileStudioServer.Features.Accounts.Accounts;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
-using AgileStudioServer.Features.Users.Users;
+using AgileStudioServer.Features.Accounts.BacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
 
-namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
+namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
 {
-    public class BacklogItemTypeSchemaForProjectDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemTypeSchemaNodeDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemTypeSchemaModel)
-            ) && to == typeof(BacklogItemTypeSchemaForProjectDto);
+                from == typeof(BacklogItemTypeSchemaNodeModel)
+            ) && to == typeof(BacklogItemTypeSchemaNodeDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -29,26 +28,27 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            BacklogItemTypeSchemaModel? model = null;
+            BacklogItemTypeSchemaNodeModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (BacklogItemTypeSchemaModel)referenceHydrator.Hydrate(
-                    from, typeof(BacklogItemTypeSchemaModel), maxDepth, depth, referenceHydrator
+                model = (BacklogItemTypeSchemaNodeModel)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemTypeSchemaNodeModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is BacklogItemTypeSchemaModel)
+            else if (from is BacklogItemTypeSchemaNodeModel)
             {
-                model = (BacklogItemTypeSchemaModel)from;
+                model = (BacklogItemTypeSchemaNodeModel)from;
             }
 
             object? dto = null;
             if (model != null)
             {
-                var accountSummaryDto = (AccountSummaryDto)referenceHydrator.Hydrate(
-                    model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
+                var backlogItemTypeSummaryDto = (BacklogItemTypeSummaryDto)referenceHydrator.Hydrate(
+                    model.BacklogItemTypeID, typeof(BacklogItemTypeSummaryDto), maxDepth, depth
                 );
 
-                dto = new BacklogItemTypeSchemaForProjectDto(model.ID, model.Title);
+                dto = new BacklogItemTypeSchemaNodeDto(
+                    model.ID, backlogItemTypeSummaryDto);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -67,15 +67,20 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (BacklogItemTypeSchemaForProjectDto)to;
+            var dto = (BacklogItemTypeSchemaNodeDto)to;
             int nextDepth = depth + 1;
 
-            if (from is BacklogItemTypeSchemaModel)
+            if (from is BacklogItemTypeSchemaNodeModel)
             {
-                var model = (BacklogItemTypeSchemaModel)from;
+                var model = (BacklogItemTypeSchemaNodeModel)from;
                 dto.ID = model.ID;
-                dto.Title = model.Title;
-                dto.Description = model.Description;
+
+                if (referenceHydrator != null && nextDepth <= maxDepth)
+                {
+                    dto.BacklogItemType = (BacklogItemTypeSummaryDto)referenceHydrator.Hydrate(
+                        model.BacklogItemTypeID, typeof(BacklogItemTypeSummaryDto), maxDepth, depth
+                    );
+                }
             }
         }
     }

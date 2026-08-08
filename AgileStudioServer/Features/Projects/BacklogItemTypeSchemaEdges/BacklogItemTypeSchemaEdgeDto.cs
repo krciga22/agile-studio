@@ -2,7 +2,7 @@
 
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 {
-    public class BacklogItemTypeSchemaEdgeForProjectDto
+    public class BacklogItemTypeSchemaEdgeDto
     {
         public int ID { get; set; }
 
@@ -10,7 +10,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 
         public BacklogItemTypeSummaryDto ToType { get; set; }
 
-        public BacklogItemTypeSchemaEdgeForProjectDto(
+        public BacklogItemTypeSchemaEdgeDto(
             int id,
             BacklogItemTypeSummaryDto? fromTypeSummaryDto,
             BacklogItemTypeSummaryDto toTypeSummaryDto)

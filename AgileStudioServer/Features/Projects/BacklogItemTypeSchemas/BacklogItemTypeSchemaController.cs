@@ -45,7 +45,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
         [HttpGet("BacklogItemTypeSchema", Name = "GetBacklogItemTypeSchemaForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(BacklogItemTypeSchemaForProjectDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BacklogItemTypeSchemaDto), StatusCodes.Status200OK)]
         [SwaggerOperation(Tags = new[] { "Project" })]
         public IActionResult Get(int id)
         {
@@ -64,7 +64,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
                 BacklogItemTypeSchemaModel backlogItemTypeSchema = _BacklogItemTypeSchemaService.Get(
                     project.BacklogItemTypeSchemaID);
 
-                var dto = _Hydrator.Hydrate<BacklogItemTypeSchemaForProjectDto>(backlogItemTypeSchema);
+                var dto = _Hydrator.Hydrate<BacklogItemTypeSchemaDto>(backlogItemTypeSchema);
                 return Ok(dto);
             }
             catch (ModelNotFoundException e)

@@ -1,19 +1,19 @@
 ﻿using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Hydrators.Exceptions;
-using AgileStudioServer.Features.Accounts.BacklogItemTypes;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
+using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 
-namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
+namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemas
 {
-    public class BacklogItemTypeSchemaNodeForProjectDtoHydrator : AbstractDtoHydrator
+    public class BacklogItemTypeSchemaDtoHydrator : AbstractDtoHydrator
     {
         public override bool Supports(Type from, Type to)
         {
             return (
                 from == typeof(int) ||
-                from == typeof(BacklogItemTypeSchemaNodeModel)
-            ) && to == typeof(BacklogItemTypeSchemaNodeForProjectDto);
+                from == typeof(BacklogItemTypeSchemaModel)
+            ) && to == typeof(BacklogItemTypeSchemaDto);
         }
 
         public override object Hydrate(object from, Type to, int maxDepth, int depth, IHydrator? referenceHydrator = null)
@@ -28,27 +28,26 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
                 throw new ReferenceHydratorRequiredException(this);
             }
 
-            BacklogItemTypeSchemaNodeModel? model = null;
+            BacklogItemTypeSchemaModel? model = null;
             if (from is int && referenceHydrator != null)
             {
-                model = (BacklogItemTypeSchemaNodeModel)referenceHydrator.Hydrate(
-                    from, typeof(BacklogItemTypeSchemaNodeModel), maxDepth, depth, referenceHydrator
+                model = (BacklogItemTypeSchemaModel)referenceHydrator.Hydrate(
+                    from, typeof(BacklogItemTypeSchemaModel), maxDepth, depth, referenceHydrator
                 );
             }
-            else if (from is BacklogItemTypeSchemaNodeModel)
+            else if (from is BacklogItemTypeSchemaModel)
             {
-                model = (BacklogItemTypeSchemaNodeModel)from;
+                model = (BacklogItemTypeSchemaModel)from;
             }
 
             object? dto = null;
             if (model != null)
             {
-                var backlogItemTypeSummaryDto = (BacklogItemTypeSummaryDto)referenceHydrator.Hydrate(
-                    model.BacklogItemTypeID, typeof(BacklogItemTypeSummaryDto), maxDepth, depth
+                var accountSummaryDto = (AccountSummaryDto)referenceHydrator.Hydrate(
+                    model.AccountID, typeof(AccountSummaryDto), maxDepth, depth
                 );
 
-                dto = new BacklogItemTypeSchemaNodeForProjectDto(
-                    model.ID, backlogItemTypeSummaryDto);
+                dto = new BacklogItemTypeSchemaDto(model.ID, model.Title);
                 Hydrate(model, dto, maxDepth, depth, referenceHydrator);
             }
 
@@ -67,20 +66,15 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
                 throw new HydrationNotSupportedException(from.GetType(), to.GetType());
             }
 
-            var dto = (BacklogItemTypeSchemaNodeForProjectDto)to;
+            var dto = (BacklogItemTypeSchemaDto)to;
             int nextDepth = depth + 1;
 
-            if (from is BacklogItemTypeSchemaNodeModel)
+            if (from is BacklogItemTypeSchemaModel)
             {
-                var model = (BacklogItemTypeSchemaNodeModel)from;
+                var model = (BacklogItemTypeSchemaModel)from;
                 dto.ID = model.ID;
-
-                if (referenceHydrator != null && nextDepth <= maxDepth)
-                {
-                    dto.BacklogItemType = (BacklogItemTypeSummaryDto)referenceHydrator.Hydrate(
-                        model.BacklogItemTypeID, typeof(BacklogItemTypeSummaryDto), maxDepth, depth
-                    );
-                }
+                dto.Title = model.Title;
+                dto.Description = model.Description;
             }
         }
     }

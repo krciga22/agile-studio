@@ -2,13 +2,13 @@
 
 namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaNodes
 {
-    public class BacklogItemTypeSchemaNodeForProjectDto
+    public class BacklogItemTypeSchemaNodeDto
     {
         public int ID { get; set; }
 
         public BacklogItemTypeSummaryDto BacklogItemType { get; set; }
 
-        public BacklogItemTypeSchemaNodeForProjectDto(
+        public BacklogItemTypeSchemaNodeDto(
             int id,
             BacklogItemTypeSummaryDto backlogItemTypeSummaryDto)
         {

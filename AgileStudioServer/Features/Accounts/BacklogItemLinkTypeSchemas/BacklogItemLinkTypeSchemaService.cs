@@ -1,8 +1,11 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Pagination;
+using AgileStudioServer.Core.Services;
+using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
 {
-    public class BacklogItemLinkTypeSchemaService : AbstractService
+    public class BacklogItemLinkTypeSchemaService : AbstractModelService<BacklogItemLinkTypeSchemaModel, int>
     {
         private readonly BacklogItemLinkTypeSchemaRepository _BacklogItemLinkTypeSchemaRepository;
 
@@ -11,27 +14,50 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
             _BacklogItemLinkTypeSchemaRepository = backlogItemLinkTypeSchemaRepository;
         }
 
-        public virtual List<BacklogItemLinkTypeSchemaModel> GetAll()
+        public virtual PaginationResults<BacklogItemLinkTypeSchemaModel> GetByAccountID(int accountID)
         {
-            return _BacklogItemLinkTypeSchemaRepository.GetAll();
+            return _BacklogItemLinkTypeSchemaRepository.GetByAccountID(accountID);
         }
 
-        public virtual BacklogItemLinkTypeSchemaModel? Get(int id)
+        public override PaginationResults<BacklogItemLinkTypeSchemaModel> GetCollection()
         {
-            return _BacklogItemLinkTypeSchemaRepository.Get(id);
+            throw new NotImplementedException();
         }
 
-        public virtual BacklogItemLinkTypeSchemaModel Create(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
+        public override PaginationResults<BacklogItemLinkTypeSchemaModel> GetSubCollection(string parentResourceType, object[] id)
+        {
+            switch (parentResourceType)
+            {
+                case ResourceTypes.AccountsAccount:
+                    return GetByAccountID(int.Parse(id[0].ToString()!));
+                default:
+                    throw new ArgumentException($"Unsupported parent resource type: {parentResourceType}");
+            }
+        }
+
+        /// <exception cref="ModelNotFoundException"></exception>
+        public override BacklogItemLinkTypeSchemaModel Get(int id)
+        {
+            return _BacklogItemLinkTypeSchemaRepository.Get(id) ?? 
+                throw new ModelNotFoundException(nameof(BacklogItemLinkTypeSchemaModel), id.ToString());
+        }
+
+        public override int GetIdentifier(BacklogItemLinkTypeSchemaModel model)
+        {
+            return model.ID;
+        }
+
+        public override BacklogItemLinkTypeSchemaModel Create(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             return _BacklogItemLinkTypeSchemaRepository.Create(backlogItemLinkTypeSchema);
         }
 
-        public virtual BacklogItemLinkTypeSchemaModel Update(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
+        public override BacklogItemLinkTypeSchemaModel Update(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             return _BacklogItemLinkTypeSchemaRepository.Update(backlogItemLinkTypeSchema);
         }
 
-        public virtual void Delete(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
+        public override void Delete(BacklogItemLinkTypeSchemaModel backlogItemLinkTypeSchema)
         {
             _BacklogItemLinkTypeSchemaRepository.Delete(backlogItemLinkTypeSchema);
         }

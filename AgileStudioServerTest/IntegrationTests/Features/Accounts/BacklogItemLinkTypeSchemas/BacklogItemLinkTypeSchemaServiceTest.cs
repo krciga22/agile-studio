@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Accounts;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServerTest.Features.Accounts.Accounts;
@@ -48,20 +49,7 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
             Assert.Equal(backlogItemLinkTypeSchema.ID, returnedBacklogItemLinkTypeSchema.ID);
         }
 
-        [Fact]
-        public void GetAll_ReturnsAllBacklogItemLinkTypeSchemas()
-        {
-            var backlogItemLinkTypeSchemas = new List<BacklogItemLinkTypeSchemaModel>
-            {
-                _BacklogItemLinkTypeSchemaFixture.Create("Test BacklogItemLinkTypeSchema 1"),
-                _BacklogItemLinkTypeSchemaFixture.Create("Test BacklogItemLinkTypeSchema 2")
-            };
-
-            List<BacklogItemLinkTypeSchemaModel> returnedBacklogItemLinkTypeSchemas = _backlogItemLinkTypeSchemaService
-                .GetAll();
-
-            Assert.Equal(backlogItemLinkTypeSchemas.Count, returnedBacklogItemLinkTypeSchemas.Count);
-        }
+        // todo add test for GetAllByAccountId
 
         [Fact]
         public void Update_ReturnsUpdatedBacklogItemLinkTypeSchema()
@@ -83,8 +71,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
             _backlogItemLinkTypeSchemaService.Delete(backlogItemLinkTypeSchema);
 
-            backlogItemLinkTypeSchema = _backlogItemLinkTypeSchemaService.Get(backlogItemLinkTypeSchema.ID);
-            Assert.Null(backlogItemLinkTypeSchema);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _backlogItemLinkTypeSchemaService.Get(backlogItemLinkTypeSchema.ID));
         }
     }
 }

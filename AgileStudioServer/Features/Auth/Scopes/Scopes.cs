@@ -9,6 +9,7 @@
         public const string ACCOUNT_BACKLOG_ITEM_TYPE_SCHEMA_NODE = "account.backlogItemTypeSchemaNode";
         public const string ACCOUNT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE = "account.backlogItemTypeSchemaEdge";
         public const string ACCOUNT_BACKLOG_ITEM_LINK_TYPE = "account.backlogItemLinkType";
+        public const string ACCOUNT_BACKLOG_ITEM_LINK_TYPE_SCHEMA = "account.backlogItemLinkTypeSchema";
         public const string ACCOUNT_WORKFLOW = "account.workflow";
         public const string ACCOUNT_WORKFLOW_STATE = "account.workflowState";
         public const string PROJECT = "project";

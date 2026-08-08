@@ -35,6 +35,14 @@ namespace AgileStudioServer.Features.Accounts.Accounts
         "BacklogItemTypeSchemas")]
     [MapSubResourceGetCollection(
         ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsBacklogItemLinkType,
+        "BacklogItemLinkTypes")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsAccount,
+        ResourceTypes.AccountsBacklogItemLinkType,
+        "BacklogItemLinkTypes")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsAccount,
         ResourceTypes.AccountsWorkflow,
         "Workflows")]
     [MapSubResourcePost(

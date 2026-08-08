@@ -20,6 +20,11 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
             return _BacklogItemLinkTypeRepository.GetByAccountID(accountID);
         }
 
+        public virtual PaginationResults<BacklogItemLinkTypeModel> GetByProjectID(int projectID)
+        {
+            return _BacklogItemLinkTypeRepository.GetByProjectID(projectID);
+        }
+
         public override PaginationResults<BacklogItemLinkTypeModel> GetCollection()
         {
             throw new NotImplementedException();

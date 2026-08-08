@@ -44,6 +44,25 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypes
             return GetPaginationResultsFromQuery(query, total);
         }
 
+        public virtual PaginationResults<BacklogItemLinkTypeModel> GetByProjectID(int projectID)
+        {
+            var query =
+                (from project in _DBContext.Project
+                 join schemaEntry in _DBContext.BacklogItemLinkTypeSchemaEntry on project.BacklogItemLinkTypeSchemaID equals schemaEntry.BacklogItemLinkTypeSchemaID
+                 join linkType in _DBContext.BacklogItemLinkType on schemaEntry.BacklogItemLinkTypeID equals linkType.ID
+                 where project.ID == projectID
+                 select linkType)
+                .Distinct();
+
+            query = ApplySearchToQuery(query);
+
+            int total = query.Count();
+
+            query = ApplySortToQuery(query);
+
+            return GetPaginationResultsFromQuery(query, total);
+        }
+
         protected override DbSet<BacklogItemLinkType> GetDbSet()
         {
             return _DBContext.BacklogItemLinkType;

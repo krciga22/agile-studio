@@ -11,6 +11,14 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas
     [MapResourceGet(ResourceTypes.AccountsBacklogItemLinkTypeSchema)]
     [MapResourcePatch(ResourceTypes.AccountsBacklogItemLinkTypeSchema)]
     [MapResourceDelete(ResourceTypes.AccountsBacklogItemLinkTypeSchema)]
+    [MapSubResourceGetCollection(
+        ResourceTypes.AccountsBacklogItemLinkTypeSchema,
+        ResourceTypes.AccountsBacklogItemLinkTypeSchemaEntry,
+        "Entries")]
+    [MapSubResourcePost(
+        ResourceTypes.AccountsBacklogItemLinkTypeSchema,
+        ResourceTypes.AccountsBacklogItemLinkTypeSchemaEntry,
+        "Entries")]
     [Authorize]
     public class BacklogItemLinkTypeSchemaController : ControllerBase
     {

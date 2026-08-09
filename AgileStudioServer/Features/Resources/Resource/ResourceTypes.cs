@@ -26,6 +26,8 @@
 
         public const string AccountsBacklogItemLinkTypeSchema = "accounts.backlogItemLinkTypeSchema";
 
+        public const string AccountsBacklogItemLinkTypeSchemaEntry = "accounts.backlogItemLinkTypeSchemaEntry";
+
         public const string AccountsWorkflow = "accounts.workflow";
 
         public const string AccountsWorkflowState = "accounts.workflowState";

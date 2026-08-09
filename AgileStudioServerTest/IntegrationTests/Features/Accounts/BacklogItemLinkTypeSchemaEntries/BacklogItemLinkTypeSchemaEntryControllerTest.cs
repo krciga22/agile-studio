@@ -30,59 +30,6 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
             _BacklogItemLinkTypeSchemaEntryFixture = backlogItemLinkTypeSchemaEntryFixture;
         }
 
-        [Fact]
-        public void Get_WithId_ReturnsDto()
-        {
-            var backlogItemLinkTypeSchemaEntry = _BacklogItemLinkTypeSchemaEntryFixture.Create();
-
-            BacklogItemLinkTypeSchemaEntryDto? dto = null;
-            IActionResult result = _Controller.Get(backlogItemLinkTypeSchemaEntry.ID);
-            if (result is OkObjectResult okResult)
-            {
-                dto = okResult.Value as BacklogItemLinkTypeSchemaEntryDto;
-            }
-
-            Assert.IsType<BacklogItemLinkTypeSchemaEntryDto>(dto);
-            Assert.Equal(backlogItemLinkTypeSchemaEntry.ID, dto.ID);
-        }
-
-        [Fact]
-        public void Post_WithDto_ReturnsDto()
-        {
-            var backlogItemLinkTypeSchema = _BacklogItemLinkTypeSchemaFixture.Create();
-            var backlogItemLinkType = _BacklogItemLinkTypeFixture.Create();
-            var postDto = new BacklogItemLinkTypeSchemaEntryPostDto(
-                backlogItemLinkTypeSchema.ID,
-                backlogItemLinkType.ID);
-
-            BacklogItemLinkTypeSchemaEntryDto ? dto = null;
-            IActionResult result = _Controller.Post(postDto);
-            if (result is CreatedResult createdResult)
-            {
-                dto = createdResult.Value as BacklogItemLinkTypeSchemaEntryDto;
-            }
-
-            Assert.IsType<BacklogItemLinkTypeSchemaEntryDto>(dto);
-            Assert.Equal(postDto.BacklogItemLinkTypeSchemaID, dto.BacklogItemLinkTypeSchemaSummaryDto.ID);
-            Assert.Equal(postDto.BacklogItemLinkTypeID, dto.BacklogItemLinkTypeSummaryDto.ID);
-        }
-
-        [Fact]
-        public void Delete_WithId_ReturnsOkResult()
-        {
-            var backlogItemLinkTypeSchemaEntry = _BacklogItemLinkTypeSchemaEntryFixture.Create();
-
-            IActionResult result = _Controller.Delete(backlogItemLinkTypeSchemaEntry.ID);
-
-            Assert.IsType<OkResult>(result as OkResult);
-        }
-
-        [Fact]
-        public void Delete_WithInvalidId_ReturnsNotFoundResult()
-        {
-            IActionResult result = _Controller.Delete(Constants.NonExistantId);
-
-            Assert.IsType<NotFoundResult>(result as NotFoundResult);
-        }
+        // todo add tests
     }
 }

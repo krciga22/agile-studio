@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Data;
+﻿using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
@@ -63,8 +64,8 @@ namespace AgileStudioServerTest.IntegrationTests.Features.Accounts.BacklogItemLi
 
             _backlogItemLinkTypeSchemaEntryService.Delete(backlogItemLinkTypeSchemaEntry);
 
-            backlogItemLinkTypeSchemaEntry = _backlogItemLinkTypeSchemaEntryService.Get(backlogItemLinkTypeSchemaEntry.ID);
-            Assert.Null(backlogItemLinkTypeSchemaEntry);
+            Assert.Throws<ModelNotFoundException>(() => 
+                _backlogItemLinkTypeSchemaEntryService.Get(backlogItemLinkTypeSchemaEntry.ID));
         }
     }
 }

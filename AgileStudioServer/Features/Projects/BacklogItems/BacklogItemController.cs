@@ -14,6 +14,14 @@ namespace AgileStudioServer.Features.Projects.BacklogItems
         ResourceTypes.BacklogItemsBacklogItem,
         ResourceTypes.BacklogItemsBacklogItem,
         "Children")]
+    [MapSubResourceGetCollection(
+        ResourceTypes.BacklogItemsBacklogItem,
+        ResourceTypes.ProjectsBacklogItemStatus,
+        "Statuses")]
+    [MapSubResourcePost(
+        ResourceTypes.BacklogItemsBacklogItem,
+        ResourceTypes.ProjectsBacklogItemStatus,
+        "Statuses")]
     [Authorize]
     public class BacklogItemController : ControllerBase
     {

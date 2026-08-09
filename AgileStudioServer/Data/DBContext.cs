@@ -796,6 +796,21 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2026, 8, 8, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW)
                 {
                     CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
@@ -978,6 +993,21 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2026, 8, 8, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW)
                 {
                     CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
@@ -1133,6 +1163,21 @@ namespace AgileStudioServer.Data
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_LINK_TYPE_SCHEMA)
                 {
                     CreatedOn = new DateTime(2026, 8, 8, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW)
@@ -1292,6 +1337,21 @@ namespace AgileStudioServer.Data
                     CreatedOn = new DateTime(2026, 8, 8, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW)
                 {
                     CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
@@ -1447,6 +1507,21 @@ namespace AgileStudioServer.Data
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_LINK_TYPE_SCHEMA)
                 {
                     CreatedOn = new DateTime(2026, 8, 8, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.LIST, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.CREATE, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
+                    IsSystemRolePermission = true
+                },
+                new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_STATUS)
+                {
+                    CreatedOn = new DateTime(2026, 8, 9, 0, 0, 0, DateTimeKind.Utc),
                     IsSystemRolePermission = true
                 },
                 new RolePermission(roleKey, PermissionKeys.READ, Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW)

@@ -28,6 +28,7 @@ namespace AgileStudioCLI.Commands
         {
             // delete project related entities
             await _DBContext.BacklogItem.ForEachAsync(x => _DBContext.BacklogItem.Remove(x));
+            await _DBContext.BacklogItemStatus.ForEachAsync(x => _DBContext.BacklogItemStatus.Remove(x));
             await _DBContext.Release.ForEachAsync(x => _DBContext.Release.Remove(x));
             await _DBContext.Sprint.ForEachAsync(x => _DBContext.Sprint.Remove(x));
             await _DBContext.Project.ForEachAsync(x => _DBContext.Project.Remove(x));

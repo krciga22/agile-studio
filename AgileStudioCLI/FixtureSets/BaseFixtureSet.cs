@@ -23,6 +23,7 @@ using AgileStudioServerTest.Features.Projects.Sprints;
 using AgileStudioServerTest.Features.Users.Users;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaNodes;
 using AgileStudioServerTest.Features.Accounts.BacklogItemTypeSchemaEdges;
+using AgileStudioServerTest.Features.Projects.BacklogItemStatuses;
 
 namespace AgileStudioCLI.FixtureSets
 {
@@ -38,6 +39,7 @@ namespace AgileStudioCLI.FixtureSets
         private readonly BacklogItemTypeSchemaFixture _BacklogItemTypeSchemaFixture;
         private readonly BacklogItemTypeSchemaNodeFixture _BacklogItemTypeSchemaNodeFixture;
         private readonly BacklogItemTypeSchemaEdgeFixture _BacklogItemTypeSchemaEdgeFixture;
+        private readonly BacklogItemStatusFixture _BacklogItemStatusFixture;
         private readonly ProjectFixture _ProjectFixture;
         private readonly ReleaseFixture _ReleaseFixture;
         private readonly RoleFixture _RoleFixture;
@@ -58,6 +60,7 @@ namespace AgileStudioCLI.FixtureSets
             BacklogItemTypeSchemaFixture backlogItemTypeSchemaFixture,
             BacklogItemTypeSchemaNodeFixture backlogItemTypeSchemaNodeFixture,
             BacklogItemTypeSchemaEdgeFixture backlogItemTypeSchemaEdgeFixture,
+            BacklogItemStatusFixture backlogItemStatusFixture,
             ProjectFixture projectFixture,
             ReleaseFixture releaseFixture,
             RoleFixture roleFixture,
@@ -77,6 +80,7 @@ namespace AgileStudioCLI.FixtureSets
             _BacklogItemTypeSchemaFixture = backlogItemTypeSchemaFixture;
             _BacklogItemTypeSchemaNodeFixture = backlogItemTypeSchemaNodeFixture;
             _BacklogItemTypeSchemaEdgeFixture = backlogItemTypeSchemaEdgeFixture;
+            _BacklogItemStatusFixture = backlogItemStatusFixture;
             _ProjectFixture = projectFixture;
             _ReleaseFixture = releaseFixture;
             _RoleFixture = roleFixture;
@@ -298,13 +302,19 @@ namespace AgileStudioCLI.FixtureSets
 
             for( var i = 0; i < 5; i++ )
             {
-                _BacklogItemFixture.Create(
+                var backlogItem = _BacklogItemFixture.Create(
                     title: $"Child Task {i}",
                     project: project,
                     backlogItemType: backlogItemTypeTask,
                     workflowState: taskWorkflowStateNotStarted,
                     parentBacklogItem: testStory,
                     createdBy: user);
+
+                _BacklogItemStatusFixture.Create(
+                    backlogItem: backlogItem,
+                    workflowState: workflowStateInBacklog,
+                    createdBy: user,
+                    comment: "Backlog Item Created");
             }
         }
 

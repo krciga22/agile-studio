@@ -61,11 +61,6 @@ namespace AgileStudioServer.Features.Projects.Workflows
 
                 BacklogItemModel backlogItemModel = _BacklogItemService.Get(id);
 
-                BacklogItemTypeModel backlogItemTypeModel = _BacklogItemTypeService.Get(
-                    backlogItemModel.BacklogItemTypeID);
-
-                WorkflowModel workflowModel = _WorkflowService.Get(backlogItemTypeModel.WorkflowID);
-
                 _PermissionCheckerService.ValidatePermissions(
                     RoleSubjectTypes.USER,
                     _ServiceContext.GetCurrentUserIdStrict().ToString(),
@@ -73,6 +68,11 @@ namespace AgileStudioServer.Features.Projects.Workflows
                     Scopes.PROJECT_BACKLOG_ITEM_WORKFLOW,
                     Scopes.PROJECT_BACKLOG_ITEM,
                     backlogItemModel.ID.ToString());
+
+                BacklogItemTypeModel backlogItemTypeModel = _BacklogItemTypeService.Get(
+                    backlogItemModel.BacklogItemTypeID);
+
+                WorkflowModel workflowModel = _WorkflowService.Get(backlogItemTypeModel.WorkflowID);
 
                 WorkflowDto dto = _Hydrator.Hydrate<WorkflowDto>(workflowModel);
 

@@ -3,7 +3,9 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Accounts.BacklogItemTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Scopes;
@@ -22,6 +24,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
     {
         private readonly ProjectService _ProjectService;
 
+        private readonly BacklogItemTypeSchemaNodeService _backlogItemTypeSchemaNodeService;
+
         private readonly BacklogItemTypeSchemaEdgeService _BacklogItemTypeSchemaEdgeService;
 
         private readonly Hydrator _Hydrator;
@@ -32,12 +36,14 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 
         public BacklogItemTypeSchemaEdgeController(
             ProjectService projectService,
+            BacklogItemTypeSchemaNodeService backlogItemTypeSchemaNodeService,
             BacklogItemTypeSchemaEdgeService backlogItemTypeSchemaEdgeService,
             Hydrator hydrator,
             ServiceContext serviceContext,
             PermissionCheckerService permissionCheckerService)
         {
             _ProjectService = projectService;
+            _backlogItemTypeSchemaNodeService = backlogItemTypeSchemaNodeService;
             _BacklogItemTypeSchemaEdgeService = backlogItemTypeSchemaEdgeService;
             _Hydrator = hydrator;
             _ServiceContext = serviceContext;
@@ -109,10 +115,20 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
 
                 ProjectModel project = _ProjectService.Get(id);
 
-                PaginationResults<BacklogItemTypeSchemaEdgeModel> models = _BacklogItemTypeSchemaEdgeService.GetByFromTypeId(
-                    fromTypeID, project.BacklogItemTypeSchemaID);
+                BacklogItemTypeSchemaNodeModel node = _backlogItemTypeSchemaNodeService.GetBySchemaAndBacklogItemType(
+                    project.BacklogItemTypeSchemaID, fromTypeID);
 
-                // todo check permissions
+                _PermissionCheckerService.ValidatePermissions(
+                    RoleSubjectTypes.USER,
+                    _ServiceContext.GetCurrentUserIdStrict().ToString(),
+                    PermissionKeys.LIST,
+                    Scopes.PROJECT_BACKLOG_ITEM_TYPE_SCHEMA_EDGE,
+                    Scopes.PROJECT,
+                    id.ToString());
+
+                PaginationResults<BacklogItemTypeSchemaEdgeModel> models = _BacklogItemTypeSchemaEdgeService.GetByFromTypeId(
+                    node.BacklogItemTypeID, project.BacklogItemTypeSchemaID);
+
                 PaginationResults<BacklogItemTypeSchemaEdgeDto> dtos = new PaginationResults<BacklogItemTypeSchemaEdgeDto>(
                     _Hydrator.HydrateList<BacklogItemTypeSchemaEdgeDto>(models.Items),
                     models.Total, models.Page, models.ItemsPerPage);
@@ -121,7 +137,8 @@ namespace AgileStudioServer.Features.Projects.BacklogItemTypeSchemaEdges
             }
             catch (ModelNotFoundException e)
             {
-                if (e.ModelClassName.Equals(nameof(ProjectModel)))
+                if (e.ModelClassName.Equals(nameof(ProjectModel)) || 
+                    e.ModelClassName.Equals(nameof(BacklogItemTypeSchemaNodeModel)))
                 {
                     return NotFound();
                 }

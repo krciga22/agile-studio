@@ -42,7 +42,7 @@ namespace AgileStudioServer.Features.Projects.BacklogItemLinkTypeSchemas
             _PermissionCheckerService = permissionCheckerService;
         }
 
-        [HttpGet("Projects/Project/{id}/BacklogItemLinkTypeSchema", 
+        [HttpGet("Projects/Projects/{id}/BacklogItemLinkTypeSchema", 
             Name = "GetBacklogItemLinkTypeSchemaForProject")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

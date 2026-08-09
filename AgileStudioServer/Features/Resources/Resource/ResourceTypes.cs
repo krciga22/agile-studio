@@ -10,6 +10,8 @@
 
         public const string BacklogItemsBacklogItem = "backlogItems.backlogItem";
 
+        public const string ProjectsBacklogItemStatus = "projects.backlogItemStatus";
+
         public const string AccountsAccount = "accounts.account";
 
         public const string AccountsAccountType = "accounts.accountType";

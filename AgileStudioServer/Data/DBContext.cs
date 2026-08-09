@@ -14,6 +14,7 @@ using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.RolePermissions;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
+using AgileStudioServer.Features.Projects.BacklogItemLinks;
 using AgileStudioServer.Features.Projects.BacklogItems;
 using AgileStudioServer.Features.Projects.BacklogItemStatuses;
 using AgileStudioServer.Features.Projects.Projects;
@@ -47,6 +48,8 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemLinkTypeSchema> BacklogItemLinkTypeSchema { get; set; }
 
         public DbSet<BacklogItemLinkTypeSchemaEntry> BacklogItemLinkTypeSchemaEntry { get; set; }
+
+        public DbSet<BacklogItemLink> BacklogItemLink { get; set; }
 
         public DbSet<BacklogItemStatus> BacklogItemStatus { get; set; }
 
@@ -192,6 +195,24 @@ namespace AgileStudioServer.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("fk_backlog_item_status_workflow_state_id");
 
+            modelBuilder.Entity<BacklogItemLink>()
+                .HasOne(e => e.SourceBacklogItem)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_backlog_item_link_source_backlog_item_id");
+
+            modelBuilder.Entity<BacklogItemLink>()
+                .HasOne(e => e.TargetBacklogItem)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_backlog_item_link_target_backlog_item_id");
+
+            modelBuilder.Entity<BacklogItemLink>()
+                .HasOne(e => e.BacklogItemLinkType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_backlog_item_link_backlog_item_link_type_id");
+
             modelBuilder.Entity<RolePermission>()
                 .Property(rp => rp.Scope)
                 .HasDefaultValue(Scopes.GLOBAL);
@@ -264,6 +285,7 @@ namespace AgileStudioServer.Data
 
             modelBuilder.Entity<Project>().ToTable("project", "projects");
             modelBuilder.Entity<BacklogItem>().ToTable("backlog_item", "projects");
+            modelBuilder.Entity<BacklogItemLink>().ToTable("backlog_item_link", "projects");
             modelBuilder.Entity<BacklogItemStatus>().ToTable("backlog_item_status", "projects");
             modelBuilder.Entity<Sprint>().ToTable("sprint", "projects");
             modelBuilder.Entity<Release>().ToTable("release", "projects");

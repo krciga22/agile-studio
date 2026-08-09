@@ -4,6 +4,8 @@ using AgileStudioServer.Features.Accounts.BacklogItemLinkTypes;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntries;
 using AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemas;
 using AgileStudioServer.Features.Accounts.BacklogItemTypes;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
+using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
 using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemas;
 using AgileStudioServer.Features.Accounts.Workflows;
 using AgileStudioServer.Features.Accounts.WorkflowStates;
@@ -13,13 +15,12 @@ using AgileStudioServer.Features.Auth.RolePermissions;
 using AgileStudioServer.Features.Auth.Roles;
 using AgileStudioServer.Features.Auth.Scopes;
 using AgileStudioServer.Features.Projects.BacklogItems;
+using AgileStudioServer.Features.Projects.BacklogItemStatuses;
 using AgileStudioServer.Features.Projects.Projects;
 using AgileStudioServer.Features.Projects.Releases;
 using AgileStudioServer.Features.Projects.Sprints;
 using AgileStudioServer.Features.Users.Users;
 using Microsoft.EntityFrameworkCore;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaNodes;
-using AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges;
 
 namespace AgileStudioServer.Data
 {
@@ -46,6 +47,8 @@ namespace AgileStudioServer.Data
         public DbSet<BacklogItemLinkTypeSchema> BacklogItemLinkTypeSchema { get; set; }
 
         public DbSet<BacklogItemLinkTypeSchemaEntry> BacklogItemLinkTypeSchemaEntry { get; set; }
+
+        public DbSet<BacklogItemStatus> BacklogItemStatus { get; set; }
 
         public DbSet<Sprint> Sprint { get; set; }
 
@@ -177,6 +180,18 @@ namespace AgileStudioServer.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("fk_backlog_item_type_workflow_workflow_id");
 
+            modelBuilder.Entity<BacklogItemStatus>()
+                .HasOne(e => e.BacklogItem)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_backlog_item_status_backlog_item_id");
+
+            modelBuilder.Entity<BacklogItemStatus>()
+                .HasOne(e => e.WorkflowState)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("fk_backlog_item_status_workflow_state_id");
+
             modelBuilder.Entity<RolePermission>()
                 .Property(rp => rp.Scope)
                 .HasDefaultValue(Scopes.GLOBAL);
@@ -249,6 +264,7 @@ namespace AgileStudioServer.Data
 
             modelBuilder.Entity<Project>().ToTable("project", "projects");
             modelBuilder.Entity<BacklogItem>().ToTable("backlog_item", "projects");
+            modelBuilder.Entity<BacklogItemStatus>().ToTable("backlog_item_status", "projects");
             modelBuilder.Entity<Sprint>().ToTable("sprint", "projects");
             modelBuilder.Entity<Release>().ToTable("release", "projects");
 

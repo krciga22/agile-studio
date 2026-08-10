@@ -23,6 +23,11 @@ namespace AgileStudioServer.Features.Projects.BacklogItemStatuses
             return _BacklogItemStatusRepository.GetByBacklogItemId(backlogItemId);
         }
 
+        public virtual BacklogItemStatusModel GetLatestForBacklogItemId(int backlogItemId)
+        {
+            return _BacklogItemStatusRepository.GetLatestForBacklogItemId(backlogItemId);
+        }
+
         public override PaginationResults<BacklogItemStatusModel> GetCollection()
         {
             throw new NotImplementedException();

@@ -43,6 +43,17 @@ namespace AgileStudioServer.Features.Projects.BacklogItemStatuses
             return GetPaginationResultsFromQuery(query, total);
         }
 
+        public virtual BacklogItemStatusModel GetLatestForBacklogItemId(int backlogItemId)
+        {
+            var query =
+                (from status in _DBContext.BacklogItemStatus
+                 where status.BacklogItemID == backlogItemId
+                 orderby status.ID descending
+                 select status);
+
+            return _Hydrator.Hydrate<BacklogItemStatusModel>(query.First());
+        }        
+
         protected override DbSet<BacklogItemStatus> GetDbSet()
         {
             return _DBContext.BacklogItemStatus;

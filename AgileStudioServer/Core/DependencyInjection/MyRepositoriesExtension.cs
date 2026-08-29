@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Core.Repositories;
+﻿using AgileStudioServer.Core.Data;
+using AgileStudioServer.Core.Repositories;
 using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -19,6 +20,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 services.AddScoped(classType);
                 services.AddScoped(typeof(Repository), classType);
             }
+
+            services.AddScoped(typeof(TransactionService));
 
             return services;
         }

@@ -92,6 +92,13 @@ namespace AgileStudioServer.Core.Repositories
             return HydrateModel(entity);
         }
 
+        public void StageCreate(TModel model)
+        {
+            TEntity entity = HydrateEntity(model);
+
+            _DBContext.Add(entity);
+        }
+
         public TModel Update(TModel model)
         {
             TEntity entity = HydrateEntity(model);
@@ -102,12 +109,26 @@ namespace AgileStudioServer.Core.Repositories
             return HydrateModel(entity);
         }
 
+        public void StageUpdate(TModel model)
+        {
+            TEntity entity = HydrateEntity(model);
+
+            _DBContext.Update(entity);
+        }
+
         public void Delete(TModel model)
         {
             var entity = HydrateEntity(model);
 
             _DBContext.Remove(entity);
             _DBContext.SaveChanges();
+        }
+
+        public void StageDelete(TModel model)
+        {
+            var entity = HydrateEntity(model);
+
+            _DBContext.Remove(entity);
         }
 
         protected abstract DbSet<TEntity> GetDbSet();

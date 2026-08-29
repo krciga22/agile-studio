@@ -67,7 +67,8 @@ namespace AgileStudioServer.Features.Accounts.Workflows
             return _TransactionService.ExecuteInTransaction<WorkflowModel>(() => {
                 workflow = _WorkflowRepository.Create(workflow);
 
-                WorkflowStateModel workflowStateModel = new("In Backlog", workflow.ID);
+                String workflowStateTitle = WorkflowConstants.DefaultWorkflowStateTitle;
+                WorkflowStateModel workflowStateModel = new(workflowStateTitle, workflow.ID);
                 workflowStateModel = _WorkflowStateRepository.Create(workflowStateModel);
 
                 workflow.DefaultWorkflowStateID = workflowStateModel.ID;

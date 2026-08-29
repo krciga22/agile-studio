@@ -22,6 +22,10 @@ namespace AgileStudioServer.Core.Data
         /// </summary>
         public T ExecuteInTransaction<T>(Func<T> operation)
         {
+            if (_dbContext.Database.CurrentTransaction != null){
+                return operation();
+            }
+
             BeginTransaction();
             try
             {
@@ -41,6 +45,10 @@ namespace AgileStudioServer.Core.Data
         /// </summary>
         public void ExecuteInTransaction(Action operation)
         {
+            if (_dbContext.Database.CurrentTransaction != null){
+                operation();
+            }
+
             BeginTransaction();
             try
             {

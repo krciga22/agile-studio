@@ -1,6 +1,8 @@
-﻿using AgileStudioServer.Core.Pagination;
+﻿using AgileStudioServer.Core.Data;
+using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Core.Services.Exceptions;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Resources.Resource;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
@@ -9,14 +11,22 @@ namespace AgileStudioServer.Features.Accounts.Workflows
     {
         private readonly WorkflowRepository _WorkflowRepository;
 
+        private readonly WorkflowStateRepository _WorkflowStateRepository;
+
         private readonly ServiceContext _ServiceContext;
 
+        private TransactionService _TransactionService;
+
         public WorkflowService(
-            WorkflowRepository workflowRepository, 
-            ServiceContext serviceContext)
+            WorkflowRepository workflowRepository,
+            WorkflowStateRepository workflowStateRepository,
+            ServiceContext serviceContext,
+            TransactionService transactionService)
         {
             _WorkflowRepository = workflowRepository;
+            _WorkflowStateRepository = workflowStateRepository;
             _ServiceContext = serviceContext;
+            _TransactionService = transactionService;
         }
 
         public virtual PaginationResults<WorkflowModel> GetByAccountID(int accountID)
@@ -54,7 +64,17 @@ namespace AgileStudioServer.Features.Accounts.Workflows
 
         public override WorkflowModel Create(WorkflowModel workflow)
         {
-            return _WorkflowRepository.Create(workflow);
+            return _TransactionService.ExecuteInTransaction<WorkflowModel>(() => {
+                workflow = _WorkflowRepository.Create(workflow);
+
+                WorkflowStateModel workflowStateModel = new("In Backlog", workflow.ID);
+                workflowStateModel = _WorkflowStateRepository.Create(workflowStateModel);
+
+                workflow.DefaultWorkflowStateID = workflowStateModel.ID;
+                _WorkflowRepository.StageUpdate(workflow);
+
+                return workflow;
+            });
         }
 
         public override WorkflowModel Update(WorkflowModel workflow)

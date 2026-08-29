@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
@@ -20,6 +21,10 @@ namespace AgileStudioServer.Features.Accounts.Workflows
         public int AccountID { get; set; }
 
         public Account Account { get; set; } = null!;
+
+        public int? DefaultWorkflowStateID { get; set; } = null!;
+
+        public WorkflowState? DefaultWorkflowState { get; set; } = null!;
 
         public Workflow(string title, int accountID)
         {

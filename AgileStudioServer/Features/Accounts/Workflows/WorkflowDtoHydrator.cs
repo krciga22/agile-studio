@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Hydrators.Exceptions;
 using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
@@ -88,6 +89,13 @@ namespace AgileStudioServer.Features.Accounts.Workflows
                     {
                         dto.CreatedBy = (UserSummaryDto)referenceHydrator.Hydrate(
                             model.CreatedById, typeof(UserSummaryDto), maxDepth, depth
+                        );
+                    }
+
+                    if (model.DefaultWorkflowStateID != null)
+                    {
+                        dto.DefaultWorkflowState = (WorkflowStateSummaryDto)referenceHydrator.Hydrate(
+                            model.DefaultWorkflowStateID, typeof(WorkflowStateSummaryDto), maxDepth, depth
                         );
                     }
                 }

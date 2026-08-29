@@ -267,6 +267,20 @@ namespace AgileStudioServer.Data
             modelBuilder.Entity<Permission>()
                 .HasKey(r => r.PermissionKey);
 
+            modelBuilder.Entity<Workflow>()
+                .HasOne(e => e.DefaultWorkflowState)
+                .WithMany()
+                .HasForeignKey(e => e.DefaultWorkflowStateID)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_workflow_default_workflow_state_id");
+
+            modelBuilder.Entity<WorkflowState>()
+                .HasOne(e => e.Workflow)
+                .WithMany()
+                .HasForeignKey(e => e.WorkflowID)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_workflow_state_workflow_id");
+
             // todo move this to separate seeding class
             SeedStandardTypes(modelBuilder);
 

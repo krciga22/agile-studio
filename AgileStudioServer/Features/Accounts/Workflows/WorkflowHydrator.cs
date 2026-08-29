@@ -3,6 +3,7 @@ using AgileStudioServer.Core.Hydrator.Exceptions;
 using AgileStudioServer.Core.Repositories.Exceptions;
 using AgileStudioServer.Data;
 using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows;
@@ -97,6 +98,13 @@ public class WorkflowHydrator : AbstractEntityHydrator
                 {
                     entity.CreatedBy = (User)referenceHydrator.Hydrate(
                         model.CreatedById, typeof(User), maxDepth, nextDepth
+                    );
+                }
+
+                if (model.DefaultWorkflowStateID != null)
+                {
+                    entity.DefaultWorkflowState = (WorkflowState)referenceHydrator.Hydrate(
+                        model.DefaultWorkflowStateID, typeof(WorkflowState), maxDepth, nextDepth
                     );
                 }
             }

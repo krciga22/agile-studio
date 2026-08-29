@@ -88,6 +88,7 @@ namespace AgileStudioServer.Features.Accounts.Workflows
                 model.CreatedOn = entity.CreatedOn;
                 model.CreatedById = entity.CreatedByID;
                 model.AccountID = entity.AccountID;
+                model.DefaultWorkflowStateID = entity.DefaultWorkflowStateID;
             }
             else if (from is WorkflowPostDto)
             {
@@ -101,6 +102,7 @@ namespace AgileStudioServer.Features.Accounts.Workflows
                 var dto = (WorkflowPatchDto)from;
                 model.Title = dto.Title;
                 model.Description = dto.Description;
+                model.DefaultWorkflowStateID = dto.DefaultWorkflowStateID;
             }
         }
     }

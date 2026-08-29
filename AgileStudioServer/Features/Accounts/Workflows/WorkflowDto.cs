@@ -1,4 +1,5 @@
 ﻿using AgileStudioServer.Features.Accounts.Accounts;
+using AgileStudioServer.Features.Accounts.WorkflowStates;
 using AgileStudioServer.Features.Users.Users;
 
 namespace AgileStudioServer.Features.Accounts.Workflows
@@ -16,6 +17,8 @@ namespace AgileStudioServer.Features.Accounts.Workflows
         public UserSummaryDto? CreatedBy { get; set; }
 
         public AccountSummaryDto Account { get; set; }
+
+        public WorkflowStateSummaryDto? DefaultWorkflowState { get; set; }
 
         public WorkflowDto(
             int id,

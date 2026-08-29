@@ -14,6 +14,8 @@
 
         public int AccountID { get; set; }
 
+        public int? DefaultWorkflowStateID { get; set; } = null!;
+
         public WorkflowModel(string title, int accountID)
         {
             Title = title;

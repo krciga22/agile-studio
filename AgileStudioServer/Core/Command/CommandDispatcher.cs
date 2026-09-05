@@ -1,24 +1,28 @@
 ﻿namespace AgileStudioServer.Core.Command
 {
-    public class CommandDispatcher(IEnumerable<ICommandListener> serviceCommandListeners)
+    public class CommandDispatcher(IEnumerable<ICommandHandler> commandHandlers)
     {
-        private readonly IEnumerable<ICommandListener> _ServiceCommandListeners = serviceCommandListeners;
+        private readonly IEnumerable<ICommandHandler> _CommandHandlers = commandHandlers;
 
-        public void Dispatch(ICommand serviceEvent)
+        public void Dispatch(ICommand command)
         {
-            List<ICommandListener> listeners = _ServiceCommandListeners.Where(
-                    l => l.GetEvents().Contains(serviceEvent.GetType())).ToList();
+            List<ICommandHandler> handlers = _CommandHandlers.Where(
+                    l => l.GetCommands().Contains(command.GetType())).ToList();
 
-            listeners = listeners.OrderBy(l => l.GetPriority()).ToList();
+            if(handlers.Count == 0){
+                return;
+            }
 
-            listeners.ForEach(listener => {
+            handlers = handlers.OrderBy(l => l.GetPriority()).ToList();
+
+            handlers.ForEach(handler => {
                 try
                 {
-                    listener.Handle(serviceEvent);
+                    handler.Handle(command);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error handling service event {nameof(serviceEvent)} with listener {nameof(listener)}: {ex.Message}");
+                    Console.WriteLine($"Error handling command {nameof(command)} with handler {nameof(handler)}: {ex.Message}");
                 }
             });
         }

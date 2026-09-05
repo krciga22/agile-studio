@@ -9,9 +9,9 @@ using AgileStudioServer.Features.Resources.Resource.Commands;
 
 namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
 {
-    public class ProjectAssignProjectAdminRoleCommandListener(RoleGrantService roleGrantService) : ICommandListener
+    public class ProjectAssignProjectAdminRoleCommandHandler(RoleGrantService roleGrantService) : ICommandHandler
     {
-        public Type[] GetEvents()
+        public Type[] GetCommands()
         {
             return [typeof(ResourceCreatedCommand)];
         }
@@ -21,14 +21,14 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
             return CommandPriority.Low;
         }
 
-        public void Handle(ICommand serviceEvent)
+        public void Handle(ICommand command)
         {
-            if (serviceEvent is ResourceCreatedCommand e 
-                && e.Type == ResourceTypes.ProjectsProject)
+            if (command is ResourceCreatedCommand c 
+                && c.Type == ResourceTypes.ProjectsProject)
             {
-                ProjectModel projectModel = (ProjectModel) e.Model;
+                ProjectModel projectModel = (ProjectModel) c.Model;
 
-                int? createdBy = GetCurrentUserIdFromServiceContext(e.ServiceContext) ??
+                int? createdBy = GetCurrentUserIdFromServiceContext(c.ServiceContext) ??
                         projectModel.CreatedByID;
                 if (createdBy == null){
                     return;

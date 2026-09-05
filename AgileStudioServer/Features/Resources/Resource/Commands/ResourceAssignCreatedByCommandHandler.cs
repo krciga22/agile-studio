@@ -1,14 +1,13 @@
 ﻿using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Services;
 using AgileStudioServer.Features.Auth.Auth;
-using AgileStudioServer.Features.Resources.Resource.Commands;
 using System.Reflection;
 
-namespace AgileStudioServer.Features.Resources.Resource.CommandListeners
+namespace AgileStudioServer.Features.Resources.Resource.Commands
 {
-    public class ResourceAssignCreatedByCommandListener() : ICommandListener
+    public class ResourceAssignCreatedByCommandHandler() : ICommandHandler
     {
-        public Type[] GetEvents()
+        public Type[] GetCommands()
         {
             return [typeof(ResourceCreatedCommand)];
         }
@@ -18,27 +17,27 @@ namespace AgileStudioServer.Features.Resources.Resource.CommandListeners
             return CommandPriority.High;
         }
 
-        public void Handle(ICommand serviceEvent)
+        public void Handle(ICommand command)
         {
-            if (serviceEvent is ResourceCreatedCommand e
-                && e.Type == ResourceTypes.ProjectsProject)
+            if (command is ResourceCreatedCommand c
+                && c.Type == ResourceTypes.ProjectsProject)
             {
-                PropertyInfo? createdByIDProp = e.Model.GetType().GetProperty("CreatedByID");
+                PropertyInfo? createdByIDProp = c.Model.GetType().GetProperty("CreatedByID");
                 if (createdByIDProp == null){
                     return;
                 }
 
-                var createdByIDValue = createdByIDProp.GetValue(e.Model);
+                var createdByIDValue = createdByIDProp.GetValue(c.Model);
                 if (createdByIDValue != null){
                     return;
                 }
 
-                int? createdByID = GetCurrentUserIdFromServiceContext(e.ServiceContext);
+                int? createdByID = GetCurrentUserIdFromServiceContext(c.ServiceContext);
                 if (createdByID == null){
                     return;
                 }
 
-                createdByIDProp.SetValue(e.Model, createdByID);
+                createdByIDProp.SetValue(c.Model, createdByID);
             }
         }
 

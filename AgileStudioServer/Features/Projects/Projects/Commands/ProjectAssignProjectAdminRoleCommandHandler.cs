@@ -13,7 +13,7 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
     {
         public Type[] GetCommands()
         {
-            return [typeof(ResourceCreatedCommand)];
+            return [typeof(ResourceCreateCommand)];
         }
 
         public int GetPriority()
@@ -23,7 +23,7 @@ namespace AgileStudioServer.Features.Projects.Projects.CommandListeners
 
         public void Handle(ICommand command)
         {
-            if (command is ResourceCreatedCommand c 
+            if (command is ResourceCreateCommand c 
                 && c.Type == ResourceTypes.ProjectsProject)
             {
                 ProjectModel projectModel = (ProjectModel) c.Model;

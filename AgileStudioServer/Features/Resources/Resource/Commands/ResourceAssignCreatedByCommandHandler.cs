@@ -9,7 +9,7 @@ namespace AgileStudioServer.Features.Resources.Resource.Commands
     {
         public Type[] GetCommands()
         {
-            return [typeof(ResourceCreatedCommand)];
+            return [typeof(ResourceCreateCommand)];
         }
 
         public int GetPriority()
@@ -19,7 +19,7 @@ namespace AgileStudioServer.Features.Resources.Resource.Commands
 
         public void Handle(ICommand command)
         {
-            if (command is ResourceCreatedCommand c
+            if (command is ResourceCreateCommand c
                 && c.Type == ResourceTypes.ProjectsProject)
             {
                 PropertyInfo? createdByIDProp = c.Model.GetType().GetProperty("CreatedByID");

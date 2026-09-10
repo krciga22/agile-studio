@@ -41,6 +41,11 @@ namespace AgileStudioServer.Features.Projects.Projects
             return typeof(ProjectService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(ProjectRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             ProjectModel projectModel = ((ProjectModel)model);

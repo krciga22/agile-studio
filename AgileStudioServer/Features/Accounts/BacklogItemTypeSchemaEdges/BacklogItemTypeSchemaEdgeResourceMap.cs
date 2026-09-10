@@ -41,6 +41,11 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemTypeSchemaEdges
             return typeof(BacklogItemTypeSchemaEdgeService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(BacklogItemTypeSchemaEdgeRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             return new ParentScope(Scopes.ACCOUNT_BACKLOG_ITEM_TYPE_SCHEMA, 

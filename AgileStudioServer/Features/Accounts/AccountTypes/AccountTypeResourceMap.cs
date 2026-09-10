@@ -42,6 +42,11 @@ namespace AgileStudioServer.Features.Accounts.AccountTypes
             return typeof(AccountTypeService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(AccountTypeRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             return new ParentScope(Scopes.GLOBAL, null);

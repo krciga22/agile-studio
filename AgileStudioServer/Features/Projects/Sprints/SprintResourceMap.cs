@@ -41,6 +41,11 @@ namespace AgileStudioServer.Features.Projects.Sprints
             return typeof(SprintService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(SprintRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             SprintModel sprintModel = ((SprintModel)model);

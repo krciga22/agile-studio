@@ -41,6 +41,11 @@ namespace AgileStudioServer.Features.Projects.BacklogItemStatuses
             return typeof(BacklogItemStatusService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(BacklogItemStatusRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             BacklogItemStatusModel backlogItemStatusModel = ((BacklogItemStatusModel)model);

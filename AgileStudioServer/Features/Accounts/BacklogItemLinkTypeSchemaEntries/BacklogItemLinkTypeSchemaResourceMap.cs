@@ -42,6 +42,11 @@ namespace AgileStudioServer.Features.Accounts.BacklogItemLinkTypeSchemaEntrySche
             return typeof(BacklogItemLinkTypeSchemaEntryService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(BacklogItemLinkTypeSchemaEntryRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             return new ParentScope(Scopes.ACCOUNT_BACKLOG_ITEM_LINK_TYPE_SCHEMA, 

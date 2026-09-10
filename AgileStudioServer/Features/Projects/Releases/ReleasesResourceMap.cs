@@ -42,6 +42,11 @@ namespace AgileStudioServer.Features.Projects.Releases
             return typeof(ReleaseService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(ReleaseRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             ReleaseModel releaseModel = ((ReleaseModel)model);

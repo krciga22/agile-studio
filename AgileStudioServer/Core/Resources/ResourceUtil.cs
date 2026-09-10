@@ -1,4 +1,5 @@
-﻿using AgileStudioServer.Core.Services;
+﻿using AgileStudioServer.Core.Repositories;
+using AgileStudioServer.Core.Services;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 
 namespace AgileStudioServer.Core.Resources
@@ -30,6 +31,18 @@ namespace AgileStudioServer.Core.Resources
             }
 
             return modelService;
+        }
+
+        /// <exception cref="ResourceRepositoryNotFoundException"></exception>
+        public static Repository GetModelRepository(
+            IEnumerable<Repository> _ModelRepositories,
+            IResourceMap resourceMap)
+        {
+            Repository? repository = _ModelRepositories.FirstOrDefault(
+                repo => repo.GetType() == resourceMap.GetResourceModelRepositoryType()) ??
+                    throw new ResourceRepositoryNotFoundException(resourceMap.GetResourceType());
+
+            return repository;
         }
     }
 }

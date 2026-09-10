@@ -41,6 +41,11 @@ namespace AgileStudioServer.Features.Accounts.Workflows
             return typeof(WorkflowService);
         }
 
+        public Type? GetResourceModelRepositoryType()
+        {
+            return typeof(WorkflowRepository);
+        }
+
         public ParentScope GetParentResourceScope(Object model)
         {
             return new ParentScope(Scopes.ACCOUNT, 

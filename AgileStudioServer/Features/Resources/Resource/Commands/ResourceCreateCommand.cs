@@ -1,10 +1,8 @@
 ﻿using AgileStudioServer.Core.Command;
-using AgileStudioServer.Core.Services;
 
 namespace AgileStudioServer.Features.Resources.Resource.Commands
 {
-    public class ResourceCreateCommand(string type, object model, ServiceContext serviceContext) :
-        AbstractCommand(serviceContext)
+    public class ResourceCreateCommand(string type, object model) : AbstractCommand
     {
         public string Type { get; set; } = type;
 

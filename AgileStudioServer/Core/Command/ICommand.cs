@@ -7,6 +7,6 @@ namespace AgileStudioServer.Core.Command
     /// </summary>
     public interface ICommand
     {
-        ServiceContext ServiceContext { get; set; }
+
     }
 }

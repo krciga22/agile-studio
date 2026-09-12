@@ -5,8 +5,8 @@ namespace AgileStudioServer.Core.Command
     /// <summary>
     /// Base class for all commands.
     /// </summary>
-    public abstract class AbstractCommand(ServiceContext serviceContext) : ICommand
+    public abstract class AbstractCommand() : ICommand
     {
-        public ServiceContext ServiceContext { get; set; } = serviceContext;
+        
     }
 }

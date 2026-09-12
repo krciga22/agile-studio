@@ -1,4 +1,5 @@
 using AgileStudioServer.Core.APIs;
+using AgileStudioServer.Core.Command;
 using AgileStudioServer.Core.Hydrator;
 using AgileStudioServer.Core.Pagination;
 using AgileStudioServer.Core.Resources;
@@ -7,6 +8,7 @@ using AgileStudioServer.Core.Services.Exceptions;
 using AgileStudioServer.Features.Auth.Permissions;
 using AgileStudioServer.Features.Auth.RoleGrants;
 using AgileStudioServer.Features.Auth.Scopes;
+using AgileStudioServer.Features.Resources.Resource.Commands;
 using AgileStudioServer.Features.Resources.Resource.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
@@ -18,7 +20,8 @@ namespace AgileStudioServer.Features.Resources.Resource
         IEnumerable<IResourceMap> resourceMaps,
         IEnumerable<IModelService> modelServices,
         ServiceContext serviceContext,
-        PermissionCheckerService permissionCheckerService
+        PermissionCheckerService permissionCheckerService,
+        CommandDispatcher commandDispatcher
         ) : ControllerBase
     {
         private readonly Hydrator _Hydrator = hydrator;
@@ -26,6 +29,7 @@ namespace AgileStudioServer.Features.Resources.Resource
         private readonly IEnumerable<IModelService> _ModelServices = modelServices;
         private readonly ServiceContext _ServiceContext = serviceContext;
         private readonly PermissionCheckerService _PermissionCheckerService = permissionCheckerService;
+        private readonly CommandDispatcher _CommandDispatcher = commandDispatcher;
 
         public IResult GetCollection(
             HttpContext httpContext, string type, 
@@ -120,8 +124,12 @@ namespace AgileStudioServer.Features.Resources.Resource
                     resourceMap.GetResourceModelType(),
                     _ServiceContext.HydratorDepth);
 
-                object resourceModel = InvokeResourceServiceMethod(
-                    resourceService, "Create", [createModel]);
+                ICommandResult commandResult = _CommandDispatcher.Dispatch(new ResourceCreateCommand(type, createModel));
+
+                object resourceModel = commandResult.GetValue() ??
+                    throw new Exception(
+                        $"The result for command \"{nameof(ResourceCreateCommand)}\" did not return a value."
+                    );
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
                     resourceMap.GetResourceDtoType(),
@@ -365,8 +373,12 @@ namespace AgileStudioServer.Features.Resources.Resource
                     throw new ParentResourceIdentifierMismatchException(parentId);
                 }
 
-                object resourceModel = InvokeResourceServiceMethod(
-                    childTypeResourceService, "Create", [createModel]);
+                ICommandResult commandResult = _CommandDispatcher.Dispatch(new ResourceCreateCommand(childType, createModel));
+
+                object resourceModel = commandResult.GetValue() ??
+                    throw new Exception(
+                        $"The result for command \"{nameof(ResourceCreateCommand)}\" did not return a value."
+                    );
 
                 var resourceDto = _Hydrator.Hydrate(resourceModel,
                     childTypeResourceMap.GetResourceDtoType(),

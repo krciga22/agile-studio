@@ -19,6 +19,8 @@
         // todo make dynamic depending on the command being handled
         int GetPriority();
 
-        void Handle(ICommand command);
+        bool CanHandle(ICommand command);
+
+        void Handle(ICommand command, ICommandResult result);
     }
 }
